@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de85ba41-25b7-4412-abb7-6123a89480c3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/Testing.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,12 +36,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/abdul/Documents/Skole/2022/2/IDATT2001 - Programmering 2/mappevurdering/finalmappevurdering2023",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
   }
@@ -56,6 +56,7 @@
       <option name="presentableId" value="Default" />
       <updated>1675168370155</updated>
       <workItem from="1675168372636" duration="518000" />
+      <workItem from="1675169176773" duration="21000" />
     </task>
     <servers />
   </component>
