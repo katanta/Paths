@@ -3,28 +3,58 @@ package edu.ntnu.idatt2001.groups.group32;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * A passage is a smaller part of the story, like a paragraph.
+ * One can go from one passage to another via a link.
+ * @version 0.1
+ * @author Kristians J. Matrevics
+ */
 public class Passage {
     private final String title;
     private String content;
     private ArrayList<Link> links;
 
+    /**
+     * Constructs an object of the Passage class.
+     * @param title (String): A main description which also functions as a unique identificator.
+     * @param content (String): Textual content that normally includes some part of a dialogue or a paragraph.
+     * @since 0.1
+     */
     public Passage(String title, String content) {
         this.title = title;
         this.content = content;
     }
 
+    /**
+     * @return title (String): A unique descriptor of the passage
+     * @since 0.1
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * @return content (String): block of text that is part of certain scene in the story.
+     * @since 0.1
+     */
     public String getContent() {
         return content;
     }
 
+    /**
+     * @return links (ArrayList<link>): The list of all links to this passage.
+     * @since 0.1
+     */
     public ArrayList<Link> getLinks() {
         return links;
     }
 
+    /**
+     * @param link (Link): the link one wishes to add to this passage.
+     * @return true if the link was unique and added it to the passage.
+     * false if the passage already contained this link.
+     * @since 0.1
+     */
     public boolean addLink(Link link) {
         for(Link l : links) {
             if (link.equals(l)) {
@@ -35,10 +65,19 @@ public class Passage {
         return true;
     }
 
+    /**
+     * @return true if the passage has any links.
+     * false if the passage has no links.
+     * @since 0.1
+     */
     public boolean hasLinks() {
         return links.size() > 0;
     }
 
+    /**
+     * @return String representation of the passage, including all link information.
+     * @since 0.1
+     */
     @Override
     public String toString() {
         String s = "Title: " + title;
@@ -50,6 +89,12 @@ public class Passage {
         return s;
     }
 
+    /**
+     * Checks if an object is equal to this passage, by comparing titles.
+     * @param o (Object): the object one wishes to compare to this one.
+     * @return true if the objects are equal, otherwise will return false.
+     * @since 0.1
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,6 +103,10 @@ public class Passage {
         return Objects.equals(title, passage.title);
     }
 
+    /**
+     * @return hashCode (int): A generated integer that represents the passage by using its title.
+     * @since 0.1
+     */
     @Override
     public int hashCode() {
         return Objects.hash(title);
