@@ -20,12 +20,12 @@ public class Player {
 
     public Player(String name, int health, int score, int gold) {
         this.name = name;
-        this.health = health;
-        if (score > 0) {
-            this.score = score;
+        if (health > 0) {
+            this.health = health;
         } else {
             throw new IllegalArgumentException("Health cannot dip below zero!");
         }
+        this.score = score;
         this.gold = gold;
         inventory = new ArrayList<String>();
     }
