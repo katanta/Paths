@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2001.groups.group32;
+package edu.ntnu.mappe32;
 
 public class LinkTest {
     //The first file for tests...

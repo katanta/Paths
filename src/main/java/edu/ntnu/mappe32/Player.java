@@ -1,4 +1,4 @@
-package edu.ntnu.idatt2001.groups.group32;
+package edu.ntnu.mappe32;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,17 +8,35 @@ import java.util.List;
  * A player and its attributes can be affected by a story.
  */
 public class Player {
-    // Name of the player.
+    /**
+     * Name of the player.
+     */
     private final String name;
-    // Health of a player.
+    /**
+     * Health of a player.
+     */
     private int health;
-    //Score of a player.
+    /**
+     * Score of a player.
+     */
     private int score;
-    // Gold of a player.
+    /**
+     * Gold of a player.
+     */
     private int gold;
+    /**
+     * Inventory of a player.
+     */
     private List<String> inventory;
 
-    public Player(String name, int health, int score, int gold) {
+    /**
+     * This method instantiates an object of the class Player.
+     * @param name Name of the player, as String.
+     * @param health Health of the player, as int.
+     * @param score Score of the player, as int.
+     * @param gold Gold of the player, as int.
+     */
+    public Player(final String name, int health, int score, int gold) {
         this.name = name;
         if (health > 0) {
             this.health = health;
@@ -43,11 +61,16 @@ public class Player {
      * @param newHealthPoints New health points, as int.
      */
     public void addHealth(int newHealthPoints) {
-        this.health += newHealthPoints;
+        if (newHealthPoints > 0) {
+            this.health +=  newHealthPoints;
+        } else if (health + newHealthPoints < 0) {
+            throw new IllegalArgumentException("Health cannot dip below zero!");
+        }
+
     }
 
     /**
-     * This method adds new score points to a player:
+     * This method adds new score points to a player.
      * @param newScorePoints New score points, as int.
      */
     public void addScore(int newScorePoints) {
