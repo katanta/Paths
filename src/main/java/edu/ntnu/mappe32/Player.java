@@ -38,11 +38,7 @@ public class Player {
      */
     public Player(final String name, int health, int score, int gold) {
         this.name = name;
-        if (health > 0) {
-            this.health = health;
-        } else {
-            throw new IllegalArgumentException("Health cannot dip below zero!");
-        }
+        addHealth(health);
         this.score = score;
         this.gold = gold;
         inventory = new ArrayList<String>();
@@ -57,16 +53,16 @@ public class Player {
     }
 
     /**
-     * THis method adds new heath points to a player.
+     * This method adds new heath points to a player.
+     * If the addition results in a negative value, health is set to 0 instead.
      * @param newHealthPoints New health points, as int.
      */
     public void addHealth(int newHealthPoints) {
         if (newHealthPoints > 0) {
             this.health +=  newHealthPoints;
-        } else if (health + newHealthPoints < 0) {
-            throw new IllegalArgumentException("Health cannot dip below zero!");
-        }
-
+        } else if (this.health + newHealthPoints < 0) {
+            this.health = 0;
+        } else { this.health += newHealthPoints; }
     }
 
     /**
