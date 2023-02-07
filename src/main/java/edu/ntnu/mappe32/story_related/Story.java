@@ -24,7 +24,7 @@ public class Story {
      * @param title
      * @param openingPassage
      */
-    Story(String title, Passage openingPassage) {
+    public Story(String title, Passage openingPassage) {
         this.title = title;
         this.openingPassage = openingPassage;
 
