@@ -6,7 +6,7 @@ package edu.ntnu.mappe32;
  */
 public interface Goal {
     /**
-     * This method decides which player a goal-check should be executed on.
+     * This method decides which player a goal should be executed on.
      * @param player The player a goal should be executed on, as Player.
      */
     void execute(Player player);
