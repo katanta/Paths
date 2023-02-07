@@ -2,7 +2,7 @@ package edu.ntnu.mappe32;
 
 public class ScoreGoal implements Goal {
 
-    private int minimumPoints;
+    private final int minimumPoints;
 
     /**
      * This constructor facilitates the creation of instances of the class ScoreGoal.
@@ -13,9 +13,9 @@ public class ScoreGoal implements Goal {
     }
 
     /**
-     * This method decides which player a goal-check should be executed on.
+     * This method decides which player a goal should be executed on.
      *
-     * @param player The player a goal-check should be executed on, as Player.
+     * @param player The player a goal should be executed on, as Player.
      */
     @Override
     public void execute(Player player) {
@@ -25,7 +25,7 @@ public class ScoreGoal implements Goal {
     /**
      * This method checks if the score goal is reached.
      * @param player The player a goal-check should be executed on, as Player.
-     * @return Wheter the player has fulfilled a goal, as boolean.
+     * @return Whether the player has fulfilled a goal, as boolean.
      */
     public boolean isFulfilled(Player player) {
         return player.getScore() >= this.minimumPoints;

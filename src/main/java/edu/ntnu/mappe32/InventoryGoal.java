@@ -13,17 +13,19 @@ public class InventoryGoal implements Goal {
     }
 
     public boolean isFulfilled(Player player) {
-        Iterator<String> it = mandatoryItems.iterator();
+        Iterator<String> it = player.getInventory().iterator();
+        int i = 0;
         while (it.hasNext()) {
-            if (it.equals(player.getInventory()))
-        }
-        for(String item : mandatoryItems) {
-            for(String playerItem : player.getInventory()) {
-                if(item.equals(playerItem)) {
-                    mandatoryItems.remove(item);
+            i = 0;
+            while (i < mandatoryItems.size()) {
+                if (it.next().equals(mandatoryItems.get(i))) {
+                    mandatoryItems.remove(i);
                 }
+                i++;
             }
+            it.next();
         }
+
         return mandatoryItems.isEmpty();
     }
 
