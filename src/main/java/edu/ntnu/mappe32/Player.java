@@ -69,6 +69,14 @@ public class Player {
     }
 
     /**
+     * This method returns the health of a player.
+     * @return Health of player, as int.
+     */
+    public int getHealth() {
+        return health;
+    }
+
+    /**
      * This method adds new score points to a player.
      * @param newScorePoints New score points, as int.
      */
