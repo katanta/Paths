@@ -1,5 +1,9 @@
 package edu.ntnu.mappe32;
 
+import edu.ntnu.mappe32.story_related.Passage;
+import edu.ntnu.mappe32.story_related.Link;
+import edu.ntnu.mappe32.story_related.Story;
+
 public class Game {
     private Player player;
     private Story story;

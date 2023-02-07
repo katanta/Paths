@@ -1,4 +1,7 @@
-package edu.ntnu.mappe32;
+package edu.ntnu.mappe32.story_related;
+
+import edu.ntnu.mappe32.story_related.Link;
+import edu.ntnu.mappe32.story_related.Passage;
 
 import java.util.Collection;
 import java.util.HashMap;
