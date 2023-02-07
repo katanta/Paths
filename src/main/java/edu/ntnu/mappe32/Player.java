@@ -36,7 +36,8 @@ public class Player {
      * @param score Score of the player, as int.
      * @param gold Gold of the player, as int.
      */
-    public Player(final String name, int health, int score, int gold) {
+    public Player(final String name, final int health,
+                  final int score, final int gold) {
         this.name = name;
         addHealth(health);
         this.score = score;
@@ -57,19 +58,21 @@ public class Player {
      * If the addition results in a negative value, health is set to 0 instead.
      * @param newHealthPoints New health points, as int.
      */
-    public void addHealth(int newHealthPoints) {
+    public void addHealth(final int newHealthPoints) {
         if (newHealthPoints > 0) {
             this.health +=  newHealthPoints;
         } else if (this.health + newHealthPoints < 0) {
             this.health = 0;
-        } else { this.health += newHealthPoints; }
+        } else {
+            this.health += newHealthPoints;
+        }
     }
 
     /**
      * This method adds new score points to a player.
      * @param newScorePoints New score points, as int.
      */
-    public void addScore(int newScorePoints) {
+    public void addScore(final int newScorePoints) {
         this.score += newScorePoints;
     }
 
@@ -85,7 +88,7 @@ public class Player {
      * This method adds new gold points to the player.
      * @param newGoldPoints New gold points, as int.
      */
-    public void addGold(int newGoldPoints) {
+    public void addGold(final int newGoldPoints) {
         this.gold += newGoldPoints;
     }
 
@@ -93,7 +96,7 @@ public class Player {
      * This method adds an item to a player's inventory.
      * @param item Item to be added, as String.
      */
-    public void addToInventory(String item) {
+    public void addToInventory(final String item) {
        inventory.add(item);
     }
 
