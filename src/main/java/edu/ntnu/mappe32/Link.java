@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Objects;
 public class Link {
     private String text;
     private final String reference;
-    //private List<Action> actions
+    private List<Action> actions;
 
     /**
      * Constructor for objects of the Link class.
@@ -43,19 +44,13 @@ public class Link {
         return reference;
     }
 
-    /*
+
     public void addAction(Action action) {
         actions.add(action);
      }
 
-     public List<Action> getActions() {
-        return actions;
-     */
+     public List<Action> getActions() { return actions; }
 
-    /**
-     * @return String representation of the object.
-     * @since 0.1
-     */
     @Override
     public String toString() {
         String s = "Text: " + text;
