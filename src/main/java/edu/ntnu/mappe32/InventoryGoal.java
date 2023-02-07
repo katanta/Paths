@@ -13,20 +13,9 @@ public class InventoryGoal implements Goal {
     }
 
     public boolean isFulfilled(Player player) {
-        Iterator<String> it = player.getInventory().iterator();
-        int i = 0;
-        while (it.hasNext()) {
-            i = 0;
-            while (i < mandatoryItems.size()) {
-                if (it.next().equals(mandatoryItems.get(i))) {
-                    mandatoryItems.remove(i);
-                }
-                i++;
-            }
-            it.next();
-        }
-
-        return mandatoryItems.isEmpty();
+        int mandatoryItemCount = (int) player.getInventory().stream().
+                filter(item -> mandatoryItems.contains(item)).count();
+        return mandatoryItemCount >= mandatoryItems.size();
     }
 
     @Override
