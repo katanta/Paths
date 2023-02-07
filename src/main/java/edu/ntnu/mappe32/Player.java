@@ -101,9 +101,19 @@ public class Player {
     }
 
     /**
+     * This method returns the gold a player.
+     * @return Gold of a player, as int.
+     */
+    public int getGold() {
+        return gold;
+    }
+
+    /**
      * This method adds an item to a player's inventory.
      * @param item Item to be added, as String.
      */
+
+
     public void addToInventory(final String item) {
        inventory.add(item);
     }
