@@ -1,6 +1,7 @@
 package edu.ntnu.mappe32;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -59,9 +60,7 @@ public class Player {
      * @param newHealthPoints New health points, as int.
      */
     public void addHealth(final int newHealthPoints) {
-        if (newHealthPoints > 0) {
-            this.health +=  newHealthPoints;
-        } else if (this.health + newHealthPoints < 0) {
+        if (this.health + newHealthPoints < 0) {
             this.health = 0;
         } else {
             this.health += newHealthPoints;
@@ -117,7 +116,6 @@ public class Player {
     public void addToInventory(final String item) {
        inventory.add(item);
     }
-
     /**
      * This method returns the inventory of a player.
      * @return Returns inventory as, List<String>
