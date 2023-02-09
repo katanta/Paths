@@ -4,36 +4,72 @@ import edu.ntnu.mappe32.story_related.Passage;
 import edu.ntnu.mappe32.story_related.Link;
 import edu.ntnu.mappe32.story_related.Story;
 
+import java.util.List;
+
+/**
+ * The game is the facade of the paths game.
+ * The class connects a player to a story, and has methods to start
+ * and maneuver through the game.
+ * @author Kristians J. Matrevics
+ * @version 0.1
+ */
 public class Game {
     private Player player;
     private Story story;
-    //private List<Goal> goals
+    private List<Goal> goals
 
-    public Game(Player player, Story story) {
+    /**
+     * A constructor for objects of the game class.
+     * @param player (Player): The player object that this game uses.
+     * @param story (Story): The story object that this game uses.
+     * @param goals (List<Goal>): The goals of this particular game.
+     * @since 0.1
+     */
+    public Game(Player player, Story story, List<Goal> goals) {
         this.player = player;
         this.story = story;
-        //this.goals = goals;
+        this.goals = goals;
     }
 
+    /**
+     * @return The player object of this game, as player.
+     * @since 0.1
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * @return the story object of this game, as story.
+     * @since 0.1
+     */
     public Story getStory() {
         return story;
     }
 
     /**
-     * public List<Goal> getGoals() {
-     *     return goals;
-     * }
+     * @return the goals of this game, as a List of goal-objects.
+     * @since 0.1
      */
+     public List<Goal> getGoals() {
+         return goals;
+     }
 
+
+    /**
+     * @return Begins the game by returning the opening passage of a story.
+     * @since 0.1
+     */
     public Passage begin() {
         return story.getOpeningPassage();
     }
 
+    /**
+     * @param link (Link): The link object that a passage uses as its key in a story.
+     * @return The passage that is the value to the given link/key in a story.
+     * @since 0.1
+     */
     public Passage go(Link link) {
-        return story.getPassage(link); //TODO: Implement this properly, I don't think this is correct...
+        return story.getPassage(link);
     }
 }
