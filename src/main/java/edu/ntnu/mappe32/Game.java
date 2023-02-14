@@ -16,7 +16,7 @@ import java.util.List;
 public class Game {
     private Player player;
     private Story story;
-    private List<Goal> goals
+    private List<Goal> goals;
 
     /**
      * A constructor for objects of the game class.

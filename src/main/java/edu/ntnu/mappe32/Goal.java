@@ -6,8 +6,8 @@ package edu.ntnu.mappe32;
  */
 public interface Goal {
     /**
-     * This method decides which player a goal should be executed on.
-     * @param player The player a goal should be executed on, as Player.
+     * This method returns true if a partical requirement/goal in a game is met.
+     * @param player The player being inspected to see if the requirements/goals are met.
      */
-    void execute(Player player);
+    boolean isFulfilled(Player player);
 }

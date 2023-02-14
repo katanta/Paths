@@ -17,10 +17,6 @@ public class GoldGoal implements Goal{
         this.minimumGold = minimumGold;
     }
 
-    @Override
-    public void execute(Player player) {
-        //TODO: Implement this
-    }
     /**
      * This method checks if the gold goal is reached.
      * @param player The player a goal-check should be executed on, as Player.

@@ -11,25 +11,13 @@ public class HealthGoal implements Goal {
     public HealthGoal(final int minimumHealth) {
         this.minimumHealth = minimumHealth;
     }
-    /**
-     * This method decides which player a goal should be executed on.
-     *
-     * @param player The player a goal should be executed on, as Player.
-     */
-    @Override
-    public void execute(Player player) {
-        if (isFulFilled(player)) {
-            // TODO: Implement
-        }
-
-    }
 
     /**
      * This method checks if the score goal is reached.
      * @param player The player a goal-check should be executed on, as Player.
      * @return Whether the player has fulfilled a goal, as boolean.
      */
-    public boolean isFulFilled(Player player) {
+    public boolean isFulfilled(Player player) {
         return player.getHealth() >= minimumHealth;
     }
 }

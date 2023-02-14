@@ -1,8 +1,5 @@
 package edu.ntnu.mappe32;
 
-import edu.ntnu.mappe32.story_related.Story;
-
-import java.util.Iterator;
 import java.util.List;
 
 public class InventoryGoal implements Goal {
@@ -17,11 +14,5 @@ public class InventoryGoal implements Goal {
                 filter(item -> mandatoryItems.contains(item)).count();
         return mandatoryItemCount >= mandatoryItems.size();
     }
-
-    @Override
-    public void execute(Player player) {
-        if(isFulfilled(player)) {
-            //TODO: implement this
-        }
-    }
 }
+
