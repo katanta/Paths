@@ -11,9 +11,13 @@ public class GoldGoal implements Goal{
     /**
      * This constructor facilitates the creation of instances of the class GoldGoal.
      * @param minimumGold Gold required for a goal to be reached, as int.
+     * @throws IllegalArgumentException when minimumGold is below zero.
      * @since 0.1
      */
     public GoldGoal(int minimumGold) {
+        if (minimumGold < 0) {
+            throw new IllegalArgumentException("Minimum gold goal cannot be a negative amount.");
+        }
         this.minimumGold = minimumGold;
     }
 
