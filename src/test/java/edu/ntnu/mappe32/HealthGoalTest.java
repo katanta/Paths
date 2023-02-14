@@ -29,4 +29,11 @@ class HealthGoalTest {
         HealthGoal godLike = new HealthGoal(200);
         assertFalse(godLike.isFulfilled(player));
     }
+
+    @Test
+    void healthGoalConstructorThrowsIllegalArgumentExceptionOnNegativeMinValue() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            HealthGoal rockBottom = new HealthGoal(-200);
+        });
+    }
 }

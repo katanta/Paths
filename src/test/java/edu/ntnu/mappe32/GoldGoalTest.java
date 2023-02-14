@@ -30,5 +30,10 @@ class GoldGoalTest {
         assertFalse(kingsRansom.isFulfilled(player));
     }
 
-
+    @Test
+    void goldGoalConstructorThrowsIllegalArgumentExceptionOnNegativeMinValue() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            GoldGoal rockBottom = new GoldGoal(-200);
+        });
+    }
 }

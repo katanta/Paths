@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,5 +29,12 @@ class ScoreGoalTest {
     void isFulfilledReturnsFalseWhenScoreGoalIsNotMet() {
         ScoreGoal globalElite = new ScoreGoal(1500);
         assertFalse(globalElite.isFulfilled(player));
+    }
+
+    @Test
+    void scoreGoalConstructorThrowsIllegalArgumentExceptionOnNegativeMinValue() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            ScoreGoal rockBottom = new ScoreGoal(-200);
+        });
     }
 }
