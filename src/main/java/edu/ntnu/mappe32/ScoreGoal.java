@@ -12,7 +12,7 @@ public class ScoreGoal implements Goal {
      */
     ScoreGoal(final int minimumPoints) {
         if (minimumPoints < 0) {
-            throw new IllegalArgumentException("Minimum score goal cannot be a negative amount");
+            throw new IllegalArgumentException("Minimum score goal cannot be a negative amount.");
         }
         this.minimumPoints = minimumPoints;
     }
