@@ -7,9 +7,13 @@ public class ScoreGoal implements Goal {
     /**
      * This constructor facilitates the creation of instances of the class ScoreGoal.
      * @param minimumPoints Points required for a goal to be reached, as int.
+     * @throws IllegalArgumentException when minimumPoints is negative.
      * @since 0.1
      */
     ScoreGoal(final int minimumPoints) {
+        if (minimumPoints < 0) {
+            throw new IllegalArgumentException("Minimum score goal cannot be a negative amount");
+        }
         this.minimumPoints = minimumPoints;
     }
 
