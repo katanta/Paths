@@ -39,4 +39,13 @@ public class InventoryGoalTest {
         assertTrue(helpStranger.isFulfilled(player));
     }
 
+    @Test
+    void isFulfilledReturnsFalseWhenInventoryDoesNotMeetRequirements() {
+        ArrayList<String> mandatoryItems = new ArrayList<>();
+        mandatoryItems.add("Potion of Healing");
+        mandatoryItems.add("The King's Crown");
+        mandatoryItems.add("24-karat diamond");
+        InventoryGoal impossibleTask = new InventoryGoal(mandatoryItems);
+        assertFalse(impossibleTask.isFulfilled(player));
+    }
 }
