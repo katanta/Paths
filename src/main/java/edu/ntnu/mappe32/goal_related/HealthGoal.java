@@ -1,4 +1,6 @@
-package edu.ntnu.mappe32;
+package edu.ntnu.mappe32.goal_related;
+
+import edu.ntnu.mappe32.Player;
 
 public class HealthGoal implements Goal {
 

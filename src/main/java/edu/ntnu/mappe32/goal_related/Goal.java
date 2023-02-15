@@ -1,4 +1,6 @@
-package edu.ntnu.mappe32;
+package edu.ntnu.mappe32.goal_related;
+
+import edu.ntnu.mappe32.Player;
 
 /**
  * Goals are used to check the values of the attributes of a player.

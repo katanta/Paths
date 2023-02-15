@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32;
 
+import edu.ntnu.mappe32.goal_related.InventoryGoal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

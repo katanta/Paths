@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32;
 
-import org.junit.jupiter.api.Assertions;
+import edu.ntnu.mappe32.goal_related.ScoreGoal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
