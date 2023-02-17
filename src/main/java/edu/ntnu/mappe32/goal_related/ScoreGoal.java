@@ -12,7 +12,7 @@ public class ScoreGoal implements Goal {
      * @throws IllegalArgumentException when minimumPoints is negative.
      * @since 0.1
      */
-    ScoreGoal(final int minimumPoints) {
+    public ScoreGoal(final int minimumPoints) {
         if (minimumPoints < 0) {
             throw new IllegalArgumentException("Minimum score goal cannot be a negative amount.");
         }

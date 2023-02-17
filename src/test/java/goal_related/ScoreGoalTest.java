@@ -1,12 +1,13 @@
-package edu.ntnu.mappe32;
+package goal_related;
 
+import edu.ntnu.mappe32.Player;
 import edu.ntnu.mappe32.goal_related.ScoreGoal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ScoreGoalTest {
+public class ScoreGoalTest {
     Player player = null;
     @BeforeEach
     void setUp() {

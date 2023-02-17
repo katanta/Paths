@@ -1,5 +1,6 @@
-package edu.ntnu.mappe32;
+package goal_related;
 
+import edu.ntnu.mappe32.Player;
 import edu.ntnu.mappe32.goal_related.HealthGoal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
