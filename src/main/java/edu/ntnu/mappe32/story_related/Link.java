@@ -54,7 +54,11 @@ public class Link {
      }
 
     public List<Action> getActions() {
-        return new ArrayList<>(actions);
+        if (actions.isEmpty()) {
+            throw new IllegalStateException("This link contains no actions");
+        } else {
+            return new ArrayList<>(actions);
+        }
     }
     @Override
     public String toString() {
