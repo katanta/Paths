@@ -2,6 +2,7 @@ package edu.ntnu.mappe32.story_related;
 
 import edu.ntnu.mappe32.Action;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,8 +52,9 @@ public class Link {
         actions.add(action);
      }
 
-     public List<Action> getActions() { return actions; }
-
+    public List<Action> getActions() {
+        return new ArrayList<>(actions);
+    }
     @Override
     public String toString() {
         String s = "Text: " + text;
