@@ -29,6 +29,7 @@ public class Link {
     public Link(String text, String reference) {
         this.text = text;
         this.reference = reference;
+        this.actions = new ArrayList<>();
     }
 
     /**
