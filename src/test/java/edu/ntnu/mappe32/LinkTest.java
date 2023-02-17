@@ -6,9 +6,9 @@ import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkTest {
     Link climbTree;
@@ -26,6 +26,7 @@ public class LinkTest {
     Action add1ScorePoint;
     Action add10GoldPoints;
     Action addMacheteToInventory;
+    Action add20GoldPoints;
     List<Action> testActions;
     @BeforeEach
     void setup() {
@@ -34,7 +35,7 @@ public class LinkTest {
         add1ScorePoint = new ScoreAction(1);
         add10GoldPoints = new GoldAction(10);
         addMacheteToInventory = new InventoryAction("Machete");
-
+        add20GoldPoints = new GoldAction(20);
         testActions = new ArrayList<>();
 
         testActions.add(remove10HealthPoints);
@@ -111,12 +112,18 @@ public class LinkTest {
     @Nested
     class GetActionsTest {
         @Test
-        void getActionRetunsActions() {
+        void getActionReturnsActions() {
             assertEquals(testActions, kickTree.getActions());
         }
         @Test
         void getActionThrowsActionsEmptyException() {
             assertThrows(IllegalStateException.class, () -> climbTree.getActions());
+        }
+        @Test
+        void getActionReturnsDeepCopyOfActions() {
+            List<Action> mutatedKickTreeActions = kickTree.getActions();
+            mutatedKickTreeActions.add(add20GoldPoints);
+            assertNotEquals(mutatedKickTreeActions, kickTree.getActions());
         }
     }
 
