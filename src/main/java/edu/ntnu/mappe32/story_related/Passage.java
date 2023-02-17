@@ -1,6 +1,7 @@
 package edu.ntnu.mappe32.story_related;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Objects;
 public class Passage {
     private final String title;
     private String content;
-    private ArrayList<Link> links;
+    private List<Link> links;
 
     /**
      * Constructs an object of the Passage class.
@@ -30,6 +31,7 @@ public class Passage {
             throw new IllegalArgumentException("Passage must be instatiated with a valid content");
         } else { this.content = content; }
 
+        links = new ArrayList<>();
     }
 
     /**
@@ -49,10 +51,10 @@ public class Passage {
     }
 
     /**
-     * @return links (ArrayList<link>): The list of all links to this passage.
+     * @return links (List<link>): The list of all links to this passage.
      * @since 0.1
      */
-    public ArrayList<Link> getLinks() {
+    public List<Link> getLinks() {
         return links;
     }
 
