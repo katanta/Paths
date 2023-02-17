@@ -55,7 +55,7 @@ public class Passage {
      * @since 0.1
      */
     public List<Link> getLinks() {
-        return links;
+        return new ArrayList<>(links);
     }
 
     /**
