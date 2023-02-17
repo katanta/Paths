@@ -21,8 +21,15 @@ public class Passage {
      * @since 0.1
      */
     public Passage(String title, String content) {
-        this.title = title;
-        this.content = content;
+        if (title.isBlank()) {
+           throw new IllegalArgumentException("Passage must be instatiated with a valid title");
+        }
+        else { this.title = title; }
+
+        if (content.isBlank()) {
+            throw new IllegalArgumentException("Passage must be instatiated with a valid content");
+        } else { this.content = content; }
+
     }
 
     /**
