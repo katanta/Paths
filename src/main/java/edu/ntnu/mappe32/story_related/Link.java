@@ -27,8 +27,16 @@ public class Link {
      * @since 0.1
      */
     public Link(String text, String reference) {
-        this.text = text;
-        this.reference = reference;
+        if (text.isBlank()) {
+            throw new IllegalArgumentException("Link must be instatiated with a valid text");
+        } else {
+            this.text = text;
+        }
+        if (reference.isBlank()) {
+            throw new IllegalArgumentException("Link must be instantiated with a valid text");
+        } else {
+            this.reference = reference;
+        }
         this.actions = new ArrayList<>();
     }
 
