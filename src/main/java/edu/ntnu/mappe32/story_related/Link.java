@@ -60,12 +60,15 @@ public class Link {
             return new ArrayList<>(actions);
         }
     }
+
     @Override
     public String toString() {
-        String s = "Text: " + text;
-        s += " \nReference: " + reference;
-        //TODO: make this toString also return the actions list for the link
-        return s;
+        return "Link{" +
+                "text='" + text + '\'' +
+                ", reference='" + reference + '\'' +
+                ", actions=" + actions +
+                '}';
+        // TODO: Make toString for actions
     }
 
     /**
