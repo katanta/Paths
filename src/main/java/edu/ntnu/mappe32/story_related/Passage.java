@@ -24,8 +24,7 @@ public class Passage {
     public Passage(String title, String content) {
         if (title.isBlank()) {
            throw new IllegalArgumentException("Passage must be instatiated with a valid title");
-        }
-        else { this.title = title; }
+        } else { this.title = title; }
 
         if (content.isBlank()) {
             throw new IllegalArgumentException("Passage must be instatiated with a valid content");
@@ -55,7 +54,9 @@ public class Passage {
      * @since 0.1
      */
     public List<Link> getLinks() {
-        return new ArrayList<>(links);
+        if (links.isEmpty()) {
+            throw new IllegalStateException("This passage contains no links");
+        } else { return new ArrayList<>(links); }
     }
 
     /**
