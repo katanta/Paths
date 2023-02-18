@@ -66,10 +66,10 @@ public class Passage {
      * @since 0.1
      */
     public boolean addLink(Link link) {
-        for(Link l : links) {
-            if (link.equals(l)) {
-                return false;
-            }
+        String match = links.stream().filter(l -> l.equals(link)).map(Link::getReference)
+                .reduce("", (total, s) -> total + s );
+        if (!match.isBlank()) {
+            return false;
         }
         links.add(link);
         return true;
