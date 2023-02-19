@@ -63,7 +63,7 @@ public class PassageTest {
 
 
         kickedShakedTree = new Passage("Kicked/shaked tree Passage", "The golden apple fell on your head. " +
-                "Your head is bumped." + "A killer bee flies by!");
+                "Your head is bumped. " + "A killer bee flies by!");
 
         runHome = new Link("Run home", "Run home Passage");
 
@@ -116,7 +116,7 @@ public class PassageTest {
         assertEquals("You climb the tree and notice a large beehive full " +
                 "of killer bees. 3 bees sting you just as you pick the apple from the tree.", climbedTree.getContent());
         assertEquals("The golden apple fell on your head. " +
-                "Your head is bumped." + "A killer bee flies by!", kickedShakedTree.getContent());
+                "Your head is bumped. " + "A killer bee flies by!", kickedShakedTree.getContent());
 
     }
     @Nested

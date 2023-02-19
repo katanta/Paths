@@ -63,7 +63,7 @@ public class LinkTest {
 
 
         kickedShakedTree = new Passage("Kicked/shaked tree Passage", "The golden apple fell on your head. " +
-                "Your head is bumped." + "A killer bee flies by!");
+                "Your head is bumped. " + "A killer bee flies by!");
 
         runHome = new Link("Run home", "Run home Passage");
 
