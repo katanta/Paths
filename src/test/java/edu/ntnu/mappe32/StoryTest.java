@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -32,6 +34,7 @@ public class StoryTest {
     Action addMacheteToInventory;
     List<Action> assertionActions;
     List<Link> assertionLinks;
+    Map<Link, Passage> assertionPassages;
 
     @BeforeEach
     void setup() {
@@ -67,7 +70,7 @@ public class StoryTest {
 
 
         kickedShakedTree = new Passage("Kicked/shaked tree Passage", "The golden apple fell on your head. " +
-                "Your head is bumped." + "A killer bee flies by!");
+                "Your head is bumped. " + "A killer bee flies by!");
 
         runHome = new Link("Run home", "Run home Passage");
 
@@ -94,17 +97,37 @@ public class StoryTest {
         climbedTree.addLink(scratchHead);
 
         storyOfAfrica = new Story("Story of Africa", openingPassage);
+
+        storyOfAfrica.addPassage(kickedShakedTree);
+        assertionPassages = new HashMap<>();
+
+        assertionPassages.put(new Link(kickedShakedTree.getTitle(), kickedShakedTree.getTitle()), kickedShakedTree);
     }
 
     @Test
     void getTitleReturnsTitle() {
-        assertEquals("StoryOfAfrica", storyOfAfrica.getTitle());
+        assertEquals("Story of Africa", storyOfAfrica.getTitle());
     }
+
     @Test
     void getOpeningPassageReturnsOpeningPassage() {
         assertEquals(openingPassage, storyOfAfrica.getOpeningPassage());
     }
 
+    @Test
+    void addPassageAddsPassage() {
+        storyOfAfrica.addPassage(climbedTree);
+        assertionPassages.put(new Link(climbedTree.getTitle(),climbedTree.getTitle()), climbedTree);
+        assertEquals(assertionPassages.values().toString(), storyOfAfrica.getPassages().toString());
+    }
 
+    @Test
+    void getPassageReturnsPassage() {
+        assertEquals(kickedShakedTree, storyOfAfrica.getPassage(kickTree));
+    }
 
+    @Test
+    void getPassagesReturnsPassages() {
+        assertEquals(assertionPassages.values().toString(), storyOfAfrica.getPassages().toString());
+    }
 }
