@@ -124,6 +124,7 @@ public class LinkTest {
             List<Action> mutatedKickTreeActions = kickTree.getActions();
             mutatedKickTreeActions.add(add20GoldPoints);
             assertNotEquals(mutatedKickTreeActions, kickTree.getActions());
+            assertNotSame(kickTree.getActions(), kickTree.getActions());
         }
     }
 
