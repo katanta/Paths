@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.story_related;
 
-import edu.ntnu.mappe32.Action;
+import edu.ntnu.mappe32.action_related.Action;
 
 import java.util.ArrayList;
 import java.util.List;

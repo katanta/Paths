@@ -1,10 +1,10 @@
 package edu.ntnu.mappe32;
 
+import edu.ntnu.mappe32.action_related.*;
 import edu.ntnu.mappe32.story_related.Link;
 import edu.ntnu.mappe32.story_related.Passage;
 import edu.ntnu.mappe32.story_related.Story;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
