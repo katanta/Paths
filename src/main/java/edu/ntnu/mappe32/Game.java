@@ -72,7 +72,7 @@ public class Game {
      */
     public Passage go(Link link) {
         if (!link.getActions().isEmpty()) {
-            link.getActions().forEach(action -> action.execute(player));
+            link.getActions().forEach(a -> a.execute(player));
         }
         return story.getPassage(link);
     }
