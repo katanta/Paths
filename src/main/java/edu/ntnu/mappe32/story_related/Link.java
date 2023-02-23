@@ -80,10 +80,9 @@ public class Link {
     }
 
     /**
-     * Returns whether or not two links are equal.
+     * Returns whether two links are equal.
      * @param o (Object): The object we wish to compare to an object of this class.
-     * @return true if instance of class is equal to o.
-     * @return false otherwise
+     * @return whether instance of class is equal to o.
      * @since 0.1
      */
     @Override
