@@ -85,21 +85,21 @@ public class Link {
      * @return whether instance of class is equal to o.
      * @since 0.1
      */
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Link link = (Link) o;
-        return Objects.equals(reference, link.reference);
+        return text.equals(link.text) && reference.equals(link.reference) && actions.equals(link.actions);
     }
 
     /**
+     * @return a generated integer that uniquely represents the object.
      * @since 0.1
-     * @return hashCode (int): a generated integer value representing the link, using its reference.
      */
     @Override
     public int hashCode() {
-        return Objects.hash(reference);
+        return Objects.hash(text, reference, actions);
     }
-
 }

@@ -62,7 +62,8 @@ public class Story {
      * @return Passage as passage.
      */
     public Passage getPassage(Link link) {
-        return passages.get(link);
+        Link searchLink = new Link(link.getReference(), link.getReference());
+        return passages.get(searchLink);
     }
 
     /**
