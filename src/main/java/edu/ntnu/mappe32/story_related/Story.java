@@ -5,6 +5,7 @@ import edu.ntnu.mappe32.story_related.Passage;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,5 +71,16 @@ public class Story {
      */
     public Collection<Passage> getPassages() {
         return passages.values();
+    }
+    public void removePassage(Link removalLink) {
+        int match = (int) passages.values().stream().map(Passage::getLinks)
+                .filter(links -> (links.contains(removalLink))).count();
+        if (match > 1) {
+            throw new IllegalArgumentException("The link refers to multiple passages and cannot be removed");
+        }
+        if (match == 0) {
+            throw new IllegalArgumentException("The link refers to no passage");
+        }
+        passages.remove(removalLink);
     }
 }
