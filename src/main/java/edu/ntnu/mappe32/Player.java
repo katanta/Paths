@@ -31,16 +31,29 @@ public class Player {
     private List<String> inventory;
 
     /**
-     * This method instantiates an object of the class Player.
+     * This constructor facilitates the creation of instances of the class Player.
+     * The constructor throws IllegalArgumentExceptions if negartive values are entered in the parameters.
      * @param name Name of the player, as String.
      * @param health Health of the player, as int.
      * @param score Score of the player, as int.
      * @param gold Gold of the player, as int.
      */
     public Player(final String name, final int health,
-                  final int score, final int gold) {
+                  final int score, final int gold) throws IllegalArgumentException {
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Player must have a name");
+        }
+        if (health < 0) {
+            throw new IllegalArgumentException("Health cannot be below zero");
+        }
+        if (score < 0) {
+            throw new IllegalArgumentException("Score cannot be below zero");
+        }
+        if (gold < 0) {
+            throw new IllegalArgumentException("Gold cannot be blow zero");
+        }
         this.name = name;
-        addHealth(health);
+        this.health = health;
         this.score = score;
         this.gold = gold;
         inventory = new ArrayList<String>();
@@ -77,10 +90,15 @@ public class Player {
 
     /**
      * This method adds new score points to a player.
+     * If the addition results in a negative value, score is set to 0 instead.
      * @param newScorePoints New score points, as int.
      */
     public void addScore(final int newScorePoints) {
-        this.score += newScorePoints;
+        if (this.score + newScorePoints < 0) {
+            this.score = 0;
+        } else {
+            this.score += newScorePoints;
+        }
     }
 
     /**
@@ -93,10 +111,15 @@ public class Player {
 
     /**
      * This method adds new gold points to the player.
+     * If the new augend is negative and results in negative gold, the method will throw an IllegalArguemntException.
      * @param newGoldPoints New gold points, as int.
      */
-    public void addGold(final int newGoldPoints) {
-        this.gold += newGoldPoints;
+    public void addGold(final int newGoldPoints) throws IllegalArgumentException {
+        if (this.gold + newGoldPoints < 0) {
+            throw new IllegalArgumentException("You do not have enough points");
+        } else {
+            this.gold += newGoldPoints;
+        }
     }
 
     /**
