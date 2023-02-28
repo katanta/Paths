@@ -100,7 +100,7 @@ public class Passage {
     }
 
     /**
-     * Checks if an object is equal to this passage, by comparing titles.
+     * Checks if an object is equal to this passage, by comparing all fields.
      * @param o (Object): the object one wishes to compare to this one.
      * @return true if the objects are equal, otherwise will return false.
      * @since 0.1
@@ -110,15 +110,15 @@ public class Passage {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Passage passage = (Passage) o;
-        return Objects.equals(title, passage.title);
+        return title.equals(passage.title) && content.equals(passage.content) && links.equals(passage.links);
     }
-
     /**
-     * @return hashCode (int): A generated integer that represents the passage by using its title.
+     * @return hashCode (int): A generated integer that represents the passage by using its fields.
      * @since 0.1
      */
     @Override
     public int hashCode() {
-        return Objects.hash(title);
+        return Objects.hash(title, content, links);
     }
+
 }
