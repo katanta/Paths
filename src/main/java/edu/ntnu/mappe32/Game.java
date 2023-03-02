@@ -26,7 +26,17 @@ public class Game {
      * @param goals (List<Goal>): The goals of this particular game.
      * @since 0.1
      */
-    public Game(Player player, Story story, List<Goal> goals) {
+    public Game(Player player, Story story, List<Goal> goals) throws IllegalArgumentException {
+        if (player == null) {
+            throw new IllegalArgumentException("Player cannot be null.");
+        }
+        if (story == null) {
+            throw new IllegalArgumentException("Story cannot be null.");
+        }
+        if (goals.isEmpty()) {
+            throw new IllegalArgumentException("A game must have atleast 1 goal.");
+        }
+
         this.player = player;
         this.story = story;
         this.goals = goals;
