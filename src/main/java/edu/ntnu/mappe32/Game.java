@@ -15,9 +15,9 @@ import java.util.List;
  * @version 0.1
  */
 public class Game {
-    private Player player;
-    private Story story;
-    private List<Goal> goals;
+    private final Player player;
+    private final Story story;
+    private final List<Goal> goals;
 
     /**
      * A constructor for objects of the game class.
@@ -26,7 +26,7 @@ public class Game {
      * @param goals (List<Goal>): The goals of this particular game.
      * @since 0.1
      */
-    public Game(Player player, Story story, List<Goal> goals) throws IllegalArgumentException {
+    public Game(Player player, Story story, List<Goal> goals) throws IllegalArgumentException, IllegalStateException {
         if (player == null) {
             throw new IllegalArgumentException("Player cannot be null.");
         }
@@ -34,7 +34,7 @@ public class Game {
             throw new IllegalArgumentException("Story cannot be null.");
         }
         if (goals.isEmpty()) {
-            throw new IllegalArgumentException("A game must have atleast 1 goal.");
+            throw new IllegalStateException("A game must have atleast 1 goal.");
         }
 
         this.player = player;
