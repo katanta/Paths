@@ -62,11 +62,7 @@ public class Link {
      }
 
     public List<Action> getActions() {
-        if (actions.isEmpty()) {
-            throw new IllegalStateException("This link contains no actions");
-        } else {
             return new ArrayList<>(actions);
-        }
     }
 
     @Override
@@ -79,27 +75,18 @@ public class Link {
         // TODO: Make toString for actions
     }
 
-    /**
-     * Returns whether two links are equal.
-     * @param o (Object): The object we wish to compare to an object of this class.
-     * @return whether instance of class is equal to o.
-     * @since 0.1
-     */
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Link link = (Link) o;
-        return text.equals(link.text) && reference.equals(link.reference) && actions.equals(link.actions);
+        return text.equalsIgnoreCase(link.text)
+                && reference.equalsIgnoreCase(link.reference)
+                && actions.equals(link.actions);
     }
 
-    /**
-     * @return a generated integer that uniquely represents the object.
-     * @since 0.1
-     */
     @Override
     public int hashCode() {
-        return Objects.hash(text, reference, actions);
+        return Objects.hash(text.toLowerCase(), reference.toLowerCase(), actions);
     }
 }

@@ -28,7 +28,7 @@ public class TrollStoryPaths {
         attackTrollPassage.addLink(castSpell);
 
         Passage runAwayPassage = new Passage("Run away", "The troll sees you and runs after you.");
-        Link keepRunning = new Link("Keep running", "Keep Running");
+        Link keepRunning = new Link("Keep running", "Keep running");
         keepRunning.addAction(getStompedOn);
         runAwayPassage.addLink(keepRunning);
         Link stopAndCastSpell = new Link("Stop and cast a magic spell", "Cast a magic spell");
