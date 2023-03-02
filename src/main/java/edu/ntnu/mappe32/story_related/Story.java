@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.story_related;
 
+import edu.ntnu.mappe32.action_related.Action;
 import edu.ntnu.mappe32.story_related.Link;
 import edu.ntnu.mappe32.story_related.Passage;
 
@@ -63,7 +64,9 @@ public class Story {
      */
     public Passage getPassage(Link link) {
         Link searchLink = new Link(link.getReference(), link.getReference());
+        searchLink.getActions().removeAll(searchLink.getActions());
         return passages.get(searchLink);
+
     }
 
     /**
