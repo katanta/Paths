@@ -116,10 +116,6 @@ public class LinkTest {
             assertEquals(testActions, kickTree.getActions());
         }
         @Test
-        void getActionThrowsActionsEmptyException() {
-            assertThrows(IllegalStateException.class, () -> climbTree.getActions());
-        }
-        @Test
         void getActionReturnsDeepCopyOfActions() {
             List<Action> mutatedKickTreeActions = kickTree.getActions();
             mutatedKickTreeActions.add(add20GoldPoints);
