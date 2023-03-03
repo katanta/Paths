@@ -78,43 +78,44 @@ public class LinkTest {
     class LinkConstructorThrowsExceptions {
 
         @Test
-        @DisplayName("throws IllegalArgumentExcepetion for a link with blank text")
+        @DisplayName("throws IllegalArgumentException for a link with blank text")
         void throwsIllegalArgumentWhenTextIsBlank() {
-            assertThrows(IllegalArgumentException.class, () -> new Link("", "ABC"),
-                    "throws IllegalArgumentException");
+            assertThrows(IllegalArgumentException.class, () -> new Link("", "ABC"));
         }
-
+        @DisplayName("throws IllegalArgumentException for a link with a blank reference")
         @Test
         void throwsIllegalArgumentWhenReferenceIsBlank() {
             assertThrows(IllegalArgumentException.class, () -> new Link("ABC", ""));
-
         }
     }
+    @DisplayName("getText() retuns text")
     @Test
     void getTextReturnsText() {
         assertEquals("Climb the tree", climbTree.getText(), "Returns ");
         assertEquals("Kick the tree", kickTree.getText());
         assertEquals("Shake the tree", shakeTree.getText());
     }
-
+    @DisplayName("getReference() returns reference")
     @Test
     void getReferenceReturnsReference() {
         assertEquals("Climbed tree Passage", climbTree.getReference());
         assertEquals("Kicked/shaked tree Passage", kickTree.getReference());
         assertEquals("Frantically waved Hands Passage", franticallyWaveHands.getReference());
     }
-
+    @DisplayName("addAction() returns action")
     @Test
     void addActionAddsAction() {
         assertEquals(testActions, kickTree.getActions());
     }
-
+    @DisplayName("getAction()")
     @Nested
     class GetActionsTest {
+        @DisplayName("returns actions")
         @Test
         void getActionReturnsActions() {
             assertEquals(testActions, kickTree.getActions());
         }
+        @DisplayName("returns deep copy of actions")
         @Test
         void getActionReturnsDeepCopyOfActions() {
             List<Action> mutatedKickTreeActions = kickTree.getActions();
@@ -123,7 +124,7 @@ public class LinkTest {
             assertNotSame(kickTree.getActions(), kickTree.getActions());
         }
     }
-
+    @DisplayName("toString() returns String representation")
     @Test
     void toStringReturnsToString() {
         String kickTreeToString = "Link{" + "text='" + "Kick the tree" + '\'' +
