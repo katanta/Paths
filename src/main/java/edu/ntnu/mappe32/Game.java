@@ -5,6 +5,7 @@ import edu.ntnu.mappe32.story_related.Passage;
 import edu.ntnu.mappe32.story_related.Link;
 import edu.ntnu.mappe32.story_related.Story;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,15 +29,14 @@ public class Game {
      */
     public Game(Player player, Story story, List<Goal> goals) throws IllegalArgumentException, IllegalStateException {
         if (player == null) {
-            throw new IllegalArgumentException("Player cannot be null.");
+            throw new IllegalArgumentException("Player cannot be null");
         }
         if (story == null) {
-            throw new IllegalArgumentException("Story cannot be null.");
+            throw new IllegalArgumentException("Story cannot be null");
         }
         if (goals.isEmpty()) {
-            throw new IllegalStateException("A game must have atleast 1 goal.");
+            throw new IllegalStateException("A game must have atleast 1 goal");
         }
-
         this.player = player;
         this.story = story;
         this.goals = goals;
@@ -63,7 +63,7 @@ public class Game {
      * @since 0.1
      */
      public List<Goal> getGoals() {
-         return goals;
+         return new ArrayList<>(goals);
      }
 
 
