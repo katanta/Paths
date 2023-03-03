@@ -1,10 +1,7 @@
 package edu.ntnu.mappe32;
 
 import edu.ntnu.mappe32.action_related.*;
-import edu.ntnu.mappe32.goal_related.Goal;
-import edu.ntnu.mappe32.goal_related.GoldGoal;
-import edu.ntnu.mappe32.goal_related.HealthGoal;
-import edu.ntnu.mappe32.goal_related.ScoreGoal;
+import edu.ntnu.mappe32.goal_related.*;
 import edu.ntnu.mappe32.story_related.Link;
 import edu.ntnu.mappe32.story_related.Passage;
 import edu.ntnu.mappe32.story_related.Story;
@@ -15,8 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTest {
     Player mutumbu;
@@ -49,6 +45,7 @@ public class GameTest {
     Goal superPowered;
     Goal masterGuardian;
     List<Goal> goals;
+    Goal tapeItUp;
     @BeforeEach
     void setup() {
         this.mutumbu = new Player("Mutumbu", 150, 0, 25);
@@ -131,7 +128,7 @@ public class GameTest {
         assertionLinks.add(takeABite);
         assertionLinks.add(runHome);
         assertionLinks.add(scratchHead);
-
+        kickedShakedTree.addLink(kickTree);
         climbedTree.addLink(climbTree);
         climbedTree.addLink(shakeTree);
         climbedTree.addLink(franticallyWaveHands);
@@ -142,6 +139,7 @@ public class GameTest {
         storyOfAfrica = new Story("Story of Africa", openingPassage);
 
         storyOfAfrica.addPassage(kickedShakedTree);
+        storyOfAfrica.addPassage(climbedTree);
         assertionPassages = new HashMap<>();
 
         assertionPassages.put(new Link(kickedShakedTree.getTitle(), kickedShakedTree.getTitle()), kickedShakedTree);
@@ -154,6 +152,7 @@ public class GameTest {
         goals.add(superPowered);
         goals.add(masterGuardian);
         game1 = new Game(mutumbu, storyOfAfrica, goals);
+        tapeItUp = new InventoryGoal(new ArrayList<>(List.of("Tape")));
     }
     @DisplayName("constructor")
     @Nested
@@ -177,12 +176,53 @@ public class GameTest {
     }
     @DisplayName("getPlayer() returns player")
     @Test
-    void playerGetPlayerReturnsPlayer() {
+    void getPlayerReturnsPlayer() {
         assertEquals(mutumbu, game1.getPlayer());
     }
     @DisplayName("getStory() retruns story")
     @Test
     void getStoryReturnsStory() {
         assertEquals(storyOfAfrica, game1.getStory());
+    }
+    @DisplayName("getGoals()")
+    @Nested
+    public class GetGoalsTest {
+        @DisplayName("returns goals()")
+        @Test
+        void getGoalsReturnsGoals() {
+            assertEquals(goals, game1.getGoals());
+        }
+        @DisplayName("returns deep copy of goals()")
+        @Test
+        void getGoalsReturnsDeepCopyOfGoals() {
+            List<Goal> mutatedGoals = game1.getGoals();
+            mutatedGoals.add(tapeItUp);
+            assertNotEquals(mutatedGoals, game1.getGoals());
+        }
+    }
+    @DisplayName("begin() returns opening passage a game's story")
+    @Test
+    void beginReturnsOpeningPassageOfAGamesStory() {
+        assertEquals(storyOfAfrica.getOpeningPassage(), game1.begin());
+    }
+    @DisplayName("go()")
+    @Nested
+    public class GoTest {
+        @DisplayName("returns passage of given link")
+        @Test
+        void returnsPassageOfAGivenLink() {
+            assertEquals(climbedTree, game1.go(climbTree));
+        }
+
+        @DisplayName("executes actions on the game's player")
+        @Test
+        void executesActionsOnTheGamesPlayer() {
+            game1.go(kickTree);
+            assertEquals(140, mutumbu.getHealth());
+            assertEquals(1, mutumbu.getScore());
+            assertEquals(35, mutumbu.getGold());
+            mutumbusTestInventory.add("Machete");
+            assertEquals(mutumbusTestInventory, mutumbu.getInventory());
+        }
     }
 }
