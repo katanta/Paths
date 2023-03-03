@@ -29,7 +29,6 @@ public class Player {
      * Inventory of a player.
      */
     private List<String> inventory;
-
     /**
      * This constructor facilitates the creation of instances of the class Player.
      * The constructor throws IllegalArgumentExceptions if negartive values are entered in the parameters.
@@ -58,7 +57,6 @@ public class Player {
         this.gold = gold;
         inventory = new ArrayList<String>();
     }
-
     /**
      * This method returns the name a player.
      * @return Name of player as String
@@ -66,7 +64,6 @@ public class Player {
     public String getName() {
         return name;
     }
-
     /**
      * This method adds new heath points to a player.
      * If the addition results in a negative value, health is set to 0 instead.
@@ -79,7 +76,6 @@ public class Player {
             this.health += newHealthPoints;
         }
     }
-
     /**
      * This method returns the health of a player.
      * @return Health of player, as int.
@@ -87,7 +83,6 @@ public class Player {
     public int getHealth() {
         return health;
     }
-
     /**
      * This method adds new score points to a player.
      * If the addition results in a negative value, score is set to 0 instead.
@@ -100,7 +95,6 @@ public class Player {
             this.score += newScorePoints;
         }
     }
-
     /**
      * This method returns the score of a player.
      * @return Score of a player, as int.
@@ -108,7 +102,6 @@ public class Player {
     public int getScore() {
         return score;
     }
-
     /**
      * This method adds new gold points to the player.
      * If the new augend is negative and results in negative gold, the method will throw an IllegalArguemntException.
@@ -121,7 +114,6 @@ public class Player {
             this.gold += newGoldPoints;
         }
     }
-
     /**
      * This method returns the gold a player.
      * @return Gold of a player, as int.
@@ -129,13 +121,10 @@ public class Player {
     public int getGold() {
         return gold;
     }
-
     /**
      * This method adds an item to a player's inventory.
      * @param item Item to be added, as String.
      */
-
-
     public void addToInventory(final String item) {
        inventory.add(item);
     }
@@ -144,6 +133,6 @@ public class Player {
      * @return Returns inventory as, List<String>
      */
     public List<String> getInventory() {
-        return inventory;
+        return new ArrayList<>(inventory);
     }
 }
