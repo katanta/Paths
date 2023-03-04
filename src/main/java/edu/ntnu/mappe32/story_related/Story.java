@@ -107,7 +107,7 @@ public class Story {
      * @return Broken links in a story, as List<Link>
      */
     public List<Link> getBrokenLinks() {
-        return getPassages().stream().flatMap(passage -> passage.getLinks().stream()).toList()
-                .stream().filter(link -> getPassage(link) == null).toList();
+        return getPassages().stream().flatMap(passage -> passage.getLinks().stream())
+                .filter(link -> getPassage(link) == null).toList();
     }
 }
