@@ -109,7 +109,7 @@ public class Player {
      */
     public void addGold(final int newGoldPoints) throws IllegalArgumentException {
         if (this.gold + newGoldPoints < 0) {
-            throw new IllegalArgumentException("You do not have enough points");
+            throw new IllegalArgumentException("You do not have enough gold");
         } else {
             this.gold += newGoldPoints;
         }
