@@ -49,7 +49,7 @@ public class Player {
             throw new IllegalArgumentException("Score cannot be below zero");
         }
         if (gold < 0) {
-            throw new IllegalArgumentException("Gold cannot be blow zero");
+            throw new IllegalArgumentException("Gold cannot be below zero");
         }
         this.name = name;
         this.health = health;

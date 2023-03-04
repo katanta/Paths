@@ -4,10 +4,7 @@ import edu.ntnu.mappe32.action_related.Action;
 import edu.ntnu.mappe32.story_related.Link;
 import edu.ntnu.mappe32.story_related.Passage;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class represents a story.
@@ -86,5 +83,18 @@ public class Story {
             throw new IllegalArgumentException("The link refers to no passage");
         }
         passages.remove(removalLink);
+    }
+
+    /**
+     * @return All broken links in a story, as a List of Links.
+     * A broken link is defined as a link that belongs to a passage that does not yet refer to any passage,
+     * meaning that attempting to use it in an actual story would not return an existing passage.
+     */
+    public List<Link> getBrokenLinks() {
+        List<Link> foundLinks = new ArrayList<>();
+        getPassages().forEach(p -> p.getLinks().forEach(link -> {
+            if (getPassage(link) == null) foundLinks.add(link);
+        }));
+        return foundLinks;
     }
 }
