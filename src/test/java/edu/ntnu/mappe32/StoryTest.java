@@ -157,19 +157,16 @@ class StoryTest {
             assertThrows(IllegalStateException.class, () -> storyOfAfrica.removePassage(kickTree));
         }
     }
-    @DisplayName("getBrokenLinks()")
-    @Nested
-    class GetBrokenLinksTest {
-        @DisplayName("returns all of the broken links in no particular order")
-        @Test
-        void getBrokenLinksReturnsBrokenLinks() {
-            storyOfAfrica.addPassage(kickedShakedTree);
-            storyOfAfrica.addPassage(climbedTree);
-            climbedTree.addLink(kickTree);
-            climbedTree.addLink(shakeTree);
-            assertEquals(assertionBrokenLinks.size(), storyOfAfrica.getBrokenLinks().size());
-            assertTrue(storyOfAfrica.getBrokenLinks().containsAll(assertionBrokenLinks));
-            assertTrue(assertionBrokenLinks.containsAll(storyOfAfrica.getBrokenLinks()));
-        }
+    @DisplayName("getBrokenLinks() returns all of the broken links in no particular order")
+    @Test
+    void getBrokenLinksReturnsBrokenLinks() {
+        storyOfAfrica.addPassage(kickedShakedTree);
+        storyOfAfrica.addPassage(climbedTree);
+        climbedTree.addLink(kickTree);
+        climbedTree.addLink(shakeTree);
+        assertEquals(assertionBrokenLinks.size(), storyOfAfrica.getBrokenLinks().size());
+        assertTrue(storyOfAfrica.getBrokenLinks().containsAll(assertionBrokenLinks));
+        assertTrue(assertionBrokenLinks.containsAll(storyOfAfrica.getBrokenLinks()));
+
     }
 }
