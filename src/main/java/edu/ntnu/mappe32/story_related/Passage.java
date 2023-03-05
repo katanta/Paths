@@ -11,14 +11,23 @@ import java.util.Objects;
  * @author Kristians J. Matrevics
  */
 public class Passage {
-    private final String title;
-    private String content;
-    private List<Link> links;
-
     /**
-     * Constructs an object of the Passage class.
-     * @param title (String): A main description which also functions as a unique identificator.
-     * @param content (String): Textual content that normally includes some part of a dialogue or a paragraph.
+     * Title of a passage, as String
+     */
+    private final String title;
+    /**
+     * Content of a passage, as String
+     */
+    private final String content;
+    /**
+     * Links of a passage, as List<Link>
+     */
+    private final List<Link> links;
+    /**
+     * This constructor facilitates the creation of instances of the class Passage.
+     * The constructor throws IllegalArgumentExceptions if the title or content is left blank in the parameters.
+     * @param title A main description which also functions as a unique identificator, as String
+     * @param content Textual content that normally includes some part of a dialogue or a paragraph, as String
      * @since 0.1
      */
     public Passage(String title, String content) {
@@ -32,7 +41,6 @@ public class Passage {
 
         links = new ArrayList<>();
     }
-
     /**
      * @return title (String): A unique descriptor of the passage
      * @since 0.1
@@ -40,7 +48,6 @@ public class Passage {
     public String getTitle() {
         return title;
     }
-
     /**
      * @return content (String): block of text that is part of certain scene in the story.
      * @since 0.1
@@ -48,17 +55,13 @@ public class Passage {
     public String getContent() {
         return content;
     }
-
     /**
      * @return links (List<link>): The list of all links to this passage.
      * @since 0.1
      */
     public List<Link> getLinks() {
-        if (links.isEmpty()) {
-            throw new IllegalStateException("This passage contains no links");
-        } else { return new ArrayList<>(links); }
+        return new ArrayList<>(links);
     }
-
     /**
      * @param link (Link): the link one wishes to add to this passage.
      * @return true if the link was unique and added it to the passage.
