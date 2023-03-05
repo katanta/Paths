@@ -4,6 +4,7 @@ import edu.ntnu.mappe32.action_related.*;
 import edu.ntnu.mappe32.story_related.Link;
 import edu.ntnu.mappe32.story_related.Passage;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -90,25 +91,28 @@ public class PassageTest {
         climbedTree.addLink(runHome);
         climbedTree.addLink(scratchHead);
     }
-
+    @DisplayName("constructor")
     @Nested
-    class PassageConstructorThrowsExceptions {
+    class PassageConstructor {
+        @DisplayName("throws IllegalArgumentException when title is blank")
         @Test
         void throwsIllegalArgumentWhenTitleIsBlank() {
             assertThrows(IllegalArgumentException.class, () -> new Passage("", "ABC"));
         }
+        @DisplayName("throws IllegalArgumentException when content is blank")
         @Test
         void throwsIllegalArgumentWhenContentIsBlank() {
             assertThrows(IllegalArgumentException.class, () -> new Passage("ABC", ""));
         }
     }
+    @DisplayName("getTitle() returns title")
     @Test
-    void getTitleReturnsText() {
+    void getTitleReturnsTitle() {
         assertEquals("Opening Passage", openingPassage.getTitle());
         assertEquals("Climbed tree Passage", climbedTree.getTitle());
         assertEquals("Kicked/shaked tree Passage", kickedShakedTree.getTitle());
     }
-
+    @DisplayName("getContent() returns content")
     @Test
     void getContentReturnsContent() {
         assertEquals("You just found the enchanted apple tree " +
@@ -120,19 +124,18 @@ public class PassageTest {
                 "Your head is bumped. " + "A killer bee flies by!", kickedShakedTree.getContent());
 
     }
+    @DisplayName("getLinks()")
     @Nested
     class GetLinksTest {
+        @DisplayName("returns links")
         @Test
         void getLinksReturnsLinks() {
 
             assertEquals(assertionLinks, climbedTree.getLinks());
         }
+        @DisplayName("returns copy of links")
         @Test
-        void getLinksThrowsIllegalStateException() {
-            assertThrows(IllegalStateException.class,() -> kickedShakedTree.getLinks());
-        }
-        @Test
-        void getLinksRetunsDeepCopyOfActions() {
+        void getLinksReturnsCopyOfLinks() {
             List<Link> mutatedClimbedTreeLinks = climbedTree.getLinks();
             mutatedClimbedTreeLinks.add(runToKilimanjaro);
             assertNotEquals(mutatedClimbedTreeLinks, climbedTree.getLinks());
@@ -140,42 +143,49 @@ public class PassageTest {
             assertEquals(mutatedClimbedTreeLinks, climbedTree.getLinks());
         }
     }
-
+    @DisplayName("addLink()")
     @Nested
     class AddLinkTest {
+        @DisplayName("adds link")
         @Test
         void addLinkAddsLink() {
             climbedTree.addLink(runToKilimanjaro);
             assertionLinks.add(runToKilimanjaro);
             assertEquals(assertionLinks, climbedTree.getLinks());
         }
+        @DisplayName("returns false when adding a link that already exists in a passage")
         @Test
         void addLinkReturnsFalseWhenAddingLinkThatAlreadyExistsInPassage() {
             assertFalse(climbedTree.addLink(runHome));
         }
+        @DisplayName("does not add a link that already exists in a passage")
         @Test
         void addLinkDoesNotAddLinkThatAlreadyExistsInPassage() {
             climbedTree.addLink(runHome);
             assertEquals(assertionLinks, climbedTree.getLinks());
         }
     }
+    @DisplayName("hasLinks()")
     @Nested
     class hasLinksTest {
+        @DisplayName("returns false when passage has no links")
         @Test
         void returnsFalseWhenPassageHasNoLinks() {
             assertFalse(kickedShakedTree.hasLinks());
         }
+        @DisplayName("returns true when passage has links")
         @Test
         void returnsTrueWhenPassageHasLinks() {
             assertTrue(climbedTree.hasLinks());
         }
+        @DisplayName("returns true when passage has 1 link")
         @Test
         void returnsTrueWhenPassageHasOneLink() {
             kickedShakedTree.addLink(climbTree);
             assertTrue(kickedShakedTree.hasLinks());
         }
     }
-
+    @DisplayName("toString() returns correct String")
     @Test
     void toStringReturnsToString() {
 
