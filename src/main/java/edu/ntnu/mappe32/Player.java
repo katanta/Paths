@@ -1,8 +1,6 @@
 package edu.ntnu.mappe32;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class represents a Player.
@@ -28,7 +26,7 @@ public class Player {
     /**
      * Inventory of a player.
      */
-    private List<String> inventory;
+    private Map<Item, Integer> inventory;
     /**
      * This constructor facilitates the creation of instances of the class Player.
      * The constructor throws IllegalArgumentExceptions if negartive values are entered in the parameters.
@@ -55,7 +53,7 @@ public class Player {
         this.health = health;
         this.score = score;
         this.gold = gold;
-        inventory = new ArrayList<String>();
+        inventory = new HashMap<>();
     }
     /**
      * This method returns the name a player.
@@ -125,14 +123,25 @@ public class Player {
      * This method adds an item to a player's inventory.
      * @param item Item to be added, as String.
      */
-    public void addToInventory(final String item) {
-       inventory.add(item);
+    public void addToInventory(final Item item) {
+        inventory.merge(item, 1, Integer::sum);
+    }
+
+    public void removeFromInventory(final Item item) {
+        if (!inventory.containsKey(item)) {
+            throw new IllegalArgumentException("The player does not have this item");
+        }
+        inventory.merge(item, -1, Integer::sum);
+
+        if (inventory.get(item) == 0) {
+            inventory.remove(item);
+        }
     }
     /**
      * This method returns the inventory of a player.
      * @return Returns inventory as, List<String>
      */
-    public List<String> getInventory() {
-        return new ArrayList<>(inventory);
+    public Map<Item, Integer> getInventory() {
+        return new HashMap<>(inventory);
     }
 }

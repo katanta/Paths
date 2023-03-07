@@ -70,7 +70,6 @@ public class Story {
      */
     public Passage getPassage(Link link) {
         Link searchLink = new Link(link.getReference(), link.getReference());
-        searchLink.getActions().removeAll(searchLink.getActions());
         return passages.get(searchLink);
 
     }

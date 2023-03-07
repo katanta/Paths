@@ -3,11 +3,12 @@ package edu.ntnu.mappe32.action_related;
 import edu.ntnu.mappe32.Player;
 
 public class InventoryAction implements Action{
-
+    private final boolean add;
     private final String item;
 
-    public InventoryAction(final String item) {
+    public InventoryAction(final String item, boolean add) {
         this.item = item;
+        this.add = add;
     }
 
     //What should be the game mechanic when a player adds an item he already owns?
@@ -19,7 +20,11 @@ public class InventoryAction implements Action{
      */
     @Override
     public void execute(Player player) {
-        player.addToInventory(item);
+        if (add) {
+            player.addToInventory(item);
+        }
+        else {
+            player.removeFromInventory(item);
+        }
     }
-
 }

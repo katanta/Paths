@@ -24,7 +24,7 @@ public class InventoryGoal implements Goal {
      */
     @Override
     public boolean isFulfilled(Player player) {
-        int mandatoryItemCount = (int) player.getInventory().stream().
+        int mandatoryItemCount = (int) player.getInventory().keySet().stream().
                 filter(mandatoryItems::contains).count();
         return mandatoryItemCount == mandatoryItems.size();
     }
