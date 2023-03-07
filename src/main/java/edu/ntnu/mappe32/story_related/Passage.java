@@ -93,13 +93,12 @@ public class Passage {
      */
     @Override
     public String toString() {
-        String s = "Title: " + title;
-        s += "\nContent: " + content;
-        s += "\nLinks Info: ";
+        StringBuilder s = new StringBuilder("::" + title);
+        s.append("/n").append(content);
         for(Link link : links) {
-            s += link.toString() + "\n";
+            s.append("/n").append(link);
         }
-        return s;
+        return s.toString();
     }
 
     /**

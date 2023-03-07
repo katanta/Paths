@@ -67,12 +67,8 @@ public class Link {
 
     @Override
     public String toString() {
-        return "Link{" +
-                "text='" + text + '\'' +
-                ", reference='" + reference + '\'' +
-                ", actions=" + actions +
-                '}';
-        // TODO: Make toString for actions
+        return "[" + text + "]" + "(" + reference + ")";
+        //TODO: what should the format for actions be?
     }
 
     @Override
