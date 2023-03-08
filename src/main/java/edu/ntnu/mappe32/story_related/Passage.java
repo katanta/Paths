@@ -94,9 +94,9 @@ public class Passage {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder("::" + title);
-        s.append("/n").append(content);
+        s.append("\n").append(content);
         for(Link link : links) {
-            s.append("/n").append(link);
+            s.append("\n").append(link);
         }
         return s.toString();
     }

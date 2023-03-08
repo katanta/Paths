@@ -67,8 +67,11 @@ public class Link {
 
     @Override
     public String toString() {
-        return "[" + text + "]" + "(" + reference + ")";
-        //TODO: what should the format for actions be?
+        StringBuilder s = new StringBuilder("[" + text + "]" + "(" + reference + ")");
+        for(Action action : actions) {
+            s.append("\n").append(action);
+        }
+        return s.toString();
     }
 
     @Override

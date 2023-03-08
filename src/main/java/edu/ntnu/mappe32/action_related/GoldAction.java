@@ -25,5 +25,10 @@ public class GoldAction implements Action {
     public void execute(Player player) {
         player.addGold(this.gold);
     }
+
+    @Override
+    public String toString() {
+        return "<gold " + gold + ">";
+    }
 }
 
