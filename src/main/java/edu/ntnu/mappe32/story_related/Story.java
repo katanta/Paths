@@ -106,6 +106,7 @@ public class Story {
                 .filter(link -> getPassage(link) == null).toList();
     }
 
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder(title);
         s.append("\n\n").append(openingPassage);

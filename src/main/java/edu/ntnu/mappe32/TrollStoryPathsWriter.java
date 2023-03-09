@@ -6,6 +6,9 @@ import edu.ntnu.mappe32.story_related.Link;
 import edu.ntnu.mappe32.story_related.Passage;
 import edu.ntnu.mappe32.story_related.Story;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 public class TrollStoryPathsWriter {
     public static void main(String[] args) {
@@ -52,6 +55,10 @@ public class TrollStoryPathsWriter {
         trollStory.addPassage(keepRunningPassage);
         trollStory.addPassage(castSpellPassage);
 
-        System.out.println(trollStory);
+        try (FileWriter fileWriter = new FileWriter("src/main/resources/saved stories/trollStory.paths")) {
+            fileWriter.write(trollStory.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
