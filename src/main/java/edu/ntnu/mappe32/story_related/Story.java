@@ -109,9 +109,7 @@ public class Story {
     public String toString() {
         StringBuilder s = new StringBuilder(title);
         s.append("\n\n").append(openingPassage);
-        for (Passage p : passages.values()) {
-            s.append("\n\n").append(p);
-        }
+        passages.values().forEach(p -> s.append("\n\n").append(p));
         return s.toString();
     }
 }
