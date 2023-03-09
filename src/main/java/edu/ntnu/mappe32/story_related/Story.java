@@ -105,4 +105,13 @@ public class Story {
         return getPassages().stream().flatMap(passage -> passage.getLinks().stream())
                 .filter(link -> getPassage(link) == null).toList();
     }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder(title);
+        s.append("\n\n").append(openingPassage);
+        for (Passage p : passages.values()) {
+            s.append("\n\n").append(p);
+        }
+        return s.toString();
+    }
 }
