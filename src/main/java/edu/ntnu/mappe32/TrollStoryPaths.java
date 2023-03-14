@@ -5,12 +5,12 @@ import edu.ntnu.mappe32.story_related.*;
 import edu.ntnu.mappe32.goal_related.*;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TrollStoryPaths {
-    public static void main(String[] args) throws FileNotFoundException {
-
+    public static void main(String[] args) throws IOException {
         Story trollStory = StoryReader.readStory("src/main/resources/saved stories/trollStory.paths");
 
         Player player = new Player("Daffen", 100, 0, 0);

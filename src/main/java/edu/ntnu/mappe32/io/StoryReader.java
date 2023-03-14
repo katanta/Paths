@@ -1,156 +1,134 @@
 package edu.ntnu.mappe32.io;
 
-
 import edu.ntnu.mappe32.action_related.*;
 import edu.ntnu.mappe32.story_related.Link;
 import edu.ntnu.mappe32.story_related.Passage;
 import edu.ntnu.mappe32.story_related.Story;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
+/**
+ * This class reads a .paths file, instatiating an instance of Story
+ * by reading the content of a .paths file.
+ */
 public class StoryReader {
-
-    public static Story readStory(String filePath) throws FileNotFoundException {
+    private static String currentLine;
+    public static Story readStory(String filePath) throws IOException {
         File storyFile = new File(filePath);
+        int dotIndex = storyFile.getName().lastIndexOf(".");
+
+        if (!storyFile.getName().substring(dotIndex + 1).equals("paths")) {
+            throw new IOException("The file type does not correspond with .paths");
+        }
         Story story;
-        Scanner scan = new Scanner(storyFile);
         String storyTitle;
-        storyTitle = scan.nextLine();
 
-        List<Action> actions = new ArrayList<>();
-        List<Link> links = new ArrayList<>();
         List<Passage> passages = new ArrayList<>();
-
-
-        while (scan.hasNextLine()) {
-            String currentLine = scan.nextLine();
-            String passageTitle;
-            String passageContent;
-            if (currentLine.isBlank()) {
-                continue;
-            }
-
-            //Scan for passage
-
-            if (currentLine.startsWith("::")) {
-                passageTitle = currentLine.substring(2);
-                currentLine = scan.nextLine();
-                passageContent = currentLine;
-
-                if (scan.hasNextLine()) {
-                    currentLine = scan.nextLine();
-                }
+        try (BufferedReader bufferedReader = Files.newBufferedReader(storyFile.toPath())) {
+            storyTitle = bufferedReader.readLine();
+            while ((currentLine = bufferedReader.readLine()) != null)  {
 
                 if (currentLine.isBlank()) {
-                    passages.add(new Passage(passageTitle, passageContent));
                     continue;
                 }
 
+                String passageTitle;
+                String passageContent;
 
-                //Scan for link
-                Link link;
-                String linkTitle;
-                String linkReference;
-                while (currentLine.startsWith("[")) {
-                    linkTitle = currentLine.substring(currentLine.indexOf("[") + 1, currentLine.lastIndexOf("]"));
-                    linkReference = currentLine.substring(currentLine.indexOf("(") + 1, currentLine.lastIndexOf(")"));
+                if (currentLine.startsWith("::")) {
+                    passageTitle = currentLine.substring(2);
+                    currentLine = bufferedReader.readLine();
+                    passageContent = currentLine;
 
-                    if (scan.hasNextLine()) {
-                        currentLine = scan.nextLine();
-                    } else {
-                        currentLine = "";
-                    }
+                    currentLine = bufferedReader.readLine();
+                    StoryReader.checkIfEndOfFile();
 
-                    if (currentLine.startsWith("[") || currentLine.isBlank()) {
-                        link = new Link(linkTitle, linkReference);
-                        links.add(link);
-
+                    if (currentLine.isBlank()) {
+                        passages.add(new Passage(passageTitle, passageContent));
                         continue;
                     }
 
-                    while (currentLine.startsWith("<")) {
-                        char actionType = currentLine.charAt(1);
-                        StringBuilder value = new StringBuilder();
-                        String splitActionString;
-                        switch (actionType) {
-                            case 'g' -> {
-                                splitActionString = currentLine.split(" ")[1];
-                                value.append(splitActionString, 0, splitActionString.lastIndexOf('>'));
-                                actions.add(new GoldAction(Integer.parseInt(value.toString())));
-                                if (scan.hasNextLine()) {
-                                    currentLine = scan.nextLine();
-                                } else {
-                                    currentLine = "";
-                                }
-                            }
-                            case 'h' -> {
-                                splitActionString = currentLine.split(" ")[1];
-                                value.append(splitActionString, 0, splitActionString.lastIndexOf('>'));
-                                actions.add(new HealthAction(Integer.parseInt(value.toString())));
-                                if (scan.hasNextLine()) {
-                                    currentLine = scan.nextLine();
-                                } else {
-                                    currentLine = "";
-                                }
-                            }
-                            case 'i' -> {
-                                String[] splitLine = currentLine.split(" ");
-                                int i = 1;
-                                while (i < splitLine.length) {
+                    //Scan for link
+                    Link link;
+                    String linkTitle;
+                    String linkReference;
+                    Passage passage = new Passage(passageTitle, passageContent);
 
-                                    if (i == splitLine.length - 1) {
-                                        splitActionString = splitLine[i];
-                                        value.append(splitActionString, 0, splitActionString.length() - 1);
-                                    }
+                    while (currentLine.startsWith("[")) {
+                        linkTitle = currentLine.substring(currentLine.indexOf("[") + 1, currentLine.lastIndexOf("]"));
+                        linkReference = currentLine.substring(currentLine.indexOf("(") + 1, currentLine.lastIndexOf(")"));
+                        link = new Link(linkTitle, linkReference);
+                        currentLine = bufferedReader.readLine();
+                        StoryReader.checkIfEndOfFile();
 
-                                    value.append(splitLine[i]).append(" ");
-                                    i++;
-                                }
-                                actions.add(new InventoryAction(value.toString()));
-                                if (scan.hasNextLine()) {
-                                    currentLine = scan.nextLine();
-                                } else {
-                                    currentLine = "";
-                                }
-                            }
-                            case 's' -> {
-                                splitActionString = currentLine.split(" ")[1];
-                                value.append(splitActionString,0, splitActionString.lastIndexOf('>'));
-                                actions.add(new ScoreAction(Integer.parseInt(value.toString())));
-                                if (scan.hasNextLine()) {
-                                    currentLine = scan.nextLine();
-                                } else {
-                                    currentLine = "";
-                                }
-                            }
+                        if (currentLine.startsWith("[") || currentLine.isBlank()) {
+                            link = new Link(linkTitle, linkReference);
+                            passage.addLink(link);
+                            continue;
                         }
+
+                        //Scan for actions
+                        while (currentLine.startsWith("<")) {
+                            char actionType = currentLine.charAt(1);
+                            String splitActionString;
+                            switch (actionType) {
+                                case 'g', 'h', 's' -> StoryReader.addNumericalActionToLink(actionType, currentLine, link);
+                                case 'i' -> {
+                                    StringBuilder itemName = new StringBuilder();
+                                    String[] splitUpInventoryAction = currentLine.split(" ");
+                                    int i = 1;
+                                    while (i < splitUpInventoryAction.length - 1) {
+                                        itemName.append(splitUpInventoryAction[i]).append(" ");
+                                        i++;
+                                    }
+                                    itemName.append(splitUpInventoryAction[i], 0, splitUpInventoryAction[i].length() - 1);
+
+                                    link.addAction(new InventoryAction(itemName.toString()));
+                                }
+                            }
+                            currentLine = bufferedReader.readLine();
+                            StoryReader.checkIfEndOfFile();
+                        }
+                        passage.addLink(link);
                     }
-                    link = new Link(linkTitle, linkReference);
-                    actions.forEach(link::addAction);
-                    links.add(link);
-                    actions.clear();
+                    passages.add(passage);
                 }
-                Passage passage = new Passage(passageTitle, passageContent);
-                links.forEach(passage::addLink);
-                passages.add(passage);
-                links.clear();
             }
+            bufferedReader.close();
+            story = new Story(storyTitle, passages.get(0));
+            passages.remove(0);
+            passages.forEach(story::addPassage);
+        } catch (IOException e) {
+            throw new IOException("File does not exist");
         }
-        scan.close();
-        story = new Story(storyTitle, passages.get(0));
-        passages.remove(0);
-        passages.forEach(story::addPassage);
         return story;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    private static void checkIfEndOfFile() {
+        if (currentLine == null) {
+            StoryReader.currentLine = "";
+        }
+    }
+    private static void addNumericalActionToLink(char actionType, String currentLine, Link link) {
+        if (actionType == 'g') {
+            link.addAction(new GoldAction(Integer.parseInt(currentLine.split(" ")[1].substring(0, currentLine.split(" ")[1].lastIndexOf('>')))));
+        }
+        if (actionType == 's') {
+            link.addAction(new ScoreAction(Integer.parseInt(currentLine.split(" ")[1].substring(0, currentLine.split(" ")[1].lastIndexOf('>')))));
+        }
+        if (actionType == 'h') {
+            link.addAction(new HealthAction(Integer.parseInt(currentLine.split(" ")[1].substring(0, currentLine.split(" ")[1].lastIndexOf('>')))));
+        }
+
+    }
+    public static void main(String[] args) throws IOException {
         Story story = StoryReader.readStory("src/main/resources/saved stories/trollStory.paths");
         System.out.println(story);
     }
-
 
 }
