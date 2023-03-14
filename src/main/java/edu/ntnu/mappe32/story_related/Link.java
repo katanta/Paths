@@ -13,9 +13,9 @@ import java.util.Objects;
  * @version 0.1
  */
 public class Link {
-    private String text;
+    private final String text;
     private final String reference;
-    private List<Action> actions;
+    private final List<Action> actions;
 
     /**
      * Constructor for objects of the Link class.
@@ -26,7 +26,7 @@ public class Link {
      * //@param actions: A list of special objects that make it possible to affect various attributes of the player.
      * @since 0.1
      */
-    public Link(String text, String reference) {
+    public Link(final String text, final String reference) {
         if (text.isBlank()) {
             throw new IllegalArgumentException("Link must be instatiated with a valid text");
         } else {
