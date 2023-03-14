@@ -1,4 +1,4 @@
-package edu.ntnu.mappe32;
+package edu.ntnu.mappe32.io;
 
 
 import edu.ntnu.mappe32.action_related.*;
