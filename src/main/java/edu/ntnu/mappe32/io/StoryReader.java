@@ -30,17 +30,13 @@ public class StoryReader {
             String currentLine = scan.nextLine();
             String passageTitle;
             String passageContent;
-            String linkTitle;
-            String linkReference;
-            StringBuilder value = new StringBuilder();
-
             if (currentLine.isBlank()) {
                 continue;
             }
 
             //Scan for passage
 
-            while (currentLine.startsWith("::")) {
+            if (currentLine.startsWith("::")) {
                 passageTitle = currentLine.substring(2);
                 currentLine = scan.nextLine();
                 passageContent = currentLine;
@@ -57,78 +53,82 @@ public class StoryReader {
 
                 //Scan for link
                 Link link;
+                String linkTitle;
+                String linkReference;
                 while (currentLine.startsWith("[")) {
                     linkTitle = currentLine.substring(currentLine.indexOf("[") + 1, currentLine.lastIndexOf("]"));
                     linkReference = currentLine.substring(currentLine.indexOf("(") + 1, currentLine.lastIndexOf(")"));
-                    currentLine = scan.nextLine();
+
+                    if (scan.hasNextLine()) {
+                        currentLine = scan.nextLine();
+                    } else {
+                        currentLine = "";
+                    }
 
                     if (currentLine.startsWith("[") || currentLine.isBlank()) {
                         link = new Link(linkTitle, linkReference);
                         links.add(link);
 
-                        if (currentLine.isBlank()) {
-                            currentLine = scan.nextLine();
-                        }
-                        continue;
-                    }
-
-                    if (currentLine.isBlank()) {
-                        currentLine = scan.nextLine();
                         continue;
                     }
 
                     while (currentLine.startsWith("<")) {
-
-                        if (currentLine.startsWith("<g")) {
-                            String split = currentLine.split(" ")[1];
-                            value = new StringBuilder(split.substring(0, split.lastIndexOf('>')));
-                            actions.add(new GoldAction(Integer.parseInt(value.toString())));
-                            currentLine = scan.nextLine();
-                            continue;
-                        }
-
-                        //Health action
-
-                        if (currentLine.startsWith("<h")) {
-                            String split = currentLine.split(" ")[1];
-                            value = new StringBuilder(split.substring(0, split.lastIndexOf('>')));
-                            actions.add(new HealthAction(Integer.parseInt(value.toString())));
-                            currentLine = scan.nextLine();
-                            continue;
-                        }
-
-                        //Inventory action
-
-                        if (currentLine.startsWith("<i")) {
-                            String[] splitLine = currentLine.split(" ");
-                            int i = 1;
-
-                            while (i < splitLine.length) {
-
-                                if (i == splitLine.length - 1) {
-                                    String split = splitLine[i];
-                                    value.append(split, 0, split.length() - 1);
+                        char actionType = currentLine.charAt(1);
+                        StringBuilder value = new StringBuilder();
+                        String splitActionString;
+                        switch (actionType) {
+                            case 'g' -> {
+                                splitActionString = currentLine.split(" ")[1];
+                                value.append(splitActionString, 0, splitActionString.lastIndexOf('>'));
+                                actions.add(new GoldAction(Integer.parseInt(value.toString())));
+                                if (scan.hasNextLine()) {
+                                    currentLine = scan.nextLine();
+                                } else {
+                                    currentLine = "";
                                 }
-
-                                value.append(splitLine[i]).append(" ");
-                                i++;
                             }
-                            actions.add(new InventoryAction(value.toString()));
-                            currentLine = scan.nextLine();
+                            case 'h' -> {
+                                splitActionString = currentLine.split(" ")[1];
+                                value.append(splitActionString, 0, splitActionString.lastIndexOf('>'));
+                                actions.add(new HealthAction(Integer.parseInt(value.toString())));
+                                if (scan.hasNextLine()) {
+                                    currentLine = scan.nextLine();
+                                } else {
+                                    currentLine = "";
+                                }
+                            }
+                            case 'i' -> {
+                                String[] splitLine = currentLine.split(" ");
+                                int i = 1;
+                                while (i < splitLine.length) {
 
-                            continue;
-                        }
+                                    if (i == splitLine.length - 1) {
+                                        splitActionString = splitLine[i];
+                                        value.append(splitActionString, 0, splitActionString.length() - 1);
+                                    }
 
-                        //Score action
-
-                        if (currentLine.startsWith("<s")) {
-                            String split = currentLine.split(" ")[1];
-                            value = new StringBuilder(split.substring(0, split.lastIndexOf('>')));
-                            actions.add(new ScoreAction(Integer.parseInt(value.toString())));
-                            currentLine = scan.nextLine();
+                                    value.append(splitLine[i]).append(" ");
+                                    i++;
+                                }
+                                actions.add(new InventoryAction(value.toString()));
+                                if (scan.hasNextLine()) {
+                                    currentLine = scan.nextLine();
+                                } else {
+                                    currentLine = "";
+                                }
+                            }
+                            case 's' -> {
+                                splitActionString = currentLine.split(" ")[1];
+                                value.append(splitActionString,0, splitActionString.lastIndexOf('>'));
+                                actions.add(new ScoreAction(Integer.parseInt(value.toString())));
+                                if (scan.hasNextLine()) {
+                                    currentLine = scan.nextLine();
+                                } else {
+                                    currentLine = "";
+                                }
+                            }
                         }
                     }
-
                     link = new Link(linkTitle, linkReference);
                     actions.forEach(link::addAction);
                     links.add(link);
@@ -140,10 +140,17 @@ public class StoryReader {
                 links.clear();
             }
         }
+        scan.close();
         story = new Story(storyTitle, passages.get(0));
         passages.remove(0);
         passages.forEach(story::addPassage);
         return story;
     }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Story story = StoryReader.readStory("src/main/resources/saved stories/trollStory.paths");
+        System.out.println(story);
+    }
+
 
 }
