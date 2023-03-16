@@ -24,6 +24,18 @@ public class StoryReader {
      * The line in which the BufferedReader is on at all times.
      */
     private static String currentLine;
+    private static final String FILE_EXTENSION = "paths";
+    private static final String PASSAGE_TITLE_FORMAT = "::";
+    private static final String LINK_TITLE_FORMAT = "[";
+    private static final String LINK_TITLE_FORMAT_END = "]";
+    private static final String LINK_REFERENCE_FORMAT = "(";
+    private static final String LINK_REFERENCE_FORMAT_END = ")";
+    private static final String ACTION_FORMAT = "<";
+    private static final String ACTION_FORMAT_END = ">";
+    private static final char INVENTORY_ACTION_FORMAT = 'i';
+    private static final char HEALTH_ACTION_FORMAT = 'h';
+    private static final char GOLD_ACTION_FORMAT = 'g';
+    private static final char SCORE_ACTION_FORMAT = 's';
 
     /**
      * This method reads a .paths file and returns a story.
@@ -32,7 +44,7 @@ public class StoryReader {
      * @throws FileNotFoundException Throws FileNotFoundException if the file is not found.
      * @throws IllegalArgumentException Throws IllegalArgumentException if the file path does not have the extension '.paths'.
      */
-    public static Story readStory(String filePath) throws FileNotFoundException, IllegalArgumentException {
+    public static Story readStory(String filePath) throws IllegalArgumentException, IOException {
         validateFilePath(filePath);
 
         File storyFile = new File(filePath);
@@ -53,48 +65,23 @@ public class StoryReader {
                 }
 
                 // Parse passage
-                if (currentLine.startsWith("::")) {
-                    String passageTitle = currentLine.substring(2);
-                    currentLine = bufferedReader.readLine();
-                    String passageContent = currentLine;
-
-                    if ((currentLine = bufferedReader.readLine()) == null || currentLine.isBlank()) {
-                        passages.add(new Passage(passageTitle, passageContent));
-                        continue;
-                    }
-
-                    // Parse links and add them to the passage
-                    Passage passage = new Passage(passageTitle, passageContent);
-                    addLinkloop:
-                    while (currentLine.startsWith("[")) {
-                        Link link = parseLink();
-
-                        if ((currentLine = bufferedReader.readLine()) == null) {
-                            passage.addLink(link);
-                            break;
-                        }
-
-                        // Parse actions and add them to the link
-                        while (currentLine.startsWith("<")) {
-                            parseActionAndAddActionToLink(link);
-                            if ((currentLine = bufferedReader.readLine()) == null) {
-                                passage.addLink(link);
-                                break addLinkloop;
-                            }
-                        }
-                        passage.addLink(link);
-                    }
+                if (currentLine.startsWith(PASSAGE_TITLE_FORMAT)) {
+                    Passage passage = parsePassage(bufferedReader);
                     passages.add(passage);
                 }
             }
 
-            // Create the story and add passages to it
+            // Create the story with only the opening passage
             story = new Story(storyTitle, passages.get(0));
+
+            // Remove the opening passage
             passages.remove(0);
+
+            // Add remaining passages
             passages.forEach(story::addPassage);
 
         } catch (IOException e) {
-            throw new FileNotFoundException("File does not exist");
+            throw new IOException("File does not exist");
         }
         return story;
     }
@@ -105,12 +92,47 @@ public class StoryReader {
      * @throws IllegalArgumentException Throws IllegalArgumentException if the file path does not have the extension '.paths'.
      */
     private static void validateFilePath(String filePath) throws IllegalArgumentException {
+        if (filePath.isBlank() || !filePath.contains(".")) {
+            throw new IllegalArgumentException("This is not a file path.");
+        }
         int dotIndex = filePath.lastIndexOf(".");
 
         String extension =  filePath.substring(dotIndex + 1);
-        if (!extension.equals("paths")) {
-            throw new IllegalArgumentException("The file extension does not correspond with .paths");
+        if (!extension.equals(FILE_EXTENSION)) {
+            throw new IllegalArgumentException("The file extension does not correspond with ." + FILE_EXTENSION);
         }
+    }
+
+    /**
+     * This method reads the current passage in the BufferedReader and returns a new Passage object.
+     * @param bufferedReader The BufferedReader to read from, as BufferedReader.
+     * @return New Passage object based on the content of the BufferedReader, as Passage.
+     * @throws IOException Throws IOException if there's a problem reading from the BufferedReader.
+     */
+    private static Passage parsePassage(BufferedReader bufferedReader) throws IOException {
+        String passageTitle = currentLine.substring(2);
+        currentLine = bufferedReader.readLine();
+        String passageContent = currentLine;
+
+        Passage passage = new Passage(passageTitle, passageContent);
+
+        if ((currentLine = bufferedReader.readLine()) == null || currentLine.isBlank()) {
+            return passage;
+        }
+
+        // Parse links and add them to the passage
+        while (currentLine != null && currentLine.startsWith(LINK_TITLE_FORMAT)) {
+            Link link = parseLink();
+
+            // Parse actions and add them to the link
+            while ((currentLine = bufferedReader.readLine()) != null && currentLine.startsWith(ACTION_FORMAT)) {
+                parseActionAndAddActionToLink(link);
+            }
+
+            passage.addLink(link);
+        }
+
+        return passage;
     }
 
     /**
@@ -119,8 +141,10 @@ public class StoryReader {
      * @return New link corresponding to the content of the currentLine, as Link
      */
     private static Link parseLink() {
-        String linkTitle = currentLine.substring(currentLine.indexOf("[") + 1, currentLine.lastIndexOf("]"));
-        String linkReference = currentLine.substring(currentLine.indexOf("(") + 1, currentLine.lastIndexOf(")"));
+        String linkTitle = currentLine
+                .substring(currentLine.indexOf(LINK_TITLE_FORMAT) + 1, currentLine.lastIndexOf(LINK_TITLE_FORMAT_END));
+        String linkReference = currentLine
+                .substring(currentLine.indexOf(LINK_REFERENCE_FORMAT) + 1, currentLine.lastIndexOf(LINK_REFERENCE_FORMAT_END));
         return new Link(linkTitle, linkReference);
     }
 
@@ -133,7 +157,7 @@ public class StoryReader {
     private static void parseActionAndAddActionToLink(Link link) {
         char actionType = currentLine.charAt(1);
         switch (actionType) {
-            case 'i' -> {
+            case INVENTORY_ACTION_FORMAT -> {
                 String itemName = Arrays.stream(currentLine.split(" "))
                         .skip(1)
                         .limit(currentLine.split(" ").length - 1)
@@ -142,24 +166,25 @@ public class StoryReader {
 
                 link.addAction(new InventoryAction(itemName.substring(0, itemName.length() - 1)));
             }
-            case 'g', 'h', 's' -> addNumberBasedActionToLink(actionType, link);
+            case GOLD_ACTION_FORMAT, HEALTH_ACTION_FORMAT, SCORE_ACTION_FORMAT -> addNumberBasedActionToLink(actionType, link);
         }
     }
 
     /**
      * This method parses an action with a number based value (Goal, Health or Score Action).
-     * It uses the same parsing logic, but instantiates the action according to its action type.
+     * It uses the same parsing logic for each type of action,
+     * but instantiates the action according to its action type.
      * @param actionType Type of actions, as char
      * @param link The link in which the action is to be added to, as Link.
      */
     private static void addNumberBasedActionToLink(char actionType, Link link) {
         String[] parts = currentLine.split(" ");
-        int value = Integer.parseInt(parts[1].substring(0, parts[1].lastIndexOf('>')));
+        int value = Integer.parseInt(parts[1].substring(0, parts[1].lastIndexOf(ACTION_FORMAT_END)));
 
         switch (actionType) {
-            case 'g' -> link.addAction(new GoldAction(value));
-            case 'h' -> link.addAction(new HealthAction(value));
-            case 's' -> link.addAction(new ScoreAction(value));
+            case GOLD_ACTION_FORMAT -> link.addAction(new GoldAction(value));
+            case HEALTH_ACTION_FORMAT -> link.addAction(new HealthAction(value));
+            case SCORE_ACTION_FORMAT -> link.addAction(new ScoreAction(value));
         }
     }
 }
