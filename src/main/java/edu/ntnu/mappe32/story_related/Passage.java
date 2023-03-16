@@ -33,12 +33,12 @@ public class Passage {
     public Passage(String title, String content) {
         if (title.isBlank()) {
            throw new IllegalArgumentException("Passage must be instatiated with a valid title");
-        } else { this.title = title; }
-
+        }
         if (content.isBlank()) {
             throw new IllegalArgumentException("Passage must be instatiated with a valid content");
-        } else { this.content = content; }
-
+        }
+        this.title = title;
+        this.content = content;
         links = new ArrayList<>();
     }
     /**
