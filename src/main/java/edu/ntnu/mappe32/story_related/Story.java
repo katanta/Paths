@@ -32,7 +32,7 @@ public class Story {
      * @param openingPassage Opening passage of a story, as Passage
      */
     public Story(final String title, final Passage openingPassage) throws IllegalArgumentException {
-        if (title.isBlank()) {
+        if (title == null || title.isBlank()) {
             throw new IllegalArgumentException("A story must have a title");
         }
         if (openingPassage == null) {

@@ -7,6 +7,9 @@ public class InventoryAction implements Action{
     private final String item;
 
     public InventoryAction(final String item) {
+        if (item == null || item.isBlank()) {
+            throw new IllegalArgumentException("The item must have a name");
+        }
         this.item = item;
     }
 

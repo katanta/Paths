@@ -147,18 +147,32 @@ public class PlayerTest {
         }
 
     }
-    @DisplayName("addToInventory() adds a String to inventory")
-    @Test
-    void addToInventoryAddsItemToInventory() {
-        mutumbu.addToInventory("Glue");
-        mufasa.addToInventory("Soup");
-        pumba.addToInventory("Spaghetti");
-        mutumbusTestInventory.add("Glue");
-        mufasasTestInventory.add("Soup");
-        pumbasTestInventory.add("Spaghetti");
-        assertEquals(mutumbusTestInventory, mutumbu.getInventory());
-        assertEquals(mufasasTestInventory, mufasa.getInventory());
-        assertEquals(pumbasTestInventory, pumba.getInventory());
+    @DisplayName("addToInventory()")
+    @Nested
+    class AddToInventoryTest {
+        @DisplayName("adds a String to inventory")
+        @Test
+        void addToInventoryAddsItemToInventory() {
+            mutumbu.addToInventory("Glue");
+            mufasa.addToInventory("Soup");
+            pumba.addToInventory("Spaghetti");
+            mutumbusTestInventory.add("Glue");
+            mufasasTestInventory.add("Soup");
+            pumbasTestInventory.add("Spaghetti");
+            assertEquals(mutumbusTestInventory, mutumbu.getInventory());
+            assertEquals(mufasasTestInventory, mufasa.getInventory());
+            assertEquals(pumbasTestInventory, pumba.getInventory());
+        }
+        @DisplayName("throws IllegalArgumentException when item is blank")
+        @Test
+        void throwsIllegalArguementExceptionWhenItemIsBlank() {
+            assertThrows(IllegalArgumentException.class, () -> mutumbu.addToInventory("   "));
+        }
+        @DisplayName("throws IllegalArgumentException when item is null")
+        @Test
+        void throwsIllegalArguementExceptionWhenItemIsNull() {
+            assertThrows(IllegalArgumentException.class, () -> mutumbu.addToInventory(null));
+        }
     }
     @DisplayName("addScore()")
     @Nested

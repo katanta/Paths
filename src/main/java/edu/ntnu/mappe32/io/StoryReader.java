@@ -44,7 +44,7 @@ public class StoryReader {
      * @throws FileNotFoundException Throws FileNotFoundException if the file is not found.
      * @throws IllegalArgumentException Throws IllegalArgumentException if the file path does not have the extension '.paths'.
      */
-    public static Story readStory(String filePath) throws IllegalArgumentException, IOException {
+    public static Story readStory(String filePath) throws IllegalArgumentException, IOException, FileNotFoundException {
         validateFilePath(filePath);
 
         File storyFile = new File(filePath);
@@ -80,8 +80,10 @@ public class StoryReader {
             // Add remaining passages
             passages.forEach(story::addPassage);
 
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("File does not exist");
         } catch (IOException e) {
-            throw new IOException("File does not exist");
+            throw new IOException(e.getMessage());
         }
         return story;
     }
@@ -92,7 +94,10 @@ public class StoryReader {
      * @throws IllegalArgumentException Throws IllegalArgumentException if the file path does not have the extension '.paths'.
      */
     private static void validateFilePath(String filePath) throws IllegalArgumentException {
-        if (filePath.isBlank() || !filePath.contains(".")) {
+        if (filePath == null || filePath.isBlank()) {
+            throw new IllegalArgumentException("File path cannot be null or left blank.");
+        }
+        if (!filePath.contains(".")) {
             throw new IllegalArgumentException("This is not a file path.");
         }
         int dotIndex = filePath.lastIndexOf(".");
@@ -150,7 +155,7 @@ public class StoryReader {
 
     /**
      * This method parses a line that correspons to an action (starts with '<').
-     * It resolves the action type and the value of the action using currentLine.
+     * It resolves the action type and the value of the action using currentLine and splitting it.
      * The method parses and instantiates an action based on the action type.
      * @param link The link in which the action is to be added to, as Link.
      */
@@ -160,19 +165,19 @@ public class StoryReader {
             case INVENTORY_ACTION_FORMAT -> {
                 String itemName = Arrays.stream(currentLine.split(" "))
                         .skip(1)
-                        .limit(currentLine.split(" ").length - 1)
                         .collect(Collectors.joining(" "));
 
 
                 link.addAction(new InventoryAction(itemName.substring(0, itemName.length() - 1)));
             }
-            case GOLD_ACTION_FORMAT, HEALTH_ACTION_FORMAT, SCORE_ACTION_FORMAT -> addNumberBasedActionToLink(actionType, link);
+            case GOLD_ACTION_FORMAT, HEALTH_ACTION_FORMAT, SCORE_ACTION_FORMAT ->
+                    addNumberBasedActionToLink(actionType, link);
         }
     }
 
     /**
      * This method parses an action with a number based value (Goal, Health or Score Action).
-     * It uses the same parsing logic for each type of action,
+     * It uses the same parsing logic for each type of number based action,
      * but instantiates the action according to its action type.
      * @param actionType Type of actions, as char
      * @param link The link in which the action is to be added to, as Link.

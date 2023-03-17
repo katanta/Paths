@@ -97,7 +97,12 @@ public class PassageTest {
         @DisplayName("throws IllegalArgumentException when title is blank")
         @Test
         void throwsIllegalArgumentWhenTitleIsBlank() {
-            assertThrows(IllegalArgumentException.class, () -> new Passage("", "ABC"));
+            assertThrows(IllegalArgumentException.class, () -> new Passage("  ", "ABC"));
+        }
+        @DisplayName("throws IllegalArgumentException when title is null")
+        @Test
+        void throwsIllegalArgumentWhenTitleIsNull() {
+            assertThrows(IllegalArgumentException.class, () -> new Passage(null, "ABC"));
         }
         @DisplayName("throws IllegalArgumentException when content is blank")
         @Test
@@ -188,12 +193,11 @@ public class PassageTest {
     @DisplayName("toString() returns correct String")
     @Test
     void toStringReturnsToString() {
+        StringBuilder s = new StringBuilder();
 
-        String openingPassageToString = "Title: Opening Passage\nContent: " +
-                "You just found the enchanted apple tree you've been searching for your whole adventure around Serengeti. " +
-                "You're hungry and you see a golden apple hanging from the tree.\nLinks Info: Link{text='" +
-                "Climb the tree\'" + ", reference='Climbed tree Passage\'" + ", actions=[]}\n";
-        assertEquals(openingPassageToString, openingPassage.toString());
+        s.append("::Opening Passage\nYou just found the enchanted apple tree you've been searching for your whole adventure around Serengeti. " + "You're hungry and you see a golden apple hanging from the tree.\n")
+                .append(climbTree);
+        assertEquals(s.toString(), openingPassage.toString());
     }
 
 }

@@ -39,7 +39,7 @@ public class Player {
      */
     public Player(final String name, final int health,
                   final int score, final int gold) throws IllegalArgumentException {
-        if (name.isBlank()) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Player must have a name");
         }
         if (health < 0) {
@@ -126,7 +126,10 @@ public class Player {
      * @param item Item to be added, as String.
      */
     public void addToInventory(final String item) {
-       inventory.add(item);
+        if (item == null || item.isBlank()) {
+            throw new IllegalArgumentException("Invalid item.");
+        }
+        inventory.add(item);
     }
     /**
      * This method returns the inventory of a player.

@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 class AllActionTests {
-    Player player = null;
-    Player goalPlayer = null;
+    Player player;
+    Player goalPlayer;
 
     @BeforeEach
     void setUp() {

@@ -27,10 +27,10 @@ public class Link {
      * @since 0.1
      */
     public Link(final String text, final String reference) {
-        if (text.isBlank()) {
+        if (text == null || text.isBlank()) {
             throw new IllegalArgumentException("Link must be instatiated with a valid text.");
         }
-        if (reference.isBlank()) {
+        if (reference == null || reference.isBlank()) {
             throw new IllegalArgumentException("Link must be instantiated with a valid reference.");
         }
         this.text = text;
@@ -66,9 +66,7 @@ public class Link {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder("[" + text + "]" + "(" + reference + ")");
-        for(Action action : actions) {
-            s.append("\n").append(action);
-        }
+        actions.forEach(s::append);
         return s.toString();
     }
 

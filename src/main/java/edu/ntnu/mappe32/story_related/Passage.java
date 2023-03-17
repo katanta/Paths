@@ -31,10 +31,10 @@ public class Passage {
      * @since 0.1
      */
     public Passage(String title, String content) {
-        if (title.isBlank()) {
+        if (title == null || title.isBlank()) {
            throw new IllegalArgumentException("Passage must be instatiated with a valid title");
         }
-        if (content.isBlank()) {
+        if (content == null || content.isBlank()) {
             throw new IllegalArgumentException("Passage must be instatiated with a valid content");
         }
         this.title = title;

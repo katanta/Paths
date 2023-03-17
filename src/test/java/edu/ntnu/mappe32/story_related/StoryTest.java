@@ -101,6 +101,11 @@ class StoryTest {
         void constructorThrowsIllegalArgumentExceptionWhenTitleIsBlank() {
             assertThrows(IllegalArgumentException.class, () -> new Story(" ", openingPassage));
         }
+        @DisplayName("throws IllegalArgumentException when title is null")
+        @Test
+        void constructorThrowsIllegalArgumentExceptionWhenTitleIsNull() {
+            assertThrows(IllegalArgumentException.class, () -> new Story(null, openingPassage));
+        }
         @DisplayName("throws IllegalArgumentException when opening passage is null")
         @Test
         void constructorThrowsIllegalArgumentExceptionWhenOpeningPassageIsNull() {
