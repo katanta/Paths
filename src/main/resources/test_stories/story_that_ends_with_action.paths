@@ -7,8 +7,8 @@ The story of the troll
 <health 100>
 <inventory Medal of the Coward>
 [Attack the troll](Attack the troll)
-<goal 1000>
-<goal -1000>
+<gold 1000>
+<gold -1000>
 <health 100>
 <score 100>
 [Call the chopper](Call the chopper)
