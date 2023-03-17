@@ -80,12 +80,22 @@ public class LinkTest {
         @Test
         @DisplayName("throws IllegalArgumentException for a link with blank text")
         void throwsIllegalArgumentWhenTextIsBlank() {
-            assertThrows(IllegalArgumentException.class, () -> new Link("", "ABC"));
+            assertThrows(IllegalArgumentException.class, () -> new Link("", "Reference"));
         }
-        @DisplayName("throws IllegalArgumentException for a link with a blank reference")
+        @Test
+        @DisplayName("throws IllegalArgumentException for a link with null text")
+        void throwsIllegalArgumentWhenTextIsNull() {
+            assertThrows(IllegalArgumentException.class, () -> new Link(null, "Reference"));
+        }
+        @DisplayName("throws IllegalArgumentException when reference is null")
         @Test
         void throwsIllegalArgumentWhenReferenceIsBlank() {
-            assertThrows(IllegalArgumentException.class, () -> new Link("ABC", ""));
+            assertThrows(IllegalArgumentException.class, () -> new Link("Text", ""));
+        }
+        @DisplayName("throws IllegalArgumentException for a link with null reference")
+        @Test
+        void throwsIllegalArgumentWhenLinkReferenceIsNull() {
+            assertThrows(IllegalArgumentException.class, () -> new Link("Text", null));
         }
     }
     @DisplayName("getText() retuns text")
@@ -127,8 +137,10 @@ public class LinkTest {
     @DisplayName("toString() returns String representation")
     @Test
     void toStringReturnsToString() {
-        String kickTreeToString = "Link{" + "text='" + "Kick the tree" + '\'' +
-                ", reference='" + "Kicked/shaked tree Passage" + '\'' + ", actions=" + testActions + '}';
-        assertEquals(kickTreeToString, kickTree.toString());
+        StringBuilder s = new StringBuilder();
+        s.append("[" + "Kick the tree" + ']' +
+                "(" + "Kicked/shaked tree Passage" + ')');
+        testActions.forEach(s::append);
+        assertEquals(s.toString(), kickTree.toString());
     }
 }
