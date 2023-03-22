@@ -1,7 +1,6 @@
 package edu.ntnu.mappe32;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -28,10 +27,11 @@ public class Player {
     /**
      * Inventory of a player.
      */
-    private List<String> inventory;
+    private final List<String> inventory;
     /**
      * This constructor facilitates the creation of instances of the class Player.
-     * The constructor throws IllegalArgumentExceptions if negartive values are entered in the parameters.
+     * The constructor throws IllegalArgumentExceptions
+     * if negative values are entered in the parameters.
      * @param name Name of the player, as String.
      * @param health Health of the player, as int.
      * @param score Score of the player, as int.
@@ -55,8 +55,9 @@ public class Player {
         this.health = health;
         this.score = score;
         this.gold = gold;
-        inventory = new ArrayList<String>();
+        inventory = new ArrayList<>();
     }
+
     /**
      * This method returns the name a player.
      * @return Name of player as String
@@ -64,6 +65,7 @@ public class Player {
     public String getName() {
         return name;
     }
+
     /**
      * This method adds new heath points to a player.
      * If the addition results in a negative value, health is set to 0 instead.
@@ -72,10 +74,10 @@ public class Player {
     public void addHealth(final int newHealthPoints) {
         if (this.health + newHealthPoints < 0) {
             this.health = 0;
-        } else {
-            this.health += newHealthPoints;
         }
+        this.health += newHealthPoints;
     }
+
     /**
      * This method returns the health of a player.
      * @return Health of player, as int.
@@ -83,6 +85,7 @@ public class Player {
     public int getHealth() {
         return health;
     }
+
     /**
      * This method adds new score points to a player.
      * If the addition results in a negative value, score is set to 0 instead.
@@ -91,10 +94,10 @@ public class Player {
     public void addScore(final int newScorePoints) {
         if (this.score + newScorePoints < 0) {
             this.score = 0;
-        } else {
-            this.score += newScorePoints;
         }
+        this.score += newScorePoints;
     }
+
     /**
      * This method returns the score of a player.
      * @return Score of a player, as int.
@@ -102,18 +105,20 @@ public class Player {
     public int getScore() {
         return score;
     }
+
     /**
      * This method adds new gold points to the player.
-     * If the new augend is negative and results in negative gold, the method will throw an IllegalArguemntException.
+     * If the new augend is negative and results in negative gold,
+     * the method will throw an IllegalArguemntException.
      * @param newGoldPoints New gold points, as int.
      */
     public void addGold(final int newGoldPoints) throws IllegalArgumentException {
         if (this.gold + newGoldPoints < 0) {
             throw new IllegalArgumentException("You do not have enough gold");
-        } else {
-            this.gold += newGoldPoints;
         }
+        this.gold += newGoldPoints;
     }
+
     /**
      * This method returns the gold a player.
      * @return Gold of a player, as int.
@@ -121,6 +126,7 @@ public class Player {
     public int getGold() {
         return gold;
     }
+
     /**
      * This method adds an item to a player's inventory.
      * @param item Item to be added, as String.
@@ -131,6 +137,7 @@ public class Player {
         }
         inventory.add(item);
     }
+
     /**
      * This method returns the inventory of a player.
      * @return Returns inventory as, List<String>
