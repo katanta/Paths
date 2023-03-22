@@ -72,10 +72,11 @@ public class Player {
      * @param newHealthPoints New health points, as int.
      */
     public void addHealth(final int newHealthPoints) {
-        if (this.health + newHealthPoints < 0) {
-            this.health = 0;
+        if (this.health + newHealthPoints > 0) {
+            this.health += newHealthPoints;
+            return;
         }
-        this.health += newHealthPoints;
+        this.health = 0;
     }
 
     /**
@@ -92,10 +93,11 @@ public class Player {
      * @param newScorePoints New score points, as int.
      */
     public void addScore(final int newScorePoints) {
-        if (this.score + newScorePoints < 0) {
-            this.score = 0;
+        if (this.score + newScorePoints > 0) {
+            this.score += newScorePoints;
+            return;
         }
-        this.score += newScorePoints;
+        this.score = 0;
     }
 
     /**

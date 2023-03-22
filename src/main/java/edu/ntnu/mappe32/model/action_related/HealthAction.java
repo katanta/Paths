@@ -11,7 +11,7 @@ public class HealthAction implements Action {
      * @since 0.1
      */
     public HealthAction(final int health) {
-         this.health = health;
+        this.health = health;
     }
 
     /**

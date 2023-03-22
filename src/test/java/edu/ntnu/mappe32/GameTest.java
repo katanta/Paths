@@ -1,7 +1,6 @@
 package edu.ntnu.mappe32;
 
 import edu.ntnu.mappe32.controller.Game;
-import edu.ntnu.mappe32.goal_related.*;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.*;
 import edu.ntnu.mappe32.model.goal_related.*;
