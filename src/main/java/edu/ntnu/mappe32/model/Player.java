@@ -1,4 +1,4 @@
-package edu.ntnu.mappe32;
+package edu.ntnu.mappe32.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package edu.ntnu.mappe32.story_related;
+package edu.ntnu.mappe32.model.story_related;
 
 import java.util.ArrayList;
 import java.util.List;

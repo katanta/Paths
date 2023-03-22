@@ -1,9 +1,10 @@
-package edu.ntnu.mappe32;
+package edu.ntnu.mappe32.controller;
 
-import edu.ntnu.mappe32.goal_related.Goal;
-import edu.ntnu.mappe32.story_related.Passage;
-import edu.ntnu.mappe32.story_related.Link;
-import edu.ntnu.mappe32.story_related.Story;
+import edu.ntnu.mappe32.model.Player;
+import edu.ntnu.mappe32.model.goal_related.Goal;
+import edu.ntnu.mappe32.model.story_related.Passage;
+import edu.ntnu.mappe32.model.story_related.Link;
+import edu.ntnu.mappe32.model.story_related.Story;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,12 @@
 package edu.ntnu.mappe32.io;
 
-import edu.ntnu.mappe32.action_related.*;
-import edu.ntnu.mappe32.story_related.Link;
-import edu.ntnu.mappe32.story_related.Passage;
-import edu.ntnu.mappe32.story_related.Story;
+import edu.ntnu.mappe32.model.action_related.GoldAction;
+import edu.ntnu.mappe32.model.action_related.HealthAction;
+import edu.ntnu.mappe32.model.action_related.InventoryAction;
+import edu.ntnu.mappe32.model.action_related.ScoreAction;
+import edu.ntnu.mappe32.model.story_related.Link;
+import edu.ntnu.mappe32.model.story_related.Passage;
+import edu.ntnu.mappe32.model.story_related.Story;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,13 +28,13 @@ public class StoryReader {
      */
     private static String currentLine;
     private static final String FILE_EXTENSION = "paths";
-    private static final String PASSAGE_TITLE_FORMAT = "::";
-    private static final String LINK_TITLE_FORMAT = "[";
-    private static final String LINK_TITLE_FORMAT_END = "]";
-    private static final String LINK_REFERENCE_FORMAT = "(";
-    private static final String LINK_REFERENCE_FORMAT_END = ")";
-    private static final String ACTION_FORMAT = "<";
-    private static final String ACTION_FORMAT_END = ">";
+    private static final String PASSAGE_TITLE_DELIMITER = "::";
+    private static final String LINK_TITLE_DELIMITER = "[";
+    private static final String LINK_TITLE_END_DELIMITER = "]";
+    private static final String LINK_REFERENCE_DELIMITER = "(";
+    private static final String LINK_REFERENCE_END_DELIMITER = ")";
+    private static final String ACTION_DELIMITER = "<";
+    private static final String ACTION_END_DELIMITER = ">";
     private static final char INVENTORY_ACTION_FORMAT = 'i';
     private static final char HEALTH_ACTION_FORMAT = 'h';
     private static final char GOLD_ACTION_FORMAT = 'g';
@@ -65,7 +68,7 @@ public class StoryReader {
                 }
 
                 // Parse passage
-                if (currentLine.startsWith(PASSAGE_TITLE_FORMAT)) {
+                if (currentLine.startsWith(PASSAGE_TITLE_DELIMITER)) {
                     Passage passage = parsePassage(bufferedReader);
                     passages.add(passage);
                 }
@@ -126,11 +129,11 @@ public class StoryReader {
         }
 
         // Parse links and add them to the passage
-        while (currentLine != null && currentLine.startsWith(LINK_TITLE_FORMAT)) {
+        while (currentLine != null && currentLine.startsWith(LINK_TITLE_DELIMITER)) {
             Link link = parseLink();
 
             // Parse actions and add them to the link
-            while ((currentLine = bufferedReader.readLine()) != null && currentLine.startsWith(ACTION_FORMAT)) {
+            while ((currentLine = bufferedReader.readLine()) != null && currentLine.startsWith(ACTION_DELIMITER)) {
                 parseActionAndAddActionToLink(link);
             }
 
@@ -147,9 +150,9 @@ public class StoryReader {
      */
     private static Link parseLink() {
         String linkTitle = currentLine
-                .substring(currentLine.indexOf(LINK_TITLE_FORMAT) + 1, currentLine.lastIndexOf(LINK_TITLE_FORMAT_END));
+                .substring(currentLine.indexOf(LINK_TITLE_DELIMITER) + 1, currentLine.lastIndexOf(LINK_TITLE_END_DELIMITER));
         String linkReference = currentLine
-                .substring(currentLine.indexOf(LINK_REFERENCE_FORMAT) + 1, currentLine.lastIndexOf(LINK_REFERENCE_FORMAT_END));
+                .substring(currentLine.indexOf(LINK_REFERENCE_DELIMITER) + 1, currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER));
         return new Link(linkTitle, linkReference);
     }
 
@@ -184,7 +187,7 @@ public class StoryReader {
      */
     private static void addNumberBasedActionToLink(char actionType, Link link) {
         String[] parts = currentLine.split(" ");
-        int value = Integer.parseInt(parts[1].substring(0, parts[1].lastIndexOf(ACTION_FORMAT_END)));
+        int value = Integer.parseInt(parts[1].substring(0, parts[1].lastIndexOf(ACTION_END_DELIMITER)));
 
         switch (actionType) {
             case GOLD_ACTION_FORMAT -> link.addAction(new GoldAction(value));

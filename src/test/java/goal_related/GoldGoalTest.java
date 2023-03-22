@@ -1,7 +1,7 @@
 package goal_related;
 
-import edu.ntnu.mappe32.Player;
-import edu.ntnu.mappe32.goal_related.GoldGoal;
+import edu.ntnu.mappe32.model.Player;
+import edu.ntnu.mappe32.model.goal_related.GoldGoal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,10 +1,13 @@
 package edu.ntnu.mappe32;
 
+import edu.ntnu.mappe32.controller.Game;
 import edu.ntnu.mappe32.io.StoryReader;
-import edu.ntnu.mappe32.story_related.*;
-import edu.ntnu.mappe32.goal_related.*;
-
-import java.io.FileNotFoundException;
+import edu.ntnu.mappe32.model.Player;
+import edu.ntnu.mappe32.model.goal_related.Goal;
+import edu.ntnu.mappe32.model.goal_related.GoldGoal;
+import edu.ntnu.mappe32.model.story_related.Link;
+import edu.ntnu.mappe32.model.story_related.Passage;
+import edu.ntnu.mappe32.model.story_related.Story;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;

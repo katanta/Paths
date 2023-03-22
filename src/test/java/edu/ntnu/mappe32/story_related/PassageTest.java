@@ -1,8 +1,8 @@
 package edu.ntnu.mappe32.story_related;
 
-import edu.ntnu.mappe32.action_related.*;
-import edu.ntnu.mappe32.story_related.Link;
-import edu.ntnu.mappe32.story_related.Passage;
+import edu.ntnu.mappe32.model.action_related.*;
+import edu.ntnu.mappe32.model.story_related.Link;
+import edu.ntnu.mappe32.model.story_related.Passage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

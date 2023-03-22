@@ -1,7 +1,7 @@
 package edu.ntnu.mappe32.action_related;
 
-import edu.ntnu.mappe32.Player;
-import edu.ntnu.mappe32.action_related.*;
+import edu.ntnu.mappe32.model.Player;
+import edu.ntnu.mappe32.model.action_related.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

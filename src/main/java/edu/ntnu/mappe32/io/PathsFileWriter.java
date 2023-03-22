@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.io;
 
-import edu.ntnu.mappe32.story_related.Story;
+import edu.ntnu.mappe32.model.story_related.Story;
 
 import java.io.File;
 import java.io.FileWriter;

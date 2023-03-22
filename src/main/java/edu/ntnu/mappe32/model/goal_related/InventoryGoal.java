@@ -1,6 +1,6 @@
-package edu.ntnu.mappe32.goal_related;
+package edu.ntnu.mappe32.model.goal_related;
 
-import edu.ntnu.mappe32.Player;
+import edu.ntnu.mappe32.model.Player;
 
 import java.util.List;
 

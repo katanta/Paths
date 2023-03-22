@@ -1,16 +1,14 @@
 package edu.ntnu.mappe32.io;
 
-import edu.ntnu.mappe32.action_related.*;
-import edu.ntnu.mappe32.action_related.Action;
-import edu.ntnu.mappe32.story_related.Link;
-import edu.ntnu.mappe32.story_related.Passage;
-import edu.ntnu.mappe32.story_related.Story;
+import edu.ntnu.mappe32.model.action_related.*;
+import edu.ntnu.mappe32.model.story_related.Link;
+import edu.ntnu.mappe32.model.story_related.Passage;
+import edu.ntnu.mappe32.model.story_related.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

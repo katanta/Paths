@@ -1,6 +1,6 @@
-package edu.ntnu.mappe32.action_related;
+package edu.ntnu.mappe32.model.action_related;
 
-import edu.ntnu.mappe32.Player;
+import edu.ntnu.mappe32.model.Player;
 
 /**
  * An action represents a future change to the state of the player.

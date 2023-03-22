@@ -1,6 +1,6 @@
-package edu.ntnu.mappe32.action_related;
+package edu.ntnu.mappe32.model.action_related;
 
-import edu.ntnu.mappe32.Player;
+import edu.ntnu.mappe32.model.Player;
 
 public class HealthAction implements Action {
     private final int health;
