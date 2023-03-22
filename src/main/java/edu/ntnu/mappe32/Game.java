@@ -34,8 +34,8 @@ public class Game {
         if (story == null) {
             throw new IllegalArgumentException("Story cannot be null");
         }
-        if (goals.isEmpty()) {
-            throw new IllegalStateException("A game must have atleast 1 goal");
+        if (goals == null || goals.isEmpty()) {
+            throw new IllegalStateException("A game must have a list of goals with atleast 1 goal");
         }
         this.player = player;
         this.story = story;
