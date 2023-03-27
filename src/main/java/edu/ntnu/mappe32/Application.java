@@ -7,18 +7,17 @@ import javafx.stage.Stage;
 
 
 public class Application extends javafx.application.Application {
-    Stage stage;
 
     public static void main(String[] args) {
         launch();
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         PathsSplashScreenView splashScreen = new PathsSplashScreenView();
-        StorySelecterView storySelecterView = new StorySelecterView();
         stage.setScene(splashScreen.getScene());
-        GameSetupController gameSetup = new GameSetupController(stage, splashScreen, storySelecterView);
+        GameSetupController gameSetup = new GameSetupController(stage, splashScreen, new StorySelecterView());
+        stage.setTitle("Paths Game");
         stage.show();
     }
 }
