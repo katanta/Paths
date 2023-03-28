@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class StorySelecter {
+public class StorySelector {
     // This is the directory of the folder which contains different .paths
     File directory;
     List<PathsFile> listPathsFiles;
     File[] files;
-    public StorySelecter() {
+    public StorySelector() {
         directory = new File("src/main/resources/test_stories");
         listPathsFiles = new ArrayList<>();
         files = directory.listFiles((dir, name) -> name.endsWith(".paths"));

@@ -1,7 +1,7 @@
 package edu.ntnu.mappe32.view;
 
 import edu.ntnu.mappe32.model.PathsFile;
-import edu.ntnu.mappe32.model.StorySelecter;
+import edu.ntnu.mappe32.model.StorySelector;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
@@ -16,12 +16,12 @@ import javafx.scene.layout.StackPane;
 import java.io.File;
 import java.io.IOException;
 
-public class StorySelecterView {
+public class StorySelectorView {
     Scene scene;
     Button addStoryButton;
     TableView<PathsFile> storyTable;
 
-    public StorySelecterView() {
+    public StorySelectorView() {
         this.storyTable = new TableView<>();
         this.addStoryButton = new Button("Add another .paths file");
         addStoryButton.setLayoutX(1280);
@@ -45,7 +45,7 @@ public class StorySelecterView {
     }
 
     public void fillStoryTable() {
-        storyTable.setItems(FXCollections.observableArrayList(new StorySelecter().getListPathsFiles()));
+        storyTable.setItems(FXCollections.observableArrayList(new StorySelector().getListPathsFiles()));
 
     }
 
