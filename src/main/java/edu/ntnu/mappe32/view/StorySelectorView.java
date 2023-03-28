@@ -4,7 +4,9 @@ import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.StorySelecter;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,6 +27,7 @@ public class StorySelecterView {
         addStoryButton.setLayoutX(1280);
         StackPane root = new StackPane();
         root.getChildren().addAll(storyTable, addStoryButton);
+        StackPane.setAlignment(addStoryButton, Pos.BOTTOM_RIGHT);
         this.scene = new Scene(root, 1280,720);
     }
 
@@ -60,5 +63,11 @@ public class StorySelecterView {
 
     public Scene getScene() {
         return scene;
+    }
+
+    public Alert fileAlreadySelectedAlert() {
+        Alert fileAlreadySelected = new Alert(Alert.AlertType.WARNING);
+        fileAlreadySelected.setContentText("The file already exists in the table.");
+        return fileAlreadySelected;
     }
 }
