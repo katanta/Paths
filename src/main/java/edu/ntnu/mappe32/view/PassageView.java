@@ -43,10 +43,10 @@ public class PassageView {
         passageContent.setFont(new Font(14));
         passageScrollPane.setMaxWidth(600);
         passageContent.setWrappingWidth(passageScrollPane.getMaxWidth() - 15);
-        passageScrollPane.setMaxHeight(100);
+        passageScrollPane.setMaxHeight(180);
         passageScrollPane.setContent(passageContent);
         VBox center = new VBox(storyTitle, passageTitle, passageScrollPane);
-        center.setMargin(passageContent, new Insets(25, 0, 0, 0));
+        center.setMargin(passageTitle, new Insets(0, 0, 25, 0));
         center.setAlignment(Pos.TOP_CENTER);
         root.getChildren().add(center);
 
@@ -60,6 +60,7 @@ public class PassageView {
             updateScene(); //make the buttons change the current active passage, changing the scene
             });
             linkButton.setTooltip(new Tooltip(link.getText()));
+            linkButton.getTooltip().setFont(new Font(12));
             linkButtons.getChildren().add(linkButton);
         });
         linkButtons.setAlignment(Pos.CENTER);
@@ -67,7 +68,7 @@ public class PassageView {
         linksScrollPane.setMaxSize(200, 500);
         linksScrollPane.setFitToWidth(true);
         center.getChildren().add(linksScrollPane);
-        center.setMargin(linksScrollPane, new Insets(25, 0, 0, 0));
+        center.setMargin(linksScrollPane, new Insets(35, 0, 0, 0));
     }
 
     public Scene getScene() {
