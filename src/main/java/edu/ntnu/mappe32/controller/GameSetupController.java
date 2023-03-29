@@ -1,9 +1,9 @@
 package edu.ntnu.mappe32.controller;
 
 import edu.ntnu.mappe32.model.PathsFile;
-import edu.ntnu.mappe32.view.CreatePlayerAndGoalsView;
 import edu.ntnu.mappe32.view.PathsSplashScreenView;
-import edu.ntnu.mappe32.view.StorySelectorView;
+import edu.ntnu.mappe32.view.StorySelecterView;
+import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
