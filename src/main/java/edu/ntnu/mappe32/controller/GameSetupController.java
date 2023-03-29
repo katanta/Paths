@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class GameSetupController {
-    // private final Game game;
+    CreatePlayerAndGoalsView createPlayerAndGoalsView;
     public GameSetupController(Stage stage, PathsSplashScreenView splashScreen,
                                StorySelectorView storySelectorView) {
 
@@ -45,9 +45,13 @@ public class GameSetupController {
         storySelectorView.getStoryTable().setOnMousePressed(mouseEvent -> {
             if (mouseEvent.isPrimaryButtonDown() && (mouseEvent.getClickCount() == 2)) {
                 PathsFile pathsFile = storySelectorView.getStoryTable().getSelectionModel().getSelectedItem();
-                stage.setScene(new CreatePlayerAndGoalsView(pathsFile).getScene());
+                createPlayerAndGoalsView = new CreatePlayerAndGoalsView(pathsFile);
+                stage.setScene(createPlayerAndGoalsView.getScene());
             }
         });
-        // this.game = new Game();
+    }
+
+    public CreatePlayerAndGoalsView getCreatePlayerAndGoalsView() {
+        return createPlayerAndGoalsView;
     }
 }
