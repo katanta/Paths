@@ -76,7 +76,11 @@ public class LinkTest {
     @Nested
     @DisplayName("constructor")
     class LinkConstructorThrowsExceptions {
-
+        @Test
+        @DisplayName("does not throw IllegalArgumentException when text and reference are not blank")
+        void contructorDoesNotThrowIllegalArgumentExceptionWhenTextAndReferenceAreNotBlank() {
+            assertDoesNotThrow(() -> new Link("Text", "Reference"));
+        }
         @Test
         @DisplayName("throws IllegalArgumentException for a link with blank text")
         void throwsIllegalArgumentWhenTextIsBlank() {
@@ -112,7 +116,7 @@ public class LinkTest {
         assertEquals("Kicked/shaked tree Passage", kickTree.getReference());
         assertEquals("Frantically waved Hands Passage", franticallyWaveHands.getReference());
     }
-    @DisplayName("addAction() returns action")
+    @DisplayName("addAction() adds action")
     @Test
     void addActionAddsAction() {
         assertEquals(testActions, kickTree.getActions());

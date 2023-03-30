@@ -96,6 +96,11 @@ class StoryTest {
     @DisplayName("constructor")
     @Nested
     class ConstructorTest {
+        @DisplayName("does not throw IllegalArgumentException when parameters are not blank or null")
+        @Test
+        void constructordoesNotThrowIllegalArgumentExceptionWhenParametersAreNotBlankOrNull() {
+            assertDoesNotThrow( () -> new Story("Title", openingPassage));
+        }
         @DisplayName("throws IllegalArgumentException when title is blank")
         @Test
         void constructorThrowsIllegalArgumentExceptionWhenTitleIsBlank() {
@@ -122,12 +127,23 @@ class StoryTest {
     void getOpeningPassageReturnsOpeningPassage() {
         assertEquals(openingPassage, storyOfAfrica.getOpeningPassage());
     }
-    @DisplayName("addPassage() adds passage")
-    @Test
-    void addPassageAddsPassage() {
-        storyOfAfrica.addPassage(climbedTree);
-        assertionPassages.put(new Link(climbedTree.getTitle(),climbedTree.getTitle()), climbedTree);
-        assertEquals(assertionPassages.values().toString(), storyOfAfrica.getPassages().toString());
+    @DisplayName("addPassage()")
+    @Nested
+    class AddPassageTest {
+        @DisplayName("adds passage")
+        @Test
+        void addPassageAddsPassage() {
+            storyOfAfrica.addPassage(climbedTree);
+            assertionPassages.put(new Link(climbedTree.getTitle(),climbedTree.getTitle()), climbedTree);
+            assertEquals(assertionPassages.values().toString(), storyOfAfrica.getPassages().toString());
+        }
+        @DisplayName("does not add passage when passage already exists in story")
+        @Test
+        void doesNotAddPassageWhenPassageAlreadyExistsInStory() {
+            storyOfAfrica.addPassage(kickedShakedTree);
+            assertEquals(assertionPassages.values().toString(), storyOfAfrica.getPassages().toString());
+        }
+
     }
     @DisplayName("getPassage() returns passage")
     @Test

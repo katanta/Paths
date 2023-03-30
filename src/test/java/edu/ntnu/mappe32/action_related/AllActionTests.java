@@ -3,6 +3,7 @@ package edu.ntnu.mappe32.action_related;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,13 +11,12 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 class AllActionTests {
     Player player;
-    Player goalPlayer;
 
     @BeforeEach
     void setUp() {
         player = new Player("LeBron", 500, 500, 500);
     }
-
+    @DisplayName("GoldAction accurately calculates and throws exception if going below zero")
     @Test
     void goldActionAccuratelyCalculatesAndThrowsExceptionIfGoingBelowZero() {
         Action plus500Gold = new GoldAction(500);
@@ -30,7 +30,7 @@ class AllActionTests {
             impossibleDebt.execute(player);
         });
     }
-
+    @DisplayName("HealthAction accurately calculates and does not go below zero")
     @Test
     void healthActionAccuratelyCalculatesAndDoesNotGoBelowZero() {
         Action plus500Health = new HealthAction(500);
@@ -43,7 +43,7 @@ class AllActionTests {
         die.execute(player);
         assertEquals(0, player.getHealth());
     }
-
+    @DisplayName("InventoryAction adds to inventory")
     @Test
     void inventoryActionAddsToInventory() {
         Action giveDiamond = new InventoryAction("10g Diamond");
@@ -56,6 +56,14 @@ class AllActionTests {
         assertEquals(testInventory, player.getInventory());
     }
 
+    @DisplayName("InventoryAction constructor throws IllegalArgumentException if item is blank or empty")
+    @Test
+    void inventoryActionConstructorThrowsIllegalArgumentExceptionIfItemNameIsBlankOrEmpty() {
+        assertThrows(IllegalArgumentException.class, () -> new InventoryAction("  "));
+        assertThrows(IllegalArgumentException.class, () -> new InventoryAction(null));
+
+    }
+    @DisplayName("ScoreAction correctly calculates and does not go below zero")
     @Test
     void ScoreActionCorrectlyCalculatesAndDoesNotGoBelowZero() {
         Action wiltChamberlain = new ScoreAction(100);

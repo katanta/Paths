@@ -124,7 +124,7 @@ public class PathsFileReaderTest {
                             .readStory("src/main/resources/test_stories" +
                                     "/story_that_ends_with_passage_content.paths").toString());
         }
-        @DisplayName("throws IOException")
+        @DisplayName("throws IOException when file is not found")
         @Test
         void readStoryThrowsIOExceptionWhenFileIsNonExistent() {
             String fileName = "nonexistent_file.paths";

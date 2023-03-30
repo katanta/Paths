@@ -77,14 +77,11 @@ public class PathsFileReader {
             // Create the story with only the opening passage
             story = new Story(storyTitle, passages.get(0));
 
-            // Remove the opening passage
-            passages.remove(0);
-
-            // Add remaining passages
-            passages.forEach(story::addPassage);
+            // Add remaining passages, excluding the opening passage
+            passages.stream().skip(1).forEach(story::addPassage);
 
         } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File does not exist");
+            throw new FileNotFoundException("File does not exist in the direcotry");
         } catch (IOException e) {
             throw new IOException(e.getMessage());
         }
