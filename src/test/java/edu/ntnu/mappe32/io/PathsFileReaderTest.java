@@ -100,7 +100,9 @@ public class PathsFileReaderTest {
         void readStoryReturnsStoryWhenPathsFileEndsWithALink() throws IOException {
             lastPassage.addLink(lastLink);
             assertEquals(mainTestStory.toString(),
-                    PathsFileReader.readStory("src/main/resources/test_stories/main_test_story.paths").toString());
+                    PathsFileReader
+                            .readStory("src/main/resources/test_stories" +
+                                    "/main_test_story.paths").toString());
         }
 
         @DisplayName("retuns story when paths file ends with an action")
@@ -109,20 +111,32 @@ public class PathsFileReaderTest {
             lastPassage.addLink(lastLink);
             lastLink.addAction(goldPlus100);
             assertEquals(mainTestStory.toString(),
-                    PathsFileReader.readStory("src/main/resources/test_stories/story_that_ends_with_action.paths").toString());
+                    PathsFileReader
+                            .readStory("src/main/resources/test_stories" +
+                                    "/story_that_ends_with_action.paths").toString());
         }
 
         @DisplayName("returns sotry when paths file ends with passage content")
         @Test
         void readStoryReturnsStoryWhenPathsFileEndsWithPassageContent() throws IOException {
             assertEquals(mainTestStory.toString(),
-                    PathsFileReader.readStory("src/main/resources/test_stories/story_that_ends_with_passage_content.paths").toString());
+                    PathsFileReader
+                            .readStory("src/main/resources/test_stories" +
+                                    "/story_that_ends_with_passage_content.paths").toString());
         }
         @DisplayName("throws IOException")
         @Test
         void readStoryThrowsIOExceptionWhenFileIsNonExistent() {
             String fileName = "nonexistent_file.paths";
             assertThrows(IOException.class, () -> PathsFileReader.readStory(fileName));
+        }
+        @DisplayName("throws IllegalArguementException when Action type does not exist")
+        @Test
+        void readStoryThrowsIllegalArgumentExceptionWhenActionTypeDoesNotExist() {
+            assertThrows(IllegalArgumentException.class, () -> PathsFileReader
+                    .readStory("src/main/resources/test_stories" +
+                            "/story_that_has_action_type_which_does_not_exist.paths"));
+
         }
     }
 

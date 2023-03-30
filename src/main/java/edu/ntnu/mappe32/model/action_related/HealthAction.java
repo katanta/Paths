@@ -27,6 +27,6 @@ public class HealthAction implements Action {
 
     @Override
     public String toString() {
-        return "<health " + health + ">";
+        return "<Health " + health + ">";
     }
 }

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * This class reads a .paths file, instatiating an instance of Story
  * by reading the content of a .paths file.
  */
-public class StoryReader {
+public class PathsFileReader {
     /**
      * The line in which the BufferedReader is on at all times.
      */
@@ -35,10 +35,10 @@ public class StoryReader {
     private static final String LINK_REFERENCE_END_DELIMITER = ")";
     private static final String ACTION_DELIMITER = "<";
     private static final String ACTION_END_DELIMITER = ">";
-    private static final char INVENTORY_ACTION_FORMAT = 'i';
-    private static final char HEALTH_ACTION_FORMAT = 'h';
-    private static final char GOLD_ACTION_FORMAT = 'g';
-    private static final char SCORE_ACTION_FORMAT = 's';
+    private static final String INVENTORY_ACTION_FORMAT = "inventory";
+    private static final String HEALTH_ACTION_FORMAT = "health";
+    private static final String GOLD_ACTION_FORMAT = "gold";
+    private static final String SCORE_ACTION_FORMAT = "score";
 
     /**
      * This method reads a .paths file and returns a story.
@@ -163,7 +163,7 @@ public class StoryReader {
      * @param link The link in which the action is to be added to, as Link.
      */
     private static void parseActionAndAddActionToLink(Link link) {
-        char actionType = currentLine.charAt(1);
+        String actionType = currentLine.substring(1, currentLine.indexOf(" ")).toLowerCase();
         switch (actionType) {
             case INVENTORY_ACTION_FORMAT -> {
                 String itemName = Arrays.stream(currentLine.split(" "))
@@ -175,6 +175,7 @@ public class StoryReader {
             }
             case GOLD_ACTION_FORMAT, HEALTH_ACTION_FORMAT, SCORE_ACTION_FORMAT ->
                     addNumberBasedActionToLink(actionType, link);
+            default -> throw new IllegalArgumentException("This Action type could not be found");
         }
     }
 
@@ -185,7 +186,7 @@ public class StoryReader {
      * @param actionType Type of actions, as char
      * @param link The link in which the action is to be added to, as Link.
      */
-    private static void addNumberBasedActionToLink(char actionType, Link link) {
+    private static void addNumberBasedActionToLink(String actionType, Link link) {
         String[] parts = currentLine.split(" ");
         int value = Integer.parseInt(parts[1].substring(0, parts[1].lastIndexOf(ACTION_END_DELIMITER)));
 

@@ -1,7 +1,7 @@
 package edu.ntnu.mappe32;
 
 import edu.ntnu.mappe32.controller.Game;
-import edu.ntnu.mappe32.io.StoryReader;
+import edu.ntnu.mappe32.io.PathsFileReader;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.goal_related.GoldGoal;
@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class TrollStoryPaths {
     public static void main(String[] args) throws IOException {
-        Story trollStory = StoryReader.readStory("src/main/resources/saved stories/trollStory.paths");
+        Story trollStory = PathsFileReader.readStory("src/main/resources/saved stories/trollStory.paths");
 
         Player player = new Player("Daffen", 100, 0, 0);
 
