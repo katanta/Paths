@@ -57,7 +57,9 @@ public class Story {
      * @param passage Passage to be added, as Passage
      */
     public void addPassage(Passage passage) {
-        passages.put(new Link(passage.getTitle(), passage.getTitle()), passage);
+        if (!passages.containsValue(passage)) {
+            passages.put(new Link(passage.getTitle(), passage.getTitle()), passage);
+        }
     }
     /**
      * This method returns a passage from the passages Map, using the passage's Link.
