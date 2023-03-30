@@ -132,11 +132,15 @@ public class PathsFileReader {
         while (currentLine != null && currentLine.startsWith(LINK_TITLE_DELIMITER)) {
             Link link = parseLink();
 
-            // Parse actions and add them to the link
-            while ((currentLine = bufferedReader.readLine()) != null && currentLine.startsWith(ACTION_DELIMITER)) {
-                parseActionAndAddActionToLink(link);
-            }
+            // Check if currentLine contains actions
+            if (currentLine.substring(currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER))
+                    .contains(ACTION_DELIMITER)) {
+                //Parse actions and add them to the link
+                Arrays.stream(splitCurrentLineIntoActions()).forEach(action ->
+                        parseActionAndAddActionToLink(action, link));
 
+            }
+            currentLine = bufferedReader.readLine();
             passage.addLink(link);
         }
 
@@ -150,10 +154,25 @@ public class PathsFileReader {
      */
     private static Link parseLink() {
         String linkTitle = currentLine
-                .substring(currentLine.indexOf(LINK_TITLE_DELIMITER) + 1, currentLine.lastIndexOf(LINK_TITLE_END_DELIMITER));
+                .substring(currentLine.indexOf(LINK_TITLE_DELIMITER) + 1,
+                        currentLine.lastIndexOf(LINK_TITLE_END_DELIMITER));
         String linkReference = currentLine
-                .substring(currentLine.indexOf(LINK_REFERENCE_DELIMITER) + 1, currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER));
+                .substring(currentLine.indexOf(LINK_REFERENCE_DELIMITER) + 1,
+                        currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER));
+
         return new Link(linkTitle, linkReference);
+    }
+
+    /**
+     * This method splits the currentLine into an Array of String,
+     * where each String represents actions of a link.
+     * @return Array of String which represents actions, as String[].
+     */
+    public static String[] splitCurrentLineIntoActions() {
+        String actions = currentLine.substring(currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER))
+                .substring(1);
+        String[] actionsSplit = actions.split(ACTION_END_DELIMITER);
+        return Arrays.copyOf(actionsSplit, actionsSplit.length);
     }
 
     /**
@@ -162,19 +181,19 @@ public class PathsFileReader {
      * The method parses and instantiates an action based on the action type.
      * @param link The link in which the action is to be added to, as Link.
      */
-    private static void parseActionAndAddActionToLink(Link link) {
-        String actionType = currentLine.substring(1, currentLine.indexOf(" ")).toLowerCase();
+    private static void parseActionAndAddActionToLink(String action, Link link) {
+        String actionType = action.substring(1, action.indexOf(" ")).toLowerCase();
         switch (actionType) {
             case INVENTORY_ACTION_FORMAT -> {
-                String itemName = Arrays.stream(currentLine.split(" "))
+                String itemName = Arrays.stream(action.split(" "))
                         .skip(1)
                         .collect(Collectors.joining(" "));
 
 
-                link.addAction(new InventoryAction(itemName.substring(0, itemName.length() - 1)));
+                link.addAction(new InventoryAction(itemName));
             }
             case GOLD_ACTION_FORMAT, HEALTH_ACTION_FORMAT, SCORE_ACTION_FORMAT ->
-                    addNumberBasedActionToLink(actionType, link);
+                    addNumberBasedActionToLink(action, actionType, link);
             default -> throw new IllegalArgumentException("This Action type could not be found");
         }
     }
@@ -186,9 +205,9 @@ public class PathsFileReader {
      * @param actionType Type of actions, as char
      * @param link The link in which the action is to be added to, as Link.
      */
-    private static void addNumberBasedActionToLink(String actionType, Link link) {
-        String[] parts = currentLine.split(" ");
-        int value = Integer.parseInt(parts[1].substring(0, parts[1].lastIndexOf(ACTION_END_DELIMITER)));
+    private static void addNumberBasedActionToLink(String action, String actionType, Link link) {
+        String[] parts = action.split(" ");
+        int value = Integer.parseInt(parts[1]);
 
         switch (actionType) {
             case GOLD_ACTION_FORMAT -> link.addAction(new GoldAction(value));
