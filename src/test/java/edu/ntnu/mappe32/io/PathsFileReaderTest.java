@@ -9,10 +9,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.file.NoSuchFileException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PathsFileReaderTest {
 
@@ -116,7 +118,7 @@ public class PathsFileReaderTest {
                                     "/story_that_ends_with_action.paths").toString());
         }
 
-        @DisplayName("returns sotry when paths file ends with passage content")
+        @DisplayName("returns story when paths file ends with passage content")
         @Test
         void readStoryReturnsStoryWhenPathsFileEndsWithPassageContent() throws IOException {
             assertEquals(mainTestStory.toString(),
@@ -124,11 +126,11 @@ public class PathsFileReaderTest {
                             .readStory("src/main/resources/test_stories" +
                                     "/story_that_ends_with_passage_content.paths").toString());
         }
-        @DisplayName("throws IOException when file is not found")
+        @DisplayName("throws NoSuchFileException when file is not found")
         @Test
         void readStoryThrowsIOExceptionWhenFileIsNonExistent() {
-            String fileName = "nonexistent_file.paths";
-            assertThrows(IOException.class, () -> PathsFileReader.readStory(fileName));
+            String fileName = "src/main/resources/test_stories/nonexistent_file.paths";
+            assertThrowsExactly(NoSuchFileException.class, () -> PathsFileReader.readStory(fileName));
         }
         @DisplayName("throws IllegalArguementException when Action type does not exist")
         @Test

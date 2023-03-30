@@ -21,7 +21,7 @@ public class PathsFileWriter {
         try(FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write(story.toString());
         } catch (IOException e) {
-            throw new IOException("Unable to write to paths-file: " + e.getMessage());
+            throw new IOException("Unable to write the file: " + e.getMessage());
         }
     }
 }

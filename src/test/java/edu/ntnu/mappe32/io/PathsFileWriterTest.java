@@ -109,9 +109,16 @@ class PathsFileWriterTest {
         @DisplayName("throws IllegalArgumentException if file path does not have .paths as extension")
         @Test
         void throwsIllegalArgumentExceptionIfFilePathDoesNotHaveDotPathsAsExtension() {
-            String testFilePath = "test.txt";
+            String testFilePath = "src/main/resources/test_stories/test.txt";
             assertThrows(IllegalArgumentException.class,
-                    () ->PathsFileWriter.writeStory(mainTestStory, testFilePath));
+                    () -> PathsFileWriter.writeStory(mainTestStory, testFilePath));
+        }
+        @DisplayName("throws IOException if directory does not exist")
+        @Test
+        void throwsIOExceptionWhenDirectoryDoesNotExist() {
+            String testFilePath = "src/non/existent/directory/test.paths";
+            assertThrows(IOException.class,
+                    () -> PathsFileWriter.writeStory(mainTestStory, testFilePath));
         }
     }
 }
