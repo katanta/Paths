@@ -100,7 +100,7 @@ public class StoryReadTest {
         void readStoryReturnsStoryWhenPathsFileEndsWithALink() throws IOException {
             lastPassage.addLink(lastLink);
             assertEquals(mainTestStory.toString(),
-                    StoryReader.readStory("src/main/resources/test_stories/main_test_story.paths").toString());
+                    PathsFileReader.readStory("src/main/resources/test_stories/main_test_story.paths").toString());
         }
 
         @DisplayName("retuns story when paths file ends with an action")
@@ -109,20 +109,20 @@ public class StoryReadTest {
             lastPassage.addLink(lastLink);
             lastLink.addAction(goldPlus100);
             assertEquals(mainTestStory.toString(),
-                    StoryReader.readStory("src/main/resources/test_stories/story_that_ends_with_action.paths").toString());
+                    PathsFileReader.readStory("src/main/resources/test_stories/story_that_ends_with_action.paths").toString());
         }
 
         @DisplayName("returns sotry when paths file ends with passage content")
         @Test
         void readStoryReturnsStoryWhenPathsFileEndsWithPassageContent() throws IOException {
             assertEquals(mainTestStory.toString(),
-                    StoryReader.readStory("src/main/resources/test_stories/story_that_ends_with_passage_content.paths").toString());
+                    PathsFileReader.readStory("src/main/resources/test_stories/story_that_ends_with_passage_content.paths").toString());
         }
         @DisplayName("throws IOException")
         @Test
         void readStoryThrowsIOExceptionWhenFileIsNonExistent() {
             String fileName = "nonexistent_file.paths";
-            assertThrows(IOException.class, () -> StoryReader.readStory(fileName));
+            assertThrows(IOException.class, () -> PathsFileReader.readStory(fileName));
         }
     }
 
@@ -133,24 +133,24 @@ public class StoryReadTest {
         @Test
         void validateFileTestThrowsIllegalArgumentExceptionWhenFilePathDoesNotHavePathsAsExtension() {
             String filePath = "file/doesnothave/paths/asextension.txt";
-            assertThrows(IllegalArgumentException.class, () -> StoryReader.readStory(filePath));
+            assertThrows(IllegalArgumentException.class, () -> PathsFileReader.readStory(filePath));
         }
         @DisplayName("throws IllegalArgumentException when file path does not have a '.'")
         @Test
         void validateFileTestThrowsIllegalArguementExceptionWhenFilePathDoesNotHaveADot() {
             String filePath = "src/filepath/doesnot/have/dot";
-            assertThrows(IllegalArgumentException.class, () -> StoryReader.readStory(filePath));
+            assertThrows(IllegalArgumentException.class, () -> PathsFileReader.readStory(filePath));
         }
         @DisplayName("throws IllegalArgumentException when file path is null")
         @Test
         void validateFileTestThrowsIllegalArgumentExceptionWhenFilePathIsNull() {
-            assertThrows(IllegalArgumentException.class, () -> StoryReader.readStory(null));
+            assertThrows(IllegalArgumentException.class, () -> PathsFileReader.readStory(null));
         }
         @DisplayName("throws IllegalArgumentException when file path is blank")
         @Test
         void validateFileTestThrowsIllegalArgumentExceptionWhenFilePathIsBlank() {
             String filePath = "";
-            assertThrows(IllegalArgumentException.class, () -> StoryReader.readStory(filePath));
+            assertThrows(IllegalArgumentException.class, () -> PathsFileReader.readStory(filePath));
         }
     }
 }

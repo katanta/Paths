@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * This class reads a .paths file, instatiating an instance of Story
  * by reading the content of a .paths file.
  */
-public class StoryReader {
+public class PathsFileReader {
     /**
      * The line in which the BufferedReader is on at all times.
      */

@@ -1,7 +1,6 @@
 package edu.ntnu.mappe32.model;
 
-import edu.ntnu.mappe32.io.StoryReader;
-import edu.ntnu.mappe32.model.story_related.Link;
+import edu.ntnu.mappe32.io.PathsFileReader;
 import edu.ntnu.mappe32.model.story_related.Story;
 
 import java.io.File;
@@ -15,7 +14,7 @@ public class PathsFile {
 
     public PathsFile(File file) throws IOException {
         this.filePath = file.getAbsolutePath();
-        Story story = StoryReader.readStory(filePath);
+        Story story = PathsFileReader.readStory(filePath);
         this.storyTitle = story.getTitle();
         this.brokenLinks = story.getBrokenLinks().size();
     }
