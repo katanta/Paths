@@ -169,15 +169,14 @@ public class PathsFileReader {
      * @return Array of String which represents actions, as String[].
      */
     public static String[] splitCurrentLineIntoActions() {
-        String actions = currentLine.substring(currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER))
-                .substring(1);
-        String[] actionsSplit = actions.split(ACTION_END_DELIMITER);
-        return Arrays.copyOf(actionsSplit, actionsSplit.length);
+        String actions = currentLine.substring(currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER) + 1);
+        return actions.split(ACTION_END_DELIMITER);
     }
 
     /**
-     * This method parses a line that correspons to an action (starts with '<').
-     * It resolves the action type and the value of the action using currentLine and splitting it.
+     * This method parses a String action,
+     * which contains an action in the format "<'actionType' 'value'".
+     * It resolves the action type and the value of the action by splitting the String.
      * The method parses and instantiates an action based on the action type.
      * @param link The link in which the action is to be added to, as Link.
      */
