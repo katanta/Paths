@@ -2,7 +2,6 @@ package edu.ntnu.mappe32.view;
 
 import edu.ntnu.mappe32.model.PathsFile;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -33,7 +32,7 @@ public class CreatePlayerAndGoalsView {
     TextField goalValueTextField;
     Label healthGoalLabel;
     Label scoreGoalLabel;
-    Label goldGoalLabel;
+    Label numberValueGoalLabel;
 
     public CreatePlayerAndGoalsView(PathsFile pathsFile) {
         this.pathsFile = pathsFile;
@@ -50,14 +49,14 @@ public class CreatePlayerAndGoalsView {
         configureAddGoalLabel();
         configureGoalTypeToggleButton();
         configureGoalValueTextField();
-        configureGoldGoalLabel();
+        configureNumberValueGoalLabel();
 
         HBox topBar = new HBox(10);
         topBar.getChildren().addAll(storyTitleLabel, pathsFileLabel);
         HBox goalTypeToggleBar = new HBox();
         goalTypeToggleBar.getChildren().addAll(goldToggle, healthToggle, inventoryToggle, scoreToggle);
         HBox goalValueBar = new HBox(10);
-        goalValueBar.getChildren().addAll(goldGoalLabel, goalValueTextField);
+        goalValueBar.getChildren().addAll(numberValueGoalLabel, goalValueTextField);
         VBox playerAndGoalConfigurationBox = new VBox(10);
         playerAndGoalConfigurationBox.getChildren().addAll(topBar,
                 playerConfigurationLabel, playerGridPane, addGoalLabel,
@@ -92,8 +91,13 @@ public class CreatePlayerAndGoalsView {
         VBox.setMargin(addGoalLabel, new Insets(10));
     }
 
-    public void configureGoldGoalLabel() {
-        this.goldGoalLabel = new Label("Gold Goal:");
+
+    public void configureNumberValueGoalLabel() {
+        this.numberValueGoalLabel = new Label();
+        numberValueGoalLabel.setFont(new Font("Times New Roman", 20));
+        numberValueGoalLabel.setManaged(false);
+        numberValueGoalLabel.setVisible(false);
+        HBox.setMargin(numberValueGoalLabel, new Insets(10));
 
     }
     public void configureGoalTypeToggleButton() {
@@ -141,7 +145,9 @@ public class CreatePlayerAndGoalsView {
         this.goalValueTextField = new TextField();
         goalValueTextField.setPromptText("Enter the value of the goal");
         goalValueTextField.setMaxWidth(200);
-        VBox.setMargin(goalValueTextField, new Insets(10));
+        goalValueTextField.setVisible(false);
+        goalValueTextField.setManaged(false);
+        HBox.setMargin(goalValueTextField, new Insets(10));
     }
     public void configurePlayerGoldTextField() {
         this.playerGoldTextField = new TextField();
@@ -166,6 +172,35 @@ public class CreatePlayerAndGoalsView {
         this.pathsFileLabel.setWrapText(true);
         HBox.setMargin(pathsFileLabel, new Insets(10));
     }
+
+    public Label getNumberValueGoalLabel() {
+        return numberValueGoalLabel;
+    }
+
+    public ToggleButton getGoldToggle() {
+        return goldToggle;
+    }
+
+    public ToggleGroup getGoalTypeToggle() {
+        return goalTypeToggle;
+    }
+
+    public ToggleButton getScoreToggle() {
+        return scoreToggle;
+    }
+
+    public ToggleButton getHealthToggle() {
+        return healthToggle;
+    }
+
+    public TextField getGoalValueTextField() {
+        return goalValueTextField;
+    }
+
+    public ToggleButton getInventoryToggle() {
+        return inventoryToggle;
+    }
+
     public Scene getScene() {
         return scene;
     }
