@@ -194,9 +194,5 @@ class StoryTest {
         assertEquals(assertionBrokenLinks.size(), storyOfAfrica.getBrokenLinks().size());
         assertTrue(storyOfAfrica.getBrokenLinks().containsAll(assertionBrokenLinks));
         assertTrue(assertionBrokenLinks.containsAll(storyOfAfrica.getBrokenLinks()));
-        System.out.println((PathsFileReader.readStory("src/main/resources/test_stories/main_test_story.paths").getPassages()));
-        System.out.println(storyOfAfrica);
-
-
     }
 }
