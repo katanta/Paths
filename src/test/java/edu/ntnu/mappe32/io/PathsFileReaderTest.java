@@ -135,7 +135,7 @@ public class PathsFileReaderTest {
         void readStoryThrowsIllegalArgumentExceptionWhenActionTypeDoesNotExist() {
             assertThrows(IllegalArgumentException.class, () -> PathsFileReader
                     .readStory("src/main/resources/test_stories" +
-                            "/story_that_has_action_type_which_does_not_exist.paths"));
+                            "/throws_exception/story_that_has_action_type_which_does_not_exist.paths"));
         }
     }
 
