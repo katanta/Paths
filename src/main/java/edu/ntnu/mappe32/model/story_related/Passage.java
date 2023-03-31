@@ -63,19 +63,19 @@ public class Passage {
         return new ArrayList<>(links);
     }
     /**
+     * This method adds a link to the passage if the passage does not contain
+     * a link with the same text.
      * @param link (Link): the link one wishes to add to this passage.
-     * @return true if the link was unique and added it to the passage.
-     * false if the passage already contained this link.
+     * @return true if the link has a unique text and added it's to the passage.
+     * false if the passage already contained a link with the same text.
      * @since 0.1
      */
     public boolean addLink(Link link) {
-        String match = links.stream().filter(l -> l.equals(link)).map(Link::getReference)
-                .reduce("", (total, s) -> total + s );
-        if (!match.isBlank()) {
-            return false;
+        if (links.stream().noneMatch(l -> l.getText().equals(link.getText()))) {
+            links.add(link);
+            return true;
         }
-        links.add(link);
-        return true;
+        return false;
     }
 
     /**

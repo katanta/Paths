@@ -179,6 +179,16 @@ public class PassageTest {
             climbedTree.addLink(runHome);
             assertEquals(assertionLinks, climbedTree.getLinks());
         }
+        @DisplayName("does not add link with same text as another link")
+        @Test
+        void addLinkDoesNotAddLinkWithSameTextAsAnotherLink() {
+            climbedTree.addLink(new Link(runHome.getText(), "Unique reference"));
+        }
+        @DisplayName("adds link with the same reference as another link")
+        @Test
+        void addLinkAddsLinkWithTheSameReferenceAsAnotherLink() {
+            climbedTree.addLink(new Link("Unique text", runHome.getReference()));
+        }
     }
     @DisplayName("hasLinks()")
     @Nested
