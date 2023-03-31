@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.story_related;
 
+import edu.ntnu.mappe32.io.PathsFileReader;
 import edu.ntnu.mappe32.model.action_related.*;
 import edu.ntnu.mappe32.model.story_related.Link;
 import edu.ntnu.mappe32.model.story_related.Passage;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -153,6 +155,10 @@ class StoryTest {
     @DisplayName("getPassages() returns List<Passage> passages")
     @Test
     void getPassagesReturnsPassages() {
+        storyOfAfrica.addPassage(kickedShakedTree);
+        storyOfAfrica.addPassage(climbedTree);
+        climbedTree.addLink(kickTree);
+        climbedTree.addLink(shakeTree);
         assertEquals(assertionPassages.values().toString(), storyOfAfrica.getPassages().toString());
     }
 
@@ -180,7 +186,7 @@ class StoryTest {
     }
     @DisplayName("getBrokenLinks() returns all of the broken links in no particular order")
     @Test
-    void getBrokenLinksReturnsBrokenLinks() {
+    void getBrokenLinksReturnsBrokenLinks() throws IOException {
         storyOfAfrica.addPassage(kickedShakedTree);
         storyOfAfrica.addPassage(climbedTree);
         climbedTree.addLink(kickTree);
@@ -188,6 +194,9 @@ class StoryTest {
         assertEquals(assertionBrokenLinks.size(), storyOfAfrica.getBrokenLinks().size());
         assertTrue(storyOfAfrica.getBrokenLinks().containsAll(assertionBrokenLinks));
         assertTrue(assertionBrokenLinks.containsAll(storyOfAfrica.getBrokenLinks()));
+        System.out.println((PathsFileReader.readStory("src/main/resources/test_stories/main_test_story.paths").getPassages()));
+        System.out.println(storyOfAfrica);
+
 
     }
 }

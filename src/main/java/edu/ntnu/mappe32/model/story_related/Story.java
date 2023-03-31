@@ -67,17 +67,17 @@ public class Story {
      * @return Passage as passage.
      */
     public Passage getPassage(Link link) {
-        Link searchLink = new Link(link.getReference(), link.getReference());
-        searchLink.getActions().removeAll(searchLink.getActions());
-        return passages.get(searchLink);
-
+        return passages.get(new Link(link.getReference(), link.getReference()));
     }
     /**
-     * This method return the Map passages.
-     * @return Passages, as Collection<Passage>.
+     * This method returns the values of Map<Link, Passage> passages,
+     * as well as the openingPassage of the story
+     * @return Passages with openingPassage, as Collection<Passage>.
      */
     public Collection<Passage> getPassages() {
-        return passages.values();
+        Collection<Passage> passagesWithOpeningPassage = new ArrayList<>(passages.values());
+        passagesWithOpeningPassage.add(this.openingPassage);
+        return passagesWithOpeningPassage;
     }
     /**
      * This method removes a passage from Map <Link, Passage>.
