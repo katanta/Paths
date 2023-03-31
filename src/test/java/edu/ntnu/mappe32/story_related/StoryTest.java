@@ -11,10 +11,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -137,13 +134,17 @@ class StoryTest {
         void addPassageAddsPassage() {
             storyOfAfrica.addPassage(climbedTree);
             assertionPassages.put(new Link(climbedTree.getTitle(),climbedTree.getTitle()), climbedTree);
-            assertEquals(assertionPassages.values().toString(), storyOfAfrica.getPassages().toString());
+            Collection<Passage> assertionPassagesList = new ArrayList<>(assertionPassages.values());
+            assertionPassagesList.add(openingPassage);
+            assertEquals(assertionPassagesList.toString(), storyOfAfrica.getPassages().toString());
         }
         @DisplayName("does not add passage when passage already exists in story")
         @Test
         void doesNotAddPassageWhenPassageAlreadyExistsInStory() {
             storyOfAfrica.addPassage(kickedShakedTree);
-            assertEquals(assertionPassages.values().toString(), storyOfAfrica.getPassages().toString());
+            Collection<Passage> assertionPassagesList = new ArrayList<>(assertionPassages.values());
+            assertionPassagesList.add(openingPassage);
+            assertEquals(assertionPassagesList.toString(), storyOfAfrica.getPassages().toString());
         }
 
     }
@@ -155,11 +156,9 @@ class StoryTest {
     @DisplayName("getPassages() returns List<Passage> passages")
     @Test
     void getPassagesReturnsPassages() {
-        storyOfAfrica.addPassage(kickedShakedTree);
-        storyOfAfrica.addPassage(climbedTree);
-        climbedTree.addLink(kickTree);
-        climbedTree.addLink(shakeTree);
-        assertEquals(assertionPassages.values().toString(), storyOfAfrica.getPassages().toString());
+        Collection<Passage> assertionPassagesList = new ArrayList<>(assertionPassages.values());
+        assertionPassagesList.add(openingPassage);
+        assertEquals(assertionPassagesList.toString(), storyOfAfrica.getPassages().toString());
     }
 
     @DisplayName("removePassage()")
@@ -186,7 +185,7 @@ class StoryTest {
     }
     @DisplayName("getBrokenLinks() returns all of the broken links in no particular order")
     @Test
-    void getBrokenLinksReturnsBrokenLinks() throws IOException {
+    void getBrokenLinksReturnsBrokenLinks() {
         storyOfAfrica.addPassage(kickedShakedTree);
         storyOfAfrica.addPassage(climbedTree);
         climbedTree.addLink(kickTree);
