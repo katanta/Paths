@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32;
 
+import edu.ntnu.mappe32.action_related.InventoryAction;
 import edu.ntnu.mappe32.goal_related.Goal;
 import edu.ntnu.mappe32.story_related.Passage;
 import edu.ntnu.mappe32.story_related.Link;
@@ -81,7 +82,10 @@ public class Game {
      * @since 0.1
      */
     public Passage go(Link link) {
-        link.getActions().forEach(a -> a.execute(player));
+        link.getActions().stream().filter(action -> action instanceof InventoryAction)
+                .filter(invAction -> !((InventoryAction) invAction).isAdding())
+                .forEach(removalAction -> removalAction.execute(player));
+        link.getActions().stream().filter(action  -> !(action instanceof InventoryAction)).forEach(a -> a.execute(player));
         return story.getPassage(link);
     }
 }

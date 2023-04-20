@@ -1,18 +1,20 @@
 package edu.ntnu.mappe32.action_related;
 
+import edu.ntnu.mappe32.Item;
 import edu.ntnu.mappe32.Player;
 
 public class InventoryAction implements Action{
     private final boolean add;
-    private final String item;
+    private final Item item;
 
-    public InventoryAction(final String item, boolean add) {
+    public InventoryAction(final Item item, boolean add) {
         this.item = item;
         this.add = add;
     }
 
-    //What should be the game mechanic when a player adds an item he already owns?
-    //++ How are we going to handle removal of items from one's own inventory?
+    public boolean isAdding() {
+        return add;
+    }
 
     /**
      * Executes an action that affects a players inventory.
@@ -25,6 +27,7 @@ public class InventoryAction implements Action{
         }
         else {
             player.removeFromInventory(item);
+            item.useItem(player);
         }
     }
 }
