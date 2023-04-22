@@ -32,20 +32,22 @@ public class StorySelectorView {
     }
 
     public void createStoryTable() {
-        TableColumn<PathsFile, String> storyTitleColumn = new TableColumn<>("Story Title");
-        storyTitleColumn.setCellValueFactory(new PropertyValueFactory<>("storyTitle"));
-        storyTitleColumn.prefWidthProperty().bind(storyTable.widthProperty().divide(9));
+        TableColumn<PathsFile, String> storyTitleColumn   = new TableColumn<>("Story Title");
         TableColumn<PathsFile, String> fileLocationColumn = new TableColumn<>("File Location");
-        fileLocationColumn.setCellValueFactory(new PropertyValueFactory<>("filePath"));
-        fileLocationColumn.prefWidthProperty().bind(storyTable.widthProperty().divide(1.29));
         TableColumn<PathsFile, Integer> brokenLinksColumn = new TableColumn<>("Broken Links");
+        storyTitleColumn.setCellValueFactory(new PropertyValueFactory<>("storyTitle"));
+        fileLocationColumn.setCellValueFactory(new PropertyValueFactory<>("filePath"));
         brokenLinksColumn.setCellValueFactory(new PropertyValueFactory<>("brokenLinks"));
+
+        storyTitleColumn.prefWidthProperty().bind(storyTable.widthProperty().divide(9));
+        fileLocationColumn.prefWidthProperty().bind(storyTable.widthProperty().divide(1.29));
         brokenLinksColumn.prefWidthProperty().bind(storyTable.widthProperty().divide(9));
+
         storyTable.getColumns().addAll(storyTitleColumn, fileLocationColumn, brokenLinksColumn);
     }
 
     public void fillStoryTable() {
-        storyTable.setItems(FXCollections.observableArrayList(new StorySelector().getListPathsFiles()));
+        storyTable.setItems(FXCollections.observableArrayList(new StorySelector().getListOfPathsFiles()));
 
     }
 
