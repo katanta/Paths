@@ -28,7 +28,7 @@ public class PathsFileReader {
      * The line in which the BufferedReader is on at all times.
      */
     private static String currentLine;
-    private static final String FILE_EXTENSION = "paths";
+    private static final String FILE_EXTENSION = ".paths";
     private static final String PASSAGE_TITLE_DELIMITER = "::";
     private static final String LINK_TITLE_DELIMITER = "[";
     private static final String LINK_TITLE_END_DELIMITER = "]";
@@ -45,7 +45,7 @@ public class PathsFileReader {
      * This method reads a .paths file and returns a story.
      * @param filePath File path of the .paths file to be read, as String.
      * @return Story of the .paths file, as Story.
-     * @throws FileNotFoundException Throws FileNotFoundException if the file is not found.
+     * @throws IOException Throws FileNotFoundException if the file is not found.
      * @throws IllegalArgumentException Throws IllegalArgumentException if the file path does not have the extension '.paths'.
      */
     public static Story readStory(String filePath) throws IllegalArgumentException, IOException {
@@ -105,7 +105,7 @@ public class PathsFileReader {
         }
         int dotIndex = filePath.lastIndexOf(".");
 
-        String extension =  filePath.substring(dotIndex + 1);
+        String extension =  filePath.substring(dotIndex);
         if (!extension.equals(FILE_EXTENSION)) {
             throw new IllegalArgumentException("The file extension does not correspond with ." + FILE_EXTENSION);
         }
@@ -175,7 +175,7 @@ public class PathsFileReader {
 
     /**
      * This method parses a String action,
-     * which contains an action in the format "<'actionType' 'value'".
+     * which contains an action in the format "<'actionType' 'value'>".
      * It resolves the action type and the value of the action by splitting the String.
      * The method parses and instantiates an action based on the action type.
      * @param link The link in which the action is to be added to, as Link.
