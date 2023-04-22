@@ -38,7 +38,7 @@ public class Player {
      * @param gold Gold of the player, as int.
      */
     public Player(final String name, final int health,
-                  final int score, final int gold) throws IllegalArgumentException {
+                  final int score, final int gold, final List<String> inventory) throws IllegalArgumentException {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Player must have a name");
         }
@@ -51,13 +51,23 @@ public class Player {
         if (gold < 0) {
             throw new IllegalArgumentException("Gold cannot be below zero");
         }
+        if (inventory == null || inventory.isEmpty()) {
+            throw new IllegalStateException("Inventory of player cannot be null or empty");
+        }
         this.name = name;
         this.health = health;
         this.score = score;
         this.gold = gold;
-        inventory = new ArrayList<>();
+        this.inventory = inventory;
     }
 
+    public Player(PlayerBuilder playerBuilder) {
+        this.name = playerBuilder.name;
+        this.health = playerBuilder.health;
+        this.gold = playerBuilder.gold;
+        this.score = playerBuilder.score;
+        this.inventory = playerBuilder.inventory;
+    }
     /**
      * This method returns the name a player.
      * @return Name of player as String
@@ -146,5 +156,58 @@ public class Player {
      */
     public List<String> getInventory() {
         return new ArrayList<>(inventory);
+    }
+
+    /**
+     * This is the builder class for Player, which makes it able to
+     * instantiate a player without an inventory.
+     */
+    public static class PlayerBuilder {
+        /**
+         * Name of the player.
+         */
+        private final String name;
+        /**
+         * Health of a player.
+         */
+        private final int health;
+        /**
+         * Score of a player.
+         */
+        private final int score;
+        /**
+         * Gold of a player.
+         */
+        private final int gold;
+        /**
+         * Inventory of a player.
+         */
+        private List<String> inventory;
+
+        public PlayerBuilder(String name, int health, int score, int gold) {
+            if (name == null || name.isBlank()) {
+                throw new IllegalArgumentException("Player must have a name");
+            }
+            if (health < 0) {
+                throw new IllegalArgumentException("Health cannot be below zero");
+            }
+            if (score < 0) {
+                throw new IllegalArgumentException("Score cannot be below zero");
+            }
+            if (gold < 0) {
+                throw new IllegalArgumentException("Gold cannot be below zero");
+            }
+            this.name = name;
+            this.health = health;
+            this.score = score;
+            this.gold = gold;
+        }
+        public PlayerBuilder inventory(List<String> inventory) {
+            this.inventory = inventory;
+            return this;
+        }
+        Player build() {
+            return new Player(this);
+        }
     }
 }
