@@ -17,6 +17,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -45,10 +46,10 @@ public class PassageView {
     }
 
     public void configurePassageContent() throws FileNotFoundException {
-
+        Font mainFont = Font.loadFont("src/main/resources/fonts/PixeloidSans-JR6qo.ttf", 14);
         currentPassage = game.begin();
         StackPane root = new StackPane();
-        scene = new Scene(root, 1280, 720);
+        scene = new Scene(root, 1280, 720, Color.DARKGREY);
         storyTitle = new Label(game.getStory().getTitle());
         storyTitle.setLabelFor(passageTitle);
         storyTitle.setMinSize(10, 10);
