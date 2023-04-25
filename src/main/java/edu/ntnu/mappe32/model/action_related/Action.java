@@ -13,4 +13,6 @@ public interface Action {
      * @param player The player affected by the action, as Player.
      */
     void execute(Player player);
+
+    boolean equals(Object o);
 }

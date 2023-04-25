@@ -2,6 +2,8 @@ package edu.ntnu.mappe32.model.action_related;
 
 import edu.ntnu.mappe32.model.Player;
 
+import java.util.Objects;
+
 public class ScoreAction implements Action{
 
     private final int points;
@@ -28,5 +30,17 @@ public class ScoreAction implements Action{
     @Override
     public String toString() {
         return "<Score " + points + ">";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ScoreAction that)) return false;
+        return points == that.points;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(points);
     }
 }

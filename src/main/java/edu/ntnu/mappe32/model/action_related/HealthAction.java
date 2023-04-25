@@ -2,6 +2,8 @@ package edu.ntnu.mappe32.model.action_related;
 
 import edu.ntnu.mappe32.model.Player;
 
+import java.util.Objects;
+
 public class HealthAction implements Action {
     private final int health;
 
@@ -28,5 +30,17 @@ public class HealthAction implements Action {
     @Override
     public String toString() {
         return "<Health " + health + ">";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof HealthAction that)) return false;
+        return health == that.health;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(health);
     }
 }
