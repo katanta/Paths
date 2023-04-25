@@ -144,6 +144,8 @@ public class Player {
      * @param item Item to be added, as String.
      */
     public void addToInventory(final Item item) {
+        if (item == null)
+            throw new IllegalArgumentException("Item cannot be null");
         inventory.merge(item, 1, Integer::sum);
     }
 
