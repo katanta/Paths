@@ -3,8 +3,6 @@ package edu.ntnu.mappe32.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.ntnu.mappe32.Item;
-
 /**
  * This class represents a Player.
  * A player and its attributes can be affected by a story.
@@ -53,14 +51,13 @@ public class Player {
         if (gold < 0) {
             throw new IllegalArgumentException("Gold cannot be below zero");
         }
-        if (inventory == null || inventory.isEmpty()) {
-            throw new IllegalStateException("Inventory of player cannot be null or empty");
+        if (inventory == null) {
+            throw new IllegalStateException("Inventory of player cannot be null");
         }
         this.name = name;
         this.health = health;
         this.score = score;
         this.gold = gold;
-        this.inventory = inventory;
         this.inventory = inventory;
     }
 
