@@ -1,4 +1,4 @@
-package edu.ntnu.mappe32;
+package edu.ntnu.mappe32.model;
 
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.Action;
@@ -36,5 +36,11 @@ public class Item {
 
     public void useItem(Player player) {
         actions.forEach(action -> action.execute(player));
+    }
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder(itemName + " ");
+        actions.forEach(action -> s.append(action).append(" "));
+        return s.toString();
     }
 }
