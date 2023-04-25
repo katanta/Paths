@@ -1,13 +1,16 @@
 package edu.ntnu.mappe32.model.action_related;
 
-import edu.ntnu.mappe32.Item;
+import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
 
 public class InventoryAction implements Action{
     private final boolean add;
     private final Item item;
 
-    public InventoryAction(final Item item, boolean add) {
+    public InventoryAction(final Item item, final boolean add) {
+        if (item == null) {
+            throw new IllegalArgumentException("Item cannot be null");
+        }
         this.item = item;
         this.add = add;
     }
@@ -33,6 +36,6 @@ public class InventoryAction implements Action{
 
     @Override
     public String toString() {
-        return "<Inventory " + item + ">";
+        return "<Inventory " + this.add + " " + this.item + ">";
     }
 }
