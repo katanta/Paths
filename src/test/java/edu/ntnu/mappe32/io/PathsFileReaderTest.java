@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class StoryReadTest {
+public class PathsFileReaderTest {
 
     Story mainTestStory;
 
@@ -100,7 +100,9 @@ public class StoryReadTest {
         void readStoryReturnsStoryWhenPathsFileEndsWithALink() throws IOException {
             lastPassage.addLink(lastLink);
             assertEquals(mainTestStory.toString(),
-                    PathsFileReader.readStory("src/main/resources/test_stories/main_test_story.paths").toString());
+                    PathsFileReader
+                            .readStory("src/main/resources/test_stories" +
+                                    "/main_test_story.paths").toString());
         }
 
         @DisplayName("retuns story when paths file ends with an action")
@@ -109,20 +111,31 @@ public class StoryReadTest {
             lastPassage.addLink(lastLink);
             lastLink.addAction(goldPlus100);
             assertEquals(mainTestStory.toString(),
-                    PathsFileReader.readStory("src/main/resources/test_stories/story_that_ends_with_action.paths").toString());
+                    PathsFileReader
+                            .readStory("src/main/resources/test_stories" +
+                                    "/story_that_ends_with_action.paths").toString());
         }
 
-        @DisplayName("returns sotry when paths file ends with passage content")
+        @DisplayName("returns story when paths file ends with passage content")
         @Test
         void readStoryReturnsStoryWhenPathsFileEndsWithPassageContent() throws IOException {
             assertEquals(mainTestStory.toString(),
-                    PathsFileReader.readStory("src/main/resources/test_stories/story_that_ends_with_passage_content.paths").toString());
+                    PathsFileReader
+                            .readStory("src/main/resources/test_stories" +
+                                    "/story_that_ends_with_passage_content.paths").toString());
         }
-        @DisplayName("throws IOException")
+        @DisplayName("throws NoSuchFileException when file is not found")
         @Test
         void readStoryThrowsIOExceptionWhenFileIsNonExistent() {
-            String fileName = "nonexistent_file.paths";
-            assertThrows(IOException.class, () -> PathsFileReader.readStory(fileName));
+            String fileName = "src/main/resources/test_stories/nonexistent_file.paths";
+            assertThrowsExactly(NoSuchFileException.class, () -> PathsFileReader.readStory(fileName));
+        }
+        @DisplayName("throws IllegalArguementException when Action type does not exist")
+        @Test
+        void readStoryThrowsIllegalArgumentExceptionWhenActionTypeDoesNotExist() {
+            assertThrows(IllegalArgumentException.class, () -> PathsFileReader
+                    .readStory("src/main/resources/test_stories" +
+                            "/throws_exception/story_that_has_action_type_which_does_not_exist.paths"));
         }
     }
 

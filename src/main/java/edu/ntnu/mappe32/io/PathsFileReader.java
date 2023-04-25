@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,10 +36,10 @@ public class PathsFileReader {
     private static final String LINK_REFERENCE_END_DELIMITER = ")";
     private static final String ACTION_DELIMITER = "<";
     private static final String ACTION_END_DELIMITER = ">";
-    private static final char INVENTORY_ACTION_FORMAT = 'i';
-    private static final char HEALTH_ACTION_FORMAT = 'h';
-    private static final char GOLD_ACTION_FORMAT = 'g';
-    private static final char SCORE_ACTION_FORMAT = 's';
+    private static final String INVENTORY_ACTION_FORMAT = "inventory";
+    private static final String HEALTH_ACTION_FORMAT = "health";
+    private static final String GOLD_ACTION_FORMAT = "gold";
+    private static final String SCORE_ACTION_FORMAT = "score";
 
     /**
      * This method reads a .paths file and returns a story.
@@ -47,7 +48,7 @@ public class PathsFileReader {
      * @throws FileNotFoundException Throws FileNotFoundException if the file is not found.
      * @throws IllegalArgumentException Throws IllegalArgumentException if the file path does not have the extension '.paths'.
      */
-    public static Story readStory(String filePath) throws IllegalArgumentException, IOException, FileNotFoundException {
+    public static Story readStory(String filePath) throws IllegalArgumentException, IOException {
         validateFilePath(filePath);
 
         File storyFile = new File(filePath);
@@ -77,16 +78,15 @@ public class PathsFileReader {
             // Create the story with only the opening passage
             story = new Story(storyTitle, passages.get(0));
 
-            // Remove the opening passage
-            passages.remove(0);
+            // Add remaining passages, excluding the opening passage
+            passages.stream().skip(1).forEach(story::addPassage);
 
-            // Add remaining passages
-            passages.forEach(story::addPassage);
-
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File does not exist");
+        } catch (NoSuchFileException e) {
+            throw new NoSuchFileException("File does not exist in the directory: "
+                    + e.getMessage());
         } catch (IOException e) {
-            throw new IOException(e.getMessage());
+            throw new IOException("An IOException occurred while attempting to read the file: "
+                    + e.getMessage());
         }
         return story;
     }
@@ -132,11 +132,15 @@ public class PathsFileReader {
         while (currentLine != null && currentLine.startsWith(LINK_TITLE_DELIMITER)) {
             Link link = parseLink();
 
-            // Parse actions and add them to the link
-            while ((currentLine = bufferedReader.readLine()) != null && currentLine.startsWith(ACTION_DELIMITER)) {
-                parseActionAndAddActionToLink(link);
-            }
+            // Check if currentLine contains actions
+            if (currentLine.substring(currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER))
+                    .contains(ACTION_DELIMITER)) {
+                //Parse actions and add them to the link
+                Arrays.stream(splitCurrentLineIntoActions()).forEach(action ->
+                        parseActionAndAddActionToLink(action, link));
 
+            }
+            currentLine = bufferedReader.readLine();
             passage.addLink(link);
         }
 
@@ -150,31 +154,46 @@ public class PathsFileReader {
      */
     private static Link parseLink() {
         String linkTitle = currentLine
-                .substring(currentLine.indexOf(LINK_TITLE_DELIMITER) + 1, currentLine.lastIndexOf(LINK_TITLE_END_DELIMITER));
+                .substring(currentLine.indexOf(LINK_TITLE_DELIMITER) + 1,
+                        currentLine.lastIndexOf(LINK_TITLE_END_DELIMITER));
         String linkReference = currentLine
-                .substring(currentLine.indexOf(LINK_REFERENCE_DELIMITER) + 1, currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER));
+                .substring(currentLine.indexOf(LINK_REFERENCE_DELIMITER) + 1,
+                        currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER));
+
         return new Link(linkTitle, linkReference);
     }
 
     /**
-     * This method parses a line that correspons to an action (starts with '<').
-     * It resolves the action type and the value of the action using currentLine and splitting it.
+     * This method splits the currentLine into an Array of String,
+     * where each String represents actions of a link.
+     * @return Array of String which represents actions, as String[].
+     */
+    public static String[] splitCurrentLineIntoActions() {
+        String actions = currentLine.substring(currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER) + 1);
+        return actions.split(ACTION_END_DELIMITER);
+    }
+
+    /**
+     * This method parses a String action,
+     * which contains an action in the format "<'actionType' 'value'".
+     * It resolves the action type and the value of the action by splitting the String.
      * The method parses and instantiates an action based on the action type.
      * @param link The link in which the action is to be added to, as Link.
      */
-    private static void parseActionAndAddActionToLink(Link link) {
-        char actionType = currentLine.charAt(1);
+    private static void parseActionAndAddActionToLink(String action, Link link) {
+        String actionType = action.substring(1, action.indexOf(" ")).toLowerCase();
         switch (actionType) {
             case INVENTORY_ACTION_FORMAT -> {
-                String itemName = Arrays.stream(currentLine.split(" "))
+                String itemName = Arrays.stream(action.split(" "))
                         .skip(1)
                         .collect(Collectors.joining(" "));
 
 
-                link.addAction(new InventoryAction(itemName.substring(0, itemName.length() - 1)));
+                link.addAction(new InventoryAction(itemName));
             }
             case GOLD_ACTION_FORMAT, HEALTH_ACTION_FORMAT, SCORE_ACTION_FORMAT ->
-                    addNumberBasedActionToLink(actionType, link);
+                    addNumberBasedActionToLink(action, actionType, link);
+            default -> throw new IllegalArgumentException("This Action type could not be found");
         }
     }
 
@@ -185,9 +204,9 @@ public class PathsFileReader {
      * @param actionType Type of actions, as char
      * @param link The link in which the action is to be added to, as Link.
      */
-    private static void addNumberBasedActionToLink(char actionType, Link link) {
-        String[] parts = currentLine.split(" ");
-        int value = Integer.parseInt(parts[1].substring(0, parts[1].lastIndexOf(ACTION_END_DELIMITER)));
+    private static void addNumberBasedActionToLink(String action, String actionType, Link link) {
+        String[] parts = action.split(" ");
+        int value = Integer.parseInt(parts[1]);
 
         switch (actionType) {
             case GOLD_ACTION_FORMAT -> link.addAction(new GoldAction(value));

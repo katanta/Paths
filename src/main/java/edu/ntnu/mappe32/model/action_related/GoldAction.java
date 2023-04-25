@@ -28,7 +28,7 @@ public class GoldAction implements Action {
 
     @Override
     public String toString() {
-        return "<gold " + gold + ">";
+        return "<Gold " + gold + ">";
     }
 }
 

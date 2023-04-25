@@ -13,6 +13,9 @@ public class InventoryGoal implements Goal {
      * @since 0.1
      */
     public InventoryGoal(List<String> mandatoryItems) {
+        if (mandatoryItems == null || mandatoryItems.isEmpty()) {
+            throw new IllegalArgumentException("Mandatory items cannot be empty or null");
+        }
         this.mandatoryItems = mandatoryItems;
     }
 

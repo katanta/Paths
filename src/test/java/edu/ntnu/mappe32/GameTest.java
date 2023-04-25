@@ -159,6 +159,11 @@ public class GameTest {
     @DisplayName("constructor")
     @Nested
     public class GameConstructor {
+        @DisplayName("does not throw IllegalArgumentExcpetion when paramters are not null")
+        @Test
+        void doesNotThrowIllegalArgumentExceptionWhenParametersAreNotNull() {
+            assertDoesNotThrow(() -> new Game(mutumbu, storyOfAfrica, goals));
+        }
         @DisplayName("throws illegalArguementException when player is null")
         @Test
         void throwsIllegalArgumentExceptionWhenPlayerIsNull() {
@@ -202,7 +207,7 @@ public class GameTest {
             assertNotEquals(mutatedGoals, game1.getGoals());
         }
     }
-    @DisplayName("begin() returns opening passage a game's story")
+    @DisplayName("begin() returns opening passage of a game's story")
     @Test
     void beginReturnsOpeningPassageOfAGamesStory() {
         assertEquals(storyOfAfrica.getOpeningPassage(), game1.begin());

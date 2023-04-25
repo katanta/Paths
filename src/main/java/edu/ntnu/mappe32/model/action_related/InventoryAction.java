@@ -27,6 +27,6 @@ public class InventoryAction implements Action{
 
     @Override
     public String toString() {
-        return "<inventory " + item + ">";
+        return "<Inventory " + item + ">";
     }
 }

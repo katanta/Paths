@@ -55,6 +55,43 @@ public class PlayerTest {
         this.pumbasTestInventory = new ArrayList<String>(Arrays.asList("N'Tofos", "Orange",
                 "Apple", "Machete", "Knife", "Paperclip", "Rolex", "Key"));
     }
+
+    @DisplayName("constructor")
+    @Nested
+    class ConstructorTest {
+        @DisplayName("throws IllegalArgumentException when player gold is less than zero")
+        @Test
+        void throwsIllegalArgumentExceptionWhenPlayerGoldIsLessThanZero() {
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Player("Name", 100, 100, -100));
+
+        }
+
+        @DisplayName("throws IllegalArgumentException when player health is less than zero")
+        @Test
+        void throwsIllegalArgumentExceptionWhenPlayerHealthIsLessThanZero() {
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Player("Name", -100, 100, 100));
+        }
+        @DisplayName("throws IllegalArgumentException when player gold is less than zero")
+        @Test
+        void throwsIllegalArgumentExceptionWhenPlayerScoreIsLessThanZero() {
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Player("Name", 100, -100, 100));
+        }
+        @DisplayName("throws IllegalArgumentException when player name is null")
+        @Test
+        void throwsIllegalArgumentExceptionWhenPlayerNameIsNull() {
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Player(null, 100, 100, 100));
+        }
+        @DisplayName("throws IllegalArgumentException when player name is blank")
+        @Test
+        void throwsIllegalArgumentExceptionWhenPlayerNameIsBlank() {
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Player("   ", 100, 100, 100));
+        }
+    }
     @DisplayName("getName() returns name")
     @Test
     void getNameReturnsName() {
@@ -120,6 +157,11 @@ public class PlayerTest {
             assertThrows(IllegalArgumentException.class, () -> mutumbu.addGold(-10000));
             assertThrows(IllegalArgumentException.class, () -> mufasa.addGold(-100000000));
             assertThrows(IllegalArgumentException.class, () -> pumba.addGold(-10000));
+        }
+        @DisplayName("does not throw IllegalArgumentException when player has just enough gold")
+        @Test
+        void doesNotThrowIllegalArgumentExceptionWhenPlayerHasEnoughGold() {
+            assertDoesNotThrow(() -> mutumbu.addGold(-25));
         }
     }
 

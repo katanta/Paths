@@ -12,19 +12,16 @@ import java.io.IOException;
  * @author Kristians J. Matrevics
  */
 public class PathsFileWriter {
-    public PathsFileWriter() {
-    }
-
-    public void writeStory(Story story, String filePath) throws IOException {
+    public static void writeStory(Story story, String filePath) throws IOException {
         File file = new File(filePath);
-        if (!file.getName().endsWith(".paths")) {
-            throw new IOException("Unsupported file format. Only .paths-files are supported.");
+        if (!file.getPath().endsWith(".paths")) {
+            throw new IllegalArgumentException("Unsupported file format. Only .paths-files are supported.");
         }
 
         try(FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write(story.toString());
         } catch (IOException e) {
-            throw new IOException("Unable to write to paths-file: " + e.getMessage());
+            throw new IOException("Unable to write the file: " + e.getMessage());
         }
     }
 }

@@ -94,6 +94,11 @@ public class PassageTest {
     @DisplayName("constructor")
     @Nested
     class PassageConstructor {
+        @DisplayName("does not throw IllegalArgumentException when title and content are not blank")
+        @Test
+        void doesNotThrowIllegalArgumentExceptionWhenTitleAndContentAreNotBlank() {
+            assertDoesNotThrow(() -> new Passage("Title", "Content"));
+        }
         @DisplayName("throws IllegalArgumentException when title is blank")
         @Test
         void throwsIllegalArgumentWhenTitleIsBlank() {
@@ -158,6 +163,11 @@ public class PassageTest {
             assertionLinks.add(runToKilimanjaro);
             assertEquals(assertionLinks, climbedTree.getLinks());
         }
+        @DisplayName("return true when adding link that does not exist in passage")
+        @Test
+        void addLinkReturnsTrueWhenAddingLinkThatDoesNotExistInPassage() {
+            assertTrue(climbedTree.addLink(runToKilimanjaro));
+        }
         @DisplayName("returns false when adding a link that already exists in a passage")
         @Test
         void addLinkReturnsFalseWhenAddingLinkThatAlreadyExistsInPassage() {
@@ -203,11 +213,19 @@ public class PassageTest {
     @DisplayName("toString() returns correct String")
     @Test
     void toStringReturnsToString() {
-        StringBuilder s = new StringBuilder();
 
-        s.append("::Opening Passage\nYou just found the enchanted apple tree you've been searching for your whole adventure around Serengeti. " + "You're hungry and you see a golden apple hanging from the tree.\n")
-                .append(climbTree);
-        assertEquals(s.toString(), openingPassage.toString());
+        String s = "::Opening Passage\nYou just found the enchanted apple tree you've been searching for your whole adventure around Serengeti. "
+                + "You're hungry and you see a golden apple hanging from the tree.\n" +
+                climbTree;
+        assertEquals(s, openingPassage.toString());
+    }
+
+    @DisplayName("hashCode is symmetric")
+    @Test
+    void hashCodeIsSymmetric() {
+        Passage passage1 = new Passage("passage", "content");
+        Passage passage2 = new Passage("passage", "content");
+        assertEquals(passage1.hashCode(), passage2.hashCode());
     }
 
 }
