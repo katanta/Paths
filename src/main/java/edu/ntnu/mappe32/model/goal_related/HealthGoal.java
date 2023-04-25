@@ -28,4 +28,8 @@ public class HealthGoal implements Goal {
     public boolean isFulfilled(Player player) {
         return player.getHealth() >= minimumHealth;
     }
+
+    public String toString() {
+        return "Have a total of " + minimumHealth + " health";
+    }
 }

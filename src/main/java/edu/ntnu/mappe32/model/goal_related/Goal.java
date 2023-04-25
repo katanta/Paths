@@ -14,4 +14,11 @@ public interface Goal {
      * @since 0.1
      */
     boolean isFulfilled(Player player);
+
+    /**
+     * Returns a string representation of the object meant to be seen by a user/player.
+     * @return A textual representation of the goal, as String.
+     * @since 0.3
+     */
+    String toString();
 }
