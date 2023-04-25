@@ -1,8 +1,11 @@
 package edu.ntnu.mappe32.model.goal_related;
 
+import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InventoryGoal implements Goal {
     // List of mandatory items that a player needs to achieve an InventoryGoal
@@ -12,6 +15,7 @@ public class InventoryGoal implements Goal {
      * @param mandatoryItems items required to reach a particular goal, as a list of strings.
      * @since 0.1
      */
+    //TODO: The current iteration of InventoryGoal does not take into account if a player has met quantity requirements
     public InventoryGoal(List<String> mandatoryItems) {
         if (mandatoryItems == null || mandatoryItems.isEmpty()) {
             throw new IllegalArgumentException("Mandatory items cannot be empty or null");
@@ -27,9 +31,9 @@ public class InventoryGoal implements Goal {
      */
     @Override
     public boolean isFulfilled(Player player) {
-        int mandatoryItemCount = (int) player.getInventory().keySet().stream().
-                filter(mandatoryItems::contains).count();
-        return mandatoryItemCount == mandatoryItems.size();
+        HashSet<String> itemNames = (HashSet<String>) player.getInventory().keySet().stream().map(Item::getItemName).collect(Collectors.toSet());
+
+        return itemNames.containsAll(mandatoryItems);
     }
 }
 
