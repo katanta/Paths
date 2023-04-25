@@ -6,6 +6,7 @@ import edu.ntnu.mappe32.model.action_related.Action;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Item {
     private final String itemName;
@@ -42,5 +43,17 @@ public class Item {
         StringBuilder s = new StringBuilder(itemName + " ");
         actions.forEach(action -> s.append(action).append(" "));
         return s.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item item)) return false;
+        return itemName.equals(item.itemName) && actions.equals(item.actions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemName, actions);
     }
 }
