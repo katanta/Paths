@@ -1,8 +1,11 @@
 package edu.ntnu.mappe32.view;
 
 import edu.ntnu.mappe32.controller.Game;
+import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Passage;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,6 +22,7 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Stack;
 
 public class PassageView {
@@ -29,15 +33,19 @@ public class PassageView {
     Game game;
     Passage currentPassage;
     VBox linkButtons;
+    VBox gameGoals;
     Label playerHealthLabel;
     Label playerScoreLabel;
     Label playerGoldLabel;
+
+
 
     public PassageView(Game game) {
         this.game = game;
     }
 
     public void configurePassageContent() throws FileNotFoundException {
+
         currentPassage = game.begin();
         StackPane root = new StackPane();
         scene = new Scene(root, 1280, 720);
@@ -79,7 +87,6 @@ public class PassageView {
         center.getChildren().add(linksScrollPane);
         center.setMargin(linksScrollPane, new Insets(35, 0, 0, 0));
 
-        //TODO: Configure right side; player info
 
         Font infoFont = new Font(14);
         //setup health indicator
@@ -115,16 +122,33 @@ public class PassageView {
         playerGold.setAlignment(Pos.CENTER_LEFT);
         playerGold.setSpacing(20);
 
+        //Set all player info, (score, hp, and gold)
         VBox playerInfo = new VBox(playerHealth, playerScore, playerGold); //TODO: add the other elements here...
         playerInfo.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        Label infoTitle = new Label(game.getPlayer().getName() + "'s status");
+        VBox.setMargin(infoTitle, new Insets(30, 0, 0, 0));
         playerInfo.setSpacing(40);
         playerInfo.setMaxWidth(320);
         playerInfo.setAlignment(Pos.TOP_LEFT);
+
         VBox.setMargin(playerHealth, new Insets(40, 0, 0, 50));
         VBox.setMargin(playerScore, new Insets(0, 0, 0, 37));
         VBox.setMargin(playerGold, new Insets(0, 0, 0, 43));
         StackPane.setAlignment(playerInfo, Pos.TOP_RIGHT);
         root.getChildren().add(playerInfo);
+
+        //Set up goals
+        gameGoals = new VBox();
+        gameGoals.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        gameGoals.setMaxWidth(320);
+        StackPane.setAlignment(gameGoals, Pos.TOP_LEFT);
+        root.getChildren().add(gameGoals);
+        ScrollPane goalScrollPane = new ScrollPane();
+        ObservableList<Goal> listOfGoals = FXCollections.observableList(game.getGoals());
+        for (Goal g : listOfGoals) {
+
+        }
+
     }
 
     public Scene getScene() throws FileNotFoundException {
