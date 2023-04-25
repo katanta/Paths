@@ -8,12 +8,18 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Stack;
 
 public class PassageView {
     Scene scene;
@@ -23,12 +29,15 @@ public class PassageView {
     Game game;
     Passage currentPassage;
     VBox linkButtons;
+    Label playerHealthLabel;
+    Label playerScoreLabel;
+    Label playerGoldLabel;
 
     public PassageView(Game game) {
         this.game = game;
     }
 
-    public void configurePassageContent() {
+    public void configurePassageContent() throws FileNotFoundException {
         currentPassage = game.begin();
         StackPane root = new StackPane();
         scene = new Scene(root, 1280, 720);
@@ -69,17 +78,73 @@ public class PassageView {
         linksScrollPane.setFitToWidth(true);
         center.getChildren().add(linksScrollPane);
         center.setMargin(linksScrollPane, new Insets(35, 0, 0, 0));
+
+        //TODO: Configure right side; player info
+
+        Font infoFont = new Font(14);
+        //setup health indicator
+        ImageView healthIcon = new ImageView(new Image(new FileInputStream("src/main/resources/img/hp.png")));
+        playerHealthLabel = new Label("HEALTH: " + game.getPlayer().getHealth());
+        playerHealthLabel.setFont(infoFont);
+        playerHealthLabel.setLabelFor(healthIcon);
+        healthIcon.setFitHeight(50);
+        healthIcon.setFitWidth(50);
+        HBox playerHealth = new HBox(healthIcon, playerHealthLabel);
+        playerHealth.setAlignment(Pos.CENTER_LEFT);
+        playerHealth.setSpacing(20);
+
+        //setup score indicator
+        ImageView scoreIcon = new ImageView(new Image(new FileInputStream("src/main/resources/img/score.png")));
+        playerScoreLabel = new Label("SCORE: " + game.getPlayer().getScore());
+        playerScoreLabel.setFont(infoFont);
+        playerScoreLabel.setLabelFor(scoreIcon);
+        scoreIcon.setFitHeight(67);
+        scoreIcon.setFitWidth(67);
+        HBox playerScore = new HBox(scoreIcon, playerScoreLabel);
+        playerScore.setAlignment(Pos.CENTER_LEFT);
+        playerScore.setSpacing(20);
+
+        //setup gold indicator
+        ImageView goldIcon = new ImageView(new Image(new FileInputStream("src/main/resources/img/gold.png")));
+        playerGoldLabel = new Label("GOLD: " + game.getPlayer().getGold());
+        playerGoldLabel.setFont(infoFont);
+        playerGoldLabel.setLabelFor(goldIcon);
+        goldIcon.setFitHeight(58);
+        goldIcon.setFitWidth(60);
+        HBox playerGold = new HBox(goldIcon, playerGoldLabel);
+        playerGold.setAlignment(Pos.CENTER_LEFT);
+        playerGold.setSpacing(20);
+
+        VBox playerInfo = new VBox(playerHealth, playerScore, playerGold); //TODO: add the other elements here...
+        playerInfo.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        playerInfo.setSpacing(40);
+        playerInfo.setMaxWidth(320);
+        playerInfo.setAlignment(Pos.TOP_LEFT);
+        VBox.setMargin(playerHealth, new Insets(40, 0, 0, 50));
+        VBox.setMargin(playerScore, new Insets(0, 0, 0, 37));
+        VBox.setMargin(playerGold, new Insets(0, 0, 0, 43));
+        StackPane.setAlignment(playerInfo, Pos.TOP_RIGHT);
+        root.getChildren().add(playerInfo);
     }
 
-    public Scene getScene() {
+    public Scene getScene() throws FileNotFoundException {
         configurePassageContent();
         return scene;
     }
 
+    /**
+     * Updates the scene based on the current active passage. The link buttons
+     * receive an action that changes the current passage, and executes this method once again.
+     */
     public void updateScene() {
         linkButtons.getChildren().clear();
         passageContent.setText(currentPassage.getContent());
         passageTitle.setText(currentPassage.getTitle());
+        playerGoldLabel.setText("GOLD: " + game.getPlayer().getGold());
+        playerHealthLabel.setText("HEALTH: " + game.getPlayer().getHealth());
+        playerScoreLabel.setText("SCORE: " + game.getPlayer().getScore());
+        //TODO: Update Inventory too when it is implemented
+        //TODO: Show current goals & completion status.
         currentPassage.getLinks().forEach(link -> {
             Button linkButton = new Button(link.getText());
             linkButton.setPrefSize(200, 40);
