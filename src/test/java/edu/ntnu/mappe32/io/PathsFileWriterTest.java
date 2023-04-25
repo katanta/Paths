@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.io;
 
+import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.action_related.*;
 import edu.ntnu.mappe32.model.story_related.Link;
 import edu.ntnu.mappe32.model.story_related.Passage;
@@ -28,9 +29,9 @@ class PathsFileWriterTest {
         Action scoreMinus100 = new ScoreAction(-100);
         Action healthPlus100 = new HealthAction(100);
         Action healthMinus100 = new HealthAction(-100);
-        Action medalOfTheCoward = new InventoryAction("Medal of the Coward");
-        Action keysYoWhatsUp = new InventoryAction("Keys Yo Whats Up");
-        Action helmet = new InventoryAction("Helmet");
+        Action medalOfTheCoward = new InventoryAction(new Item("Medal Of The Coward", new ScoreAction(-10)), true);
+        Action keysYoWhatsUp = new InventoryAction(new Item("Keys Yo Whats Up", new ScoreAction(10)), true);
+        Action helmet = new InventoryAction(new Item("Helmet", new HealthAction(100)), true);
         Action goldPlus50 = new GoldAction(50);
         goldPlus100 = new GoldAction(100);
         Action goldPlus1000 = new GoldAction(1000);

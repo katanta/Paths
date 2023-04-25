@@ -1,10 +1,13 @@
 package edu.ntnu.mappe32;
 
-import edu.ntnu.mappe32.action_related.*;
-import edu.ntnu.mappe32.goal_related.*;
-import edu.ntnu.mappe32.story_related.Link;
-import edu.ntnu.mappe32.story_related.Passage;
-import edu.ntnu.mappe32.story_related.Story;
+import edu.ntnu.mappe32.controller.Game;
+import edu.ntnu.mappe32.model.Item;
+import edu.ntnu.mappe32.model.Player;
+import edu.ntnu.mappe32.model.action_related.*;
+import edu.ntnu.mappe32.model.goal_related.*;
+import edu.ntnu.mappe32.model.story_related.Link;
+import edu.ntnu.mappe32.model.story_related.Passage;
+import edu.ntnu.mappe32.model.story_related.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -18,9 +21,9 @@ public class GameTest {
     Player mutumbu;
     Player mufasa;
     Player pumba;
-    List<String> pumbasTestInventory;
-    List<String> mutumbusTestInventory;
-    List<String> mufasasTestInventory;
+    List<Item> pumbasTestInventory;
+    List<Item> mutumbusTestInventory;
+    List<Item> mufasasTestInventory;
     Link climbTree;
     Link kickTree;
     Link shakeTree;
@@ -48,40 +51,55 @@ public class GameTest {
     Goal tapeItUp;
     @BeforeEach
     void setup() {
-        this.mutumbu = new Player("Mutumbu", 150, 0, 25);
-        this.mufasa = new Player("Mufasa", 200, 50, 100);
-        this.pumba = new Player("Pumba", 202, 40, 100);
-        this.mutumbu.addToInventory("Tape");
-        this.mutumbu.addToInventory("Lighter");
-        this.mutumbu.addToInventory("Candle");
-        this.mutumbu.addToInventory("Potato");
-        this.mutumbu.addToInventory("Hammer");
-        this.mutumbu.addToInventory("Dagger");
-        this.mutumbu.addToInventory("Scarf");
-        this.mufasa.addToInventory("Key");
-        this.mufasa.addToInventory("Milk");
-        this.mufasa.addToInventory("Chicken");
-        this.mufasa.addToInventory("Pencil");
-        this.mufasa.addToInventory("Wood");
-        this.mufasa.addToInventory("Paper");
-        this.pumba.addToInventory("N'Tofos");
-        this.pumba.addToInventory("Orange");
-        this.pumba.addToInventory("Apple");
-        this.pumba.addToInventory("Machete");
-        this.pumba.addToInventory("Knife");
-        this.pumba.addToInventory("Paperclip");
-        this.pumba.addToInventory("Rolex");
-        this.pumba.addToInventory("Key");
-        this.mutumbusTestInventory = new ArrayList<String>(Arrays.asList("Tape", "Lighter", "Candle", "Potato", "Hammer",
-                "Dagger", "Scarf"));
-        this.mufasasTestInventory = new ArrayList<String>(Arrays.asList("Key", "Milk", "Chicken", "Pencil", "Wood", "Paper"));
-        this.pumbasTestInventory = new ArrayList<String>(Arrays.asList("N'Tofos", "Orange",
-                "Apple", "Machete", "Knife", "Paperclip", "Rolex", "Key"));
+        this.mutumbu = new Player("Mutumbu", 150, 0, 25, new HashMap<>());
+        this.mufasa = new Player("Mufasa", 200, 50, 100, new HashMap<>());
+        this.pumba = new Player("Pumba", 202, 40, 100, new HashMap<>());
+        this.mutumbu.addToInventory(new Item("Tape", new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Lighter", new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Candle", new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Potato", new HealthAction(10)));
+        this.mutumbu.addToInventory(new Item("Hammer", new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Dagger", new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Scarf", new HealthAction(10)));
+        this.mufasa.addToInventory(new Item("Key", new ScoreAction(10)));
+        this.mufasa.addToInventory(new Item("Milk", new HealthAction(10)));
+        this.mufasa.addToInventory(new Item("Chicken", new HealthAction(50)));
+        this.mufasa.addToInventory(new Item("Pencil", new ScoreAction(10)));
+        this.mufasa.addToInventory(new Item("Wood", new ScoreAction(10)));
+        this.mufasa.addToInventory(new Item("Paper", new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("N'Tofos", new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Orange", new HealthAction(20)));
+        this.pumba.addToInventory(new Item("Apple", new HealthAction(10)));
+        this.pumba.addToInventory(new Item("Machete", new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Knife", new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Paperclip", new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Rolex", new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Key", new ScoreAction(10)));
+        this.mutumbusTestInventory = new ArrayList<>(Arrays.asList(new Item("Tape", new ScoreAction(10)),
+                new Item("Lighter", new ScoreAction(10)), new Item("Candle", new ScoreAction(10)),
+                new Item("Potato", new HealthAction(10)), new Item("Hammer", new ScoreAction(10)),
+                new Item("Dagger", new ScoreAction(10)), new Item("Scarf", new HealthAction(10))));
+
+        this.mufasasTestInventory = new ArrayList<>(Arrays.asList(new Item("Key", new ScoreAction(10)),
+                new Item("Milk", new HealthAction(10)),
+                new Item("Chicken", new HealthAction(50)),
+                new Item("Pencil", new ScoreAction(10)),
+                new Item("Wood", new ScoreAction(10)),
+                new Item("Paper", new ScoreAction(10))));
+
+        this.pumbasTestInventory = new ArrayList<>(Arrays.asList(new Item("N'Tofos", new ScoreAction(10)),
+                new Item("Orange", new HealthAction(20)),
+                new Item("Apple", new HealthAction(10)),
+                new Item("Machete", new ScoreAction(10)),
+                new Item("Knife", new ScoreAction(10)),
+                new Item("Paperclip", new ScoreAction(10)),
+                new Item("Rolex", new ScoreAction(10)),
+                new Item("Key", new ScoreAction(10))));
 
         remove10HealthPoints = new HealthAction(-10);
         add1ScorePoint = new ScoreAction(1);
         add10GoldPoints = new GoldAction(10);
-        addMacheteToInventory = new InventoryAction("Machete");
+        addMacheteToInventory = new InventoryAction(new Item("Machete", new ScoreAction(10)), true);
 
         assertionActions = new ArrayList<>();
 
@@ -157,6 +175,11 @@ public class GameTest {
     @DisplayName("constructor")
     @Nested
     public class GameConstructor {
+        @DisplayName("does not throw IllegalArgumentExcpetion when paramters are not null")
+        @Test
+        void doesNotThrowIllegalArgumentExceptionWhenParametersAreNotNull() {
+            assertDoesNotThrow(() -> new Game(mutumbu, storyOfAfrica, goals));
+        }
         @DisplayName("throws illegalArguementException when player is null")
         @Test
         void throwsIllegalArgumentExceptionWhenPlayerIsNull() {
@@ -200,7 +223,7 @@ public class GameTest {
             assertNotEquals(mutatedGoals, game1.getGoals());
         }
     }
-    @DisplayName("begin() returns opening passage a game's story")
+    @DisplayName("begin() returns opening passage of a game's story")
     @Test
     void beginReturnsOpeningPassageOfAGamesStory() {
         assertEquals(storyOfAfrica.getOpeningPassage(), game1.begin());
@@ -221,8 +244,12 @@ public class GameTest {
             assertEquals(140, mutumbu.getHealth());
             assertEquals(1, mutumbu.getScore());
             assertEquals(35, mutumbu.getGold());
-            mutumbusTestInventory.add("Machete");
-            assertEquals(mutumbusTestInventory, mutumbu.getInventory());
+
+            mutumbusTestInventory.add(new Item("Machete", new ScoreAction(10)));
+
+            assertTrue(mutumbusTestInventory.containsAll(mutumbu.getInventory().keySet()));
+            assertTrue(mutumbu.getInventory().keySet().containsAll(mutumbusTestInventory));
+            assertEquals(mutumbusTestInventory.size(), mutumbu.getInventory().keySet().size());
         }
     }
 }

@@ -1,8 +1,9 @@
 package edu.ntnu.mappe32.story_related;
 
-import edu.ntnu.mappe32.action_related.*;
-import edu.ntnu.mappe32.story_related.Link;
-import edu.ntnu.mappe32.story_related.Passage;
+import edu.ntnu.mappe32.model.Item;
+import edu.ntnu.mappe32.model.action_related.*;
+import edu.ntnu.mappe32.model.story_related.Link;
+import edu.ntnu.mappe32.model.story_related.Passage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -36,7 +37,7 @@ public class PassageTest {
         remove10HealthPoints = new HealthAction(-10);
         add1ScorePoint = new ScoreAction(1);
         add10GoldPoints = new GoldAction(10);
-        addMacheteToInventory = new InventoryAction("Machete");
+        addMacheteToInventory = new InventoryAction(new Item("Machete", new ScoreAction(10)), true);
 
         assertionActions = new ArrayList<>();
 
@@ -94,10 +95,20 @@ public class PassageTest {
     @DisplayName("constructor")
     @Nested
     class PassageConstructor {
+        @DisplayName("does not throw IllegalArgumentException when title and content are not blank")
+        @Test
+        void doesNotThrowIllegalArgumentExceptionWhenTitleAndContentAreNotBlank() {
+            assertDoesNotThrow(() -> new Passage("Title", "Content"));
+        }
         @DisplayName("throws IllegalArgumentException when title is blank")
         @Test
         void throwsIllegalArgumentWhenTitleIsBlank() {
-            assertThrows(IllegalArgumentException.class, () -> new Passage("", "ABC"));
+            assertThrows(IllegalArgumentException.class, () -> new Passage("  ", "ABC"));
+        }
+        @DisplayName("throws IllegalArgumentException when title is null")
+        @Test
+        void throwsIllegalArgumentWhenTitleIsNull() {
+            assertThrows(IllegalArgumentException.class, () -> new Passage(null, "ABC"));
         }
         @DisplayName("throws IllegalArgumentException when content is blank")
         @Test
@@ -153,6 +164,11 @@ public class PassageTest {
             assertionLinks.add(runToKilimanjaro);
             assertEquals(assertionLinks, climbedTree.getLinks());
         }
+        @DisplayName("return true when adding link that does not exist in passage")
+        @Test
+        void addLinkReturnsTrueWhenAddingLinkThatDoesNotExistInPassage() {
+            assertTrue(climbedTree.addLink(runToKilimanjaro));
+        }
         @DisplayName("returns false when adding a link that already exists in a passage")
         @Test
         void addLinkReturnsFalseWhenAddingLinkThatAlreadyExistsInPassage() {
@@ -163,6 +179,16 @@ public class PassageTest {
         void addLinkDoesNotAddLinkThatAlreadyExistsInPassage() {
             climbedTree.addLink(runHome);
             assertEquals(assertionLinks, climbedTree.getLinks());
+        }
+        @DisplayName("does not add link with same text as another link")
+        @Test
+        void addLinkDoesNotAddLinkWithSameTextAsAnotherLink() {
+            climbedTree.addLink(new Link(runHome.getText(), "Unique reference"));
+        }
+        @DisplayName("adds link with the same reference as another link")
+        @Test
+        void addLinkAddsLinkWithTheSameReferenceAsAnotherLink() {
+            climbedTree.addLink(new Link("Unique text", runHome.getReference()));
         }
     }
     @DisplayName("hasLinks()")
@@ -189,11 +215,18 @@ public class PassageTest {
     @Test
     void toStringReturnsToString() {
 
-        String openingPassageToString = "Title: Opening Passage\nContent: " +
-                "You just found the enchanted apple tree you've been searching for your whole adventure around Serengeti. " +
-                "You're hungry and you see a golden apple hanging from the tree.\nLinks Info: Link{text='" +
-                "Climb the tree\'" + ", reference='Climbed tree Passage\'" + ", actions=[]}\n";
-        assertEquals(openingPassageToString, openingPassage.toString());
+        String s = "::Opening Passage\nYou just found the enchanted apple tree you've been searching for your whole adventure around Serengeti. "
+                + "You're hungry and you see a golden apple hanging from the tree.\n" +
+                climbTree;
+        assertEquals(s, openingPassage.toString());
+    }
+
+    @DisplayName("hashCode is symmetric")
+    @Test
+    void hashCodeIsSymmetric() {
+        Passage passage1 = new Passage("passage", "content");
+        Passage passage2 = new Passage("passage", "content");
+        assertEquals(passage1.hashCode(), passage2.hashCode());
     }
 
 }

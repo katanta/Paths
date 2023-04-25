@@ -2,7 +2,7 @@ The story of the troll
 
 ::::You see a :troll
 ::You see a:: 3-meter( )tall troll slowly turning towards you.
-[Run away](Run Away)<score -100><health 100><inventory Medal of the Coward>
+[Run away](Run Away)<NonExsistentAction 100><score -100><health 100><inventory true Medal of the Coward>
 [Attack the troll](Attack the troll)<gold 1000><gold -1000><health 100><score 100>
 [Call the chopper](Call the chopper)<score 90><health 100><score 10><inventory Keys Yo Whats Up><inventory Helmet>
 

@@ -1,8 +1,9 @@
 package edu.ntnu.mappe32.story_related;
 
-import edu.ntnu.mappe32.action_related.*;
-import edu.ntnu.mappe32.story_related.Link;
-import edu.ntnu.mappe32.story_related.Passage;
+import edu.ntnu.mappe32.model.Item;
+import edu.ntnu.mappe32.model.action_related.*;
+import edu.ntnu.mappe32.model.story_related.Link;
+import edu.ntnu.mappe32.model.story_related.Passage;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class LinkTest {
         remove10HealthPoints = new HealthAction(-10);
         add1ScorePoint = new ScoreAction(1);
         add10GoldPoints = new GoldAction(10);
-        addMacheteToInventory = new InventoryAction("Machete");
+        addMacheteToInventory = new InventoryAction(new Item("Machete", new ScoreAction(100)), true);
         add20GoldPoints = new GoldAction(20);
         testActions = new ArrayList<>();
 
@@ -76,16 +77,30 @@ public class LinkTest {
     @Nested
     @DisplayName("constructor")
     class LinkConstructorThrowsExceptions {
-
+        @Test
+        @DisplayName("does not throw IllegalArgumentException when text and reference are not blank")
+        void contructorDoesNotThrowIllegalArgumentExceptionWhenTextAndReferenceAreNotBlank() {
+            assertDoesNotThrow(() -> new Link("Text", "Reference"));
+        }
         @Test
         @DisplayName("throws IllegalArgumentException for a link with blank text")
         void throwsIllegalArgumentWhenTextIsBlank() {
-            assertThrows(IllegalArgumentException.class, () -> new Link("", "ABC"));
+            assertThrows(IllegalArgumentException.class, () -> new Link("", "Reference"));
         }
-        @DisplayName("throws IllegalArgumentException for a link with a blank reference")
+        @Test
+        @DisplayName("throws IllegalArgumentException for a link with null text")
+        void throwsIllegalArgumentWhenTextIsNull() {
+            assertThrows(IllegalArgumentException.class, () -> new Link(null, "Reference"));
+        }
+        @DisplayName("throws IllegalArgumentException when reference is null")
         @Test
         void throwsIllegalArgumentWhenReferenceIsBlank() {
-            assertThrows(IllegalArgumentException.class, () -> new Link("ABC", ""));
+            assertThrows(IllegalArgumentException.class, () -> new Link("Text", ""));
+        }
+        @DisplayName("throws IllegalArgumentException for a link with null reference")
+        @Test
+        void throwsIllegalArgumentWhenLinkReferenceIsNull() {
+            assertThrows(IllegalArgumentException.class, () -> new Link("Text", null));
         }
     }
     @DisplayName("getText() retuns text")
@@ -102,7 +117,7 @@ public class LinkTest {
         assertEquals("Kicked/shaked tree Passage", kickTree.getReference());
         assertEquals("Frantically waved Hands Passage", franticallyWaveHands.getReference());
     }
-    @DisplayName("addAction() returns action")
+    @DisplayName("addAction() adds action")
     @Test
     void addActionAddsAction() {
         assertEquals(testActions, kickTree.getActions());
@@ -127,8 +142,10 @@ public class LinkTest {
     @DisplayName("toString() returns String representation")
     @Test
     void toStringReturnsToString() {
-        String kickTreeToString = "Link{" + "text='" + "Kick the tree" + '\'' +
-                ", reference='" + "Kicked/shaked tree Passage" + '\'' + ", actions=" + testActions + '}';
-        assertEquals(kickTreeToString, kickTree.toString());
+        StringBuilder s = new StringBuilder();
+        s.append("[" + "Kick the tree" + ']' +
+                "(" + "Kicked/shaked tree Passage" + ')');
+        testActions.forEach(s::append);
+        assertEquals(s.toString(), kickTree.toString());
     }
 }

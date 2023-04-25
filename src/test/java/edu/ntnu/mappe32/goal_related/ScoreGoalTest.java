@@ -7,13 +7,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreGoalTest {
     Player player;
     @BeforeEach
     void setUp() {
-        player = new Player("Olav", 100, 1000, 300);
+        player = new Player("Olav", 100, 1000, 300, new HashMap<>());
     }
     @DisplayName("isFulFilled()")
     @Nested

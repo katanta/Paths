@@ -1,5 +1,9 @@
 package edu.ntnu.mappe32;
 
+import edu.ntnu.mappe32.model.Item;
+import edu.ntnu.mappe32.model.Player;
+import edu.ntnu.mappe32.model.action_related.HealthAction;
+import edu.ntnu.mappe32.model.action_related.ScoreAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -7,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,43 +21,95 @@ public class PlayerTest {
     Player mufasa;
     Player pumba;
 
-    List<String> pumbasTestInventory;
-    List<String> mutumbusTestInventory;
-    List<String> mufasasTestInventory;
+    List<Item> pumbasTestInventory;
+    List<Item> mutumbusTestInventory;
+    List<Item> mufasasTestInventory;
 
 
 
     @BeforeEach
     void setup() {
-        this.mutumbu = new Player("Mutumbu", 150, 0, 25);
-        this.mufasa = new Player("Mufasa", 200, 50, 100);
-        this.pumba = new Player("Pumba", 202, 40, 100);
-        this.mutumbu.addToInventory("Tape");
-        this.mutumbu.addToInventory("Lighter");
-        this.mutumbu.addToInventory("Candle");
-        this.mutumbu.addToInventory("Potato");
-        this.mutumbu.addToInventory("Hammer");
-        this.mutumbu.addToInventory("Dagger");
-        this.mutumbu.addToInventory("Scarf");
-        this.mufasa.addToInventory("Key");
-        this.mufasa.addToInventory("Milk");
-        this.mufasa.addToInventory("Chicken");
-        this.mufasa.addToInventory("Pencil");
-        this.mufasa.addToInventory("Wood");
-        this.mufasa.addToInventory("Paper");
-        this.pumba.addToInventory("N'Tofos");
-        this.pumba.addToInventory("Orange");
-        this.pumba.addToInventory("Apple");
-        this.pumba.addToInventory("Machete");
-        this.pumba.addToInventory("Knife");
-        this.pumba.addToInventory("Paperclip");
-        this.pumba.addToInventory("Rolex");
-        this.pumba.addToInventory("Key");
-        this.mutumbusTestInventory = new ArrayList<String>(Arrays.asList("Tape", "Lighter", "Candle", "Potato", "Hammer",
-                "Dagger", "Scarf"));
-        this.mufasasTestInventory = new ArrayList<String>(Arrays.asList("Key", "Milk", "Chicken", "Pencil", "Wood", "Paper"));
-        this.pumbasTestInventory = new ArrayList<String>(Arrays.asList("N'Tofos", "Orange",
-                "Apple", "Machete", "Knife", "Paperclip", "Rolex", "Key"));
+        this.mutumbu = new Player("Mutumbu", 150, 0, 25, new HashMap<>());
+        this.mufasa = new Player("Mufasa", 200, 50, 100, new HashMap<>());
+        this.pumba = new Player("Pumba", 202, 40, 100, new HashMap<>());
+        this.mutumbu.addToInventory(new Item("Tape", new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Lighter", new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Candle", new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Potato", new HealthAction(10)));
+        this.mutumbu.addToInventory(new Item("Hammer", new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Dagger", new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Scarf", new HealthAction(10)));
+        this.mufasa.addToInventory(new Item("Key", new ScoreAction(10)));
+        this.mufasa.addToInventory(new Item("Milk", new HealthAction(10)));
+        this.mufasa.addToInventory(new Item("Chicken", new HealthAction(50)));
+        this.mufasa.addToInventory(new Item("Pencil", new ScoreAction(10)));
+        this.mufasa.addToInventory(new Item("Wood", new ScoreAction(10)));
+        this.mufasa.addToInventory(new Item("Paper", new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("N'Tofos", new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Orange", new HealthAction(20)));
+        this.pumba.addToInventory(new Item("Apple", new HealthAction(10)));
+        this.pumba.addToInventory(new Item("Machete", new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Knife", new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Paperclip", new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Rolex", new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Key", new ScoreAction(10)));
+        this.mutumbusTestInventory = new ArrayList<>(Arrays.asList(new Item("Tape", new ScoreAction(10)),
+                new Item("Lighter", new ScoreAction(10)), new Item("Candle", new ScoreAction(10)),
+                new Item("Potato", new HealthAction(10)), new Item("Hammer", new ScoreAction(10)),
+                new Item("Dagger", new ScoreAction(10)), new Item("Scarf", new HealthAction(10))));
+
+        this.mufasasTestInventory = new ArrayList<>(Arrays.asList(new Item("Key", new ScoreAction(10)),
+        new Item("Milk", new HealthAction(10)),
+        new Item("Chicken", new HealthAction(50)),
+        new Item("Pencil", new ScoreAction(10)),
+        new Item("Wood", new ScoreAction(10)),
+        new Item("Paper", new ScoreAction(10))));
+
+        this.pumbasTestInventory = new ArrayList<>(Arrays.asList(new Item("N'Tofos", new ScoreAction(10)),
+        new Item("Orange", new HealthAction(20)),
+        new Item("Apple", new HealthAction(10)),
+        new Item("Machete", new ScoreAction(10)),
+        new Item("Knife", new ScoreAction(10)),
+        new Item("Paperclip", new ScoreAction(10)),
+        new Item("Rolex", new ScoreAction(10)),
+        new Item("Key", new ScoreAction(10))));
+    }
+
+    @DisplayName("constructor")
+    @Nested
+    class ConstructorTest {
+        @DisplayName("throws IllegalArgumentException when player gold is less than zero")
+        @Test
+        void throwsIllegalArgumentExceptionWhenPlayerGoldIsLessThanZero() {
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Player("Name", 100, 100, -100, new HashMap<>()));
+
+        }
+
+        @DisplayName("throws IllegalArgumentException when player health is less than zero")
+        @Test
+        void throwsIllegalArgumentExceptionWhenPlayerHealthIsLessThanZero() {
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Player("Name", -100, 100, 100, new HashMap<>()));
+        }
+        @DisplayName("throws IllegalArgumentException when player gold is less than zero")
+        @Test
+        void throwsIllegalArgumentExceptionWhenPlayerScoreIsLessThanZero() {
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Player("Name", 100, -100, 100, new HashMap<>()));
+        }
+        @DisplayName("throws IllegalArgumentException when player name is null")
+        @Test
+        void throwsIllegalArgumentExceptionWhenPlayerNameIsNull() {
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Player(null, 100, 100, 100, new HashMap<>()));
+        }
+        @DisplayName("throws IllegalArgumentException when player name is blank")
+        @Test
+        void throwsIllegalArgumentExceptionWhenPlayerNameIsBlank() {
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Player("   ", 100, 100, 100, new HashMap<>()));
+        }
     }
     @DisplayName("getName() returns name")
     @Test
@@ -120,6 +177,11 @@ public class PlayerTest {
             assertThrows(IllegalArgumentException.class, () -> mufasa.addGold(-100000000));
             assertThrows(IllegalArgumentException.class, () -> pumba.addGold(-10000));
         }
+        @DisplayName("does not throw IllegalArgumentException when player has just enough gold")
+        @Test
+        void doesNotThrowIllegalArgumentExceptionWhenPlayerHasEnoughGold() {
+            assertDoesNotThrow(() -> mutumbu.addGold(-25));
+        }
     }
 
     @DisplayName("getInventory()")
@@ -128,37 +190,78 @@ public class PlayerTest {
         @DisplayName("returns inventory")
         @Test
         void getInventoryReturnsInventory() {
-            assertEquals(mutumbusTestInventory, mutumbu.getInventory());
-            assertEquals(mufasasTestInventory, mufasa.getInventory());
-            assertEquals(pumbasTestInventory, pumba.getInventory());
+            assertTrue(mutumbusTestInventory.containsAll(mutumbu.getInventory().keySet()));
+            assertTrue(mutumbu.getInventory().keySet().containsAll(mutumbusTestInventory));
+            assertEquals(mutumbusTestInventory.size(), mutumbu.getInventory().keySet().size());
+
+            assertTrue(mufasasTestInventory.containsAll(mufasa.getInventory().keySet()));
+            assertTrue(mufasa.getInventory().keySet().containsAll(mufasasTestInventory));
+            assertEquals(mufasasTestInventory.size(), mufasa.getInventory().keySet().size());
+
+            assertTrue(pumbasTestInventory.containsAll(pumba.getInventory().keySet()));
+            assertTrue(pumba.getInventory().keySet().containsAll(pumbasTestInventory));
+            assertEquals(pumbasTestInventory.size(), pumba.getInventory().keySet().size());
         }
         @DisplayName("returns copy of inventory")
         @Test
         void getInventoryReturnsCopyOfInventory() {
-            assertEquals(mutumbusTestInventory, mutumbu.getInventory());
-            assertEquals(mufasasTestInventory, mufasa.getInventory());
-            assertEquals(pumbasTestInventory, pumba.getInventory());
-            mutumbusTestInventory.add("A");
-            mufasasTestInventory.add("B");
-            pumbasTestInventory.add("C");
-            assertNotEquals(mutumbusTestInventory, mutumbu.getInventory());
-            assertNotEquals(mufasasTestInventory, mufasa.getInventory());
-            assertNotEquals(pumbasTestInventory, pumba.getInventory());
+            assertTrue(mutumbusTestInventory.containsAll(mutumbu.getInventory().keySet()));
+            assertTrue(mutumbu.getInventory().keySet().containsAll(mutumbusTestInventory));
+            assertEquals(mutumbusTestInventory.size(), mutumbu.getInventory().keySet().size());
+
+            assertTrue(mufasasTestInventory.containsAll(mufasa.getInventory().keySet()));
+            assertTrue(mufasa.getInventory().keySet().containsAll(mufasasTestInventory));
+            assertEquals(mufasasTestInventory.size(), mufasa.getInventory().keySet().size());
+
+            assertTrue(pumbasTestInventory.containsAll(pumba.getInventory().keySet()));
+            assertTrue(pumba.getInventory().keySet().containsAll(pumbasTestInventory));
+            assertEquals(pumbasTestInventory.size(), pumba.getInventory().keySet().size());
+
+
+            mutumbusTestInventory.add(new Item("Item A", new ScoreAction(10)));
+            mufasasTestInventory.add(new Item("Item B", new ScoreAction(10)));
+            pumbasTestInventory.add(new Item("Item C", new ScoreAction(10)));
+
+            assertFalse(mutumbu.getInventory().keySet().containsAll(mutumbusTestInventory));
+
+            assertFalse(mufasa.getInventory().keySet().containsAll(mufasasTestInventory));
+
+            assertFalse(pumba.getInventory().keySet().containsAll(pumbasTestInventory));
         }
 
     }
-    @DisplayName("addToInventory() adds a String to inventory")
-    @Test
-    void addToInventoryAddsItemToInventory() {
-        mutumbu.addToInventory("Glue");
-        mufasa.addToInventory("Soup");
-        pumba.addToInventory("Spaghetti");
-        mutumbusTestInventory.add("Glue");
-        mufasasTestInventory.add("Soup");
-        pumbasTestInventory.add("Spaghetti");
-        assertEquals(mutumbusTestInventory, mutumbu.getInventory());
-        assertEquals(mufasasTestInventory, mufasa.getInventory());
-        assertEquals(pumbasTestInventory, pumba.getInventory());
+    @DisplayName("addToInventory()")
+    @Nested
+    class AddToInventoryTest {
+        @DisplayName("adds a String to inventory")
+        @Test
+        void addToInventoryAddsItemToInventory() {
+            mutumbu.addToInventory(new Item("Glue", new ScoreAction(10)));
+            mufasa.addToInventory(new Item("Soup", new HealthAction(10)));
+            pumba.addToInventory(new Item("Spaghetti", new HealthAction(10)));
+            mutumbusTestInventory.add(new Item("Glue", new ScoreAction(10)));
+            mufasasTestInventory.add(new Item("Soup", new HealthAction(10)));
+            pumbasTestInventory.add(new Item("Spaghetti", new HealthAction(10)));
+            System.out.println(mutumbusTestInventory);
+            System.out.println(mutumbu.getInventory().keySet());
+
+            assertTrue(mutumbusTestInventory.containsAll(mutumbu.getInventory().keySet()));
+            assertTrue(mutumbu.getInventory().keySet().containsAll(mutumbusTestInventory));
+            assertEquals(mutumbusTestInventory.size(), mutumbu.getInventory().keySet().size());
+
+            assertTrue(mufasasTestInventory.containsAll(mufasa.getInventory().keySet()));
+            assertTrue(mufasa.getInventory().keySet().containsAll(mufasasTestInventory));
+            assertEquals(mufasasTestInventory.size(), mufasa.getInventory().keySet().size());
+
+            assertTrue(pumbasTestInventory.containsAll(pumba.getInventory().keySet()));
+            assertTrue(pumba.getInventory().keySet().containsAll(pumbasTestInventory));
+            assertEquals(pumbasTestInventory.size(), pumba.getInventory().keySet().size());
+        }
+        @DisplayName("throws IllegalArgumentException when item is null")
+        @Test
+        void throwsIllegalArguementExceptionWhenItemIsNull() {
+            assertThrows(IllegalArgumentException.class, () -> mutumbu.addToInventory(null));
+        }
     }
     @DisplayName("addScore()")
     @Nested

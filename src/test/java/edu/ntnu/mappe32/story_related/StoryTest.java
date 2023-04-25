@@ -1,18 +1,18 @@
 package edu.ntnu.mappe32.story_related;
 
-import edu.ntnu.mappe32.action_related.*;
-import edu.ntnu.mappe32.story_related.Link;
-import edu.ntnu.mappe32.story_related.Passage;
-import edu.ntnu.mappe32.story_related.Story;
+import edu.ntnu.mappe32.io.PathsFileReader;
+import edu.ntnu.mappe32.model.Item;
+import edu.ntnu.mappe32.model.action_related.*;
+import edu.ntnu.mappe32.model.story_related.Link;
+import edu.ntnu.mappe32.model.story_related.Passage;
+import edu.ntnu.mappe32.model.story_related.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,7 +41,7 @@ class StoryTest {
         remove10HealthPoints = new HealthAction(-10);
         add1ScorePoint = new ScoreAction(1);
         add10GoldPoints = new GoldAction(10);
-        addMacheteToInventory = new InventoryAction("Machete");
+        addMacheteToInventory = new InventoryAction(new Item("Machete", new ScoreAction(10)), true);
 
         openingPassage = new Passage("Opening Passage", "You just found the enchanted apple tree " +
                 "you've been searching for your whole adventure around Serengeti. " +
@@ -96,10 +96,20 @@ class StoryTest {
     @DisplayName("constructor")
     @Nested
     class ConstructorTest {
+        @DisplayName("does not throw IllegalArgumentException when parameters are not blank or null")
+        @Test
+        void constructordoesNotThrowIllegalArgumentExceptionWhenParametersAreNotBlankOrNull() {
+            assertDoesNotThrow( () -> new Story("Title", openingPassage));
+        }
         @DisplayName("throws IllegalArgumentException when title is blank")
         @Test
         void constructorThrowsIllegalArgumentExceptionWhenTitleIsBlank() {
             assertThrows(IllegalArgumentException.class, () -> new Story(" ", openingPassage));
+        }
+        @DisplayName("throws IllegalArgumentException when title is null")
+        @Test
+        void constructorThrowsIllegalArgumentExceptionWhenTitleIsNull() {
+            assertThrows(IllegalArgumentException.class, () -> new Story(null, openingPassage));
         }
         @DisplayName("throws IllegalArgumentException when opening passage is null")
         @Test
@@ -117,12 +127,27 @@ class StoryTest {
     void getOpeningPassageReturnsOpeningPassage() {
         assertEquals(openingPassage, storyOfAfrica.getOpeningPassage());
     }
-    @DisplayName("addPassage() adds passage")
-    @Test
-    void addPassageAddsPassage() {
-        storyOfAfrica.addPassage(climbedTree);
-        assertionPassages.put(new Link(climbedTree.getTitle(),climbedTree.getTitle()), climbedTree);
-        assertEquals(assertionPassages.values().toString(), storyOfAfrica.getPassages().toString());
+    @DisplayName("addPassage()")
+    @Nested
+    class AddPassageTest {
+        @DisplayName("adds passage")
+        @Test
+        void addPassageAddsPassage() {
+            storyOfAfrica.addPassage(climbedTree);
+            assertionPassages.put(new Link(climbedTree.getTitle(),climbedTree.getTitle()), climbedTree);
+            Collection<Passage> assertionPassagesList = new ArrayList<>(assertionPassages.values());
+            assertionPassagesList.add(openingPassage);
+            assertEquals(assertionPassagesList.toString(), storyOfAfrica.getPassages().toString());
+        }
+        @DisplayName("does not add passage when passage already exists in story")
+        @Test
+        void doesNotAddPassageWhenPassageAlreadyExistsInStory() {
+            storyOfAfrica.addPassage(kickedShakedTree);
+            Collection<Passage> assertionPassagesList = new ArrayList<>(assertionPassages.values());
+            assertionPassagesList.add(openingPassage);
+            assertEquals(assertionPassagesList.toString(), storyOfAfrica.getPassages().toString());
+        }
+
     }
     @DisplayName("getPassage() returns passage")
     @Test
@@ -132,7 +157,9 @@ class StoryTest {
     @DisplayName("getPassages() returns List<Passage> passages")
     @Test
     void getPassagesReturnsPassages() {
-        assertEquals(assertionPassages.values().toString(), storyOfAfrica.getPassages().toString());
+        Collection<Passage> assertionPassagesList = new ArrayList<>(assertionPassages.values());
+        assertionPassagesList.add(openingPassage);
+        assertEquals(assertionPassagesList.toString(), storyOfAfrica.getPassages().toString());
     }
 
     @DisplayName("removePassage()")
@@ -167,6 +194,5 @@ class StoryTest {
         assertEquals(assertionBrokenLinks.size(), storyOfAfrica.getBrokenLinks().size());
         assertTrue(storyOfAfrica.getBrokenLinks().containsAll(assertionBrokenLinks));
         assertTrue(assertionBrokenLinks.containsAll(storyOfAfrica.getBrokenLinks()));
-
     }
 }

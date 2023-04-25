@@ -1,6 +1,7 @@
 package edu.ntnu.mappe32;
 
 import edu.ntnu.mappe32.controller.Game;
+import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.goal_related.GoldGoal;
@@ -10,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static edu.ntnu.mappe32.io.PathsFileReader.readStory;
@@ -22,7 +24,7 @@ public class TestApp extends javafx.application.Application {
     }
 
     public static Game setUpGame() throws IOException {
-        Player player = new Player("Ole", 100, 0, 50);
+        Player player = new Player("Ole", 100, 0, 50, new HashMap<Item, Integer>());
         Story story = readStory("src/main/resources/saved stories/trollStory.paths");
         Goal goldGoal = new GoldGoal(100);
         List<Goal> goals = new ArrayList<>();

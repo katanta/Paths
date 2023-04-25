@@ -1,6 +1,9 @@
 package edu.ntnu.mappe32.goal_related;
 
+import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
+import edu.ntnu.mappe32.model.action_related.HealthAction;
+import edu.ntnu.mappe32.model.action_related.ScoreAction;
 import edu.ntnu.mappe32.model.goal_related.InventoryGoal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,13 +20,13 @@ public class InventoryGoalTest {
     Player player;
     @BeforeEach
     void setUp() {
-        player = new Player("Olav", 100, 0, 25);
-        player.addToInventory("Master Sword");
-        player.addToInventory("Length of Rope");
-        player.addToInventory("Legendary Ring of Fortifying");
-        player.addToInventory("Potato");
-        player.addToInventory("The King's Crown");
-        player.addToInventory("Potion of Healing");
+        player = new Player("Olav", 100, 0, 25, new HashMap<>());
+        player.addToInventory(new Item("Master Sword", new ScoreAction(10)));
+        player.addToInventory(new Item("Length of Rope", new ScoreAction(10)));
+        player.addToInventory(new Item("Legendary Ring of Fortifying", new ScoreAction(10)));
+        player.addToInventory(new Item("Potato", new HealthAction(10)));
+        player.addToInventory(new Item("The King's Crown", new ScoreAction(10)));
+        player.addToInventory(new Item("Potion of Healing", new HealthAction(100)));
     }
 
     @DisplayName("isFulFilled")
