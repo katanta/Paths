@@ -1,6 +1,7 @@
 package edu.ntnu.mappe32;
 
-import edu.ntnu.mappe32.action_related.Action;
+import edu.ntnu.mappe32.model.Player;
+import edu.ntnu.mappe32.model.action_related.Action;
 
 import java.util.ArrayList;
 import java.util.Arrays;

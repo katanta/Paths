@@ -1,0 +1,27 @@
+The story of the troll
+
+::::You see a :troll
+::You see a:: 3-meter( )tall troll slowly turning towards you.
+[Run away](Run Away)<score -100><health 100><inventory Medal of the Coward>
+[Attack the troll](Attack the troll)<gold 1000><gold -1000><health 100><score 100>
+[Call the chopper](Call the chopper)<score 90><health 100><score 10><inventory Keys Yo Whats Up><inventory Helmet>
+
+::Use sword
+The sword barely does so much as tickle the troll, it destroys you in anger. You are dead
+
+::Cast a magic spell
+The troll groans as it slowly turns to stone and stands motionless. 50 gold coins drop to the ground.
+
+::Attack the troll
+how do you wish to attack the troll
+[Swing your sword](Use sword)<health -100>
+[Cast a magic spell](Cast a magic spell)<gold 50>
+
+::Run away
+The troll sees you and runs after you.
+[Keep running](Keep running)<health -100>
+[Stop and cast a magic spell](Cast a magic spell)<gold 50>
+
+::Keep running
+The troll easily catches you with its long strides and eats you for dinner, literally
+[Oooops](Keep running)<NonExsistentAction 100>
