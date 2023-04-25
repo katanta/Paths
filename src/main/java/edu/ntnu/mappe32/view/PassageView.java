@@ -45,20 +45,23 @@ public class PassageView {
         this.game = game;
     }
 
+    public static Font resizableMainFont(double fontSize) {
+        return Font.loadFont("file:src/main/resources/fonts/PixeloidSans-JR6qo.ttf", fontSize);
+    }
     public void configurePassageContent() throws FileNotFoundException {
-        Font mainFont = Font.loadFont("src/main/resources/fonts/PixeloidSans-JR6qo.ttf", 14);
         currentPassage = game.begin();
         StackPane root = new StackPane();
         scene = new Scene(root, 1280, 720, Color.DARKGREY);
         storyTitle = new Label(game.getStory().getTitle());
         storyTitle.setLabelFor(passageTitle);
         storyTitle.setMinSize(10, 10);
-        storyTitle.setFont(new Font(45));
+        storyTitle.setFont(resizableMainFont(45));
         passageTitle = new Text(currentPassage.getTitle());
-        passageTitle.setFont(new Font(25));
+        passageTitle.setFont(resizableMainFont(28));
+        //passageTitle.setFont(new Font(25));
         ScrollPane passageScrollPane = new ScrollPane();
         passageContent = new Text(currentPassage.getContent() + " ejsdhfkjadshfkjdsahfksdfkjahsdkjhaskjhaksljhkjsdahvkljashvjasdhvjashvjashfjashfkjasfhjashfjkSHDFJKSHFJSHFJSDHFJHSDFKJHASDFHASDF@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@222");
-        passageContent.setFont(new Font(14));
+        passageContent.setFont(resizableMainFont(18));
         passageScrollPane.setMaxWidth(600);
         passageContent.setWrappingWidth(passageScrollPane.getMaxWidth() - 15);
         passageScrollPane.setMaxHeight(180);
@@ -73,12 +76,14 @@ public class PassageView {
         linkButtons = new VBox();
         game.begin().getLinks().forEach(link -> {
             Button linkButton = new Button(link.getText());
+            linkButton.setFont(resizableMainFont(18));
             linkButton.setPrefSize(200, 40);
+            linkButton.setMaxWidth(400);
             linkButton.setOnMouseClicked(mouseEvent -> {currentPassage = game.go(link); //this.game can be used to update player information
             updateScene(); //make the buttons change the current active passage, changing the scene
             });
             linkButton.setTooltip(new Tooltip(link.getText()));
-            linkButton.getTooltip().setFont(new Font(12));
+            linkButton.getTooltip().setFont(resizableMainFont(12));
             linkButtons.getChildren().add(linkButton);
         });
         linkButtons.setAlignment(Pos.CENTER);
@@ -89,7 +94,7 @@ public class PassageView {
         center.setMargin(linksScrollPane, new Insets(35, 0, 0, 0));
 
 
-        Font infoFont = new Font(14);
+        Font infoFont = resizableMainFont(14);
         //setup health indicator
         ImageView healthIcon = new ImageView(new Image(new FileInputStream("src/main/resources/img/hp.png")));
         playerHealthLabel = new Label("HEALTH: " + game.getPlayer().getHealth());
@@ -172,7 +177,10 @@ public class PassageView {
         //TODO: Show current goals & completion status.
         currentPassage.getLinks().forEach(link -> {
             Button linkButton = new Button(link.getText());
+            linkButton.setFont(resizableMainFont(18));
             linkButton.setPrefSize(200, 40);
+            linkButton.setTooltip(new Tooltip(link.getText()));
+            linkButton.getTooltip().setFont(resizableMainFont(12));
             linkButton.setOnMouseClicked(mouseEvent -> {this.currentPassage = game.go(link);
                 updateScene();
             });
