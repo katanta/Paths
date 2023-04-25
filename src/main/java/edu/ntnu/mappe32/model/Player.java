@@ -27,7 +27,7 @@ public class Player {
     /**
      * Inventory of a player.
      */
-    private Map<Item, Integer> inventory;
+    private final Map<Item, Integer> inventory;
     /**
      * This constructor facilitates the creation of instances of the class Player.
      * The constructor throws IllegalArgumentExceptions
