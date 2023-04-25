@@ -29,5 +29,9 @@ public class ScoreGoal implements Goal {
     public boolean isFulfilled(Player player) {
         return player.getScore() >= this.minimumPoints;
     }
+
+    public String toString() {
+        return "Have a total score of " + minimumPoints;
+    }
 }
 

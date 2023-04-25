@@ -58,7 +58,6 @@ public class PassageView {
         storyTitle.setFont(resizableMainFont(45));
         passageTitle = new Text(currentPassage.getTitle());
         passageTitle.setFont(resizableMainFont(28));
-        //passageTitle.setFont(new Font(25));
         ScrollPane passageScrollPane = new ScrollPane();
         passageContent = new Text(currentPassage.getContent() + " ejsdhfkjadshfkjdsahfksdfkjahsdkjhaskjhaksljhkjsdahvkljashvjasdhvjashvjashfjashfkjasfhjashfjkSHDFJKSHFJSHFJSDHFJHSDFKJHASDFHASDF@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@222");
         passageContent.setFont(resizableMainFont(18));
@@ -79,8 +78,9 @@ public class PassageView {
             linkButton.setFont(resizableMainFont(18));
             linkButton.setPrefSize(200, 40);
             linkButton.setMaxWidth(400);
-            linkButton.setOnMouseClicked(mouseEvent -> {currentPassage = game.go(link); //this.game can be used to update player information
-            updateScene(); //make the buttons change the current active passage, changing the scene
+            linkButton.setOnMouseClicked(mouseEvent -> {
+                currentPassage = game.go(link); //this.game can be used to update player information
+                updateScene(); //make the buttons change the current active passage, changing the scene
             });
             linkButton.setTooltip(new Tooltip(link.getText()));
             linkButton.getTooltip().setFont(resizableMainFont(12));
