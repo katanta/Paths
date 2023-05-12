@@ -242,8 +242,6 @@ public class PlayerTest {
             mutumbusTestInventory.add(new Item("Glue", new ScoreAction(10)));
             mufasasTestInventory.add(new Item("Soup", new HealthAction(10)));
             pumbasTestInventory.add(new Item("Spaghetti", new HealthAction(10)));
-            System.out.println(mutumbusTestInventory);
-            System.out.println(mutumbu.getInventory().keySet());
 
             assertTrue(mutumbusTestInventory.containsAll(mutumbu.getInventory().keySet()));
             assertTrue(mutumbu.getInventory().keySet().containsAll(mutumbusTestInventory));
