@@ -33,5 +33,9 @@ public class ScoreGoal implements Goal {
     public String toString() {
         return "Have a total score of " + minimumPoints;
     }
+    @Override
+    public String toViewString() {
+        return String.valueOf(minimumPoints);
+    }
 }
 

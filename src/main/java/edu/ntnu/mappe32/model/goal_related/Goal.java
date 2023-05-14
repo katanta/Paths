@@ -21,4 +21,6 @@ public interface Goal {
      * @since 0.3
      */
     String toString();
+
+    String toViewString();
 }

@@ -32,4 +32,8 @@ public class HealthGoal implements Goal {
     public String toString() {
         return "Have a total of " + minimumHealth + " health";
     }
+    @Override
+    public String toViewString() {
+        return String.valueOf(minimumHealth);
+    }
 }

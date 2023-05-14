@@ -38,5 +38,9 @@ public class GoldGoal implements Goal{
         return "Have a total of " + minimumGold + " gold";
     }
 
+    @Override
+    public String toViewString() {
+        return String.valueOf(minimumGold);
+    }
 
 }
