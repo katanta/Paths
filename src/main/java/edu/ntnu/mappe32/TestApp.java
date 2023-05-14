@@ -32,8 +32,13 @@ public class TestApp extends javafx.application.Application {
         List<Goal> goals = new ArrayList<>();
         goals.add(goldGoal);
         goals.add(scoreGoal);
+        player.addToInventory(new Item("abc"));
+        player.addToInventory(new Item("abcd"));
+        player.addToInventory(new Item("blahblahblah"));
+        player.addToInventory(new Item("another item"));
         for (int i = 1; i <= 50; i++) {
             goals.add(new ScoreGoal(i));
+            player.addToInventory(new Item("Pumpkin"));
         }
         return new Game(player, story, goals);
     }

@@ -1,6 +1,7 @@
 package edu.ntnu.mappe32.view;
 
 import edu.ntnu.mappe32.controller.Game;
+import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Passage;
 import javafx.beans.property.ReadOnlyDoubleProperty;
@@ -23,10 +24,13 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 public class PassageView {
+    StackPane root;
     Scene scene;
     Text passageContent;
     Label storyTitle;
@@ -38,6 +42,7 @@ public class PassageView {
     Label playerHealthLabel;
     Label playerScoreLabel;
     Label playerGoldLabel;
+    ScrollPane inventory;
 
 
 
@@ -50,7 +55,7 @@ public class PassageView {
     }
     public void configurePassageContent() throws FileNotFoundException {
         currentPassage = game.begin(); //should root be put as variable for the class, to refactor this code into methods?
-        StackPane root = new StackPane();
+        root = new StackPane();
         scene = new Scene(root, 1280, 720, Color.DARKGREY);
         storyTitle = new Label(game.getStory().getTitle());
         storyTitle.setLabelFor(passageTitle);
@@ -82,6 +87,7 @@ public class PassageView {
                 currentPassage = game.go(link); //this.game can be used to update player information
                 updateScene(); //make the buttons change the current active passage, changing the scene
                 updateGoals();
+                createInventory();
             });
             linkButton.setTooltip(new Tooltip(link.getText()));
             linkButton.getTooltip().setFont(resizableMainFont(12));
@@ -130,7 +136,7 @@ public class PassageView {
         playerGold.setSpacing(20);
 
         //Set all player info, (score, hp, and gold)
-        VBox playerInfo = new VBox(playerHealth, playerScore, playerGold); //TODO: add the other elements here...
+        VBox playerInfo = new VBox(playerHealth, playerScore, playerGold);
         playerInfo.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
         Label infoTitle = new Label(game.getPlayer().getName() + "'s status");
         VBox.setMargin(infoTitle, new Insets(30, 0, 0, 0));
@@ -151,6 +157,9 @@ public class PassageView {
         goalScrollPane.setContent(gameGoals);
         goalScrollPane.setMaxWidth(gameGoals.getMaxWidth() + 5);
         StackPane.setAlignment(goalScrollPane, Pos.TOP_LEFT);
+
+        createInventory();
+
     }
 
     public Scene getScene() throws FileNotFoundException {
@@ -169,8 +178,6 @@ public class PassageView {
         playerGoldLabel.setText("GOLD: " + game.getPlayer().getGold());
         playerHealthLabel.setText("HEALTH: " + game.getPlayer().getHealth());
         playerScoreLabel.setText("SCORE: " + game.getPlayer().getScore());
-        //TODO: Update Inventory too when it is implemented
-        //TODO: Show current goals & completion status.
         //TODO: this method CAN be split up into smaller parts, e.g. update score, health and gold labels separately from here
         currentPassage.getLinks().forEach(link -> {
             Button linkButton = new Button(link.getText());
@@ -181,6 +188,7 @@ public class PassageView {
             linkButton.setOnMouseClicked(mouseEvent -> {this.currentPassage = game.go(link);
                 updateScene();
                 updateGoals();
+                createInventory();
             });
             linkButtons.getChildren().add(linkButton);
         });
@@ -210,5 +218,23 @@ public class PassageView {
             goalStatus.setAlignment(Pos.TOP_CENTER);
             gameGoals.getChildren().add(goalStatus);
         }
+    }
+    public void createInventory() {
+        inventory = new ScrollPane();
+        VBox items = new VBox();
+        inventory.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        items.setMaxWidth(316);
+        items.setMaxHeight(350);
+        items.setAlignment(Pos.TOP_LEFT);
+        items.setSpacing(10);
+        inventory.setMaxSize(items.getMaxWidth() + 4, items.getMaxHeight() + 4);
+        for (Map.Entry<Item, Integer> item : game.getPlayer().getInventory().entrySet()) {
+            Label itemLabel = new Label(item.getValue() + "x "  +  item.getKey().getItemName());
+            itemLabel.setFont(resizableMainFont(15));
+            items.getChildren().add(itemLabel);
+        }
+        StackPane.setAlignment(inventory, Pos.BOTTOM_RIGHT);
+        inventory.setContent(items);
+        root.getChildren().add(inventory);
     }
 }
