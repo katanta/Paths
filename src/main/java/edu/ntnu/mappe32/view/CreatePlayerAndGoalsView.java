@@ -219,4 +219,15 @@ public class CreatePlayerAndGoalsView {
     public Scene getScene() {
         return scene;
     }
+    public TextField getPlayerGoldTextField() {
+        return playerGoldTextField;
+    }
+
+    public TextField getPlayerHealthTextField() {
+        return playerHealthTextField;
+    }
+
+    public TextField getPlayerNameTextField() {
+        return playerNameTextField;
+    }
 }
