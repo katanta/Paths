@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,30 +34,40 @@ public class InventoryGoalTest {
         @DisplayName("returns true when inventory contains singular mandatory item to fulfill goal")
         @Test
         void isFulfilledReturnsTrueWhenInventoryContainsSingularMandatoryItemToFulfillGoal() {
-            ArrayList<String> mandatoryItems = new ArrayList<>();
-            mandatoryItems.add("The King's Crown");
+            HashMap<Item, Integer> mandatoryItems = new HashMap<>();
+            mandatoryItems.put(new Item("The King's Crown", new ScoreAction(10)), 1);
             InventoryGoal kingsCrown = new InventoryGoal(mandatoryItems);
             assertTrue(kingsCrown.isFulfilled(player));
         }
         @DisplayName("returns true when inventory contains multiple mandatory items to fulfill goal")
         @Test
-        void IsFulfilledReturnsTrueWhenInventoryContainsMultipleMandatoryItemsToFulfillGoal() {
-            ArrayList<String> mandatoryItems = new ArrayList<>();
-            mandatoryItems.add("Length of Rope");
-            mandatoryItems.add("Potion of Healing");
-            mandatoryItems.add("Potato");
+        void isFulfilledReturnsTrueWhenInventoryContainsMultipleMandatoryItemsToFulfillGoal() {
+            HashMap<Item, Integer> mandatoryItems = new HashMap<>();
+            mandatoryItems.put(new Item("Length of Rope", new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("Potion of Healing", new HealthAction(100)), 1);
+            mandatoryItems.put(new Item("Potato", new HealthAction(10)), 1);
             InventoryGoal helpStranger = new InventoryGoal(mandatoryItems);
             assertTrue(helpStranger.isFulfilled(player));
         }
-        @DisplayName("returns false when inventory does not meet requirements")
+        @DisplayName("returns false when player inventory does not have an item")
         @Test
-        void isFulfilledReturnsFalseWhenInventoryDoesNotMeetRequirements() {
-            ArrayList<String> mandatoryItems = new ArrayList<>();
-            mandatoryItems.add("Potion of Healing");
-            mandatoryItems.add("The King's Crown");
-            mandatoryItems.add("24-karat diamond");
+        void isFulfilledReturnsFalseWhenPlayerInventoryDoesNotHaveAnItem() {
+            HashMap<Item, Integer> mandatoryItems = new HashMap<>();
+            mandatoryItems.put(new Item("Potion of Healing", new HealthAction(100)), 1);
+            mandatoryItems.put(new Item("The King's Crown", new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("24-karat diamond"), 1);
             InventoryGoal impossibleTask = new InventoryGoal(mandatoryItems);
             assertFalse(impossibleTask.isFulfilled(player));
+        }
+        @DisplayName("returns false when player does not have enough of an item")
+        @Test
+        void isFulfilledReturnsFalseWhenPlayerInventoryDoesNotHaveEnoughOfAnItem() {
+            HashMap<Item, Integer> mandatoryItems = new HashMap<>();
+            mandatoryItems.put(new Item("Length of Rope", new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("Potion of Healing", new HealthAction(100)), 1);
+            mandatoryItems.put(new Item("Potato", new HealthAction(10)), 2);
+            InventoryGoal helpStranger = new InventoryGoal(mandatoryItems);
+            assertFalse(helpStranger.isFulfilled(player));
         }
     }
     @DisplayName("constructor")
@@ -72,15 +81,15 @@ public class InventoryGoalTest {
         @DisplayName("throws IllegalArgumentException when mandatoryItems is empty")
         @Test
         void constructorThrowsIllegalArgumentExceptionWhenMandatoryItemsIsEmpty() {
-            assertThrows(IllegalArgumentException.class, () -> new InventoryGoal(new ArrayList<>()));
+            assertThrows(IllegalArgumentException.class, () -> new InventoryGoal(new HashMap<>()));
         }
         @DisplayName("does not throw IllegalArgumentException when mandatory items contains elements")
         @Test
         void doesNotThrowIllegalArgumentExceptionWhenMandatoryItemsContainsElements() {
-            ArrayList<String> mandatoryItems = new ArrayList<>();
-            mandatoryItems.add("Potion of Healing");
-            mandatoryItems.add("The King's Crown");
-            mandatoryItems.add("24-karat diamond");
+            HashMap<Item, Integer> mandatoryItems = new HashMap<>();
+            mandatoryItems.put(new Item("Potion of Healing", new HealthAction(100)), 1);
+            mandatoryItems.put(new Item("The King's Crown", new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("24-karat diamond"), 1);
             assertDoesNotThrow(() -> new InventoryGoal(mandatoryItems));
         }
     }

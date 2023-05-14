@@ -44,9 +44,6 @@ public class GameTest {
     List<Link> assertionLinks;
     Map<Link, Passage> assertionPassages;
     Game game1 = null;
-    Goal friendsRansom;
-    Goal superPowered;
-    Goal masterGuardian;
     List<Goal> goals;
     Goal tapeItUp;
     @BeforeEach
@@ -170,7 +167,9 @@ public class GameTest {
         goals.add(superPowered);
         goals.add(masterGuardian);
         game1 = new Game(mutumbu, storyOfAfrica, goals);
-        tapeItUp = new InventoryGoal(new ArrayList<>(List.of("Tape")));
+        HashMap<Item, Integer> mandatoryItems = new HashMap<>();
+        mandatoryItems.put(new Item("Tape"), 1);
+        tapeItUp = new InventoryGoal(mandatoryItems);
     }
     @DisplayName("constructor")
     @Nested
