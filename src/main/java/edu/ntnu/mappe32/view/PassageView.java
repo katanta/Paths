@@ -49,7 +49,7 @@ public class PassageView {
         return Font.loadFont("file:src/main/resources/fonts/PixeloidSans-JR6qo.ttf", fontSize);
     }
     public void configurePassageContent() throws FileNotFoundException {
-        currentPassage = game.begin();
+        currentPassage = game.begin(); //should root be put as variable for the class, to refactor this code into methods?
         StackPane root = new StackPane();
         scene = new Scene(root, 1280, 720, Color.DARKGREY);
         storyTitle = new Label(game.getStory().getTitle());
@@ -81,6 +81,7 @@ public class PassageView {
             linkButton.setOnMouseClicked(mouseEvent -> {
                 currentPassage = game.go(link); //this.game can be used to update player information
                 updateScene(); //make the buttons change the current active passage, changing the scene
+                updateGoals();
             });
             linkButton.setTooltip(new Tooltip(link.getText()));
             linkButton.getTooltip().setFont(resizableMainFont(12));
@@ -144,17 +145,12 @@ public class PassageView {
         root.getChildren().add(playerInfo);
 
         //Set up goals
-        gameGoals = new VBox();
-        gameGoals.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
-        gameGoals.setMaxWidth(320);
-        StackPane.setAlignment(gameGoals, Pos.TOP_LEFT);
-        root.getChildren().add(gameGoals);
+        updateGoals();
         ScrollPane goalScrollPane = new ScrollPane();
-        ObservableList<Goal> listOfGoals = FXCollections.observableList(game.getGoals());
-        for (Goal g : listOfGoals) {
-
-        }
-
+        root.getChildren().add(goalScrollPane);
+        goalScrollPane.setContent(gameGoals);
+        goalScrollPane.setMaxWidth(gameGoals.getMaxWidth() + 5);
+        StackPane.setAlignment(goalScrollPane, Pos.TOP_LEFT);
     }
 
     public Scene getScene() throws FileNotFoundException {
@@ -175,6 +171,7 @@ public class PassageView {
         playerScoreLabel.setText("SCORE: " + game.getPlayer().getScore());
         //TODO: Update Inventory too when it is implemented
         //TODO: Show current goals & completion status.
+        //TODO: this method CAN be split up into smaller parts, e.g. update score, health and gold labels separately from here
         currentPassage.getLinks().forEach(link -> {
             Button linkButton = new Button(link.getText());
             linkButton.setFont(resizableMainFont(18));
@@ -183,8 +180,35 @@ public class PassageView {
             linkButton.getTooltip().setFont(resizableMainFont(12));
             linkButton.setOnMouseClicked(mouseEvent -> {this.currentPassage = game.go(link);
                 updateScene();
+                updateGoals();
             });
             linkButtons.getChildren().add(linkButton);
         });
+    }
+    public void updateGoals() {
+        gameGoals = new VBox();
+        gameGoals.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        gameGoals.setMaxWidth(320);
+        gameGoals.setSpacing(50);
+
+        for (Goal g : game.getGoals()) {
+            Label goalLabel = new Label(g.getClass().getSimpleName() + ": " + g);
+            goalLabel.setFont(resizableMainFont(16));
+            goalLabel.setTooltip(new Tooltip(goalLabel.getText()));
+            goalLabel.getTooltip().setFont(resizableMainFont(14));
+            Label completionStatus = new Label("INCOMPLETE!");
+            completionStatus.setFont(resizableMainFont(16));
+            completionStatus.setTooltip(new Tooltip("The goal above is incomplete!"));
+            completionStatus.getTooltip().setFont(resizableMainFont(20));
+            completionStatus.setTextFill(Color.RED);
+            if (g.isFulfilled(game.getPlayer())) {
+                completionStatus.setText("GOAL COMPLETED!");
+                completionStatus.setTextFill(Color.GREEN);
+                completionStatus.getTooltip().setText("The goal above is complete!");
+            }
+            VBox goalStatus = new VBox(goalLabel, completionStatus);
+            goalStatus.setAlignment(Pos.TOP_CENTER);
+            gameGoals.getChildren().add(goalStatus);
+        }
     }
 }
