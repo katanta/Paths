@@ -3,12 +3,14 @@ package edu.ntnu.mappe32.view;
 import edu.ntnu.mappe32.model.PathsFile;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class CreatePlayerAndGoalsView {
     Scene scene;
@@ -30,9 +32,9 @@ public class CreatePlayerAndGoalsView {
     ToggleButton inventoryToggle;
     ToggleButton scoreToggle;
     TextField goalValueTextField;
-    Label healthGoalLabel;
-    Label scoreGoalLabel;
     Label numberValueGoalLabel;
+    ImageView playButton;
+
 
     public CreatePlayerAndGoalsView(PathsFile pathsFile) {
         this.pathsFile = pathsFile;
@@ -50,17 +52,18 @@ public class CreatePlayerAndGoalsView {
         configureGoalTypeToggleButton();
         configureGoalValueTextField();
         configureNumberValueGoalLabel();
+        configurePlayButton();
 
         HBox topBar = new HBox(10);
         topBar.getChildren().addAll(storyTitleLabel, pathsFileLabel);
         HBox goalTypeToggleBar = new HBox();
-        goalTypeToggleBar.getChildren().addAll(goldToggle, healthToggle, inventoryToggle, scoreToggle);
+        goalTypeToggleBar.getChildren().addAll(goldToggle, healthToggle, inventoryToggle, scoreToggle   );
         HBox goalValueBar = new HBox(10);
         goalValueBar.getChildren().addAll(numberValueGoalLabel, goalValueTextField);
         VBox playerAndGoalConfigurationBox = new VBox(10);
         playerAndGoalConfigurationBox.getChildren().addAll(topBar,
                 playerConfigurationLabel, playerGridPane, addGoalLabel,
-                goalTypeToggleBar, goalValueBar);
+                goalTypeToggleBar, goalValueBar, playButton);
 
         StackPane root = new StackPane();
         root.getChildren().addAll(playerAndGoalConfigurationBox);
@@ -172,7 +175,15 @@ public class CreatePlayerAndGoalsView {
         this.pathsFileLabel.setWrapText(true);
         HBox.setMargin(pathsFileLabel, new Insets(10));
     }
+    public void configurePlayButton() {
 
+        try {
+            playButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/play.png")));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("play.png could not be fount in src/main/resources/img");
+        }
+        playButton.setPickOnBounds(true);
+    }
     public Label getNumberValueGoalLabel() {
         return numberValueGoalLabel;
     }
@@ -199,6 +210,10 @@ public class CreatePlayerAndGoalsView {
 
     public ToggleButton getInventoryToggle() {
         return inventoryToggle;
+    }
+
+    public ImageView getPlayButton() {
+        return playButton;
     }
 
     public Scene getScene() {
