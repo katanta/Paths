@@ -46,9 +46,9 @@ public class InventoryGoal implements Goal {
     public String toViewString() {
         StringBuilder sb = new StringBuilder();
         mandatoryItems.keySet().forEach(item ->
-                sb.append(item.getItemName()).append(": ").append(mandatoryItems.get(item)).append(" "));
+                sb.append(item.getItemName()).append(": ").append(mandatoryItems.get(item)).append(", "));
 
-        return sb.toString();
+        return sb.substring(sb.length() - 2);
     }
 }
 
