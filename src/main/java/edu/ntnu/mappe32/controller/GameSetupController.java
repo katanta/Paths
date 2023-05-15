@@ -46,7 +46,7 @@ public class GameSetupController {
                 PathsFile pathsFile = storySelectorView.getStoryTable().getSelectionModel().getSelectedItem();
                 this.createPlayerAndGoalsView = new CreatePlayerAndGoalsView(pathsFile);
                 CreatePlayerAndGoalsController createPlayerAndGoalsController = new CreatePlayerAndGoalsController(stage,
-                        createPlayerAndGoalsView);
+                        createPlayerAndGoalsView, pathsFile);
                 stage.setScene(createPlayerAndGoalsView.getScene());
             }
         });
