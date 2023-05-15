@@ -38,13 +38,11 @@ public class PassageView {
     Game game;
     Passage currentPassage;
     VBox linkButtons;
-    VBox gameGoals;
     Label playerHealthLabel;
     Label playerScoreLabel;
     Label playerGoldLabel;
     ScrollPane inventory;
-
-
+    private ScrollPane goalScrollPane;
 
     public PassageView(Game game) {
         this.game = game;
@@ -152,14 +150,7 @@ public class PassageView {
 
         //Set up goals
         updateGoals();
-        ScrollPane goalScrollPane = new ScrollPane();
-        root.getChildren().add(goalScrollPane);
-        goalScrollPane.setContent(gameGoals);
-        goalScrollPane.setMaxWidth(gameGoals.getMaxWidth() + 5);
-        StackPane.setAlignment(goalScrollPane, Pos.TOP_LEFT);
-
         createInventory();
-
     }
 
     public Scene getScene() throws FileNotFoundException {
@@ -194,7 +185,7 @@ public class PassageView {
         });
     }
     public void updateGoals() {
-        gameGoals = new VBox();
+        VBox gameGoals = new VBox();
         gameGoals.setStyle("-fx-border-color: black; -fx-border-width: 3px;");
         gameGoals.setMaxWidth(320);
         gameGoals.setMinHeight(718);
@@ -218,6 +209,11 @@ public class PassageView {
             VBox goalStatus = new VBox(goalLabel, completionStatus);
             goalStatus.setAlignment(Pos.TOP_CENTER);
             gameGoals.getChildren().add(goalStatus);
+            goalScrollPane = new ScrollPane();
+            root.getChildren().add(goalScrollPane);
+            goalScrollPane.setContent(gameGoals);
+            goalScrollPane.setMaxWidth(gameGoals.getMaxWidth() + 5);
+            StackPane.setAlignment(goalScrollPane, Pos.TOP_LEFT);
         }
     }
     public void createInventory() {
