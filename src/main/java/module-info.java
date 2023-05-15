@@ -3,8 +3,8 @@ module IDATT.GROUP32 {
     requires java.sql;
     requires javafx.graphics;
     exports edu.ntnu.mappe32;
-    exports edu.ntnu.mappe32.model;
-    exports edu.ntnu.mappe32.io;
-    exports edu.ntnu.mappe32.controller;
-    exports edu.ntnu.mappe32.view;
+    opens edu.ntnu.mappe32.model;
+    opens edu.ntnu.mappe32.io;
+    opens edu.ntnu.mappe32.controller;
+    opens edu.ntnu.mappe32.view;
 }
