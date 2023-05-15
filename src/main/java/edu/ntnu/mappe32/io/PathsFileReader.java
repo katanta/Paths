@@ -45,7 +45,7 @@ public class PathsFileReader {
      * @throws IOException Throws FileNotFoundException if the file is not found.
      * @throws IllegalArgumentException Throws IllegalArgumentException if the file path does not have the extension '.paths'.
      */
-    public static Story readStory(String filePath) throws IllegalArgumentException, IOException {
+    public static Story readStory(String filePath) throws IllegalArgumentException {
         validateFilePath(filePath);
 
         File storyFile = new File(filePath);
@@ -78,11 +78,8 @@ public class PathsFileReader {
             // Add remaining passages, excluding the opening passage
             passages.stream().skip(1).forEach(story::addPassage);
 
-        } catch (NoSuchFileException e) {
-            throw new NoSuchFileException("File does not exist in the directory: "
-                    + e.getMessage());
         } catch (IOException e) {
-            throw new IOException("An IOException occurred while attempting to read the file: "
+            throw new RuntimeException("An IOException occurred while attempting to read the file: "
                     + e.getMessage());
         }
         return story;
