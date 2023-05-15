@@ -1,7 +1,6 @@
 package edu.ntnu.mappe32.model;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,22 +18,15 @@ public class StorySelector {
     /**
      * This constructor checks for .paths files in a given directory and instatiates a new
      * PathFile for each file that ends with .paths
-     * @throws RuntimeException
      */
-    public StorySelector() throws RuntimeException {
+    public StorySelector() {
         // Directory of the folder which contains .paths files
         File directory = new File("src/main/resources/test_stories");
         this.listOfPathsFiles = new ArrayList<>();
 
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".paths"));
         if (files != null) {
-            Arrays.stream(files).forEach(file -> {
-                try {
-                    listOfPathsFiles.add(new PathsFile(file));
-                } catch (IOException e) {
-                    throw new RuntimeException("An error occurred when reading the file: " + e.getMessage());
-                }
-            });
+            Arrays.stream(files).forEach(file -> listOfPathsFiles.add(new PathsFile(file)));
         }
 
     }
