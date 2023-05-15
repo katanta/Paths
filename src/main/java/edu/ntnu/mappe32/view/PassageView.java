@@ -54,7 +54,7 @@ public class PassageView {
         return Font.loadFont("file:src/main/resources/fonts/PixeloidSans-JR6qo.ttf", fontSize);
     }
     public void configurePassageContent() throws FileNotFoundException {
-        currentPassage = game.begin(); //should root be put as variable for the class, to refactor this code into methods?
+        currentPassage = game.begin();
         root = new StackPane();
         scene = new Scene(root, 1280, 720, Color.DARKGREY);
         storyTitle = new Label(game.getStory().getTitle());
@@ -195,8 +195,9 @@ public class PassageView {
     }
     public void updateGoals() {
         gameGoals = new VBox();
-        gameGoals.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        gameGoals.setStyle("-fx-border-color: black; -fx-border-width: 3px;");
         gameGoals.setMaxWidth(320);
+        gameGoals.setMinHeight(718);
         gameGoals.setSpacing(50);
 
         for (Goal g : game.getGoals()) {
@@ -230,7 +231,7 @@ public class PassageView {
         inventory.setMaxSize(items.getMaxWidth() + 4, items.getMaxHeight() + 4);
         for (Map.Entry<Item, Integer> item : game.getPlayer().getInventory().entrySet()) {
             Label itemLabel = new Label(item.getValue() + "x "  +  item.getKey().getItemName());
-            itemLabel.setFont(resizableMainFont(15));
+            itemLabel.setFont(resizableMainFont(18));
             items.getChildren().add(itemLabel);
         }
         StackPane.setAlignment(inventory, Pos.BOTTOM_RIGHT);
