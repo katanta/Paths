@@ -55,7 +55,7 @@ public class TestApp extends javafx.application.Application {
     }
     @Override
     public void start(Stage stage) throws IOException {
-        stage.setScene(new PassageView(setUpGame()).getScene());
+        //stage.setScene(new PassageView(setUpGame()).getScene()); // TODO FIX
         stage.setTitle("Paths Game");
         stage.show();
     }

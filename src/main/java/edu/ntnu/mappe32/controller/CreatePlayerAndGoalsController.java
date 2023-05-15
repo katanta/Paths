@@ -1,13 +1,11 @@
 package edu.ntnu.mappe32.controller;
 
-import edu.ntnu.mappe32.io.PathsFileReader;
 import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.goal_related.GoldGoal;
 import edu.ntnu.mappe32.model.goal_related.HealthGoal;
 import edu.ntnu.mappe32.model.goal_related.ScoreGoal;
-import edu.ntnu.mappe32.model.story_related.Story;
 import edu.ntnu.mappe32.view.CreatePlayerAndGoalsView;
 import edu.ntnu.mappe32.view.PassageView;
 import javafx.collections.FXCollections;
@@ -17,7 +15,6 @@ import javafx.scene.control.Toggle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
@@ -98,12 +95,9 @@ public class CreatePlayerAndGoalsController {
             if (validateGoldInput() & validateHealthInput() & validatePlayerNameInput()) {
                 Player player = createPlayer();
                 Game game = new Game(player, pathsFile.getStory(), createdGoals);
-                PassageView passageView = new PassageView(game);
-                try {
-                    stage.setScene(passageView.getScene());
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                PassageView passageView = new PassageView();
+                PassageViewController passageViewController = new PassageViewController(stage, passageView, game);
+                stage.setScene(passageView.getScene());
             }
         });
 
