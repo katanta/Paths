@@ -1,12 +1,23 @@
 package edu.ntnu.mappe32.controller;
 
+import edu.ntnu.mappe32.io.PathsFileReader;
+import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.Player;
+import edu.ntnu.mappe32.model.goal_related.Goal;
+import edu.ntnu.mappe32.model.goal_related.GoldGoal;
+import edu.ntnu.mappe32.model.goal_related.HealthGoal;
+import edu.ntnu.mappe32.model.goal_related.ScoreGoal;
+import edu.ntnu.mappe32.model.story_related.Story;
 import edu.ntnu.mappe32.view.CreatePlayerAndGoalsView;
+import edu.ntnu.mappe32.view.PassageView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
@@ -14,8 +25,12 @@ public class CreatePlayerAndGoalsController {
     private final static String fontFamily = "Times New Roman";
     private final static int fontSize = 20;
     private final CreatePlayerAndGoalsView view;
-    public CreatePlayerAndGoalsController(Stage stage, CreatePlayerAndGoalsView view) {
+    private final ObservableList<Goal> createdGoals;
+    public CreatePlayerAndGoalsController(Stage stage, CreatePlayerAndGoalsView view, PathsFile pathsFile) {
         this.view = view;
+        this.createdGoals = FXCollections.observableArrayList();
+        view.getGoalsListView().setItems(createdGoals);
+
 
         view.getGoldToggle().setOnAction(actionEvent ->  {
             if (view.getGoalValueTextField().isVisible() || view.getNumberValueGoalLabel().isVisible()
@@ -24,10 +39,14 @@ public class CreatePlayerAndGoalsController {
                 view.getNumberValueGoalLabel().setFont(new Font(fontFamily, fontSize));
                 view.getNumberValueGoalLabel().setVisible(true);
                 view.getNumberValueGoalLabel().setManaged(true);
+                view.getAddGoalButton().setVisible(true);
+                view.getAddGoalButton().setManaged(true);
                 return;
             }
             view.getNumberValueGoalLabel().setVisible(false);
             view.getNumberValueGoalLabel().setManaged(false);
+            view.getAddGoalButton().setVisible(false);
+            view.getAddGoalButton().setManaged(false);
         });
         view.getHealthToggle().setOnAction(actionEvent ->  {
             if (view.getGoalValueTextField().isVisible() || view.getNumberValueGoalLabel().isVisible()
@@ -36,10 +55,14 @@ public class CreatePlayerAndGoalsController {
                 view.getNumberValueGoalLabel().setFont(new Font(fontFamily, fontSize));
                 view.getNumberValueGoalLabel().setVisible(true);
                 view.getNumberValueGoalLabel().setManaged(true);
+                view.getAddGoalButton().setVisible(true);
+                view.getAddGoalButton().setManaged(true);
                 return;
             }
             view.getNumberValueGoalLabel().setVisible(false);
             view.getNumberValueGoalLabel().setManaged(false);
+            view.getAddGoalButton().setVisible(false);
+            view.getAddGoalButton().setManaged(false);
         });
         view.getScoreToggle().setOnAction(actionEvent ->  {
             if (view.getGoalValueTextField().isVisible() || view.getNumberValueGoalLabel().isVisible()
@@ -48,10 +71,14 @@ public class CreatePlayerAndGoalsController {
                 view.getNumberValueGoalLabel().setFont(new Font(fontFamily, fontSize));
                 view.getNumberValueGoalLabel().setVisible(true);
                 view.getNumberValueGoalLabel().setManaged(true);
+                view.getAddGoalButton().setVisible(true);
+                view.getAddGoalButton().setManaged(true);
                 return;
             }
             view.getNumberValueGoalLabel().setVisible(false);
             view.getNumberValueGoalLabel().setManaged(false);
+            view.getAddGoalButton().setVisible(false);
+            view.getAddGoalButton().setManaged(false);
         });
 
         view.getGoalTypeToggle().selectedToggleProperty().addListener((observableValue, toggle, t1) -> {
@@ -68,9 +95,30 @@ public class CreatePlayerAndGoalsController {
         });
 
         view.getPlayButton().setOnMouseClicked(mouseEvent -> {
-            Player player;
             if (validateGoldInput() & validateHealthInput() & validatePlayerNameInput()) {
-                player = createPlayer();
+                Player player = createPlayer();
+                Game game = new Game(player, pathsFile.getStory(), createdGoals);
+                PassageView passageView = new PassageView(game);
+                try {
+                    stage.setScene(passageView.getScene());
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        view.getAddGoalButton().setOnMouseClicked(mouseEvent -> {
+            Toggle selectedToggle = view.getGoalTypeToggle().getSelectedToggle();
+            if (validateGoalValueInput()) {
+                if (selectedToggle == view.getScoreToggle()) {
+                    createdGoals.add(new ScoreGoal(Integer.parseInt(view.getGoalValueTextField().getText())));
+                }
+                if (selectedToggle == view.getHealthToggle()) {
+                    createdGoals.add(new HealthGoal(Integer.parseInt(view.getGoalValueTextField().getText())));
+                }
+                if (selectedToggle == view.getGoldToggle()) {
+                    createdGoals.add(new GoldGoal(Integer.parseInt(view.getGoalValueTextField().getText())));
+                }
             }
         });
     }
@@ -149,6 +197,15 @@ public class CreatePlayerAndGoalsController {
             return false;
         }
         view.getPlayerGoldTextField().setStyle(null);
+        return true;
+    }
+    private boolean validateGoalValueInput() {
+        String numbersOnlyRegex = "^[0-9]+$";
+        if (!Pattern.matches(numbersOnlyRegex, view.getGoalValueTextField().getText())) {
+            setInvalidTextFieldStyle(view.getGoalValueTextField());
+            return false;
+        }
+        view.getGoalValueTextField().setStyle(null);
         return true;
     }
 }
