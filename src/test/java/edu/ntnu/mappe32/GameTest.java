@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32;
 
-import edu.ntnu.mappe32.controller.Game;
+import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.*;
@@ -21,15 +21,12 @@ public class GameTest {
     Player mutumbu;
     Player mufasa;
     Player pumba;
-    List<Item> pumbasTestInventory;
     List<Item> mutumbusTestInventory;
-    List<Item> mufasasTestInventory;
     Link climbTree;
     Link kickTree;
     Link shakeTree;
     Link runHome;
     Link scratchHead;
-    Link runToKilimanjaro;
     Link franticallyWaveHands;
     Link takeABite;
     Passage openingPassage;
@@ -77,22 +74,6 @@ public class GameTest {
                 new Item("Potato", new HealthAction(10)), new Item("Hammer", new ScoreAction(10)),
                 new Item("Dagger", new ScoreAction(10)), new Item("Scarf", new HealthAction(10))));
 
-        this.mufasasTestInventory = new ArrayList<>(Arrays.asList(new Item("Key", new ScoreAction(10)),
-                new Item("Milk", new HealthAction(10)),
-                new Item("Chicken", new HealthAction(50)),
-                new Item("Pencil", new ScoreAction(10)),
-                new Item("Wood", new ScoreAction(10)),
-                new Item("Paper", new ScoreAction(10))));
-
-        this.pumbasTestInventory = new ArrayList<>(Arrays.asList(new Item("N'Tofos", new ScoreAction(10)),
-                new Item("Orange", new HealthAction(20)),
-                new Item("Apple", new HealthAction(10)),
-                new Item("Machete", new ScoreAction(10)),
-                new Item("Knife", new ScoreAction(10)),
-                new Item("Paperclip", new ScoreAction(10)),
-                new Item("Rolex", new ScoreAction(10)),
-                new Item("Key", new ScoreAction(10))));
-
         remove10HealthPoints = new HealthAction(-10);
         add1ScorePoint = new ScoreAction(1);
         add10GoldPoints = new GoldAction(10);
@@ -131,7 +112,6 @@ public class GameTest {
 
         scratchHead = new Link("Scratch head. You screathed your head. It did not bring any relief. You took 10 damage.",
                 "Scratched head 10 damage Passage");
-        runToKilimanjaro = new Link("Run to Kilimanjaro", "Run to Kilimanjaro Passage");
 
         assertionLinks = new ArrayList<>();
 
@@ -199,12 +179,12 @@ public class GameTest {
     @DisplayName("getPlayer() returns player")
     @Test
     void getPlayerReturnsPlayer() {
-        assertEquals(mutumbu, game1.getPlayer());
+        assertEquals(mutumbu, game1.player());
     }
     @DisplayName("getStory() retruns story")
     @Test
     void getStoryReturnsStory() {
-        assertEquals(storyOfAfrica, game1.getStory());
+        assertEquals(storyOfAfrica, game1.story());
     }
     @DisplayName("getGoals()")
     @Nested
@@ -212,14 +192,14 @@ public class GameTest {
         @DisplayName("returns goals()")
         @Test
         void getGoalsReturnsGoals() {
-            assertEquals(goals, game1.getGoals());
+            assertEquals(goals, game1.goals());
         }
         @DisplayName("returns deep copy of goals()")
         @Test
         void getGoalsReturnsDeepCopyOfGoals() {
-            List<Goal> mutatedGoals = game1.getGoals();
+            List<Goal> mutatedGoals = game1.goals();
             mutatedGoals.add(tapeItUp);
-            assertNotEquals(mutatedGoals, game1.getGoals());
+            assertNotEquals(mutatedGoals, game1.goals());
         }
     }
     @DisplayName("begin() returns opening passage of a game's story")
