@@ -29,15 +29,11 @@ public class GameSetupController {
             fileChooser.setInitialDirectory(new File("src/main/resources/saved stories"));
             fileChooser.getExtensionFilters().add(pathsExtension);
             File selectedFile = fileChooser.showOpenDialog(stage);
-            try {
-                if (selectedFile != null)
-                    if (storySelectorView.getStoryTable().getItems()
-                        .contains(new PathsFile(selectedFile))) {
-                    storySelectorView.fileAlreadySelectedAlert().show();
+            if (selectedFile != null)
+                if (storySelectorView.getStoryTable().getItems()
+                    .contains(new PathsFile(selectedFile))) {
+                storySelectorView.fileAlreadySelectedAlert().show();
                 storySelectorView.addPathsFile(selectedFile);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
         });
 
