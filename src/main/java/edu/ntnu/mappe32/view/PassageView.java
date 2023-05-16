@@ -34,15 +34,20 @@ public class PassageView {
     private Text passageContent;
     private VBox linkButtonsVBox;
     private VBox gameGoalsVBox;
+    private HBox buttonsHBox;
+    private ImageView helpButton;
+    private ImageView homeButton;
+    private ImageView restartButton;
 
     public PassageView() {
         root = new StackPane();
         infoFont = resizableMainFont(14);
         configurePlayerInfo();
         configureInventoryPane();
-        conigurePassageInfo();
+        configurePassageInfo();
         configureLinkScrollPane();
         configureGameGoalsVBox();
+        configureButtonsHBox();
 
         this.scene = new Scene(root, 1280, 720);
     }
@@ -132,7 +137,7 @@ public class PassageView {
         playerGold.setSpacing(20);
     }
 
-    private void conigurePassageInfo() {
+    private void configurePassageInfo() {
         storyTitle = new Label();
         storyTitle.setLabelFor(passageTitle);
         storyTitle.setMinSize(10, 10);
@@ -176,6 +181,43 @@ public class PassageView {
         goalScrollPane.setMaxWidth(gameGoalsVBox.getMaxWidth() + 7);
         goalScrollPane.setMaxHeight(gameGoalsVBox.getPrefHeight() + 5);
         StackPane.setAlignment(goalScrollPane, Pos.BOTTOM_LEFT);
+    }
+
+    private void configureButtonsHBox() {
+        buttonsHBox = new HBox();
+        buttonsHBox.setMaxWidth(313);
+        buttonsHBox.setMaxHeight(720 - gameGoalsVBox.getPrefHeight());
+        buttonsHBox.setStyle("-fx-border-color: black; -fx-border-width: 3px;");
+        buttonsHBox.setAlignment(Pos.CENTER_LEFT);
+        buttonsHBox.setSpacing(40);
+        StackPane.setAlignment(buttonsHBox, Pos.TOP_LEFT);
+
+        configureHelpButton();
+        configureHomeButton();
+        configureRestartButton();
+
+        root.getChildren().add(buttonsHBox);
+    }
+
+    private void configureHelpButton() {
+        try {
+            helpButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/helpButton.png")));
+            //helpButtonHover = new ImageView(new Image(new FileInputStream("src/main/resources/img/helpButtonHover")));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        helpButton.setFitHeight(50);
+        helpButton.setFitWidth(50);
+        buttonsHBox.setMargin(helpButton, new Insets(0, 0, 0, 40));
+        buttonsHBox.getChildren().add(helpButton);
+    }
+
+    private void configureHomeButton() {
+
+    }
+
+    private void configureRestartButton() {
+
     }
 
     public VBox getItemsVBox() {
