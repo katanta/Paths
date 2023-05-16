@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32;
 
-import edu.ntnu.mappe32.controller.Game;
+import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.io.PathsFileReader;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class TrollStoryPaths {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Story trollStory = PathsFileReader.readStory("src/main/resources/saved stories/trollStory.paths");
 
         Player player = new Player("Daffen", 100, 0, 0, new HashMap<Item, Integer>());
@@ -41,7 +41,7 @@ public class TrollStoryPaths {
                 System.out.println("Your input should be a whole between 1 and " + currentPassage.getLinks().size());
                 sc.next();
             }
-            if (paths.getPlayer().getHealth() <= 0) {
+            if (paths.player().getHealth() <= 0) {
                 System.out.println("Oh dear! You died!");
                 exit = true;
             }

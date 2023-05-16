@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32;
 
-import edu.ntnu.mappe32.controller.Game;
+import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.HealthAction;
@@ -9,7 +9,6 @@ import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.goal_related.GoldGoal;
 import edu.ntnu.mappe32.model.goal_related.ScoreGoal;
 import edu.ntnu.mappe32.model.story_related.Story;
-import edu.ntnu.mappe32.view.PassageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,7 +25,7 @@ public class TestApp extends javafx.application.Application {
         launch();
     }
 
-    public static Game setUpGame() throws IOException {
+    public static Game setUpGame() {
         Player player = new Player("Ole", 100, 0, 50, new HashMap<Item, Integer>());
         Story story = readStory("src/main/resources/test_stories/main_test_story.paths");
         Goal goldGoal = new GoldGoal(100);
@@ -54,7 +53,7 @@ public class TestApp extends javafx.application.Application {
         return new Game(player, story, goals);
     }
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         //stage.setScene(new PassageView(setUpGame()).getScene()); // TODO FIX
         stage.setTitle("Paths Game");
         stage.show();
