@@ -17,7 +17,7 @@ import java.io.FileNotFoundException;
 public class GoalCell extends ListCell<Goal> {
 
     public static final int FIT_HEIGHT = 20;
-    public static final int FIT_WIDTH = 22;
+    public static final int FIT_WIDTH = 20;
     private final HBox hBox = new HBox(10);
 
     public GoalCell(Goal goal) {
@@ -26,7 +26,7 @@ public class GoalCell extends ListCell<Goal> {
         ImageView icon = createIcon(goal);
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(new Label(goal.toViewString(), pane));
+        vBox.getChildren().addAll(new Label(goal.goalValue(), pane));
         hBox.getChildren().addAll(icon, vBox, pane);
         hBox.setAlignment(Pos.CENTER);
         HBox.setHgrow(pane, Priority.ALWAYS);
@@ -44,8 +44,8 @@ public class GoalCell extends ListCell<Goal> {
             } else if (goal instanceof ScoreGoal) {
                 icon = new ImageView(
                         new Image(new FileInputStream("src/main/resources/img/score.png")));
-                icon.setFitWidth(FIT_WIDTH);
-                icon.setFitHeight(FIT_HEIGHT);
+                icon.setFitWidth(FIT_WIDTH + 6);
+                icon.setFitHeight(FIT_HEIGHT + 3);
                 return icon;
             } else if (goal instanceof HealthGoal) {
                 icon = new ImageView(
@@ -56,8 +56,8 @@ public class GoalCell extends ListCell<Goal> {
             } else if (goal instanceof GoldGoal) {
                 icon = new ImageView(
                         new Image(new FileInputStream("src/main/resources/img/gold.png")));
-                icon.setFitWidth(FIT_WIDTH);
-                icon.setFitHeight(FIT_HEIGHT);
+                icon.setFitWidth(FIT_WIDTH + 6);
+                icon.setFitHeight(FIT_HEIGHT + 2);
                 return icon;
             }
             throw new IllegalArgumentException("No image that matches your goal");

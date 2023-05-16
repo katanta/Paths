@@ -39,8 +39,12 @@ public class GoldGoal implements Goal{
     }
 
     @Override
-    public String toViewString() {
+    public String goalValue() {
         return String.valueOf(minimumGold);
     }
 
+    @Override
+    public String goalType() {
+        return "Gold";
+    }
 }

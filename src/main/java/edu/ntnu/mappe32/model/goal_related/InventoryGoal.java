@@ -43,12 +43,16 @@ public class InventoryGoal implements Goal {
                         mandatoryItems.get(item) <= player.getInventory().get(item));
     }
     @Override
-    public String toViewString() {
+    public String goalValue() {
         StringBuilder sb = new StringBuilder();
         mandatoryItems.keySet().forEach(item ->
                 sb.append(item.getItemName()).append(": ").append(mandatoryItems.get(item)).append(", "));
 
         return sb.substring(sb.length() - 2);
+    }
+    @Override
+    public String goalType() {
+        return "Inventory";
     }
 }
 

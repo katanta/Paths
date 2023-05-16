@@ -43,6 +43,7 @@ public class CreatePlayerAndGoalsView {
     private HBox invalidGoldBox;
     private HBox invalidHealthBox;
     private Image errorCircleImage;
+    private final Font labelFont = new Font("Times New Roman", 16);
 
 
     public CreatePlayerAndGoalsView(PathsFile pathsFile) {
@@ -96,7 +97,7 @@ public class CreatePlayerAndGoalsView {
     }
     private void configureStoryTitleLabel() {
         this.storyTitleLabel = new Label(pathsFile.getStoryTitle());
-        storyTitleLabel.setFont(new Font("Times New Roman", 40));
+        storyTitleLabel.setFont(labelFont);
         HBox.setMargin(storyTitleLabel, new Insets(10));
 
     }
@@ -104,31 +105,33 @@ public class CreatePlayerAndGoalsView {
         this.addGoalButton = new Button("Add Goal");
         addGoalButton.setVisible(false);
         addGoalButton.setManaged(false);
+        addGoalButton.setTooltip(new Tooltip("Press to add goal"));
         HBox.setMargin(addGoalButton, new Insets(10));
+        System.out.println(pathsFile.getStory().getItems());
 
     }
     private void configurePlayerNameLabel() {
         this.playerNameLabel = new Label("Player Name:");
-        playerNameLabel.setFont(new Font("Times New Roman", 20));
+        playerNameLabel.setFont(labelFont);
     }
     private void configurePlayerHealthLabel() {
         this.playerHealthLabel = new Label("Player Health:");
-        playerHealthLabel.setFont(new Font("Times New Roman", 20));
+        playerHealthLabel.setFont(labelFont);
     }
     private void configurePlayerGoldLabel() {
         this.playerGoldLabel = new Label("Player Gold:");
-        playerGoldLabel.setFont(new Font("Times New Roman", 20));
+        playerGoldLabel.setFont(labelFont);
     }
     private void configureAddGoalLabel() {
         this.addGoalLabel = new Label("Add Goals:");
-        addGoalLabel.setFont(new Font("Times New Roman", 20));
+        addGoalLabel.setFont(labelFont);
         VBox.setMargin(addGoalLabel, new Insets(10));
     }
 
 
     private void configureNumberValueGoalLabel() {
         this.numberValueGoalLabel = new Label();
-        numberValueGoalLabel.setFont(new Font("Times New Roman", 20));
+        numberValueGoalLabel.setFont(labelFont);
         numberValueGoalLabel.setManaged(false);
         numberValueGoalLabel.setVisible(false);
         HBox.setMargin(numberValueGoalLabel, new Insets(10));
@@ -228,7 +231,7 @@ public class CreatePlayerAndGoalsView {
     }
     private void configurePlayerConfigurationLabel() {
         this.playerConfigurationLabel = new Label("Player Configuration");
-        playerConfigurationLabel.setFont(new Font("Times New Roman", 20));
+        playerConfigurationLabel.setFont(labelFont);
         VBox.setMargin(playerConfigurationLabel, new Insets(10));
     }
     private void configurePathsFileLabelInfo() {
@@ -251,7 +254,6 @@ public class CreatePlayerAndGoalsView {
         this.goalsListView = new ListView<>();
         goalsListView.setPrefWidth(100);
         goalsListView.setPrefHeight(300);
-
         goalsListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Goal goal, boolean empty) {
@@ -262,7 +264,8 @@ public class CreatePlayerAndGoalsView {
                 } else {
                     GoalCell cell = new GoalCell(goal);
                     setGraphic(cell.getHBox());
-                    }
+                    setTooltip(new Tooltip("Click to remove '" + goal.goalType() + " Goal: " + goal.goalValue() + "'"));
+                }
                 }
         });
     }
