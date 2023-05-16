@@ -2,6 +2,7 @@ package edu.ntnu.mappe32.controller;
 
 import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
+import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Passage;
 import edu.ntnu.mappe32.view.PassageView;
@@ -24,8 +25,9 @@ import java.util.Map;
 import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
 
 public class PassageViewController {
-    private Stage stage;
-    private final Game game;
+    private final Stage stage;
+    private Game game;
+    private final Game originalGame;
     private final PassageView passageView;
     private static Passage currentPassage;
 
@@ -34,7 +36,9 @@ public class PassageViewController {
         this.passageView = passageView;
         this.game = game;
         currentPassage = game.begin();
+        originalGame = game;
         updateScene();
+        configureAllTopLeftButtonActions();
         passageView.getStoryTitle().setText(game.story().getTitle());
     }
 
@@ -44,7 +48,6 @@ public class PassageViewController {
         updatePassageInfo();
         updateInventoryPane();
         updateGameGoalsVBox();
-        configureTopLeftButtonHovering();
     }
 
     private void updateInventoryPane() {
@@ -106,7 +109,6 @@ public class PassageViewController {
                 completionStatus.setTextFill(Color.GREEN);
                 completionStatus.getTooltip().setText("The goal above is complete!");
             }
-
             VBox goalStatus = new VBox(goalLabel, completionStatus);
             goalStatus.setAlignment(Pos.TOP_CENTER);
             passageView.getGameGoalsVBox().getChildren().add(goalStatus);
@@ -120,8 +122,20 @@ public class PassageViewController {
             GameSetupController gameSetup = new GameSetupController(stage, splashScreen, new StorySelectorView());
         });
     }
+
+    private void setRestartButtonClickAction() {
+        passageView.getRestartButton().setOnMouseClicked(e -> {
+            this.game = new Game(originalGame.player(), originalGame.story(), originalGame.goals());
+            currentPassage = game.begin();
+            updateScene();
+        });
+    }
+
+    private void setHelpButtonClickAction() {
+        //todo: create a "help" image and display it on a separate stage
+    }
     
-    private void configureTopLeftButtonHovering() {
+    private void configureAllTopLeftButtonActions() {
         ImageView helpButtonHover;
         ImageView homeButtonHover;
         ImageView restartButtonHover;
@@ -138,6 +152,7 @@ public class PassageViewController {
         //help button
         passageView.getHelpButton().setOnMouseEntered(e -> {
             passageView.getHelpButton().setImage(helpButtonHover.getImage());
+            setHelpButtonClickAction();
             Tooltip tooltip = new Tooltip("Need help? Press me! :)");
             tooltip.setFont(resizableMainFont(18));
             Tooltip.install(passageView.getHelpButton(), tooltip);
@@ -159,6 +174,7 @@ public class PassageViewController {
         //restart button
         passageView.getRestartButton().setOnMouseEntered(e -> {
             passageView.getRestartButton().setImage(restartButtonHover.getImage());
+            setRestartButtonClickAction();
             Tooltip tooltip = new Tooltip("Press this to restart the story and revert " + game.player().getName() + " to their original stats.");
             tooltip.setMaxWidth(500);
             tooltip.setWrapText(true);
@@ -169,9 +185,9 @@ public class PassageViewController {
             passageView.getRestartButton().setImage(normalRestartButton);
 
         });
-
+        passageView.getRestartButton().setOnMouseReleased(e -> {
+            passageView.getRestartButton().setImage(normalRestartButton);
+        });
     }
-
-
 }
 

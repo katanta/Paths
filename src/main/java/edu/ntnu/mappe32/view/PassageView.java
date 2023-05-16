@@ -172,8 +172,9 @@ public class PassageView {
     private void configureGameGoalsVBox() {
         gameGoalsVBox = new VBox();
         gameGoalsVBox.setStyle("-fx-border-color: black; -fx-border-width: 3px;");
-        gameGoalsVBox.setMaxWidth(320);
-        gameGoalsVBox.setPrefHeight(600);
+        gameGoalsVBox.setMaxWidth(313);
+        gameGoalsVBox.setMinWidth(313); //TODO: improve aesthetics so this window matches top left button box
+        gameGoalsVBox.setPrefHeight(598);
         gameGoalsVBox.setSpacing(50);
         ScrollPane goalScrollPane = new ScrollPane();
         root.getChildren().add(goalScrollPane);
