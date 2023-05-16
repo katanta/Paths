@@ -16,9 +16,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class StorySelectorView {
-    Scene scene;
-    Button addStoryButton;
-    TableView<PathsFile> storyTable;
+    private final Scene scene;
+    private final Button addStoryButton;
+    private final TableView<PathsFile> storyTable;
 
     public StorySelectorView() {
         this.storyTable = new TableView<>();
@@ -55,7 +55,7 @@ public class StorySelectorView {
         return addStoryButton;
     }
 
-    public void addPathsFile(File file) throws IOException {
+    public void addPathsFile(File file) {
         storyTable.getItems().add(new PathsFile(file));
     }
 
