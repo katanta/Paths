@@ -5,6 +5,8 @@ import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Passage;
 import edu.ntnu.mappe32.view.PassageView;
+import edu.ntnu.mappe32.view.PathsSplashScreenView;
+import edu.ntnu.mappe32.view.StorySelectorView;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,12 +24,13 @@ import java.util.Map;
 import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
 
 public class PassageViewController {
-
+    private Stage stage;
     private final Game game;
     private final PassageView passageView;
     private static Passage currentPassage;
 
     public PassageViewController(Stage stage, PassageView passageView, Game game) {
+        this.stage = stage;
         this.passageView = passageView;
         this.game = game;
         currentPassage = game.begin();
@@ -109,6 +112,14 @@ public class PassageViewController {
             passageView.getGameGoalsVBox().getChildren().add(goalStatus);
         }
     }
+
+    private void setHomeButtonClickAction() {
+        PathsSplashScreenView splashScreen = new PathsSplashScreenView();
+        passageView.getHomeButton().setOnMouseClicked(e -> {
+            stage.setScene(splashScreen.getScene());
+            GameSetupController gameSetup = new GameSetupController(stage, splashScreen, new StorySelectorView());
+        });
+    }
     
     private void configureTopLeftButtonHovering() {
         ImageView helpButtonHover;
@@ -137,6 +148,7 @@ public class PassageViewController {
         //home button
         passageView.getHomeButton().setOnMouseEntered(e -> {
             passageView.getHomeButton().setImage(homeButtonHover.getImage());
+            setHomeButtonClickAction();
             Tooltip tooltip = new Tooltip("Press this to go the home screen.");
             tooltip.setFont(resizableMainFont(18));
             Tooltip.install(passageView.getHomeButton(), tooltip);
