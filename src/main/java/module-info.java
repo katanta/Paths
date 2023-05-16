@@ -1,6 +1,5 @@
 module IDATT.GROUP32 {
     requires javafx.controls;
-    requires java.sql;
     requires javafx.graphics;
     exports edu.ntnu.mappe32;
     opens edu.ntnu.mappe32.model;
