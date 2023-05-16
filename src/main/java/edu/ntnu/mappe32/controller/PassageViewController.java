@@ -9,10 +9,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Map;
 
 import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
@@ -37,6 +41,7 @@ public class PassageViewController {
         updatePassageInfo();
         updateInventoryPane();
         updateGameGoalsVBox();
+        configureTopLeftButtonHovering();
     }
 
     private void updateInventoryPane() {
@@ -105,9 +110,56 @@ public class PassageViewController {
         }
     }
     
-    private void addTopLeftButtonEvents() {
-        //helpButtonHover = new ImageView(new Image(new FileInputStream("src/main/resources/img/helpButtonHover")));
-        //TODO: make methods for each  button that are executed in here
+    private void configureTopLeftButtonHovering() {
+        ImageView helpButtonHover;
+        ImageView homeButtonHover;
+        ImageView restartButtonHover;
+        try {
+            helpButtonHover = new ImageView(new Image(new FileInputStream("src/main/resources/img/helpButtonHover.png")));
+            homeButtonHover = new ImageView(new Image(new FileInputStream("src/main/resources/img/homeButtonHover.png")));
+            restartButtonHover = new ImageView(new Image(new FileInputStream("src/main/resources/img/restartButtonHover.png")));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        final Image normalHelpButton = passageView.getHelpButton().getImage();
+        final Image normalHomeButton = passageView.getHomeButton().getImage();
+        final Image normalRestartButton = passageView.getRestartButton().getImage();
+        //help button
+        passageView.getHelpButton().setOnMouseEntered(e -> {
+            passageView.getHelpButton().setImage(helpButtonHover.getImage());
+            Tooltip tooltip = new Tooltip("Need help? Press me! :)");
+            tooltip.setFont(resizableMainFont(18));
+            Tooltip.install(passageView.getHelpButton(), tooltip);
+        });
+        passageView.getHelpButton().setOnMouseExited(e -> {
+            passageView.getHelpButton().setImage(normalHelpButton);
+        });
+        //home button
+        passageView.getHomeButton().setOnMouseEntered(e -> {
+            passageView.getHomeButton().setImage(homeButtonHover.getImage());
+            Tooltip tooltip = new Tooltip("Press this to go the home screen.");
+            tooltip.setFont(resizableMainFont(18));
+            Tooltip.install(passageView.getHomeButton(), tooltip);
+        });
+        passageView.getHomeButton().setOnMouseExited(e -> {
+                passageView.getHomeButton().setImage(normalHomeButton);
+        });
+        //restart button
+        passageView.getRestartButton().setOnMouseEntered(e -> {
+            passageView.getRestartButton().setImage(restartButtonHover.getImage());
+            Tooltip tooltip = new Tooltip("Press this to restart the story and revert " + game.player().getName() + " to their original stats.");
+            tooltip.setMaxWidth(500);
+            tooltip.setWrapText(true);
+            tooltip.setFont(resizableMainFont(18));
+            Tooltip.install(passageView.getRestartButton(), tooltip);
+        });
+        passageView.getRestartButton().setOnMouseExited(e -> {
+            passageView.getRestartButton().setImage(normalRestartButton);
+
+        });
+
     }
+
+
 }
 
