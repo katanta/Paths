@@ -125,7 +125,7 @@ public class PassageViewController {
 
     private void setRestartButtonClickAction() {
         passageView.getRestartButton().setOnMouseClicked(e -> {
-            this.game = new Game(originalPlayer, game.story(), game.goals());
+            this.game = new Game(originalPlayer.copyPlayer(), game.story(), game.goals());
             currentPassage = game.begin();
             updateScene();
         });
