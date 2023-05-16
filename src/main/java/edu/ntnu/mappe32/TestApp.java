@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32;
 
+import edu.ntnu.mappe32.controller.PassageViewController;
 import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
@@ -9,6 +10,7 @@ import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.goal_related.GoldGoal;
 import edu.ntnu.mappe32.model.goal_related.ScoreGoal;
 import edu.ntnu.mappe32.model.story_related.Story;
+import edu.ntnu.mappe32.view.PassageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -47,14 +49,16 @@ public class TestApp extends javafx.application.Application {
 
 
         for (int i = 1; i <= 50; i++) {
-            //goals.add(new ScoreGoal(i));
+            goals.add(new ScoreGoal(i));
             player.addToInventory(new Item("Pumpkin"));
         }
         return new Game(player, story, goals);
     }
     @Override
     public void start(Stage stage) {
-        //stage.setScene(new PassageView(setUpGame()).getScene()); // TODO FIX
+        PassageView passageView = new PassageView();
+        PassageViewController passageViewController = new PassageViewController(stage, passageView, setUpGame());
+        stage.setScene(passageView.getScene());
         stage.setTitle("Paths Game");
         stage.show();
     }

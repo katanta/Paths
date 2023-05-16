@@ -168,13 +168,14 @@ public class PassageView {
         gameGoalsVBox = new VBox();
         gameGoalsVBox.setStyle("-fx-border-color: black; -fx-border-width: 3px;");
         gameGoalsVBox.setMaxWidth(320);
-        gameGoalsVBox.setMinHeight(718);
+        gameGoalsVBox.setPrefHeight(600);
         gameGoalsVBox.setSpacing(50);
         ScrollPane goalScrollPane = new ScrollPane();
         root.getChildren().add(goalScrollPane);
         goalScrollPane.setContent(gameGoalsVBox);
-        goalScrollPane.setMaxWidth(gameGoalsVBox.getMaxWidth() + 5);
-        StackPane.setAlignment(goalScrollPane, Pos.TOP_LEFT);
+        goalScrollPane.setMaxWidth(gameGoalsVBox.getMaxWidth() + 7);
+        goalScrollPane.setMaxHeight(gameGoalsVBox.getPrefHeight() + 5);
+        StackPane.setAlignment(goalScrollPane, Pos.BOTTOM_LEFT);
     }
 
     public VBox getItemsVBox() {
