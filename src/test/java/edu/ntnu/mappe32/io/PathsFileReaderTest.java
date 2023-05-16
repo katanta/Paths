@@ -1,7 +1,6 @@
 package edu.ntnu.mappe32.io;
 
 import edu.ntnu.mappe32.model.Item;
-import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.action_related.*;
 import edu.ntnu.mappe32.model.story_related.Link;
 import edu.ntnu.mappe32.model.story_related.Passage;
@@ -11,15 +10,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.nio.file.NoSuchFileException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PathsFileReaderTest {
 
     Story mainTestStory;
-
     Passage lastPassage;
     Link lastLink;
     Action goldPlus100;
@@ -99,7 +95,7 @@ public class PathsFileReaderTest {
 
         @DisplayName("returns story when paths file contains inventory action")
         @Test
-        void readStoryReturnsStoryWhenPathsFileContainsInventoryAction() throws IOException {
+        void readStoryReturnsStoryWhenPathsFileContainsInventoryAction() {
             Link link = new Link("Run away", "Run away");
             Action health = new HealthAction(-100);
             Action gold = new GoldAction(100);
@@ -116,7 +112,7 @@ public class PathsFileReaderTest {
 
         @DisplayName("returns story when paths file ends with a link")
         @Test
-        void readStoryReturnsStoryWhenPathsFileEndsWithALink() throws IOException {
+        void readStoryReturnsStoryWhenPathsFileEndsWithALink() {
             lastPassage.addLink(lastLink);
             assertEquals(mainTestStory.toString(),
                     PathsFileReader
@@ -126,7 +122,7 @@ public class PathsFileReaderTest {
 
         @DisplayName("retuns story when paths file ends with an action")
         @Test
-        void readStoryReturnsStoryWhenPathsFileEndsWithAnAction() throws IOException {
+        void readStoryReturnsStoryWhenPathsFileEndsWithAnAction() {
             lastPassage.addLink(lastLink);
             lastLink.addAction(goldPlus100);
             assertEquals(mainTestStory.toString(),
@@ -137,7 +133,7 @@ public class PathsFileReaderTest {
 
         @DisplayName("returns story when paths file ends with passage content")
         @Test
-        void readStoryReturnsStoryWhenPathsFileEndsWithPassageContent() throws IOException {
+        void readStoryReturnsStoryWhenPathsFileEndsWithPassageContent() {
             assertEquals(mainTestStory.toString(),
                     PathsFileReader
                             .readStory("src/main/resources/test_stories" +
@@ -147,7 +143,7 @@ public class PathsFileReaderTest {
         @Test
         void readStoryThrowsIOExceptionWhenFileIsNonExistent() {
             String fileName = "src/main/resources/test_stories/nonexistent_file.paths";
-            assertThrowsExactly(NoSuchFileException.class, () -> PathsFileReader.readStory(fileName));
+            assertThrowsExactly(RuntimeException.class, () -> PathsFileReader.readStory(fileName));
         }
         @DisplayName("throws IllegalArguementException when Action type does not exist")
         @Test
