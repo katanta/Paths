@@ -36,6 +36,10 @@ public class InventoryAction implements Action{
         }
     }
 
+    public Item getItem() {
+        return item;
+    }
+
     @Override
     public String toString() {
         return "<Inventory " + this.add + " " + this.item + ">";

@@ -150,9 +150,9 @@ public class CreatePlayerAndGoalsController {
      */
     private void setInvalidTextFieldStyle(TextField textField) {
         String borderColor = "red;";
-        String borderWidth = "0.3px;";
+        String borderWidth = "1px;";
         textField.setStyle("-fx-border-color: " + borderColor +
-                "-fx-border-width:" + borderWidth);
+                "-fx-border-width: " + borderWidth);
     }
 
     /**

@@ -1,6 +1,10 @@
 package edu.ntnu.mappe32.model.story_related;
 
+import edu.ntnu.mappe32.model.Item;
+import edu.ntnu.mappe32.model.action_related.InventoryAction;
+
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class represents a story.
@@ -36,7 +40,7 @@ public class Story {
         }
         this.title = title;
         this.openingPassage = openingPassage;
-        passages = new HashMap<Link, Passage>();
+        passages = new HashMap<>();
     }
     /**
      * This method returns the title a story.
@@ -104,6 +108,19 @@ public class Story {
     public List<Link> getBrokenLinks() {
         return getPassages().stream().flatMap(passage -> passage.getLinks().stream())
                 .filter(link -> getPassage(link) == null).toList();
+    }
+
+    /**
+     * This method returns a list of the items which are possible to obtain in a story
+     * @return Obtainable items in a story, as List<Item>
+     */
+    public List<Item> getItems() {
+        return passages.keySet().stream()
+                .flatMap(link -> link.getActions().stream())
+                .filter(action -> action instanceof InventoryAction)
+                .filter(action -> ((InventoryAction) action).isAdding())
+                .map(action -> ((InventoryAction) action).getItem())
+                .toList();
     }
 
     @Override
