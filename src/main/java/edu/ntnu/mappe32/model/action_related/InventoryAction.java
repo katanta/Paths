@@ -27,9 +27,8 @@ public class InventoryAction implements Action{
      */
     @Override
     public void execute(Player player) {
-        if (add) {
+        if (add)
             player.addToInventory(item);
-        }
         else {
             player.removeFromInventory(item);
             item.useItem(player);

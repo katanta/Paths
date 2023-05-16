@@ -1,6 +1,5 @@
 package edu.ntnu.mappe32.model;
 
-import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.Action;
 
 import java.util.ArrayList;
@@ -12,11 +11,6 @@ public class Item {
     private final String itemName;
     //add itemtext here that describes what the item does or did?
     private final List<Action> actions;
-
-    public Item(final String itemName) {
-        this.itemName = itemName;
-        this.actions = new ArrayList<>();
-    }
 
     public Item(final String itemName, Action... actions) {
         this.itemName = itemName;
