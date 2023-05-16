@@ -3,6 +3,7 @@ package edu.ntnu.mappe32.view;
 import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -12,35 +13,41 @@ import javafx.scene.text.Font;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.regex.Pattern;
 
 public class CreatePlayerAndGoalsView {
-    Scene scene;
-    GridPane playerGridPane;
-    Label storyTitleLabel;
-    Label pathsFileLabel;
-    Label playerConfigurationLabel;
-    Label playerHealthLabel;
-    Label playerGoldLabel;
-    Label playerNameLabel;
-    TextField playerNameTextField;
-    TextField playerHealthTextField;
-    TextField playerGoldTextField;
-    Label addGoalLabel;
-    PathsFile pathsFile;
-    ToggleGroup goalTypeToggle;
-    ToggleButton goldToggle;
-    ToggleButton healthToggle;
-    ToggleButton inventoryToggle;
-    ToggleButton scoreToggle;
-    TextField goalValueTextField;
-    Label numberValueGoalLabel;
-    ImageView playButton;
-    ListView<Goal> goalsListView;
-    Button addGoalButton;
+    private final Scene scene;
+    private GridPane playerGridPane;
+    private Label storyTitleLabel;
+    private Label pathsFileLabel;
+    private Label playerConfigurationLabel;
+    private Label playerHealthLabel;
+    private Label playerGoldLabel;
+    private Label playerNameLabel;
+    private TextField playerNameTextField;
+    private TextField playerHealthTextField;
+    private TextField playerGoldTextField;
+    private Label addGoalLabel;
+    private final PathsFile pathsFile;
+    private ToggleGroup goalTypeToggle;
+    private ToggleButton goldToggle;
+    private ToggleButton healthToggle;
+    private ToggleButton inventoryToggle;
+    private ToggleButton scoreToggle;
+    private TextField goalValueTextField;
+    private Label numberValueGoalLabel;
+    private ImageView playButton;
+    private ListView<Goal> goalsListView;
+    private Button addGoalButton;
+    private HBox invalidNameBox;
+    private HBox invalidGoldBox;
+    private HBox invalidHealthBox;
+    private Image errorCircleImage;
 
 
     public CreatePlayerAndGoalsView(PathsFile pathsFile) {
         this.pathsFile = pathsFile;
+        configureErrorCircleImage();
         configureStoryTitleLabel();
         configurePathsFileLabelInfo();
         configurePlayerConfigurationLabel();
@@ -59,21 +66,33 @@ public class CreatePlayerAndGoalsView {
         configureGoalsListView();
         configureAddGoalButton();
 
-        HBox topBar = new HBox(10);
+        VBox topBar = new VBox(10);
         topBar.getChildren().addAll(storyTitleLabel, pathsFileLabel);
         HBox goalTypeToggleBar = new HBox();
         goalTypeToggleBar.getChildren().addAll(goldToggle, healthToggle, inventoryToggle, scoreToggle);
         HBox goalValueBar = new HBox();
         goalValueBar.getChildren().addAll(numberValueGoalLabel, goalValueTextField, addGoalButton);
         VBox playerAndGoalConfigurationBox = new VBox(10);
-        playerAndGoalConfigurationBox.getChildren().addAll(topBar,
+        playerAndGoalConfigurationBox.getChildren().addAll(
                 playerConfigurationLabel, playerGridPane, addGoalLabel,
                 goalTypeToggleBar, goalValueBar, playButton, goalsListView);
 
-        StackPane root = new StackPane();
-        root.getChildren().addAll(playerAndGoalConfigurationBox);
+        BorderPane root = new BorderPane();
+        root.setCenter(playerAndGoalConfigurationBox);
+        VBox vBox = new VBox();
+        vBox.setPrefWidth(400);
+        root.setTop(topBar);
+        topBar.setAlignment(Pos.CENTER);
+        root.setLeft(vBox);
         this.scene = new Scene(root, 1280, 720);
 
+    }
+    private void configureErrorCircleImage() {
+        try {
+            errorCircleImage = new Image(new FileInputStream("src/main/resources/img/error-circle-solid-24.png"));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
     private void configureStoryTitleLabel() {
         this.storyTitleLabel = new Label(pathsFile.getStoryTitle());
@@ -137,19 +156,49 @@ public class CreatePlayerAndGoalsView {
     }
 
     private void configurePlayerGridPane() {
+        configureInvalidInputBoxes();
         playerGridPane = new GridPane();
         playerGridPane.setHgap(10);
         playerGridPane.setVgap(10);
         playerGridPane.add(playerNameLabel,0,0);
-        playerGridPane.add(playerGoldLabel,0,1);
-        playerGridPane.add(playerHealthLabel,0,2);
+        playerGridPane.add(playerHealthLabel,0,1);
+        playerGridPane.add(playerGoldLabel,0,2);
         playerGridPane.add(playerNameTextField,1,0);
-        GridPane.setHgrow(playerNameTextField, Priority.ALWAYS);
-        playerGridPane.add(playerGoldTextField, 1,1);
-        GridPane.setHgrow(playerGoldTextField, Priority.ALWAYS);
-        playerGridPane.add(playerHealthTextField, 1,2);
-        GridPane.setHgrow(playerHealthTextField, Priority.ALWAYS);
+        playerGridPane.add(playerHealthTextField, 1,1);
+        playerGridPane.add(playerGoldTextField, 1,2);
+        playerGridPane.add(invalidNameBox, 2,0);
+        playerGridPane.add(invalidHealthBox,2,1);
+        playerGridPane.add(invalidGoldBox, 2, 2);
         VBox.setMargin(playerGridPane, new Insets(10));
+    }
+
+    private void configureInvalidInputBoxes() {
+
+        String invalidLabelStyle = "-fx-text-fill: #D80D0D;" + "-fx-font-size: 13;";
+
+        Label invalidGoldLabel = new Label("Invalid gold (Integers over 0 only)");
+        invalidGoldLabel.setStyle(invalidLabelStyle);
+        invalidGoldLabel.setAlignment(Pos.CENTER);
+        invalidGoldBox = new HBox(5);
+        invalidGoldBox.getChildren().addAll(createErrorCircle(), invalidGoldLabel);
+        invalidGoldBox.setAlignment(Pos.CENTER_LEFT);
+        invalidGoldBox.setVisible(false);
+
+        Label invalidHealthLabel = new Label("Invalid health (Integers over 0 only)");
+        invalidHealthLabel.setStyle(invalidLabelStyle);
+        invalidHealthLabel.setAlignment(Pos.CENTER);
+        invalidHealthBox = new HBox(5);
+        invalidHealthBox.getChildren().addAll(createErrorCircle(), invalidHealthLabel);
+        invalidHealthBox.setAlignment(Pos.CENTER_LEFT);
+        invalidHealthBox.setVisible(false);
+
+        Label invalidNameLabel = new Label("Invalid name");
+        invalidNameLabel.setStyle(invalidLabelStyle);
+        invalidNameLabel.setAlignment(Pos.CENTER);
+        invalidNameBox = new HBox(5);
+        invalidNameBox.getChildren().addAll(createErrorCircle(), invalidNameLabel);
+        invalidNameBox.setAlignment(Pos.CENTER_LEFT);
+        invalidNameBox.setVisible(false);
     }
     private void configurePlayerNameTextField() {
         this.playerNameTextField = new TextField();
@@ -162,17 +211,20 @@ public class CreatePlayerAndGoalsView {
         goalValueTextField.setMaxWidth(200);
         goalValueTextField.setVisible(false);
         goalValueTextField.setManaged(false);
+        goalValueTextField.setTextFormatter(maxNineCharactersFormatter());
         HBox.setMargin(goalValueTextField, new Insets(10));
     }
     private void configurePlayerGoldTextField() {
         this.playerGoldTextField = new TextField();
         playerGoldTextField.setPromptText("Player Gold");
         playerGoldTextField.setMaxWidth(200);
+        playerGoldTextField.setTextFormatter(maxNineCharactersFormatter());
     }
     private void configurePlayerHealthTextField() {
         this.playerHealthTextField = new TextField();
         playerHealthTextField.setPromptText("Player Health");
         playerHealthTextField.setMaxWidth(200);
+        playerHealthTextField.setTextFormatter(maxNineCharactersFormatter());
     }
     private void configurePlayerConfigurationLabel() {
         this.playerConfigurationLabel = new Label("Player Configuration");
@@ -213,6 +265,19 @@ public class CreatePlayerAndGoalsView {
                     }
                 }
         });
+    }
+    private VBox createErrorCircle() {
+        ImageView errorCircle = new ImageView(errorCircleImage);
+        errorCircle.setFitWidth(13);
+        errorCircle.setFitHeight(13);
+        VBox errorCircleBox = new VBox(errorCircle);
+        errorCircleBox.setAlignment(Pos.TOP_CENTER);
+        VBox.setMargin(errorCircle, new Insets(6,0,0, 0));
+        return errorCircleBox;
+    }
+    private TextFormatter<TextFormatter.Change> maxNineCharactersFormatter() {
+        Pattern pattern = Pattern.compile(".{0,9}");
+        return new TextFormatter<>((change -> pattern.matcher(change.getControlNewText()).matches() ? change : null));
     }
     public Label getNumberValueGoalLabel() {
         return numberValueGoalLabel;
@@ -267,5 +332,14 @@ public class CreatePlayerAndGoalsView {
 
     public ListView<Goal> getGoalsListView() {
         return goalsListView;
+    }
+    public HBox getInvalidGoldBox() {
+        return invalidGoldBox;
+    }
+    public HBox getInvalidNameBox() {
+        return invalidNameBox;
+    }
+    public HBox getInvalidHealthBox() {
+        return invalidHealthBox;
     }
 }

@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.controller;
 
+import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.goal_related.Goal;
@@ -10,12 +11,12 @@ import edu.ntnu.mappe32.view.CreatePlayerAndGoalsView;
 import edu.ntnu.mappe32.view.PassageView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class CreatePlayerAndGoalsController {
@@ -30,6 +31,7 @@ public class CreatePlayerAndGoalsController {
 
 
         view.getGoldToggle().setOnAction(actionEvent ->  {
+            view.getGoalValueTextField().clear();
             if (view.getGoalValueTextField().isVisible() || view.getNumberValueGoalLabel().isVisible()
                     && !view.getNumberValueGoalLabel().getText().equals("Gold Goal:")) {
                 view.getNumberValueGoalLabel().setText("Gold Goal:");
@@ -46,6 +48,7 @@ public class CreatePlayerAndGoalsController {
             view.getAddGoalButton().setManaged(false);
         });
         view.getHealthToggle().setOnAction(actionEvent ->  {
+            view.getGoalValueTextField().clear();
             if (view.getGoalValueTextField().isVisible() || view.getNumberValueGoalLabel().isVisible()
                     && !view.getNumberValueGoalLabel().getText().equals("Health Goal:")) {
                 view.getNumberValueGoalLabel().setText("Health Goal:");
@@ -62,6 +65,7 @@ public class CreatePlayerAndGoalsController {
             view.getAddGoalButton().setManaged(false);
         });
         view.getScoreToggle().setOnAction(actionEvent ->  {
+            view.getGoalValueTextField().clear();
             if (view.getGoalValueTextField().isVisible() || view.getNumberValueGoalLabel().isVisible()
                     && !view.getNumberValueGoalLabel().getText().equals("Score Goal:")) {
                 view.getNumberValueGoalLabel().setText("Score Goal:");
@@ -90,9 +94,17 @@ public class CreatePlayerAndGoalsController {
             view.getGoalValueTextField().setManaged(true);
             view.getGoalValueTextField().setVisible(true);
         });
-
         view.getPlayButton().setOnMouseClicked(mouseEvent -> {
+            if (createdGoals.isEmpty()) {
+                Alert noGoalsAlert = new Alert(Alert.AlertType.WARNING);
+                noGoalsAlert.setTitle("No Goals");
+                noGoalsAlert.setContentText("A game must have a list of goals with atleast one goal");
+                noGoalsAlert.setHeaderText("You have not made any goals!");
+                noGoalsAlert.showAndWait();
+            }
             if (validateGoldInput() & validateHealthInput() & validatePlayerNameInput()) {
+                if (createdGoals.isEmpty())
+                    return;
                 Player player = createPlayer();
                 Game game = new Game(player, pathsFile.getStory(), createdGoals);
                 PassageView passageView = new PassageView();
@@ -129,8 +141,7 @@ public class CreatePlayerAndGoalsController {
 
         int playerHealth = Integer.parseInt(view.getPlayerHealthTextField().getText());
         String playerName = view.getPlayerNameTextField().getText();
-
-        return new Player(playerName, playerHealth, 0, playerGold, new HashMap<>());
+        return new Player.PlayerBuilder(playerName, playerHealth).gold(playerGold).build();
     }
 
     /**
@@ -156,9 +167,11 @@ public class CreatePlayerAndGoalsController {
         if (!Pattern.matches(numbersOnlyRegex, view.getPlayerHealthTextField().getText())
         ) {
             setInvalidTextFieldStyle(view.getPlayerHealthTextField());
+            view.getInvalidHealthBox().setVisible(true);
             return false;
         }
         view.getPlayerHealthTextField().setStyle(null);
+        view.getInvalidHealthBox().setVisible(false);
         return true;
     }
 
@@ -172,9 +185,11 @@ public class CreatePlayerAndGoalsController {
     private boolean validatePlayerNameInput() {
         if (view.getPlayerNameTextField().getText().isBlank()) {
             setInvalidTextFieldStyle(view.getPlayerNameTextField());
+            view.getInvalidNameBox().setVisible(true);
             return false;
         }
         view.getPlayerNameTextField().setStyle(null);
+        view.getInvalidNameBox().setVisible(false);
         return true;
     }
     /**
@@ -188,9 +203,11 @@ public class CreatePlayerAndGoalsController {
         String numbersOnlyOrBlankRegex = "^$|^[0-9]+$";
         if (!Pattern.matches(numbersOnlyOrBlankRegex, view.getPlayerGoldTextField().getText())) {
             setInvalidTextFieldStyle(view.getPlayerGoldTextField());
+            view.getInvalidGoldBox().setVisible(true);
             return false;
         }
         view.getPlayerGoldTextField().setStyle(null);
+        view.getInvalidGoldBox().setVisible(false);
         return true;
     }
     private boolean validateGoalValueInput() {
