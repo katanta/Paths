@@ -107,8 +107,6 @@ public class CreatePlayerAndGoalsView {
         addGoalButton.setManaged(false);
         addGoalButton.setTooltip(new Tooltip("Press to add goal"));
         HBox.setMargin(addGoalButton, new Insets(10));
-        System.out.println(pathsFile.getStory().getItems());
-
     }
     private void configurePlayerNameLabel() {
         this.playerNameLabel = new Label("Player Name:");

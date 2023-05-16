@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.model;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ import java.util.Map;
  * This class represents a Player.
  * A player and its attributes can be affected by a story.
  */
-public class Player {
+public class Player implements Serializable {
     /**
      * Name of the player.
      */
@@ -68,6 +69,23 @@ public class Player {
         this.score = playerBuilder.score;
         this.inventory = playerBuilder.inventory;
     }
+
+    public Player copyPlayer() {
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(this);
+            oos.flush();
+            oos.close();
+            bos.close();
+            byte[] byteData = bos.toByteArray();
+            ByteArrayInputStream bais = new ByteArrayInputStream(byteData);
+            return (Player) new ObjectInputStream(bais).readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * This method returns the name a player.
      * @return Name of player as String

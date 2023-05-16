@@ -27,16 +27,16 @@ import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
 public class PassageViewController {
     private final Stage stage;
     private Game game;
-    private final Game originalGame;
+    private final Player originalPlayer;
     private final PassageView passageView;
     private static Passage currentPassage;
 
     public PassageViewController(Stage stage, PassageView passageView, Game game) {
         this.stage = stage;
         this.passageView = passageView;
+        this.originalPlayer = game.player().copyPlayer();
         this.game = game;
         currentPassage = game.begin();
-        originalGame = game;
         updateScene();
         configureAllTopLeftButtonActions();
         passageView.getStoryTitle().setText(game.story().getTitle());
@@ -125,7 +125,7 @@ public class PassageViewController {
 
     private void setRestartButtonClickAction() {
         passageView.getRestartButton().setOnMouseClicked(e -> {
-            this.game = new Game(originalGame.player(), originalGame.story(), originalGame.goals());
+            this.game = new Game(originalPlayer, game.story(), game.goals());
             currentPassage = game.begin();
             updateScene();
         });
@@ -157,9 +157,7 @@ public class PassageViewController {
             tooltip.setFont(resizableMainFont(18));
             Tooltip.install(passageView.getHelpButton(), tooltip);
         });
-        passageView.getHelpButton().setOnMouseExited(e -> {
-            passageView.getHelpButton().setImage(normalHelpButton);
-        });
+        passageView.getHelpButton().setOnMouseExited(e -> passageView.getHelpButton().setImage(normalHelpButton));
         //home button
         passageView.getHomeButton().setOnMouseEntered(e -> {
             passageView.getHomeButton().setImage(homeButtonHover.getImage());
@@ -168,9 +166,7 @@ public class PassageViewController {
             tooltip.setFont(resizableMainFont(18));
             Tooltip.install(passageView.getHomeButton(), tooltip);
         });
-        passageView.getHomeButton().setOnMouseExited(e -> {
-                passageView.getHomeButton().setImage(normalHomeButton);
-        });
+        passageView.getHomeButton().setOnMouseExited(e -> passageView.getHomeButton().setImage(normalHomeButton));
         //restart button
         passageView.getRestartButton().setOnMouseEntered(e -> {
             passageView.getRestartButton().setImage(restartButtonHover.getImage());
@@ -181,13 +177,8 @@ public class PassageViewController {
             tooltip.setFont(resizableMainFont(18));
             Tooltip.install(passageView.getRestartButton(), tooltip);
         });
-        passageView.getRestartButton().setOnMouseExited(e -> {
-            passageView.getRestartButton().setImage(normalRestartButton);
-
-        });
-        passageView.getRestartButton().setOnMouseReleased(e -> {
-            passageView.getRestartButton().setImage(normalRestartButton);
-        });
+        passageView.getRestartButton().setOnMouseExited(e -> passageView.getRestartButton().setImage(normalRestartButton));
+        passageView.getRestartButton().setOnMouseReleased(e -> passageView.getRestartButton().setImage(normalRestartButton));
     }
 }
 
