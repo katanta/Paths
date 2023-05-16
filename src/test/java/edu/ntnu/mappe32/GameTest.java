@@ -148,7 +148,7 @@ public class GameTest {
         goals.add(masterGuardian);
         game1 = new Game(mutumbu, storyOfAfrica, goals);
         HashMap<Item, Integer> mandatoryItems = new HashMap<>();
-        mandatoryItems.put(new Item("Tape"), 1);
+        mandatoryItems.put(new Item("Tape", new ScoreAction(1)), 1);
         tapeItUp = new InventoryGoal(mandatoryItems);
     }
     @DisplayName("constructor")

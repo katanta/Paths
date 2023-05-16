@@ -55,7 +55,7 @@ public class InventoryGoalTest {
             HashMap<Item, Integer> mandatoryItems = new HashMap<>();
             mandatoryItems.put(new Item("Potion of Healing", new HealthAction(100)), 1);
             mandatoryItems.put(new Item("The King's Crown", new ScoreAction(10)), 1);
-            mandatoryItems.put(new Item("24-karat diamond"), 1);
+            mandatoryItems.put(new Item("24-karat diamond", new ScoreAction(10)), 1);
             InventoryGoal impossibleTask = new InventoryGoal(mandatoryItems);
             assertFalse(impossibleTask.isFulfilled(player));
         }
@@ -89,7 +89,7 @@ public class InventoryGoalTest {
             HashMap<Item, Integer> mandatoryItems = new HashMap<>();
             mandatoryItems.put(new Item("Potion of Healing", new HealthAction(100)), 1);
             mandatoryItems.put(new Item("The King's Crown", new ScoreAction(10)), 1);
-            mandatoryItems.put(new Item("24-karat diamond"), 1);
+            mandatoryItems.put(new Item("24-karat diamond", new ScoreAction(10)), 1);
             assertDoesNotThrow(() -> new InventoryGoal(mandatoryItems));
         }
     }

@@ -10,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +41,6 @@ public class PathsFileReader {
      * This method reads a .paths file and returns a story.
      * @param filePath File path of the .paths file to be read, as String.
      * @return Story of the .paths file, as Story.
-     * @throws IOException Throws FileNotFoundException if the file is not found.
      * @throws IllegalArgumentException Throws IllegalArgumentException if the file path does not have the extension '.paths'.
      */
     public static Story readStory(String filePath) throws IllegalArgumentException {
@@ -232,16 +230,15 @@ public class PathsFileReader {
                 .get();
 
         int index = Arrays.asList(parts).indexOf(firstAction);
-        //TODO: Make Item constructor have atleast 1 action
         String itemName = Arrays.stream(parts).skip(2)
                 .limit(index - 2)
                 .collect(Collectors.joining(" "));
 
-        Item item = new Item(itemName);
-
+        List<Action> itemsActions = new ArrayList<>();
         Arrays.stream(getActionsOfInventoryAction(invetoryAction, itemName))
-                .forEach(action -> item.addAction(parseAction(action)));
+                .forEach(action -> itemsActions.add(parseAction(action)));
 
+        Item item = new Item(itemName, itemsActions.toArray(Action[]::new));
         boolean add = Arrays.asList(parts).contains("true");
 
         return new InventoryAction(item, add);

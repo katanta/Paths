@@ -1,6 +1,7 @@
 package edu.ntnu.mappe32.model;
 
 import edu.ntnu.mappe32.model.action_related.Action;
+import edu.ntnu.mappe32.model.action_related.InventoryAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +13,16 @@ public class Item {
     //add itemtext here that describes what the item does or did?
     private final List<Action> actions;
 
-    public Item(final String itemName, Action... actions) {
+    public Item(final String itemName, Action... actions) throws IllegalArgumentException {
+        if (actions == null ||actions.length == 0)
+            throw new IllegalArgumentException("An item must have an action");
+
+        if (Arrays.stream(actions).anyMatch(Objects::isNull))
+            throw new IllegalArgumentException("Actions cannot contain null");
+
+        if (Arrays.stream(actions).anyMatch(action -> action instanceof InventoryAction))
+            throw new IllegalArgumentException("An item cannot contain an inventory action");
+
         this.itemName = itemName;
         this.actions = Arrays.stream(actions).toList();
     }
