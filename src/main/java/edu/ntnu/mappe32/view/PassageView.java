@@ -195,7 +195,7 @@ public class PassageView {
         configureHelpButton();
         configureHomeButton();
         configureRestartButton();
-
+        setButtonSizes(62); //62 is as big as the buttons get, otherwise they somehow bypass the maxHeight of the buttons VBox
         root.getChildren().add(buttonsHBox);
     }
 
@@ -208,18 +208,40 @@ public class PassageView {
         }
         helpButton.setFitHeight(50);
         helpButton.setFitWidth(50);
-        buttonsHBox.setMargin(helpButton, new Insets(0, 0, 0, 40));
+        buttonsHBox.setMargin(helpButton, new Insets(0, 0, 0, 20));
         buttonsHBox.getChildren().add(helpButton);
     }
 
     private void configureHomeButton() {
-
+        try {
+            homeButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/homeButton.png")));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        homeButton.setFitHeight(50);
+        homeButton.setFitWidth(50);
+        buttonsHBox.getChildren().add(homeButton);
     }
 
     private void configureRestartButton() {
-
+        try {
+            restartButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/restartButton.png")));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        restartButton.setFitHeight(50);
+        restartButton.setFitWidth(50);
+        buttonsHBox.getChildren().add(restartButton);
     }
 
+    private void setButtonSizes(double buttonSize) {
+        restartButton.setFitWidth(buttonSize);
+        restartButton.setFitHeight(buttonSize);
+        homeButton.setFitWidth(buttonSize);
+        homeButton.setFitHeight(buttonSize);
+        helpButton.setFitWidth(buttonSize);
+        helpButton.setFitHeight(buttonSize);
+    }
     public VBox getItemsVBox() {
         return itemsVBox;
     }
