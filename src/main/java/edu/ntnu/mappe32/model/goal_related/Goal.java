@@ -22,5 +22,6 @@ public interface Goal {
      */
     String toString();
 
-    String toViewString();
+    String goalValue();
+    String goalType();
 }
