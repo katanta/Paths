@@ -206,6 +206,18 @@ public class Player {
             this.health = health;
         }
         public PlayerBuilder inventory(Map<Item, Integer> inventory) {
+            if (inventory == null || inventory.isEmpty())
+                throw new IllegalArgumentException("Inventory cannot be empty or null");
+
+            if (inventory.containsValue(null))
+                throw new IllegalArgumentException("A value cannot be null or zero");
+
+            if (inventory.values().stream().anyMatch(value -> value < 1))
+                throw new IllegalArgumentException("A value cannot be less than 1");
+
+            if (inventory.containsKey(null))
+                throw new IllegalArgumentException("A key cannot be null");
+
             this.inventory = inventory;
             return this;
         }

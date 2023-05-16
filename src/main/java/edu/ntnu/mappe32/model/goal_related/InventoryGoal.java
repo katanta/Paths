@@ -17,8 +17,11 @@ public class InventoryGoal implements Goal {
         if (mandatoryItems == null || mandatoryItems.isEmpty())
             throw new IllegalArgumentException("Mandatory items cannot be empty or null");
 
-        if (mandatoryItems.containsValue(0) || mandatoryItems.containsValue(null))
+        if (mandatoryItems.containsValue(null))
             throw new IllegalArgumentException("A value cannot be null or zero");
+
+        if (mandatoryItems.values().stream().anyMatch(value -> value < 1))
+            throw new IllegalArgumentException("A value cannot be less than 1");
 
         if (mandatoryItems.containsKey(null))
             throw new IllegalArgumentException("A key cannot be null");
