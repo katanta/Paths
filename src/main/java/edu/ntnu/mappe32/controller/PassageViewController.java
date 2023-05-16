@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.controller;
 
+import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Passage;
@@ -27,7 +28,7 @@ public class PassageViewController {
         this.game = game;
         currentPassage = game.begin();
         updateScene();
-        passageView.getStoryTitle().setText(game.getStory().getTitle());
+        passageView.getStoryTitle().setText(game.story().getTitle());
     }
 
     private void updateScene() {
@@ -40,7 +41,7 @@ public class PassageViewController {
 
     private void updateInventoryPane() {
         passageView.getItemsVBox().getChildren().clear();
-        for (Map.Entry<Item, Integer> item : game.getPlayer().getInventory().entrySet()) {
+        for (Map.Entry<Item, Integer> item : game.player().getInventory().entrySet()) {
             Label itemLabel = new Label(item.getValue() + "x " + item.getKey().getItemName());
             itemLabel.setFont(resizableMainFont(18));
             passageView.getItemsVBox().getChildren().add(itemLabel);
@@ -48,9 +49,9 @@ public class PassageViewController {
     }
 
     private void updatePlayerInfo() {
-        passageView.getPlayerGoldLabel().setText("GOLD: " + game.getPlayer().getGold());
-        passageView.getPlayerHealthLabel().setText("HEALTH: " + game.getPlayer().getHealth());
-        passageView.getPlayerScoreLabel().setText("SCORE: " + game.getPlayer().getScore());
+        passageView.getPlayerGoldLabel().setText("GOLD: " + game.player().getGold());
+        passageView.getPlayerHealthLabel().setText("HEALTH: " + game.player().getHealth());
+        passageView.getPlayerScoreLabel().setText("SCORE: " + game.player().getScore());
     }
 
     private void updatePassageInfo() {
@@ -79,9 +80,9 @@ public class PassageViewController {
     private void updateGameGoalsVBox() {
         passageView.getGameGoalsVBox().getChildren().clear();
 
-        for (Goal g : game.getGoals()) {
+        for (Goal goal : game.goals()) {
 
-            Label goalLabel = new Label(g.getClass().getSimpleName() + ": " + g);
+            Label goalLabel = new Label(goal.getClass().getSimpleName() + ": " + goal);
             goalLabel.setFont(resizableMainFont(16));
             goalLabel.setTooltip(new Tooltip(goalLabel.getText()));
             goalLabel.getTooltip().setFont(resizableMainFont(14));
@@ -92,7 +93,7 @@ public class PassageViewController {
             completionStatus.getTooltip().setFont(resizableMainFont(20));
             completionStatus.setTextFill(Color.RED);
 
-            if (g.isFulfilled(game.getPlayer())) {
+            if (goal.isFulfilled(game.player())) {
                 completionStatus.setText("GOAL COMPLETED!");
                 completionStatus.setTextFill(Color.GREEN);
                 completionStatus.getTooltip().setText("The goal above is complete!");
