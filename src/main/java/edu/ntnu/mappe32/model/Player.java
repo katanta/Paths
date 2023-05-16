@@ -171,6 +171,7 @@ public class Player {
     /**
      * This is the builder class for Player, which makes it able to
      * instantiate a player without an inventory.
+     * If gold or score is not set, it is
      */
     public static class PlayerBuilder {
         /**
@@ -184,39 +185,49 @@ public class Player {
         /**
          * Score of a player.
          */
-        private final int score;
+        private int score = 0;
         /**
          * Gold of a player.
          */
-        private final int gold;
+        private int gold = 0;
         /**
          * Inventory of a player.
          */
         private Map<Item, Integer> inventory;
 
-        public PlayerBuilder(String name, int health, int score, int gold) {
+        public PlayerBuilder(String name, int health) {
             if (name == null || name.isBlank()) {
                 throw new IllegalArgumentException("Player must have a name");
             }
             if (health < 0) {
                 throw new IllegalArgumentException("Health cannot be below zero");
             }
-            if (score < 0) {
-                throw new IllegalArgumentException("Score cannot be below zero");
-            }
-            if (gold < 0) {
-                throw new IllegalArgumentException("Gold cannot be below zero");
-            }
             this.name = name;
             this.health = health;
-            this.score = score;
-            this.gold = gold;
         }
         public PlayerBuilder inventory(Map<Item, Integer> inventory) {
             this.inventory = inventory;
             return this;
         }
-        Player build() {
+        public PlayerBuilder score(int scorePoints) {
+            if (score < 0)
+                throw new IllegalArgumentException("Score cannot be below zero");
+
+            this.score = scorePoints;
+            return this;
+        }
+
+        public PlayerBuilder gold(int goldPoints) {
+            if (gold < 0)
+                throw new IllegalArgumentException("Gold cannot be below zero");
+
+            this.gold = goldPoints;
+            return this;
+        }
+        public Player build() {
+            if (inventory == null)
+                inventory = new HashMap<>();
+
             return new Player(this);
         }
     }
