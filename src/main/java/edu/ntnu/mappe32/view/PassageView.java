@@ -202,7 +202,6 @@ public class PassageView {
     private void configureHelpButton() {
         try {
             helpButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/helpButton.png")));
-            //helpButtonHover = new ImageView(new Image(new FileInputStream("src/main/resources/img/helpButtonHover")));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -276,6 +275,18 @@ public class PassageView {
 
     public VBox getGameGoalsVBox() {
         return gameGoalsVBox;
+    }
+
+    public ImageView getHelpButton() {
+        return helpButton;
+    }
+
+    public ImageView getHomeButton() {
+        return homeButton;
+    }
+
+    public ImageView getRestartButton() {
+        return restartButton;
     }
 
     public Scene getScene() {

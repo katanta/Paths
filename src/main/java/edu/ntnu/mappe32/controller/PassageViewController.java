@@ -104,5 +104,10 @@ public class PassageViewController {
             passageView.getGameGoalsVBox().getChildren().add(goalStatus);
         }
     }
+    
+    private void addTopLeftButtonEvents() {
+        //helpButtonHover = new ImageView(new Image(new FileInputStream("src/main/resources/img/helpButtonHover")));
+        //TODO: make methods for each  button that are executed in here
+    }
 }
 
