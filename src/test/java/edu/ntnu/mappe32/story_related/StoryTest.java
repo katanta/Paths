@@ -1,6 +1,5 @@
 package edu.ntnu.mappe32.story_related;
 
-import edu.ntnu.mappe32.io.PathsFileReader;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.action_related.*;
 import edu.ntnu.mappe32.model.story_related.Link;
@@ -11,8 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -137,7 +136,9 @@ class StoryTest {
             assertionPassages.put(new Link(climbedTree.getTitle(),climbedTree.getTitle()), climbedTree);
             Collection<Passage> assertionPassagesList = new ArrayList<>(assertionPassages.values());
             assertionPassagesList.add(openingPassage);
-            assertEquals(assertionPassagesList.toString(), storyOfAfrica.getPassages().toString());
+
+            assertTrue(assertionPassagesList.containsAll(storyOfAfrica.getPassages()));
+            assertTrue(storyOfAfrica.getPassages().containsAll(assertionPassagesList));
         }
         @DisplayName("does not add passage when passage already exists in story")
         @Test
@@ -145,7 +146,8 @@ class StoryTest {
             storyOfAfrica.addPassage(kickedShakedTree);
             Collection<Passage> assertionPassagesList = new ArrayList<>(assertionPassages.values());
             assertionPassagesList.add(openingPassage);
-            assertEquals(assertionPassagesList.toString(), storyOfAfrica.getPassages().toString());
+            assertTrue(assertionPassagesList.containsAll(storyOfAfrica.getPassages()));
+            assertTrue(storyOfAfrica.getPassages().containsAll(assertionPassagesList));
         }
 
     }
@@ -159,7 +161,8 @@ class StoryTest {
     void getPassagesReturnsPassages() {
         Collection<Passage> assertionPassagesList = new ArrayList<>(assertionPassages.values());
         assertionPassagesList.add(openingPassage);
-        assertEquals(assertionPassagesList.toString(), storyOfAfrica.getPassages().toString());
+        assertTrue(assertionPassagesList.containsAll(storyOfAfrica.getPassages()));
+        assertTrue(storyOfAfrica.getPassages().containsAll(assertionPassagesList));
     }
 
     @DisplayName("removePassage()")
@@ -194,5 +197,50 @@ class StoryTest {
         assertEquals(assertionBrokenLinks.size(), storyOfAfrica.getBrokenLinks().size());
         assertTrue(storyOfAfrica.getBrokenLinks().containsAll(assertionBrokenLinks));
         assertTrue(assertionBrokenLinks.containsAll(storyOfAfrica.getBrokenLinks()));
+    }
+    @DisplayName("getItems()")
+    @Nested
+    class GetItemsTest {
+        @DisplayName("returns all the items which can be given in a game")
+        @Test
+        void getItemsReturnsAllTheItemsWhichCanBeGivenInAGame() {
+            kickedShakedTree.addLink(kickTree);
+            Set<Item> items = kickTree.getActions().stream()
+                    .filter(action -> action instanceof InventoryAction)
+                    .map(action -> ((InventoryAction) action).getItem())
+                    .collect(Collectors.toSet());
+
+            assertTrue(items.containsAll(storyOfAfrica.getItems()));
+            assertTrue(storyOfAfrica.getItems().containsAll(items));
+        }
+        @DisplayName("does not return items which are taken away")
+        @Test
+        void getItemsDoesNotReturnItemsWhichAreTakenAway() {
+            kickedShakedTree.addLink(kickTree);
+            Item knife = new Item("Knife", new ScoreAction(10));
+            kickTree.addAction(new InventoryAction(knife, false));
+            Set<Item> items = kickTree.getActions().stream()
+                    .filter(action -> action instanceof InventoryAction)
+                    .map(action -> ((InventoryAction) action).getItem())
+                    .collect(Collectors.toSet());
+            assertTrue(items.containsAll(storyOfAfrica.getItems()));
+            assertFalse(storyOfAfrica.getItems().contains(knife));
+        }
+        @DisplayName("does not contain duplicate items")
+        @Test
+        void getItemsDoesNotContainDuplicates() {
+            kickedShakedTree.addLink(kickTree);
+            Item apple = new Item("Apple", new HealthAction(10));
+            kickTree.addAction(new InventoryAction(apple, true));
+            kickTree.addAction(new InventoryAction(apple, true));
+
+            Set<Item> items = kickTree.getActions().stream()
+                    .filter(action -> action instanceof InventoryAction)
+                    .map(action -> ((InventoryAction) action).getItem())
+                    .collect(Collectors.toSet());
+
+            assertTrue(items.containsAll(storyOfAfrica.getItems()));
+            assertTrue(storyOfAfrica.getItems().containsAll(items));
+        }
     }
 }

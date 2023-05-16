@@ -41,6 +41,7 @@ public class Story {
         this.title = title;
         this.openingPassage = openingPassage;
         passages = new HashMap<>();
+        passages.put(new Link(openingPassage.getTitle(), openingPassage.getTitle()), openingPassage);
     }
     /**
      * This method returns the title a story.
@@ -81,9 +82,7 @@ public class Story {
      * @return Passages with openingPassage, as Collection<Passage>.
      */
     public Collection<Passage> getPassages() {
-        Collection<Passage> passagesWithOpeningPassage = new ArrayList<>(passages.values());
-        passagesWithOpeningPassage.add(this.openingPassage);
-        return passagesWithOpeningPassage;
+        return passages.values();
     }
     /**
      * This method removes a passage from Map <Link, Passage>.
@@ -114,13 +113,14 @@ public class Story {
      * This method returns a list of the items which are possible to obtain in a story
      * @return Obtainable items in a story, as List<Item>
      */
-    public List<Item> getItems() {
-        return passages.keySet().stream()
+    public Set<Item> getItems() {
+        return passages.values().stream()
+                .flatMap(passage -> passage.getLinks().stream())
                 .flatMap(link -> link.getActions().stream())
                 .filter(action -> action instanceof InventoryAction)
                 .filter(action -> ((InventoryAction) action).isAdding())
                 .map(action -> ((InventoryAction) action).getItem())
-                .toList();
+                .collect(Collectors.toSet());
     }
 
     @Override

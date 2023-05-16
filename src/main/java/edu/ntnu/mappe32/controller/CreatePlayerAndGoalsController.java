@@ -32,6 +32,7 @@ public class CreatePlayerAndGoalsController {
 
         view.getGoldToggle().setOnAction(actionEvent ->  {
             view.getGoalValueTextField().clear();
+            view.getGoalValueTextField().setStyle(null);
             if (view.getGoalValueTextField().isVisible() || view.getNumberValueGoalLabel().isVisible()
                     && !view.getNumberValueGoalLabel().getText().equals("Gold Goal:")) {
                 view.getNumberValueGoalLabel().setText("Gold Goal:");
@@ -49,6 +50,7 @@ public class CreatePlayerAndGoalsController {
         });
         view.getHealthToggle().setOnAction(actionEvent ->  {
             view.getGoalValueTextField().clear();
+            view.getGoalValueTextField().setStyle(null);
             if (view.getGoalValueTextField().isVisible() || view.getNumberValueGoalLabel().isVisible()
                     && !view.getNumberValueGoalLabel().getText().equals("Health Goal:")) {
                 view.getNumberValueGoalLabel().setText("Health Goal:");
@@ -66,6 +68,7 @@ public class CreatePlayerAndGoalsController {
         });
         view.getScoreToggle().setOnAction(actionEvent ->  {
             view.getGoalValueTextField().clear();
+            view.getGoalValueTextField().setStyle(null);
             if (view.getGoalValueTextField().isVisible() || view.getNumberValueGoalLabel().isVisible()
                     && !view.getNumberValueGoalLabel().getText().equals("Score Goal:")) {
                 view.getNumberValueGoalLabel().setText("Score Goal:");
@@ -127,6 +130,8 @@ public class CreatePlayerAndGoalsController {
                 }
             }
         });
+        view.getGoalsListView().setOnMouseClicked(mouseEvent ->
+            createdGoals.remove(view.getGoalsListView().getSelectionModel().getSelectedItem()));
     }
 
     /**
