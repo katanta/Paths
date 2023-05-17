@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -262,7 +263,10 @@ public class CreatePlayerAndGoalsView {
                 } else {
                     GoalCell cell = new GoalCell(goal);
                     setGraphic(cell.getHBox());
-                    setTooltip(new Tooltip("Click to remove '" + goal.goalType() + " Goal: " + goal.goalValue() + "'"));
+                    Tooltip cellTooltip = new Tooltip("Click to remove '" + goal.goalType() + " Goal: " + goal.goalValue() + "'");
+                    cellTooltip.setShowDelay(Duration.millis(200));
+                    cellTooltip.setShowDuration(Duration.INDEFINITE);
+                    setTooltip(cellTooltip);
                 }
                 }
         });
