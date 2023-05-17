@@ -149,8 +149,8 @@ public class CreatePlayerController {
     private void showInformationBox() {
         view.getInfoButton().setOnMouseClicked(mouseEvent -> {
             Alert information = new Alert(Alert.AlertType.INFORMATION);
-            information.setTitle("Story information");
-            information.setHeaderText("Information on: '" + pathsFile.getStoryTitle() + "'");
+            information.setTitle("Story Information");
+            information.setHeaderText("Information on '" + pathsFile.getStoryTitle() + "'");
             information.setContentText("Broken Links: " + pathsFile.getBrokenLinks() + "\n\nFile Path: " + pathsFile.getFilePath());
             information.getDialogPane().setStyle("");
             DialogPane dialogPane = information.getDialogPane();

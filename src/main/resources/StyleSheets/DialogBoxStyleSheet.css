@@ -1,25 +1,14 @@
 .dialog-pane > .content.label {
-    -fx-font-size:15.0px;
-    -fx-font-family: "Pixeloid Sans";
-}
-
-/**Costumization of DialogPane Header**/
-.dialog-pane:header .header-panel {
+    -fx-font-size:14px;
     -fx-font-family: "Pixeloid Sans";
 }
 
 .dialog-pane:header .header-panel .label{
     -fx-text-fill:black;
     -fx-font-size:20px;
-    -fx-font-family: "Pixeloid Sans";
+    -fx-font-family: "Pixeloid Sans Bold";
 }
 
-
-/**Costumization of Buttons**/
 .dialog-pane .button{
-    -fx-font-family: "Pixeloid Sans";
-}
-
-.dialog-pane .button:hover{
     -fx-font-family: "Pixeloid Sans";
 }
