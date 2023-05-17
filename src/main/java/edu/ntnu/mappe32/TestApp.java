@@ -1,8 +1,10 @@
 package edu.ntnu.mappe32;
 
+import edu.ntnu.mappe32.controller.CreatePlayerController;
 import edu.ntnu.mappe32.controller.PassageViewController;
 import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
+import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.HealthAction;
 import edu.ntnu.mappe32.model.action_related.ScoreAction;
@@ -10,9 +12,11 @@ import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.goal_related.GoldGoal;
 import edu.ntnu.mappe32.model.goal_related.ScoreGoal;
 import edu.ntnu.mappe32.model.story_related.Story;
+import edu.ntnu.mappe32.view.CreatePlayerView;
 import edu.ntnu.mappe32.view.PassageView;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,10 +39,6 @@ public class TestApp extends javafx.application.Application {
         List<Goal> goals = new ArrayList<>();
         goals.add(goldGoal);
         goals.add(scoreGoal);
-        player.addToInventory(new Item("abc"));
-        player.addToInventory(new Item("abcd"));
-        player.addToInventory(new Item("blahblahblah"));
-        player.addToInventory(new Item("another item"));
         player.addToInventory(new Item("Tape", new ScoreAction(10)));
         player.addToInventory(new Item("Lighter", new ScoreAction(10)));
         player.addToInventory(new Item("Candle", new ScoreAction(10)));
@@ -48,17 +48,14 @@ public class TestApp extends javafx.application.Application {
         player.addToInventory(new Item("Scarf", new HealthAction(10)));
 
 
-        for (int i = 1; i <= 50; i++) {
-            goals.add(new ScoreGoal(i));
-            player.addToInventory(new Item("Pumpkin"));
-        }
         return new Game(player, story, goals);
     }
     @Override
     public void start(Stage stage) {
+        CreatePlayerView createPlayerView = new CreatePlayerView();
         PassageView passageView = new PassageView();
         PassageViewController passageViewController = new PassageViewController(stage, passageView, setUpGame());
-        stage.setScene(passageView.getScene());
+        CreatePlayerController createPlayerController = new CreatePlayerController(createPlayerView, stage, new PathsFile(new File("src/main/resources/test_stories/main_test_story.paths")));
         stage.setTitle("Paths Game");
         stage.show();
     }
