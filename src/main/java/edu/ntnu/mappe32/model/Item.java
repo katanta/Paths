@@ -3,12 +3,13 @@ package edu.ntnu.mappe32.model;
 import edu.ntnu.mappe32.model.action_related.Action;
 import edu.ntnu.mappe32.model.action_related.InventoryAction;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Item {
+public class Item implements Serializable {
     private final String itemName;
     //add itemtext here that describes what the item does or did?
     private final List<Action> actions;

@@ -3,9 +3,10 @@ package edu.ntnu.mappe32.model.action_related;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class InventoryAction implements Action{
+public class InventoryAction implements Action, Serializable {
     private final boolean add;
     private final Item item;
 

@@ -2,9 +2,11 @@ package edu.ntnu.mappe32.model.action_related;
 
 import edu.ntnu.mappe32.model.Player;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class ScoreAction implements Action{
+public class ScoreAction implements Action, Serializable {
 
     private final int points;
 

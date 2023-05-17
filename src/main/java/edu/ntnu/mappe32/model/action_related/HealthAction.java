@@ -2,9 +2,10 @@ package edu.ntnu.mappe32.model.action_related;
 
 import edu.ntnu.mappe32.model.Player;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class HealthAction implements Action {
+public class HealthAction implements Action, Serializable {
     private final int health;
 
     /**
