@@ -18,6 +18,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.regex.Pattern;
 
+import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
+
 public class CreatePlayerView {
 
     private final Scene scene;
@@ -39,43 +41,52 @@ public class CreatePlayerView {
     private TextField playerHealthTextField;
     private TextField playerGoldTextField;
     private Image errorCircleImage;
+    private Image infoButtonImage;
+    private Image backButtonImage;
+    private ImageView nextButton;
     private final Font statLabelFont;
     private final Font textFieldFont;
     public CreatePlayerView() {
+        configureErrorCircleImage();
+
         statLabelFont = resizableMainFont(30);
-        textFieldFont = Font.loadFont("file:src/main/resources/fonts/PixeloidSans-JR6qo.ttf", 20);
+        textFieldFont = Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 20);
         configureTop();
         configureCenter();
 
         BorderPane root = new BorderPane();
-        root.getChildren().add(backButton);
         root.setTop(storyTitleBox);
         root.setCenter(centerVBox);
+        root.getChildren().add(backButton);
         this.scene = new Scene(root, 1080, 720);
-    }
-    public static Font resizableMainFont(double fontSize) {
-        return Font.loadFont("file:src/main/resources/fonts/PixeloidSans-JR6qo.ttf", fontSize);
+        scene.getStylesheets().add(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css").toExternalForm());
+
     }
     private void configureTop() {
         storyTitleBox = new HBox(50);
 
         try {
-            backButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/restartButton.png")));
+            backButtonImage = new Image(new FileInputStream("src/main/resources/img/restartButton.png"));
             backButtonHover = new Image(new FileInputStream("src/main/resources/img/restartButtonHover.png"));
-            infoButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/info.png")));
+            infoButtonImage = new Image(new FileInputStream("src/main/resources/img/info.png"));
             infoButtonHover = new Image(new FileInputStream("src/main/resources/img/info_hover.png"));
+
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        backButton = new ImageView(backButtonImage);
+        infoButton = new ImageView(infoButtonImage);
         backButton.setFitWidth(62);
         backButton.setFitHeight(62);
         backButton.setX(20);
         backButton.setY(20);
+        backButton.setPickOnBounds(true);
+        infoButton.setPickOnBounds(true);
         infoButton.setFitWidth(31);
         infoButton.setFitHeight(31);
 
         storyTitle = new Label();
-        storyTitle.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSansBold-GOjpP.ttf", 50));
+        storyTitle.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSansBold.ttf", 50));
         storyTitle.setMaxWidth(700);
 
         storyTitleBox.getChildren().addAll(storyTitle, infoButton);
@@ -93,17 +104,15 @@ public class CreatePlayerView {
         chooseYourStats.setFont(resizableMainFont(40));
         chooseYourStats.setAlignment(Pos.CENTER);
 
-        ImageView nextButton;
         try {
             nextButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/next_button.png")));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
         configurePlayerStatsGridPane();
-        playerGridPane.setPadding(new Insets(0, 0,0,220));
+        playerGridPane.setPadding(new Insets(0, 0,0,330));
         playerGridPane.setAlignment(Pos.TOP_CENTER);
         centerVBox.getChildren().addAll(chooseYourStats, playerGridPane, nextButton);
-
     }
 
     private void configurePlayerStatsGridPane() {
@@ -127,27 +136,19 @@ public class CreatePlayerView {
     }
     private void configureInvalidInputBoxes() {
 
-        String invalidLabelStyle = "-fx-text-fill: #D80D0D;" + "-fx-font-size: 13;";
-
-        Label invalidGoldLabel = new Label("Invalid gold (Integers over 0 only)");
-        invalidGoldLabel.setStyle(invalidLabelStyle);
-        invalidGoldLabel.setAlignment(Pos.CENTER);
+        Label invalidGoldLabel = createInvalidErrorLabel("Invalid gold (Integers over 0 only)");
         invalidGoldBox = new HBox(5);
         invalidGoldBox.getChildren().addAll(createErrorCircle(), invalidGoldLabel);
         invalidGoldBox.setAlignment(Pos.CENTER_LEFT);
         invalidGoldBox.setVisible(false);
 
-        Label invalidHealthLabel = new Label("Invalid health (Integers over 0 only)");
-        invalidHealthLabel.setStyle(invalidLabelStyle);
-        invalidHealthLabel.setAlignment(Pos.CENTER);
+        Label invalidHealthLabel = createInvalidErrorLabel("Invalid health (Integers over 0 only)");
         invalidHealthBox = new HBox(5);
         invalidHealthBox.getChildren().addAll(createErrorCircle(), invalidHealthLabel);
         invalidHealthBox.setAlignment(Pos.CENTER_LEFT);
         invalidHealthBox.setVisible(false);
 
-        Label invalidNameLabel = new Label("Invalid name");
-        invalidNameLabel.setStyle(invalidLabelStyle);
-        invalidNameLabel.setAlignment(Pos.CENTER);
+        Label invalidNameLabel = createInvalidErrorLabel("Invalid name");
         invalidNameBox = new HBox(5);
         invalidNameBox.getChildren().addAll(createErrorCircle(), invalidNameLabel);
         invalidNameBox.setAlignment(Pos.CENTER_LEFT);
@@ -182,11 +183,10 @@ public class CreatePlayerView {
     }
     private VBox createErrorCircle() {
         ImageView errorCircle = new ImageView(errorCircleImage);
-        errorCircle.setFitWidth(13);
-        errorCircle.setFitHeight(13);
+        errorCircle.setFitWidth(20);
+        errorCircle.setFitHeight(20);
         VBox errorCircleBox = new VBox(errorCircle);
-        errorCircleBox.setAlignment(Pos.TOP_CENTER);
-        VBox.setMargin(errorCircle, new Insets(6,0,0, 0));
+        VBox.setMargin(errorCircle, new Insets(9.2,0,0, 0));
         return errorCircleBox;
     }
     private void configureErrorCircleImage() {
@@ -196,16 +196,74 @@ public class CreatePlayerView {
             throw new RuntimeException(e);
         }
     }
+    private Label createInvalidErrorLabel(String errorMessage) {
+        Label label = new Label(errorMessage);
+        label.setStyle("-fx-text-fill: #D80D0D;");
+        label.setFont(resizableMainFont(15));
+        label.setAlignment(Pos.CENTER);
+        return label;
+    }
     private TextFormatter<TextFormatter.Change> maxNineCharactersFormatter() {
         Pattern pattern = Pattern.compile(".{0,9}");
         return new TextFormatter<>((change -> pattern.matcher(change.getControlNewText()).matches() ? change : null));
     }
 
+    public Image getBackButtonImage() {
+        return backButtonImage;
+    }
+
     public Label getStoryTitle() {
         return storyTitle;
+    }
+    public ImageView getInfoButton() {
+        return infoButton;
+    }
+
+    public Image getInfoButtonHover() {
+        return infoButtonHover;
+    }
+
+    public Image getBackButtonHover() {
+        return backButtonHover;
+    }
+
+    public ImageView getBackButton() {
+        return backButton;
+    }
+
+    public Image getInfoButtonImage() {
+        return infoButtonImage;
     }
 
     public Scene getScene() {
         return scene;
+    }
+
+    public TextField getPlayerNameTextField() {
+        return playerNameTextField;
+    }
+
+    public TextField getPlayerHealthTextField() {
+        return playerHealthTextField;
+    }
+
+    public TextField getPlayerGoldTextField() {
+        return playerGoldTextField;
+    }
+
+    public HBox getInvalidHealthBox() {
+        return invalidHealthBox;
+    }
+
+    public HBox getInvalidNameBox() {
+        return invalidNameBox;
+    }
+
+    public HBox getInvalidGoldBox() {
+        return invalidGoldBox;
+    }
+
+    public ImageView getNextButton() {
+        return nextButton;
     }
 }

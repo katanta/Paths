@@ -52,7 +52,7 @@ public class PassageView {
         this.scene = new Scene(root, 1280, 720);
     }
     public static Font resizableMainFont(double fontSize) {
-        return Font.loadFont("file:src/main/resources/fonts/PixeloidSans-JR6qo.ttf", fontSize);
+        return Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", fontSize);
     }
     private void configureInventoryPane() {
         ScrollPane inventoryPane = new ScrollPane();

@@ -17,7 +17,6 @@ import edu.ntnu.mappe32.view.PassageView;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
