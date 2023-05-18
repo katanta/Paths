@@ -47,11 +47,14 @@ public class InventoryGoal implements Goal {
     }
     @Override
     public String goalValue() {
+        if (mandatoryItems.isEmpty())
+            return "";
+
         StringBuilder sb = new StringBuilder();
         mandatoryItems.keySet().forEach(item ->
                 sb.append(item.getItemName()).append(": ").append(mandatoryItems.get(item)).append(", "));
 
-        return sb.substring(sb.length() - 2);
+        return sb.substring(0, sb.length() - 2);
     }
     @Override
     public String goalType() {
