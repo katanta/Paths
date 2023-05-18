@@ -8,6 +8,7 @@ import edu.ntnu.mappe32.model.story_related.Passage;
 import edu.ntnu.mappe32.view.PassageView;
 import edu.ntnu.mappe32.view.PathsSplashScreenView;
 import edu.ntnu.mappe32.view.StorySelectorView;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -97,7 +98,7 @@ public class PassageViewController {
             goalLabel.setFont(resizableMainFont(16));
             goalLabel.setTooltip(new Tooltip(goalLabel.getText()));
             goalLabel.getTooltip().setFont(resizableMainFont(14));
-
+            goalLabel.setMaxWidth(320);
 
             Label completionStatus = new Label("INCOMPLETE!");
             completionStatus.setFont(resizableMainFont(16));
@@ -111,7 +112,8 @@ public class PassageViewController {
                 completionStatus.getTooltip().setText("The goal above is complete!");
             }
             VBox goalStatus = new VBox(goalLabel, completionStatus);
-            goalStatus.setAlignment(Pos.TOP_CENTER);
+            goalStatus.setAlignment(Pos.CENTER);
+            VBox.setMargin(goalStatus, new Insets(30, 0, 0 ,0));
             passageView.getGameGoalsVBox().getChildren().add(goalStatus);
         }
     }

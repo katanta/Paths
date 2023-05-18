@@ -8,9 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -52,8 +50,21 @@ public class PassageView {
         configureGameGoalsVBox();
         configureButtonsHBox();
         configureRecentEventsListView();
-
+        setTestBackground();
         this.scene = new Scene(root, 1280, 720);
+    }
+
+    public void setTestBackground() { //Todo: Messed around with this a bit; it is entirely possible to set backgrounds for either the root or each individual node
+        Image backgroundImage;
+        try {
+            backgroundImage = new Image(new FileInputStream("src/main/resources/img/scrollWallpaper.jpg"));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+        buttonsHBox.setBackground(new Background(background));
     }
     public static Font resizableMainFont(double fontSize) {
         return Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", fontSize);
@@ -176,15 +187,16 @@ public class PassageView {
     private void configureGameGoalsVBox() {
         gameGoalsVBox = new VBox();
         gameGoalsVBox.setMaxWidth(318);
-        gameGoalsVBox.setMinWidth(318); //TODO: improve aesthetics so this window matches top left button box
+        gameGoalsVBox.setMinWidth(318);
         gameGoalsVBox.setPrefHeight(598);
-        gameGoalsVBox.setSpacing(50);
-        ScrollPane goalScrollPane = new ScrollPane();
-        goalScrollPane.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
+        ScrollPane goalScrollPane = new ScrollPane(gameGoalsVBox);
+        gameGoalsVBox.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         StackPane.setAlignment(goalScrollPane, Pos.BOTTOM_LEFT);
-        goalScrollPane.setContent(gameGoalsVBox);
-        goalScrollPane.setMaxWidth(gameGoalsVBox.getMaxWidth() + 10);
-        goalScrollPane.setMaxHeight(gameGoalsVBox.getPrefHeight() + 2);
+        goalScrollPane.setMinWidth(320);
+        goalScrollPane.setMaxWidth(320);
+        goalScrollPane.setMaxHeight(600);
+        goalScrollPane.setMinHeight(600);
+        goalScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         root.getChildren().add(goalScrollPane);
     }
 
@@ -255,7 +267,6 @@ public class PassageView {
         recentEventsListView.setMaxWidth(recentEventsListView.getMinWidth());
         StackPane.setAlignment(recentEventsListView, Pos.BOTTOM_CENTER);
         root.getChildren().add(recentEventsListView);
-
     }
     public VBox getItemsVBox() {
         return itemsVBox;
