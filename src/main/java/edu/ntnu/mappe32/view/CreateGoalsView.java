@@ -99,20 +99,24 @@ public class CreateGoalsView {
         this.goalsListView = new ListView<>();
         goalsListView.setMaxWidth(500);
         goalsListView.setPrefHeight(100);
+        goalsListView.setFixedCellSize(40);
         goalsListView.setCellFactory(param -> new ListCell<>() {
             @Override
-            protected void updateItem(Goal goal, boolean empty) {
+            public void updateItem(Goal goal, boolean empty) {
                 super.updateItem(goal, empty);
-                if (goal == null || empty) {
-                    setText("");
-                    setStyle("");
-                } else {
+
+                setText(null);
+                setStyle(null);
+                setGraphic(null);
+                if (goal != null && !empty) {
                     GoalCell cell = new GoalCell(goal);
                     setGraphic(cell.getHBox());
                     Tooltip cellTooltip = new Tooltip("Click to remove '" + goal.goalType() + " Goal: " + goal.goalValue() + "'");
-                    cellTooltip.setShowDelay(Duration.millis(200));
+                    cellTooltip.setShowDelay(Duration.ZERO);
                     cellTooltip.setShowDuration(Duration.INDEFINITE);
                     setTooltip(cellTooltip);
+                    cellTooltip.setFont(resizableMainFont(20));
+                    cellTooltip.setStyle("-fx-text-fill: red;");
                 }
             }
         });
@@ -152,10 +156,10 @@ public class CreateGoalsView {
      inventoryIcon.setFitHeight(50);
      goalBox.getChildren().addAll(healthIcon, scoreIcon, goldIcon, inventoryIcon);
 
-     goalBox.setMaxWidth(500);
-     goalBox.setMaxHeight(100);
-     goalBox.setPadding(new Insets(10,0,10,20));
-     goalBox.setStyle("-fx-border-width: 4;" + "-fx-border-color: black;");
+        goalBox.setMaxWidth(500);
+        goalBox.setMaxHeight(100);
+        goalBox.setPadding(new Insets(10,0,10,20));
+        goalBox.setStyle("-fx-border-width: 4;" + "-fx-border-color: black;");
 
     }
 
@@ -194,9 +198,10 @@ public class CreateGoalsView {
         numericalGoalBox = new VBox(50);
         numericalGoalBox.setPadding(new Insets(50,0,0,0));
         HBox goalValueBar = new HBox();
-        valueTypeLabel = new Label(" goal value:");
+        valueTypeLabel = new Label();
         valueTypeLabel.setFont(statLabelFont);
         valueTextField = new TextField();
+        valueTextField.setMaxWidth(170);
         valueTextField.setFont(textFieldFont);
         valueTextField.setPromptText("Enter value");
         try {
@@ -213,6 +218,8 @@ public class CreateGoalsView {
         numericalGoalBox.setMaxWidth(500);
         goalValueBar.getChildren().addAll(valueTypeLabel, valueTextField);
         numericalGoalBox.getChildren().addAll(goalValueBar, addGoalButtonBox);
+        numericalGoalBox.setVisible(false);
+        numericalGoalBox.setManaged(false);
     }
 
     public ImageView getBackButton() {
@@ -237,6 +244,57 @@ public class CreateGoalsView {
 
     public ImageView getInfoButton() {
         return infoButton;
+    }
+
+    public VBox getNumericalGoalBox() {
+        return numericalGoalBox;
+    }
+
+    public ImageView getP1() {
+        return p1;
+    }
+
+    public ImageView getP2() {
+        return p2;
+    }
+
+    public ImageView getP3() {
+        return p3;
+    }
+
+    public ImageView getGoldIcon() {
+        return goldIcon;
+    }
+
+    public ImageView getHealthIcon() {
+        return healthIcon;
+    }
+
+    public ImageView getInventoryIcon() {
+        return inventoryIcon;
+    }
+
+    public ImageView getScoreIcon() {
+        return scoreIcon;
+    }
+
+    public Label getValueTypeLabel() {
+        return valueTypeLabel;
+    }
+
+    public ImageView getP4() {
+        return p4;
+    }
+    public ImageView getAddGoalButton() {
+        return addGoalButton;
+    }
+
+    public TextField getValueTextField() {
+        return valueTextField;
+    }
+
+    public ListView<Goal> getGoalsListView() {
+        return goalsListView;
     }
 
     public Scene getScene() {
