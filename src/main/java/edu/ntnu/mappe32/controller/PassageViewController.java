@@ -76,7 +76,7 @@ public class PassageViewController {
         currentPassage.getLinks().forEach(link -> {
             Button linkButton = new Button(link.getText());
             linkButton.setFont(resizableMainFont(18));
-            linkButton.setPrefSize(200, 40);
+            linkButton.setPrefSize(200, 50);
             linkButton.setMaxWidth(400);
             linkButton.setOnMouseClicked(mouseEvent -> {
                 currentPassage = game.go(link); //this.game can be used to update player information
@@ -97,6 +97,7 @@ public class PassageViewController {
             goalLabel.setFont(resizableMainFont(16));
             goalLabel.setTooltip(new Tooltip(goalLabel.getText()));
             goalLabel.getTooltip().setFont(resizableMainFont(14));
+
 
             Label completionStatus = new Label("INCOMPLETE!");
             completionStatus.setFont(resizableMainFont(16));

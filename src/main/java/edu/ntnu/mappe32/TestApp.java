@@ -51,10 +51,9 @@ public class TestApp extends javafx.application.Application {
     }
     @Override
     public void start(Stage stage) {
-        CreatePlayerView createPlayerView = new CreatePlayerView();
         PassageView passageView = new PassageView();
         PassageViewController passageViewController = new PassageViewController(stage, passageView, setUpGame());
-        CreatePlayerController createPlayerController = new CreatePlayerController(createPlayerView, stage, new PathsFile(new File("src/main/resources/test_stories/main_test_story.paths")));
+        stage.setScene(passageView.getScene());
         stage.setTitle("Paths Game");
         stage.show();
     }

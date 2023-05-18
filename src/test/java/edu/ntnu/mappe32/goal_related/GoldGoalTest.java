@@ -40,7 +40,7 @@ class GoldGoalTest {
         }
 
     }
-    @DisplayName("contructor")
+    @DisplayName("Constructor")
     @Nested
     class Constructor {
         @DisplayName("throws IllegalArgumentException when minimum gold is negative")

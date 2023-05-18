@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +16,7 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Stack;
 
 
 public class PassageView {
@@ -38,6 +40,7 @@ public class PassageView {
     private ImageView helpButton;
     private ImageView homeButton;
     private ImageView restartButton;
+    private ListView recentEventsListView;
 
     public PassageView() {
         root = new StackPane();
@@ -48,6 +51,7 @@ public class PassageView {
         configureLinkScrollPane();
         configureGameGoalsVBox();
         configureButtonsHBox();
+        configureRecentEventsListView();
 
         this.scene = new Scene(root, 1280, 720);
     }
@@ -57,7 +61,7 @@ public class PassageView {
     private void configureInventoryPane() {
         ScrollPane inventoryPane = new ScrollPane();
         itemsVBox = new VBox();
-        inventoryPane.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        inventoryPane.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         itemsVBox.setMaxWidth(316);
         itemsVBox.setMaxHeight(350);
         itemsVBox.setAlignment(Pos.TOP_LEFT);
@@ -74,7 +78,7 @@ public class PassageView {
         configurePlayerGoldLabel();
 
         VBox playerInfo = new VBox(playerHealth, playerScore, playerGold);
-        playerInfo.setStyle("-fx-border-color: black; -fx-border-width: 2px;");
+        playerInfo.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         playerInfo.setSpacing(40);
         playerInfo.setMaxWidth(320);
         playerInfo.setAlignment(Pos.TOP_LEFT);
@@ -163,32 +167,32 @@ public class PassageView {
         linkButtonsVBox = new VBox();
         linkButtonsVBox.setAlignment(Pos.CENTER);
         linksScrollPane.setContent(linkButtonsVBox);
-        linksScrollPane.setMaxSize(200, 500);
+        linksScrollPane.setMaxSize(400, 200);
         linksScrollPane.setFitToWidth(true);
         passageInfo.getChildren().add(linksScrollPane);
-        VBox.setMargin(linksScrollPane, new Insets(35, 0, 0, 0));
+        VBox.setMargin(linksScrollPane, new Insets(15, 0, 0, 0));
     }
 
     private void configureGameGoalsVBox() {
         gameGoalsVBox = new VBox();
-        gameGoalsVBox.setStyle("-fx-border-color: black; -fx-border-width: 3px;");
-        gameGoalsVBox.setMaxWidth(313);
-        gameGoalsVBox.setMinWidth(313); //TODO: improve aesthetics so this window matches top left button box
+        gameGoalsVBox.setMaxWidth(318);
+        gameGoalsVBox.setMinWidth(318); //TODO: improve aesthetics so this window matches top left button box
         gameGoalsVBox.setPrefHeight(598);
         gameGoalsVBox.setSpacing(50);
         ScrollPane goalScrollPane = new ScrollPane();
-        root.getChildren().add(goalScrollPane);
-        goalScrollPane.setContent(gameGoalsVBox);
-        goalScrollPane.setMaxWidth(gameGoalsVBox.getMaxWidth() + 7);
-        goalScrollPane.setMaxHeight(gameGoalsVBox.getPrefHeight() + 5);
+        goalScrollPane.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         StackPane.setAlignment(goalScrollPane, Pos.BOTTOM_LEFT);
+        goalScrollPane.setContent(gameGoalsVBox);
+        goalScrollPane.setMaxWidth(gameGoalsVBox.getMaxWidth() + 10);
+        goalScrollPane.setMaxHeight(gameGoalsVBox.getPrefHeight() + 2);
+        root.getChildren().add(goalScrollPane);
     }
 
     private void configureButtonsHBox() {
         buttonsHBox = new HBox();
-        buttonsHBox.setMaxWidth(313);
+        buttonsHBox.setMaxWidth(319);
         buttonsHBox.setMaxHeight(720 - gameGoalsVBox.getPrefHeight());
-        buttonsHBox.setStyle("-fx-border-color: black; -fx-border-width: 3px;");
+        buttonsHBox.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         buttonsHBox.setAlignment(Pos.CENTER_LEFT);
         buttonsHBox.setSpacing(40);
         StackPane.setAlignment(buttonsHBox, Pos.TOP_LEFT);
@@ -241,6 +245,17 @@ public class PassageView {
         homeButton.setFitHeight(buttonSize);
         helpButton.setFitWidth(buttonSize);
         helpButton.setFitHeight(buttonSize);
+    }
+
+    private void configureRecentEventsListView() {
+        recentEventsListView = new ListView<>();
+        recentEventsListView.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
+        recentEventsListView.setMaxHeight(195);
+        recentEventsListView.setMinWidth(643);
+        recentEventsListView.setMaxWidth(recentEventsListView.getMinWidth());
+        StackPane.setAlignment(recentEventsListView, Pos.BOTTOM_CENTER);
+        root.getChildren().add(recentEventsListView);
+
     }
     public VBox getItemsVBox() {
         return itemsVBox;
