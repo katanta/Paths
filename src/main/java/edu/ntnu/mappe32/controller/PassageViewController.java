@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -60,6 +61,13 @@ public class PassageViewController {
             Label itemLabel = new Label(item.getValue() + "x " + item.getKey().getItemName());
             itemLabel.setFont(resizableMainFont(18));
             itemLabel.setMaxWidth(300);
+            VBox.setMargin(itemLabel, new Insets(0, 0, 0, 15));
+            if (item.getKey().getItemName().length() > 20) {
+                itemLabel.setTooltip(new Tooltip(itemLabel.getText()));
+                itemLabel.getTooltip().setFont(resizableMainFont(16));
+                itemLabel.getTooltip().setWrapText(true);
+                itemLabel.getTooltip().setShowDelay(new Duration(0.1));
+            }
             passageView.getItemsVBox().getChildren().add(itemLabel);
         }
     }
@@ -202,7 +210,7 @@ public class PassageViewController {
         StringBuilder finalEventString = new StringBuilder();
 
         for (Action a : linkPressed.getActions()) {
-            finalEventString.append(a.toEventString(game.player()) + "\n");
+            finalEventString.append(a.toEventString(game.player()));
         }
 
         allEventText.setText(finalEventString.toString());

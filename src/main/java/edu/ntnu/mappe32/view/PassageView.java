@@ -42,16 +42,16 @@ public class PassageView {
     private ImageView restartButton;
     private ScrollPane recentEventsPane;
     private VBox eventsVBox;
+    private ScrollPane inventoryPane;
 
     public PassageView() {
         root = new StackPane();
         infoFont = resizableMainFont(18);
-        configurePlayerInfo();
-        configureInventoryPane();
         configurePassageInfo();
         configureLinkScrollPane();
         configureGameGoalsVBox();
         configureButtonsHBox();
+        configurePlayerInfo();
         configureRecentEventsPane();
         setTestBackground();
         this.scene = new Scene(root, 1280, 720);
@@ -74,18 +74,11 @@ public class PassageView {
     }
     private void configureInventoryPane() {
         itemsVBox = new VBox();
-        ScrollPane inventoryPane = new ScrollPane();
-        inventoryPane.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
-        itemsVBox.setMaxWidth(316);
-        itemsVBox.setAlignment(Pos.TOP_LEFT);
         itemsVBox.setSpacing(10);
-        inventoryPane.setPrefViewportHeight(354);
-        inventoryPane.setPrefViewportWidth(320);
-        inventoryPane.setMaxWidth(320);
-        inventoryPane.setMaxHeight(354);
-        inventoryPane.setContent(itemsVBox);
-        StackPane.setAlignment(inventoryPane, Pos.BOTTOM_RIGHT);
-        root.getChildren().add(inventoryPane);
+        itemsVBox.setAlignment(Pos.TOP_LEFT);
+
+        inventoryPane = new ScrollPane(itemsVBox);
+        inventoryPane.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
     }
 
     private void configurePlayerInfo() {
@@ -93,8 +86,10 @@ public class PassageView {
         configurePlayerHealthLabel();
         configurePlayerScoreLabel();
         configurePlayerGoldLabel();
+        configureInventoryPane();
 
-        VBox playerInfo = new VBox(playerNameLabel , playerHealth, playerScore, playerGold);
+        VBox playerInfo = new VBox(playerNameLabel , playerHealth, playerScore, playerGold, inventoryPane);
+        inventoryPane.setFitToWidth(true);
         playerInfo.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         playerInfo.setSpacing(40);
         playerInfo.setMaxWidth(320);
@@ -279,7 +274,6 @@ public class PassageView {
         recentEventsPane.setMinWidth(643);
         recentEventsPane.setMaxWidth(recentEventsPane.getMinWidth());
         StackPane.setAlignment(recentEventsPane, Pos.BOTTOM_CENTER);
-        //620 wrappingwidth for text is ideal, with font 18!!!!!
         root.getChildren().add(recentEventsPane);
     }
     public VBox getItemsVBox() {
