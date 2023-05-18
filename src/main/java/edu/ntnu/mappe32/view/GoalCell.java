@@ -28,7 +28,7 @@ public class GoalCell extends ListCell<Goal> {
         VBox vBox = new VBox();
         vBox.getChildren().addAll(new Label(goal.goalValue(), pane));
         hBox.getChildren().addAll(icon, vBox, pane);
-        hBox.setAlignment(Pos.CENTER);
+        hBox.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(pane, Priority.ALWAYS);
     }
 

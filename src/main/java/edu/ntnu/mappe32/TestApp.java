@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32;
 
-import edu.ntnu.mappe32.controller.CreatePlayerController;
+import edu.ntnu.mappe32.controller.CreateGoalsController;
 import edu.ntnu.mappe32.controller.PassageViewController;
 import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
@@ -12,7 +12,7 @@ import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.goal_related.GoldGoal;
 import edu.ntnu.mappe32.model.goal_related.ScoreGoal;
 import edu.ntnu.mappe32.model.story_related.Story;
-import edu.ntnu.mappe32.view.CreatePlayerView;
+import edu.ntnu.mappe32.view.CreateGoalsView;
 import edu.ntnu.mappe32.view.PassageView;
 import javafx.stage.Stage;
 
@@ -25,13 +25,13 @@ import static edu.ntnu.mappe32.io.PathsFileReader.readStory;
 
 
 public class TestApp extends javafx.application.Application {
-
+    static Player player;
     public static void main(String[] args) {
         launch();
     }
 
     public static Game setUpGame() {
-        Player player = new Player("Ole", 100, 0, 50, new HashMap<Item, Integer>());
+        player = new Player("Ole", 100, 0, 50, new HashMap<Item, Integer>());
         Story story = readStory("src/main/resources/test_stories/main_test_story.paths");
         Goal goldGoal = new GoldGoal(100);
         Goal scoreGoal = new ScoreGoal(50);
@@ -51,9 +51,10 @@ public class TestApp extends javafx.application.Application {
     }
     @Override
     public void start(Stage stage) {
+
         PassageView passageView = new PassageView();
         PassageViewController passageViewController = new PassageViewController(stage, passageView, setUpGame());
-        stage.setScene(passageView.getScene());
+        CreateGoalsController createGoalsController = new CreateGoalsController(stage, new CreateGoalsView(), player, new PathsFile(new File("src/main/resources/test_stories/main_test_story.paths")));
         stage.setTitle("Paths Game");
         stage.show();
     }

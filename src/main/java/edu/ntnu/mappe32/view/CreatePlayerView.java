@@ -23,7 +23,7 @@ import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
 public class CreatePlayerView {
 
     private final Scene scene;
-    private HBox storyTitleBox;
+    private HBox top;
     private ImageView backButton;
     private Image backButtonHover;
     private ImageView infoButton;
@@ -55,7 +55,7 @@ public class CreatePlayerView {
         configureCenter();
 
         BorderPane root = new BorderPane();
-        root.setTop(storyTitleBox);
+        root.setTop(top);
         root.setCenter(centerVBox);
         root.getChildren().add(backButton);
         this.scene = new Scene(root, 1080, 720);
@@ -63,7 +63,7 @@ public class CreatePlayerView {
 
     }
     private void configureTop() {
-        storyTitleBox = new HBox(50);
+        top = new HBox(50);
 
         try {
             backButtonImage = new Image(new FileInputStream("src/main/resources/img/restartButton.png"));
@@ -89,10 +89,10 @@ public class CreatePlayerView {
         storyTitle.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSansBold.ttf", 50));
         storyTitle.setMaxWidth(700);
 
-        storyTitleBox.getChildren().addAll(storyTitle, infoButton);
-        storyTitleBox.setAlignment(Pos.CENTER);
+        top.getChildren().addAll(storyTitle, infoButton);
+        top.setAlignment(Pos.CENTER);
 
-        storyTitleBox.setPadding(new Insets(20, 0,0,0));
+        top.setPadding(new Insets(20, 0,0,0));
 
     }
 
