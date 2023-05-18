@@ -25,6 +25,8 @@ import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
@@ -35,12 +37,14 @@ public class PassageViewController {
     private final Player originalPlayer;
     private final PassageView passageView;
     private static Passage currentPassage;
+    private final List<Goal> completedGoals;
 
     public PassageViewController(Stage stage, PassageView passageView, Game game) {
         this.stage = stage;
         this.passageView = passageView;
         this.originalPlayer = game.player().copyPlayer();
         this.game = game;
+        completedGoals = new ArrayList<Goal>();
         currentPassage = game.begin();
         updateScene();
         configureAllTopLeftButtonActions();
@@ -108,6 +112,7 @@ public class PassageViewController {
     }
 
     private void updateGameGoalsVBox() {
+
         passageView.getGameGoalsVBox().getChildren().clear();
 
         for (Goal goal : game.goals()) {
@@ -124,14 +129,20 @@ public class PassageViewController {
             completionStatus.getTooltip().setFont(resizableMainFont(20));
             completionStatus.setTextFill(Color.RED);
 
-            if (goal.isFulfilled(game.player())) {
+            VBox goalStatus = new VBox(goalLabel, completionStatus);
+            goalStatus.setAlignment(Pos.CENTER);
+            VBox.setMargin(goalStatus, new Insets(30, 0, 0, 0));
+
+            if (goal.isFulfilled(game.player()) && !completedGoals.contains(goal)) {
+                completedGoals.add(goal);
+                completionStatus.setText("GOAL COMPLETED!");
+                completionStatus.setTextFill(Color.GREEN);
+                completionStatus.getTooltip().setText("The goal above is complete!");
+            } else if (!goal.isFulfilled(game.player()) && completedGoals.contains(goal)) {
                 completionStatus.setText("GOAL COMPLETED!");
                 completionStatus.setTextFill(Color.GREEN);
                 completionStatus.getTooltip().setText("The goal above is complete!");
             }
-            VBox goalStatus = new VBox(goalLabel, completionStatus);
-            goalStatus.setAlignment(Pos.CENTER);
-            VBox.setMargin(goalStatus, new Insets(30, 0, 0 ,0));
             passageView.getGameGoalsVBox().getChildren().add(goalStatus);
         }
     }
@@ -147,6 +158,7 @@ public class PassageViewController {
     private void setRestartButtonClickAction() {
         passageView.getRestartButton().setOnMouseClicked(e -> {
             this.game = new Game(originalPlayer.copyPlayer(), game.story(), game.goals());
+            completedGoals.clear();
             currentPassage = game.begin();
             passageView.getEventsVBox().getChildren().clear();
             updateScene();
