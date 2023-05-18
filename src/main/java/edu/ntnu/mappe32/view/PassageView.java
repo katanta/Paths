@@ -14,7 +14,8 @@ import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Stack;
+import java.time.Clock;
+import java.time.LocalDate;
 
 
 public class PassageView {
@@ -25,6 +26,7 @@ public class PassageView {
     private HBox playerHealth;
     private HBox playerScore;
     private HBox playerGold;
+    private Label playerNameLabel;
     private Label playerHealthLabel;
     private Label playerScoreLabel;
     private Label playerGoldLabel;
@@ -38,18 +40,18 @@ public class PassageView {
     private ImageView helpButton;
     private ImageView homeButton;
     private ImageView restartButton;
-    private ListView recentEventsListView;
+    private ScrollPane recentEventsPane;
 
     public PassageView() {
         root = new StackPane();
-        infoFont = resizableMainFont(14);
+        infoFont = resizableMainFont(18);
         configurePlayerInfo();
         configureInventoryPane();
         configurePassageInfo();
         configureLinkScrollPane();
         configureGameGoalsVBox();
         configureButtonsHBox();
-        configureRecentEventsListView();
+        configureRecentEventsPane();
         setTestBackground();
         this.scene = new Scene(root, 1280, 720);
     }
@@ -84,17 +86,18 @@ public class PassageView {
     }
 
     private void configurePlayerInfo() {
+        configurePlayerNameLabel();
         configurePlayerHealthLabel();
         configurePlayerScoreLabel();
         configurePlayerGoldLabel();
 
-        VBox playerInfo = new VBox(playerHealth, playerScore, playerGold);
+        VBox playerInfo = new VBox(playerNameLabel , playerHealth, playerScore, playerGold);
         playerInfo.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         playerInfo.setSpacing(40);
         playerInfo.setMaxWidth(320);
-        playerInfo.setAlignment(Pos.TOP_LEFT);
-
-        VBox.setMargin(playerHealth, new Insets(40, 0, 0, 50));
+        playerInfo.setAlignment(Pos.TOP_CENTER);
+        VBox.setMargin(playerNameLabel, new Insets(5, 0, 0, 0));
+        VBox.setMargin(playerHealth, new Insets(0, 0, 0, 48));
         VBox.setMargin(playerScore, new Insets(0, 0, 0, 37));
         VBox.setMargin(playerGold, new Insets(0, 0, 0, 43));
         StackPane.setAlignment(playerInfo, Pos.TOP_RIGHT);
@@ -116,6 +119,11 @@ public class PassageView {
         playerScore = new HBox(scoreIcon, playerScoreLabel);
         playerScore.setAlignment(Pos.CENTER_LEFT);
         playerScore.setSpacing(20);
+    }
+
+    private void configurePlayerNameLabel() {
+        playerNameLabel = new Label();
+        playerNameLabel.setFont(resizableMainFont(25));
     }
 
     private void configurePlayerHealthLabel() {
@@ -259,17 +267,31 @@ public class PassageView {
         helpButton.setFitHeight(buttonSize);
     }
 
-    private void configureRecentEventsListView() {
-        recentEventsListView = new ListView<>();
-        recentEventsListView.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
-        recentEventsListView.setMaxHeight(195);
-        recentEventsListView.setMinWidth(643);
-        recentEventsListView.setMaxWidth(recentEventsListView.getMinWidth());
-        StackPane.setAlignment(recentEventsListView, Pos.BOTTOM_CENTER);
-        root.getChildren().add(recentEventsListView);
+    private void configureRecentEventsPane() {
+
+        recentEventsPane = new ScrollPane();
+        recentEventsPane.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
+        recentEventsPane.setMaxHeight(195);
+        recentEventsPane.setMinWidth(643);
+        recentEventsPane.setMaxWidth(recentEventsPane.getMinWidth());
+        StackPane.setAlignment(recentEventsPane, Pos.BOTTOM_CENTER);
+        VBox testVBox = new VBox();
+        for (int i = 1; i <= 50; i++) {
+            Text eventText = new Text( ": Event Happened: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2 " + i);
+            eventText.setFont(resizableMainFont(18));
+            eventText.setWrappingWidth(620);
+            testVBox.getChildren().add(eventText);
+
+        }
+        recentEventsPane.setContent(testVBox);
+        root.getChildren().add(recentEventsPane);
     }
     public VBox getItemsVBox() {
         return itemsVBox;
+    }
+
+    public Label getPlayerNameLabel() {
+        return playerNameLabel;
     }
 
     public Label getPlayerGoldLabel() {

@@ -61,6 +61,9 @@ public class PassageViewController {
     }
 
     private void updatePlayerInfo() {
+        if (game.player().getName().endsWith("s")) {
+            passageView.getPlayerNameLabel().setText(game.player().getName() + "' stats");
+        } else passageView.getPlayerNameLabel().setText(game.player().getName() + "'s stats");
         passageView.getPlayerGoldLabel().setText("GOLD: " + game.player().getGold());
         passageView.getPlayerHealthLabel().setText("HEALTH: " + game.player().getHealth());
         passageView.getPlayerScoreLabel().setText("SCORE: " + game.player().getScore());
@@ -76,6 +79,7 @@ public class PassageViewController {
         passageView.getLinkButtonsVBox().getChildren().clear();
         currentPassage.getLinks().forEach(link -> {
             Button linkButton = new Button(link.getText());
+            linkButton.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-border-width: 2px; -fx-border-color: #000000");
             linkButton.setFont(resizableMainFont(18));
             linkButton.setPrefSize(200, 50);
             linkButton.setMaxWidth(400);
@@ -83,8 +87,10 @@ public class PassageViewController {
                 currentPassage = game.go(link); //this.game can be used to update player information
                 updateScene(); //make the buttons change the current active passage, changing the scene
             });
+            linkButton.setOnMouseEntered(e -> linkButton.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff"));
+            linkButton.setOnMouseExited(e -> linkButton.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-border-width: 2px; -fx-border-color: #000000"));
             linkButton.setTooltip(new Tooltip(link.getText()));
-            linkButton.getTooltip().setFont(resizableMainFont(12));
+            linkButton.getTooltip().setFont(resizableMainFont(20));
             passageView.getLinkButtonsVBox().getChildren().add(linkButton);
         });
     }
