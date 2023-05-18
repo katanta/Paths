@@ -29,6 +29,9 @@ public class GoalCell extends ListCell<Goal> {
         Label label = new Label(goal.goalValue());
         Font font  = Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 25);
         label.setFont(font);
+
+        if (goal instanceof InventoryGoal)
+            label.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 10));
         hBox.getChildren().addAll(icon, label, pane);
 
         hBox.setPadding(new Insets(0,0,0,5));
