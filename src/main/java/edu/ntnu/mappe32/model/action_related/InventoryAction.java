@@ -36,6 +36,23 @@ public class InventoryAction implements Action, Serializable {
         }
     }
 
+    /**
+     * A string that describes the action occurring to the player.
+     *
+     * @param player The player affected by the action, as Player.
+     * @return a String that describes the action occurring to the player, as String.
+     */
+    @Override
+    public String toEventString(Player player) {
+        if (add) {
+            return player.getName() + " has received an item: " + item.getItemName();
+        } else {
+            StringBuilder wholeEvent = new StringBuilder(player.getName() + " has used and lost their " + item.getItemName());
+            item.getActions().forEach(action -> wholeEvent.append("\n " + action.toEventString(player)));
+            return wholeEvent.toString();
+        }
+    }
+
     public Item getItem() {
         return item;
     }

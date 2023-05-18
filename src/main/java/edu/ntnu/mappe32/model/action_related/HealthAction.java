@@ -28,6 +28,23 @@ public class HealthAction implements Action, Serializable {
         player.addHealth(this.health);
     }
 
+    /**
+     * A string that describes the action occurring to the player.
+     *
+     * @param player The player affected by the action, as Player.
+     * @return a String that describes the action occurring to the player, as String.
+     */
+    @Override
+    public String toEventString(Player player) {
+        if (health < 0) {
+            if (player.getHealth() + health <= 0) {
+                return player.getName() + " has lost " + health + " health and has perished! + \n Oh dear! You have died!";
+            } else return player.getName() + " has lost " + health + " health!";
+        } else if (health > 0) return player.getName() + "has gained " + health + " health!";
+        return null;
+    }
+
+
     @Override
     public String toString() {
         return "<Health " + health + ">";

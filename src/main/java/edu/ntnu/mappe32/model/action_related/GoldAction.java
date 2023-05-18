@@ -34,6 +34,18 @@ public class GoldAction implements Action, Serializable {
         return "<Gold " + gold + ">";
     }
 
+    /**
+     * A string that describes the action to a player.
+     * @param player The player affected by the action, as Player.
+     * @return A string describing the action that occurred, as String.
+     */
+    @Override
+    public String toEventString(Player player) {
+        if (gold < 0) return player.getName() + " has lost " + gold + " gold!";
+        else if (gold > 0) return player.getName() + " has earned " + gold + " gold!";
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

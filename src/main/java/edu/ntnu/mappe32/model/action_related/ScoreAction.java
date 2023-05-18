@@ -29,6 +29,20 @@ public class ScoreAction implements Action, Serializable {
         player.addScore(this.points);
     }
 
+    /**
+     * A string that describes the action occurring to the player.
+     *
+     * @param player The player affected by the action, as Player.
+     * @return a String that describes the action occurring to the player, as String.
+     */
+    @Override
+    public String toEventString(Player player) {
+        if (points < 0) {
+            return player.getName() + " has lost " + points + " points!";
+        } else if (points > 0) return player.getName() + " has earned " + points + " points!";
+        return null;
+    }
+
     @Override
     public String toString() {
         return "<Score " + points + ">";

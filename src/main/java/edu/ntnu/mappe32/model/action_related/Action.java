@@ -14,5 +14,12 @@ public interface Action {
      */
     void execute(Player player);
 
+    /**
+     * A string that describes the action occurring to the player.
+     * @param player The player affected by the action, as Player.
+     * @return a String that describes the action occurring to the player, as String.
+     */
+    String toEventString(Player player);
+
     boolean equals(Object o);
 }

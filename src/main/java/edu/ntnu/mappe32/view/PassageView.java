@@ -280,7 +280,8 @@ public class PassageView {
             Text eventText = new Text( ": Event Happened: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2 " + i);
             eventText.setFont(resizableMainFont(18));
             eventText.setWrappingWidth(620);
-            testVBox.getChildren().add(eventText);
+            testVBox.getChildren().add(0, eventText);
+            System.out.println(testVBox.getChildren().size());
 
         }
         recentEventsPane.setContent(testVBox);
