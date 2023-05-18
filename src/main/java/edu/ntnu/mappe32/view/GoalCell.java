@@ -1,34 +1,37 @@
 package edu.ntnu.mappe32.view;
 
 import edu.ntnu.mappe32.model.goal_related.*;
-import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class GoalCell extends ListCell<Goal> {
 
-    public static final int FIT_HEIGHT = 20;
-    public static final int FIT_WIDTH = 20;
-    private final HBox hBox = new HBox(10);
+    public static final int FIT_HEIGHT = 30;
+    public static final int FIT_WIDTH = 30;
+    private final HBox hBox = new HBox(20);
 
     public GoalCell(Goal goal) {
         super();
         Pane pane = new Pane();
         ImageView icon = createIcon(goal);
 
-        VBox vBox = new VBox();
-        vBox.getChildren().addAll(new Label(goal.goalValue(), pane));
-        hBox.getChildren().addAll(icon, vBox, pane);
-        hBox.setAlignment(Pos.CENTER_LEFT);
+        Label label = new Label(goal.goalValue());
+        Font font  = Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 25);
+        label.setFont(font);
+        hBox.getChildren().addAll(icon, label, pane);
+
+        hBox.setPadding(new Insets(0,0,0,5));
         HBox.setHgrow(pane, Priority.ALWAYS);
     }
 
@@ -37,27 +40,27 @@ public class GoalCell extends ListCell<Goal> {
             ImageView icon;
             if (goal instanceof InventoryGoal) {
                 icon = new ImageView(
-                        new Image(new FileInputStream("src/main/resources/img/inventory.png")));
+                        new Image(new FileInputStream("src/main/resources/img/inventory-removebg-preview.png")));
                 icon.setFitWidth(FIT_WIDTH);
                 icon.setFitHeight(FIT_HEIGHT);
                 return icon;
             } else if (goal instanceof ScoreGoal) {
                 icon = new ImageView(
-                        new Image(new FileInputStream("src/main/resources/img/score.png")));
-                icon.setFitWidth(FIT_WIDTH + 6);
-                icon.setFitHeight(FIT_HEIGHT + 3);
+                        new Image(new FileInputStream("src/main/resources/img/score-removebg-preview.png")));
+                icon.setFitWidth(FIT_WIDTH);
+                icon.setFitHeight(FIT_HEIGHT);
                 return icon;
             } else if (goal instanceof HealthGoal) {
                 icon = new ImageView(
-                        new Image(new FileInputStream("src/main/resources/img/hp.png")));
+                        new Image(new FileInputStream("src/main/resources/img/hp-removebg-preview.png")));
                 icon.setFitWidth(FIT_WIDTH);
                 icon.setFitHeight(FIT_HEIGHT);
                 return icon;
             } else if (goal instanceof GoldGoal) {
                 icon = new ImageView(
-                        new Image(new FileInputStream("src/main/resources/img/gold.png")));
-                icon.setFitWidth(FIT_WIDTH + 6);
-                icon.setFitHeight(FIT_HEIGHT + 2);
+                        new Image(new FileInputStream("src/main/resources/img/gold-removebg-preview.png")));
+                icon.setFitWidth(FIT_WIDTH);
+                icon.setFitHeight(FIT_HEIGHT);
                 return icon;
             }
             throw new IllegalArgumentException("No image that matches your goal");
