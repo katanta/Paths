@@ -40,4 +40,4 @@ build/
 ### Mac OS ###
 .DS_Store
 /.idea/
-/.idea/
+src/main/java/edu/ntnu/mappe32/TestApp.java
