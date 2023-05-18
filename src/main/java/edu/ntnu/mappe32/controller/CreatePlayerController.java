@@ -3,13 +3,12 @@ package edu.ntnu.mappe32.controller;
 import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.view.CreatePlayerView;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
@@ -29,9 +28,6 @@ public class CreatePlayerController {
         stage.setScene(view.getScene());
     }
     private void setActions() {
-        // Set story title tooltip
-        Tooltip storyTitleTooltip = createTooltip("Title of Story: '" + pathsFile.getStoryTitle() + "'", 18);
-        view.getStoryTitle().setTooltip(storyTitleTooltip);
 
         // Set info button tooltip and change image
         Tooltip tooltip = createTooltip("Click here to see Story information...", 18);
@@ -47,22 +43,42 @@ public class CreatePlayerController {
         view.getBackButton().setOnMouseExited(mouseEvent -> view.getBackButton().setImage(view.getBackButtonImage()));
 
         // Set action for when next button is pressed
-        view.getNextButton().setOnMouseClicked(mouseEvent -> {
-            if (validateGoldInput() & validateHealthInput() & validatePlayerNameInput()) {
-                Player player = createPlayer();
-            }
-        });
+        view.getNextButton().setOnMouseClicked(mouseEvent -> goToCreateGoals());
 
         Tooltip nextButtonTooltip = createTooltip("Click to continue", 18);
         Tooltip.install(view.getNextButton(), nextButtonTooltip);
-    }
 
+        view.getPlayerHealthTextField().setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                goToCreateGoals();
+            }
+        });
+        view.getPlayerGoldTextField().setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                goToCreateGoals();
+            }
+        });
+        view.getPlayerNameTextField().setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                goToCreateGoals();
+            }
+        });
+    }
     private Tooltip createTooltip(String text, int fontSize) {
         Tooltip tooltip = new Tooltip(text);
         tooltip.setShowDelay(Duration.ZERO);
         tooltip.setShowDuration(Duration.INDEFINITE);
         tooltip.setFont(resizableMainFont(fontSize));
         return tooltip;
+    }
+
+    /**
+     * This method sends the user to CreateGoalsView
+     */
+    private void goToCreateGoals() {
+        if (validateGoldInput() & validateHealthInput() & validatePlayerNameInput()) {
+            Player player = createPlayer();
+        }
     }
 
     /**
@@ -152,10 +168,9 @@ public class CreatePlayerController {
             information.setTitle("Story Information");
             information.setHeaderText("Information on '" + pathsFile.getStoryTitle() + "'");
             information.setContentText("Broken Links: " + pathsFile.getBrokenLinks() + "\n\nFile Path: " + pathsFile.getFilePath());
-            information.getDialogPane().setStyle("");
             DialogPane dialogPane = information.getDialogPane();
             dialogPane.getStylesheets().add(
-                    getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css").toExternalForm());
+                    Objects.requireNonNull(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css")).toExternalForm());
             information.show();
         });
     }
