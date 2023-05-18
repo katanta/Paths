@@ -38,7 +38,7 @@ public class ScoreAction implements Action, Serializable {
     @Override
     public String toEventString(Player player) {
         if (points < 0) {
-            return player.getName() + " has lost " + points + " points!";
+            return player.getName() + " has lost " + -points + " points!";
         } else if (points > 0) return player.getName() + " has earned " + points + " points!";
         return null;
     }

@@ -41,6 +41,7 @@ public class PassageView {
     private ImageView homeButton;
     private ImageView restartButton;
     private ScrollPane recentEventsPane;
+    private VBox eventsVBox;
 
     public PassageView() {
         root = new StackPane();
@@ -72,16 +73,18 @@ public class PassageView {
         return Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", fontSize);
     }
     private void configureInventoryPane() {
-        ScrollPane inventoryPane = new ScrollPane();
         itemsVBox = new VBox();
+        ScrollPane inventoryPane = new ScrollPane();
         inventoryPane.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         itemsVBox.setMaxWidth(316);
-        itemsVBox.setMaxHeight(350);
         itemsVBox.setAlignment(Pos.TOP_LEFT);
         itemsVBox.setSpacing(10);
-        inventoryPane.setMaxSize(itemsVBox.getMaxWidth() + 4, itemsVBox.getMaxHeight() + 4);
-        StackPane.setAlignment(inventoryPane, Pos.BOTTOM_RIGHT);
+        inventoryPane.setPrefViewportHeight(354);
+        inventoryPane.setPrefViewportWidth(320);
+        inventoryPane.setMaxWidth(320);
+        inventoryPane.setMaxHeight(354);
         inventoryPane.setContent(itemsVBox);
+        StackPane.setAlignment(inventoryPane, Pos.BOTTOM_RIGHT);
         root.getChildren().add(inventoryPane);
     }
 
@@ -268,23 +271,15 @@ public class PassageView {
     }
 
     private void configureRecentEventsPane() {
-
-        recentEventsPane = new ScrollPane();
+        eventsVBox = new VBox();
+        eventsVBox.setSpacing(1.5);
+        recentEventsPane = new ScrollPane(eventsVBox);
         recentEventsPane.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         recentEventsPane.setMaxHeight(195);
         recentEventsPane.setMinWidth(643);
         recentEventsPane.setMaxWidth(recentEventsPane.getMinWidth());
         StackPane.setAlignment(recentEventsPane, Pos.BOTTOM_CENTER);
-        VBox testVBox = new VBox();
-        for (int i = 1; i <= 50; i++) {
-            Text eventText = new Text( ": Event Happened: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2 " + i);
-            eventText.setFont(resizableMainFont(18));
-            eventText.setWrappingWidth(620);
-            testVBox.getChildren().add(0, eventText);
-            System.out.println(testVBox.getChildren().size());
-
-        }
-        recentEventsPane.setContent(testVBox);
+        //620 wrappingwidth for text is ideal, with font 18!!!!!
         root.getChildren().add(recentEventsPane);
     }
     public VBox getItemsVBox() {
@@ -341,5 +336,9 @@ public class PassageView {
 
     public Scene getScene() {
         return scene;
+    }
+
+    public VBox getEventsVBox() {
+        return eventsVBox;
     }
 }

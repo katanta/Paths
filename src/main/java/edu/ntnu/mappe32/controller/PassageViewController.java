@@ -3,7 +3,9 @@ package edu.ntnu.mappe32.controller;
 import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
+import edu.ntnu.mappe32.model.action_related.Action;
 import edu.ntnu.mappe32.model.goal_related.Goal;
+import edu.ntnu.mappe32.model.story_related.Link;
 import edu.ntnu.mappe32.model.story_related.Passage;
 import edu.ntnu.mappe32.view.PassageView;
 import edu.ntnu.mappe32.view.PathsSplashScreenView;
@@ -17,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -56,6 +59,7 @@ public class PassageViewController {
         for (Map.Entry<Item, Integer> item : game.player().getInventory().entrySet()) {
             Label itemLabel = new Label(item.getValue() + "x " + item.getKey().getItemName());
             itemLabel.setFont(resizableMainFont(18));
+            itemLabel.setMaxWidth(300);
             passageView.getItemsVBox().getChildren().add(itemLabel);
         }
     }
@@ -72,7 +76,6 @@ public class PassageViewController {
     private void updatePassageInfo() {
         passageView.getPassageTitle().setText(currentPassage.getTitle());
         passageView.getPassageContent().setText(currentPassage.getContent());
-
     }
 
     private void updateLinkButtons() {
@@ -85,6 +88,7 @@ public class PassageViewController {
             linkButton.setMaxWidth(400);
             linkButton.setOnMouseClicked(mouseEvent -> {
                 currentPassage = game.go(link); //this.game can be used to update player information
+                updateRecentEventsPane(link);
                 updateScene(); //make the buttons change the current active passage, changing the scene
             });
             linkButton.setOnMouseEntered(e -> linkButton.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff"));
@@ -136,6 +140,7 @@ public class PassageViewController {
         passageView.getRestartButton().setOnMouseClicked(e -> {
             this.game = new Game(originalPlayer.copyPlayer(), game.story(), game.goals());
             currentPassage = game.begin();
+            passageView.getEventsVBox().getChildren().clear();
             updateScene();
         });
     }
@@ -188,6 +193,20 @@ public class PassageViewController {
         });
         passageView.getRestartButton().setOnMouseExited(e -> passageView.getRestartButton().setImage(normalRestartButton));
         passageView.getRestartButton().setOnMouseReleased(e -> passageView.getRestartButton().setImage(normalRestartButton));
+    }
+
+    private void updateRecentEventsPane(Link linkPressed) {
+        Text allEventText = new Text();
+        allEventText.setFont(resizableMainFont(18));
+        allEventText.setWrappingWidth(620);
+        StringBuilder finalEventString = new StringBuilder();
+
+        for (Action a : linkPressed.getActions()) {
+            finalEventString.append(a.toEventString(game.player()) + "\n");
+        }
+
+        allEventText.setText(finalEventString.toString());
+        passageView.getEventsVBox().getChildren().add(0, allEventText);
     }
 }
 

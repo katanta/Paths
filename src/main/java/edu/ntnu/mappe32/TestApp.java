@@ -45,6 +45,12 @@ public class TestApp extends javafx.application.Application {
         player.addToInventory(new Item("Hammer", new ScoreAction(10)));
         player.addToInventory(new Item("Dagger", new ScoreAction(10)));
         player.addToInventory(new Item("Scarf", new HealthAction(10)));
+        player.addToInventory(new Item("Lorem", new HealthAction(200)));
+        player.addToInventory(new Item("a", new HealthAction(200)));
+        player.addToInventory(new Item("b", new HealthAction(200)));
+        player.addToInventory(new Item("c", new HealthAction(200)));
+        player.addToInventory(new Item("d", new HealthAction(200)));
+
 
 
         return new Game(player, story, goals);

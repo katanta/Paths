@@ -41,7 +41,7 @@ public class GoldAction implements Action, Serializable {
      */
     @Override
     public String toEventString(Player player) {
-        if (gold < 0) return player.getName() + " has lost " + gold + " gold!";
+        if (gold < 0) return player.getName() + " has lost " + (-gold) + " gold!";
         else if (gold > 0) return player.getName() + " has earned " + gold + " gold!";
         return null;
     }
