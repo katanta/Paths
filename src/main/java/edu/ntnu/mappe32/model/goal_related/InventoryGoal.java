@@ -2,8 +2,10 @@ package edu.ntnu.mappe32.model.goal_related;
 
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
+import javafx.application.Platform;
 
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class InventoryGoal implements Goal {
     // List of mandatory items that a player needs to achieve an InventoryGoal
@@ -47,14 +49,10 @@ public class InventoryGoal implements Goal {
     }
     @Override
     public String goalValue() {
-        if (mandatoryItems.isEmpty())
-            return "";
-
-        StringBuilder sb = new StringBuilder();
-        mandatoryItems.keySet().forEach(item ->
-                sb.append(item.getItemName()).append(": ").append(mandatoryItems.get(item)).append(", "));
-
-        return sb.substring(0, sb.length() - 2);
+        return mandatoryItems.entrySet()
+                .stream()
+                .map(entry -> entry.getKey().getItemName() + ": " + entry.getValue())
+                .collect(Collectors.joining(", "));
     }
     @Override
     public String goalType() {
