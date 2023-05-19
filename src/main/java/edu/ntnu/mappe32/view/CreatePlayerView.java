@@ -112,6 +112,7 @@ public class CreatePlayerView {
         configurePlayerStatsGridPane();
         playerGridPane.setPadding(new Insets(0, 0,0,330));
         playerGridPane.setAlignment(Pos.TOP_CENTER);
+        nextButton.setPickOnBounds(true);
         centerVBox.getChildren().addAll(chooseYourStats, playerGridPane, nextButton);
     }
 

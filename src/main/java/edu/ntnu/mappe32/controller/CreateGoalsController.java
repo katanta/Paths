@@ -32,6 +32,7 @@ public class CreateGoalsController {
     private final List<String> itemsAsString;
     private final HashMap<Item, Integer> mandatoryItems;
     private final Stage stage;
+    private Tooltip addGoalButtonTooltip;
 
     public CreateGoalsController(Stage stage, CreateGoalsView view, Player player, PathsFile pathsFile) {
         this.player = player;
@@ -65,7 +66,7 @@ public class CreateGoalsController {
         view.getBackButton().setOnMouseExited(mouseEvent -> view.getBackButton().setImage(view.getBackButtonImage()));
 
         view.getBackButton().setOnMouseClicked(mouseEvent -> {
-            CreatePlayerController createPlayerController = new CreatePlayerController(new CreatePlayerView(), stage, pathsFile);
+            CreatePlayerController createPlayerController = new CreatePlayerController(new CreatePlayerView(), stage, pathsFile, player);
         });
 
     }
@@ -91,23 +92,45 @@ public class CreateGoalsController {
         });
     }
     private void setCenterActions() {
+        addGoalButtonTooltip = createTooltip("Press to add your Goal", 18);
         setGoalIconActions();
         setAddGoalButton1Actions();
         setAddGoalButton2Actions();
         setListViewActions();
         setAddGoalToInventoryActions();
         setStartButtonActions();
+        setGoalsIconsTooltips();
+    }
+    private void setStartButtonActions() {
+        Tooltip startButtonTooltip = createTooltip("Press To Start Game!", 18);
+
+        Tooltip.install(view.getStartButton(), startButtonTooltip);
+        view.getStartButton().setPickOnBounds(true);
+        view.getStartButton().setOnMouseClicked(mouseEvent -> {
+            if (createdGoals.isEmpty()) {
+                showNoGoalsAlert();
+                return;
+            }
+            Game game = new Game(player, pathsFile.getStory(), createdGoals);
+            PassageView passageView = new PassageView();
+            PassageViewController passageViewController = new PassageViewController(stage, passageView, game);
+            stage.setScene(passageView.getScene());
+        });
     }
 
-    private void setStartButtonActions() {
-        view.getStartButton().setOnMouseClicked(mouseEvent -> {
-            if (!createdGoals.isEmpty()) {
-                Game game = new Game(player, pathsFile.getStory(), createdGoals);
-                PassageView passageView = new PassageView();
-                PassageViewController passageViewController = new PassageViewController(stage, passageView, game);
-                stage.setScene(passageView.getScene());
-            }
-        });
+    private void setGoalsIconsTooltips() {
+        Tooltip healthIconTooltip = createTooltip("Create a Health Goal!", 15);
+        Tooltip scoreIconTooltip = createTooltip("Create a Score Goal!", 15);
+        Tooltip goldIconTooltip = createTooltip("Create a Gold Goal!", 15);
+        Tooltip inventoryIconTooltip = createTooltip("Create an Inventory Goal!", 15);
+        view.getHealthIcon().setPickOnBounds(true);
+        view.getScoreIcon().setPickOnBounds(true);
+        view.getGoldIcon().setPickOnBounds(true);
+        view.getInventoryIcon().setPickOnBounds(true);
+        Tooltip.install(view.getHealthIcon(), healthIconTooltip);
+        Tooltip.install(view.getScoreIcon(), scoreIconTooltip);
+        Tooltip.install(view.getGoldIcon(), goldIconTooltip);
+        Tooltip.install(view.getInventoryIcon(), inventoryIconTooltip);
     }
     private void setGoalIconActions() {
         String goalValueText = " Goal Value:";
@@ -203,6 +226,7 @@ public class CreateGoalsController {
                 }
             }
         });
+        Tooltip.install(view.getAddGoalButton1(), addGoalButtonTooltip);
     }
 
     private void setAddGoalButton2Actions() {
@@ -218,6 +242,7 @@ public class CreateGoalsController {
             view.getQuantity().clear();
             mandatoryItems.clear();
         });
+        Tooltip.install(view.getAddGoalButton2(),addGoalButtonTooltip);
     }
     private void setAddGoalToInventoryActions() {
         view.getAddToInventoryGoal().setOnMouseClicked(mouseEvent -> {
@@ -301,5 +326,16 @@ public class CreateGoalsController {
         dialogPane.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css")).toExternalForm());
         noMandatoryItems.show();
+    }
+
+    private void showNoGoalsAlert() {
+        Alert noGoals = new Alert(Alert.AlertType.WARNING);
+        noGoals.setTitle("No Goals!");
+        noGoals.setHeaderText("You have no goals for your Game!");
+        noGoals.setContentText("You must have atleast one goal before proceeding into a Game!");
+        DialogPane dialogPane = noGoals.getDialogPane();
+        dialogPane.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css")).toExternalForm());
+        noGoals.show();
     }
 }

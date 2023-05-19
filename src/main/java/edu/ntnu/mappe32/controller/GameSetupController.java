@@ -2,6 +2,7 @@ package edu.ntnu.mappe32.controller;
 
 import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.view.CreatePlayerAndGoalsView;
+import edu.ntnu.mappe32.view.CreatePlayerView;
 import edu.ntnu.mappe32.view.PathsSplashScreenView;
 import edu.ntnu.mappe32.view.StorySelectorView;
 import javafx.stage.FileChooser;
@@ -11,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class GameSetupController {
-    CreatePlayerAndGoalsView createPlayerAndGoalsView;
     public GameSetupController(Stage stage, PathsSplashScreenView splashScreen,
                                StorySelectorView storySelectorView) {
 
@@ -40,10 +40,8 @@ public class GameSetupController {
         storySelectorView.getStoryTable().setOnMousePressed(mouseEvent -> {
             if (mouseEvent.isPrimaryButtonDown() && (mouseEvent.getClickCount() == 2)) {
                 PathsFile pathsFile = storySelectorView.getStoryTable().getSelectionModel().getSelectedItem();
-                this.createPlayerAndGoalsView = new CreatePlayerAndGoalsView(pathsFile);
-                CreatePlayerAndGoalsController createPlayerAndGoalsController = new CreatePlayerAndGoalsController(stage,
-                        createPlayerAndGoalsView, pathsFile);
-                stage.setScene(createPlayerAndGoalsView.getScene());
+                CreatePlayerController createPlayerController = new CreatePlayerController(new CreatePlayerView(),
+                        stage, pathsFile, null);
             }
         });
     }

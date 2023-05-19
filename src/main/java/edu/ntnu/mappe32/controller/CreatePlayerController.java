@@ -2,6 +2,7 @@ package edu.ntnu.mappe32.controller;
 
 import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.Player;
+import edu.ntnu.mappe32.view.CreateGoalsView;
 import edu.ntnu.mappe32.view.CreatePlayerView;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -9,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
@@ -19,13 +21,19 @@ public class CreatePlayerController {
     private final PathsFile pathsFile;
     private final Stage stage;
 
-    public CreatePlayerController(CreatePlayerView view, Stage stage, PathsFile pathsFile) {
+    public CreatePlayerController(CreatePlayerView view, Stage stage, PathsFile pathsFile, Player player) {
         this.stage = stage;
         this.view = view;
         this.pathsFile = pathsFile;
         setActions();
         view.getStoryTitle().setText(pathsFile.getStoryTitle());
         stage.setScene(view.getScene());
+
+        if (player != null) {
+            view.getPlayerGoldTextField().setText(String.valueOf(player.getGold()));
+            view.getPlayerHealthTextField().setText(String.valueOf(player.getHealth()));
+            view.getPlayerNameTextField().setText(player.getName());
+        }
     }
     private void setActions() {
 
@@ -77,7 +85,8 @@ public class CreatePlayerController {
      */
     private void goToCreateGoals() {
         if (validateGoldInput() & validateHealthInput() & validatePlayerNameInput()) {
-            Player player = createPlayer();
+            CreateGoalsController createGoalsController = new CreateGoalsController(stage, new CreateGoalsView(),
+                    createPlayer(), pathsFile);
         }
     }
 
