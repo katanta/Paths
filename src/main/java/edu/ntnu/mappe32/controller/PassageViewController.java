@@ -92,6 +92,7 @@ public class PassageViewController {
                     inventory.remove(usedItem);
 
                 updateRecentEventsPane(usedItem);
+                updateScene();
                 passageView.getItemsListView().refresh();
             }
         });
