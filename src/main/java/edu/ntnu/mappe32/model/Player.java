@@ -161,10 +161,12 @@ public class Player implements Serializable {
      * This method adds an item to a player's inventory.
      * @param item Item to be added, as String.
      */
-    public void addToInventory(final Item item) {
+    public void addToInventory(final Item item, final int quantity) {
+        if (quantity == 0)
+            throw new IllegalArgumentException("Quantity cannot be zero");
         if (item == null)
             throw new IllegalArgumentException("Item cannot be null");
-        inventory.merge(item, 1, Integer::sum);
+        inventory.merge(item, quantity, Integer::sum);
     }
 
     public void removeFromInventory(final Item item) {

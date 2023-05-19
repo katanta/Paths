@@ -29,7 +29,7 @@ public class InventoryAction implements Action, Serializable {
     @Override
     public void execute(Player player) {
         if (add)
-            player.addToInventory(item);
+            player.addToInventory(item, 1);
         else {
             player.removeFromInventory(item);
             item.useItem(player);
