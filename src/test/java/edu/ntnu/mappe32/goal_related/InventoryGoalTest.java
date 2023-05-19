@@ -20,12 +20,12 @@ public class InventoryGoalTest {
     @BeforeEach
     void setUp() {
         player = new Player("Olav", 100, 0, 25, new HashMap<>());
-        player.addToInventory(new Item("Master Sword", new ScoreAction(10)));
-        player.addToInventory(new Item("Length of Rope", new ScoreAction(10)));
-        player.addToInventory(new Item("Legendary Ring of Fortifying", new ScoreAction(10)));
-        player.addToInventory(new Item("Potato", new HealthAction(10)));
-        player.addToInventory(new Item("The King's Crown", new ScoreAction(10)));
-        player.addToInventory(new Item("Potion of Healing", new HealthAction(100)));
+        player.addToInventory(new Item("Master Sword", true, new ScoreAction(10)));
+        player.addToInventory(new Item("Length of Rope", true, new ScoreAction(10)));
+        player.addToInventory(new Item("Legendary Ring of Fortifying", true, new ScoreAction(10)));
+        player.addToInventory(new Item("Potato", true, new HealthAction(10)));
+        player.addToInventory(new Item("The King's Crown", true, new ScoreAction(10)));
+        player.addToInventory(new Item("Potion of Healing", true, new HealthAction(100)));
     }
 
     @DisplayName("isFulFilled")
@@ -35,7 +35,7 @@ public class InventoryGoalTest {
         @Test
         void isFulfilledReturnsTrueWhenInventoryContainsSingularMandatoryItemToFulfillGoal() {
             HashMap<Item, Integer> mandatoryItems = new HashMap<>();
-            mandatoryItems.put(new Item("The King's Crown", new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("The King's Crown", true, new ScoreAction(10)), 1);
             InventoryGoal kingsCrown = new InventoryGoal(mandatoryItems);
             assertTrue(kingsCrown.isFulfilled(player));
         }
@@ -43,9 +43,9 @@ public class InventoryGoalTest {
         @Test
         void isFulfilledReturnsTrueWhenInventoryContainsMultipleMandatoryItemsToFulfillGoal() {
             HashMap<Item, Integer> mandatoryItems = new HashMap<>();
-            mandatoryItems.put(new Item("Length of Rope", new ScoreAction(10)), 1);
-            mandatoryItems.put(new Item("Potion of Healing", new HealthAction(100)), 1);
-            mandatoryItems.put(new Item("Potato", new HealthAction(10)), 1);
+            mandatoryItems.put(new Item("Length of Rope", true, new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("Potion of Healing", true, new HealthAction(100)), 1);
+            mandatoryItems.put(new Item("Potato", true, new HealthAction(10)), 1);
             InventoryGoal helpStranger = new InventoryGoal(mandatoryItems);
             assertTrue(helpStranger.isFulfilled(player));
         }
@@ -53,9 +53,9 @@ public class InventoryGoalTest {
         @Test
         void isFulfilledReturnsFalseWhenPlayerInventoryDoesNotHaveAnItem() {
             HashMap<Item, Integer> mandatoryItems = new HashMap<>();
-            mandatoryItems.put(new Item("Potion of Healing", new HealthAction(100)), 1);
-            mandatoryItems.put(new Item("The King's Crown", new ScoreAction(10)), 1);
-            mandatoryItems.put(new Item("24-karat diamond", new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("Potion of Healing", true, new HealthAction(100)), 1);
+            mandatoryItems.put(new Item("The King's Crown", true, new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("24-karat diamond", true, new ScoreAction(10)), 1);
             InventoryGoal impossibleTask = new InventoryGoal(mandatoryItems);
             assertFalse(impossibleTask.isFulfilled(player));
         }
@@ -63,9 +63,9 @@ public class InventoryGoalTest {
         @Test
         void isFulfilledReturnsFalseWhenPlayerInventoryDoesNotHaveEnoughOfAnItem() {
             HashMap<Item, Integer> mandatoryItems = new HashMap<>();
-            mandatoryItems.put(new Item("Length of Rope", new ScoreAction(10)), 1);
-            mandatoryItems.put(new Item("Potion of Healing", new HealthAction(100)), 1);
-            mandatoryItems.put(new Item("Potato", new HealthAction(10)), 2);
+            mandatoryItems.put(new Item("Length of Rope", true, new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("Potion of Healing", true, new HealthAction(100)), 1);
+            mandatoryItems.put(new Item("Potato", true, new HealthAction(10)), 2);
             InventoryGoal helpStranger = new InventoryGoal(mandatoryItems);
             assertFalse(helpStranger.isFulfilled(player));
         }
@@ -87,9 +87,9 @@ public class InventoryGoalTest {
         @Test
         void doesNotThrowIllegalArgumentExceptionWhenMandatoryItemsContainsElements() {
             HashMap<Item, Integer> mandatoryItems = new HashMap<>();
-            mandatoryItems.put(new Item("Potion of Healing", new HealthAction(100)), 1);
-            mandatoryItems.put(new Item("The King's Crown", new ScoreAction(10)), 1);
-            mandatoryItems.put(new Item("24-karat diamond", new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("Potion of Healing", true, new HealthAction(100)), 1);
+            mandatoryItems.put(new Item("The King's Crown", true, new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("24-karat diamond", true, new ScoreAction(10)), 1);
             assertDoesNotThrow(() -> new InventoryGoal(mandatoryItems));
         }
     }

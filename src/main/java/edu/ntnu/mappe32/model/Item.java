@@ -11,10 +11,10 @@ import java.util.Objects;
 
 public class Item implements Serializable {
     private final String itemName;
-    //add itemtext here that describes what the item does or did?
+    private final boolean usable;
     private final List<Action> actions;
 
-    public Item(final String itemName, Action... actions) throws IllegalArgumentException {
+    public Item(final String itemName, final boolean usable, Action... actions) throws IllegalArgumentException {
         if (actions == null ||actions.length == 0)
             throw new IllegalArgumentException("An item must have an action");
 
@@ -26,6 +26,7 @@ public class Item implements Serializable {
 
         this.itemName = itemName;
         this.actions = Arrays.stream(actions).toList();
+        this.usable = usable;
     }
 
     public String getItemName() {
@@ -45,11 +46,13 @@ public class Item implements Serializable {
     }
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder(itemName + " ");
+        StringBuilder s = new StringBuilder(itemName + " " + usable + " ");
         actions.forEach(action -> s.append(action).append(" "));
         return s.toString();
     }
-
+    private boolean isUsable() {
+        return usable;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

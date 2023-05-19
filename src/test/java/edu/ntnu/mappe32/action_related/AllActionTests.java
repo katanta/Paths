@@ -49,8 +49,8 @@ class AllActionTests {
     @DisplayName("InventoryAction adds to inventory")
     @Test
     void inventoryActionAddsToInventory() {
-        Item freshPairOfBirkenstocks = new Item("Fresh Pair of Birkenstocks", new ScoreAction(10));
-        Item tenGDiamond = new Item("10g Diamond", new ScoreAction(100));
+        Item freshPairOfBirkenstocks = new Item("Fresh Pair of Birkenstocks", true, new ScoreAction(10));
+        Item tenGDiamond = new Item("10g Diamond", true, new ScoreAction(100));
         Action giveDiamond = new InventoryAction(tenGDiamond, true);
         Action giveSandals = new InventoryAction(freshPairOfBirkenstocks, true);
         List<Item> testInventory = new ArrayList<>();

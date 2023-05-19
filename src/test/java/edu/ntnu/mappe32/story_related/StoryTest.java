@@ -40,7 +40,7 @@ class StoryTest {
         remove10HealthPoints = new HealthAction(-10);
         add1ScorePoint = new ScoreAction(1);
         add10GoldPoints = new GoldAction(10);
-        addMacheteToInventory = new InventoryAction(new Item("Machete", new ScoreAction(10)), true);
+        addMacheteToInventory = new InventoryAction(new Item("Machete", true, new ScoreAction(10)), true);
 
         openingPassage = new Passage("Opening Passage", "You just found the enchanted apple tree " +
                 "you've been searching for your whole adventure around Serengeti. " +
@@ -217,7 +217,7 @@ class StoryTest {
         @Test
         void getItemsDoesNotReturnItemsWhichAreTakenAway() {
             kickedShakedTree.addLink(kickTree);
-            Item knife = new Item("Knife", new ScoreAction(10));
+            Item knife = new Item("Knife", true, new ScoreAction(10));
             kickTree.addAction(new InventoryAction(knife, false));
             Set<Item> items = kickTree.getActions().stream()
                     .filter(action -> action instanceof InventoryAction)
@@ -230,7 +230,7 @@ class StoryTest {
         @Test
         void getItemsDoesNotContainDuplicates() {
             kickedShakedTree.addLink(kickTree);
-            Item apple = new Item("Apple", new HealthAction(10));
+            Item apple = new Item("Apple", true, new HealthAction(10));
             kickTree.addAction(new InventoryAction(apple, true));
             kickTree.addAction(new InventoryAction(apple, true));
 

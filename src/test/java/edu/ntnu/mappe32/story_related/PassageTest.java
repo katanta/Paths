@@ -37,7 +37,7 @@ public class PassageTest {
         remove10HealthPoints = new HealthAction(-10);
         add1ScorePoint = new ScoreAction(1);
         add10GoldPoints = new GoldAction(10);
-        addMacheteToInventory = new InventoryAction(new Item("Machete", new ScoreAction(10)), true);
+        addMacheteToInventory = new InventoryAction(new Item("Machete", true, new ScoreAction(10)), true);
 
         assertionActions = new ArrayList<>();
 

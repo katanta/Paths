@@ -32,47 +32,47 @@ public class PlayerTest {
         this.mutumbu = new Player("Mutumbu", 150, 0, 25, new HashMap<>());
         this.mufasa = new Player("Mufasa", 200, 50, 100, new HashMap<>());
         this.pumba = new Player("Pumba", 202, 40, 100, new HashMap<>());
-        this.mutumbu.addToInventory(new Item("Tape", new ScoreAction(10)));
-        this.mutumbu.addToInventory(new Item("Lighter", new ScoreAction(10)));
-        this.mutumbu.addToInventory(new Item("Candle", new ScoreAction(10)));
-        this.mutumbu.addToInventory(new Item("Potato", new HealthAction(10)));
-        this.mutumbu.addToInventory(new Item("Hammer", new ScoreAction(10)));
-        this.mutumbu.addToInventory(new Item("Dagger", new ScoreAction(10)));
-        this.mutumbu.addToInventory(new Item("Scarf", new HealthAction(10)));
-        this.mufasa.addToInventory(new Item("Key", new ScoreAction(10)));
-        this.mufasa.addToInventory(new Item("Milk", new HealthAction(10)));
-        this.mufasa.addToInventory(new Item("Chicken", new HealthAction(50)));
-        this.mufasa.addToInventory(new Item("Pencil", new ScoreAction(10)));
-        this.mufasa.addToInventory(new Item("Wood", new ScoreAction(10)));
-        this.mufasa.addToInventory(new Item("Paper", new ScoreAction(10)));
-        this.pumba.addToInventory(new Item("N'Tofos", new ScoreAction(10)));
-        this.pumba.addToInventory(new Item("Orange", new HealthAction(20)));
-        this.pumba.addToInventory(new Item("Apple", new HealthAction(10)));
-        this.pumba.addToInventory(new Item("Machete", new ScoreAction(10)));
-        this.pumba.addToInventory(new Item("Knife", new ScoreAction(10)));
-        this.pumba.addToInventory(new Item("Paperclip", new ScoreAction(10)));
-        this.pumba.addToInventory(new Item("Rolex", new ScoreAction(10)));
-        this.pumba.addToInventory(new Item("Key", new ScoreAction(10)));
-        this.mutumbusTestInventory = new ArrayList<>(Arrays.asList(new Item("Tape", new ScoreAction(10)),
-                new Item("Lighter", new ScoreAction(10)), new Item("Candle", new ScoreAction(10)),
-                new Item("Potato", new HealthAction(10)), new Item("Hammer", new ScoreAction(10)),
-                new Item("Dagger", new ScoreAction(10)), new Item("Scarf", new HealthAction(10))));
+        this.mutumbu.addToInventory(new Item("Tape", true, new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Lighter", true,new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Candle", true,new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Potato", true, new HealthAction(10)));
+        this.mutumbu.addToInventory(new Item("Hammer", true,new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Dagger", true,new ScoreAction(10)));
+        this.mutumbu.addToInventory(new Item("Scarf", true,new HealthAction(10)));
+        this.mufasa.addToInventory(new Item("Key", true,new ScoreAction(10)));
+        this.mufasa.addToInventory(new Item("Milk", true, new HealthAction(10)));
+        this.mufasa.addToInventory(new Item("Chicken", true, new HealthAction(50)));
+        this.mufasa.addToInventory(new Item("Pencil", true, new ScoreAction(10)));
+        this.mufasa.addToInventory(new Item("Wood", true, new ScoreAction(10)));
+        this.mufasa.addToInventory(new Item("Paper", true, new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("N'Tofos", true, new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Orange", true, new HealthAction(20)));
+        this.pumba.addToInventory(new Item("Apple", true, new HealthAction(10)));
+        this.pumba.addToInventory(new Item("Machete", true, new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Knife", true, new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Paperclip", true, new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Rolex", true, new ScoreAction(10)));
+        this.pumba.addToInventory(new Item("Key", true, new ScoreAction(10)));
+        this.mutumbusTestInventory = new ArrayList<>(Arrays.asList(new Item("Tape", true, new ScoreAction(10)),
+                new Item("Lighter", true, new ScoreAction(10)), new Item("Candle", true, new ScoreAction(10)),
+                new Item("Potato", true, new HealthAction(10)), new Item("Hammer", true, new ScoreAction(10)),
+                new Item("Dagger", true, new ScoreAction(10)), new Item("Scarf", true, new HealthAction(10))));
 
-        this.mufasasTestInventory = new ArrayList<>(Arrays.asList(new Item("Key", new ScoreAction(10)),
-        new Item("Milk", new HealthAction(10)),
-        new Item("Chicken", new HealthAction(50)),
-        new Item("Pencil", new ScoreAction(10)),
-        new Item("Wood", new ScoreAction(10)),
-        new Item("Paper", new ScoreAction(10))));
+        this.mufasasTestInventory = new ArrayList<>(Arrays.asList(new Item("Key", true, new ScoreAction(10)),
+        new Item("Milk", true, new HealthAction(10)),
+        new Item("Chicken", true, new HealthAction(50)),
+        new Item("Pencil", true, new ScoreAction(10)),
+        new Item("Wood", true, new ScoreAction(10)),
+        new Item("Paper", true, new ScoreAction(10))));
 
-        this.pumbasTestInventory = new ArrayList<>(Arrays.asList(new Item("N'Tofos", new ScoreAction(10)),
-        new Item("Orange", new HealthAction(20)),
-        new Item("Apple", new HealthAction(10)),
-        new Item("Machete", new ScoreAction(10)),
-        new Item("Knife", new ScoreAction(10)),
-        new Item("Paperclip", new ScoreAction(10)),
-        new Item("Rolex", new ScoreAction(10)),
-        new Item("Key", new ScoreAction(10))));
+        this.pumbasTestInventory = new ArrayList<>(Arrays.asList(new Item("N'Tofos", true, new ScoreAction(10)),
+        new Item("Orange", true, new HealthAction(20)),
+        new Item("Apple", true, new HealthAction(10)),
+        new Item("Machete", true, new ScoreAction(10)),
+        new Item("Knife", true, new ScoreAction(10)),
+        new Item("Paperclip", true, new ScoreAction(10)),
+        new Item("Rolex", true, new ScoreAction(10)),
+        new Item("Key", true, new ScoreAction(10))));
     }
 
     @DisplayName("constructor")
@@ -218,9 +218,9 @@ public class PlayerTest {
             assertEquals(pumbasTestInventory.size(), pumba.getInventory().keySet().size());
 
 
-            mutumbusTestInventory.add(new Item("Item A", new ScoreAction(10)));
-            mufasasTestInventory.add(new Item("Item B", new ScoreAction(10)));
-            pumbasTestInventory.add(new Item("Item C", new ScoreAction(10)));
+            mutumbusTestInventory.add(new Item("Item A", true, new ScoreAction(10)));
+            mufasasTestInventory.add(new Item("Item B", true, new ScoreAction(10)));
+            pumbasTestInventory.add(new Item("Item C", true, new ScoreAction(10)));
 
             assertFalse(mutumbu.getInventory().keySet().containsAll(mutumbusTestInventory));
 
@@ -236,12 +236,12 @@ public class PlayerTest {
         @DisplayName("adds a String to inventory")
         @Test
         void addToInventoryAddsItemToInventory() {
-            mutumbu.addToInventory(new Item("Glue", new ScoreAction(10)));
-            mufasa.addToInventory(new Item("Soup", new HealthAction(10)));
-            pumba.addToInventory(new Item("Spaghetti", new HealthAction(10)));
-            mutumbusTestInventory.add(new Item("Glue", new ScoreAction(10)));
-            mufasasTestInventory.add(new Item("Soup", new HealthAction(10)));
-            pumbasTestInventory.add(new Item("Spaghetti", new HealthAction(10)));
+            mutumbu.addToInventory(new Item("Glue", true, new ScoreAction(10)));
+            mufasa.addToInventory(new Item("Soup", true, new HealthAction(10)));
+            pumba.addToInventory(new Item("Spaghetti", true, new HealthAction(10)));
+            mutumbusTestInventory.add(new Item("Glue", true, new ScoreAction(10)));
+            mufasasTestInventory.add(new Item("Soup", true, new HealthAction(10)));
+            pumbasTestInventory.add(new Item("Spaghetti", true, new HealthAction(10)));
 
             assertTrue(mutumbusTestInventory.containsAll(mutumbu.getInventory().keySet()));
             assertTrue(mutumbu.getInventory().keySet().containsAll(mutumbusTestInventory));

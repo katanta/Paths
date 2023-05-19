@@ -166,8 +166,8 @@ public class PathsFileReader {
         String actions = currentLine.substring(currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER) + 1);
         return actions.split(ACTION_END_DELIMITER + ACTION_DELIMITER);
     }
-    public static String[] getActionsOfInventoryAction(String invetoryAction, String itemName) {
-        String actions = invetoryAction.substring(invetoryAction.lastIndexOf(itemName) + itemName.length() + 1);
+    public static String[] getActionsOfInventoryAction(String invetoryAction, String itemNameAndUsability) {
+        String actions = invetoryAction.substring(invetoryAction.lastIndexOf(itemNameAndUsability) + itemNameAndUsability.length() + 1);
         String[] actionsArray = actions.split(ACTION_END_DELIMITER);
 
         return Arrays.stream(actionsArray).limit(actionsArray.length - 1).map(String::trim).toArray(String[]::new);
@@ -230,16 +230,19 @@ public class PathsFileReader {
                 .get();
 
         int index = Arrays.asList(parts).indexOf(firstAction);
+        boolean usable = Boolean.parseBoolean(parts[index - 1]);
+
         String itemName = Arrays.stream(parts).skip(2)
-                .limit(index - 2)
+                .limit(index - 3)
                 .collect(Collectors.joining(" "));
 
         List<Action> itemsActions = new ArrayList<>();
-        Arrays.stream(getActionsOfInventoryAction(invetoryAction, itemName))
+        Arrays.stream(getActionsOfInventoryAction(invetoryAction, itemName + " " + usable))
                 .forEach(action -> itemsActions.add(parseAction(action)));
 
-        Item item = new Item(itemName, itemsActions.toArray(Action[]::new));
-        boolean add = Arrays.asList(parts).contains("true");
+
+        Item item = new Item(itemName, usable, itemsActions.toArray(Action[]::new));
+        boolean add = Boolean.parseBoolean(parts[1]);
 
         return new InventoryAction(item, add);
     }
