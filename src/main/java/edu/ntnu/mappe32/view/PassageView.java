@@ -1,9 +1,11 @@
 package edu.ntnu.mappe32.view;
 
+import edu.ntnu.mappe32.model.Item;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,6 +42,7 @@ public class PassageView {
     private ScrollPane recentEventsPane;
     private VBox eventsVBox;
     private ScrollPane inventoryPane;
+    private ListView<Item> itemsListView;
 
     public PassageView() {
         root = new StackPane();
@@ -71,11 +74,11 @@ public class PassageView {
     }
     private void configureInventoryPane() {
         itemsVBox = new VBox();
-        itemsVBox.setSpacing(10);
         itemsVBox.setAlignment(Pos.TOP_LEFT);
 
-        inventoryPane = new ScrollPane(itemsVBox);
-        inventoryPane.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
+        itemsListView = new ListView<>();
+        itemsVBox.getChildren().add(itemsListView);
+        itemsVBox.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
     }
 
     private void configurePlayerInfo() {
@@ -85,8 +88,7 @@ public class PassageView {
         configurePlayerGoldLabel();
         configureInventoryPane();
 
-        VBox playerInfo = new VBox(playerNameLabel , playerHealth, playerScore, playerGold, inventoryPane);
-        inventoryPane.setFitToWidth(true);
+        VBox playerInfo = new VBox(playerNameLabel , playerHealth, playerScore, playerGold, itemsVBox);
         playerInfo.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         playerInfo.setSpacing(40);
         playerInfo.setMaxWidth(320);
@@ -331,5 +333,9 @@ public class PassageView {
 
     public VBox getEventsVBox() {
         return eventsVBox;
+    }
+
+    public ListView<Item> getItemsListView() {
+        return itemsListView;
     }
 }

@@ -4,16 +4,22 @@ import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.Action;
+import edu.ntnu.mappe32.model.action_related.ScoreAction;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Link;
 import edu.ntnu.mappe32.model.story_related.Passage;
+import edu.ntnu.mappe32.view.ItemCell;
 import edu.ntnu.mappe32.view.PassageView;
 import edu.ntnu.mappe32.view.PathsSplashScreenView;
 import edu.ntnu.mappe32.view.StorySelectorView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,13 +28,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
 
@@ -39,12 +43,14 @@ public class PassageViewController {
     private final PassageView passageView;
     private static Passage currentPassage;
     private final List<Goal> completedGoals;
+    private final ObservableList<Item> inventory;
 
     public PassageViewController(Stage stage, PassageView passageView, Game game) {
         this.stage = stage;
         this.passageView = passageView;
         this.originalPlayer = game.player().copyPlayer();
         this.game = game;
+        this.inventory = FXCollections.observableArrayList(game.player().getInventory().keySet());
         completedGoals = new ArrayList<>();
         currentPassage = game.begin();
         updateScene();
@@ -56,25 +62,37 @@ public class PassageViewController {
         updatePlayerInfo();
         updateLinkButtons();
         updatePassageInfo();
-        updateInventoryPane();
+        setItemsListViewActions();
         updateGameGoalsVBox();
     }
 
-    private void updateInventoryPane() {
-        passageView.getItemsVBox().getChildren().clear();
-        for (Map.Entry<Item, Integer> item : game.player().getInventory().entrySet()) {
-            Label itemLabel = new Label(item.getValue() + "x " + item.getKey().getItemName());
-            itemLabel.setFont(resizableMainFont(18));
-            itemLabel.setMaxWidth(300);
-            VBox.setMargin(itemLabel, new Insets(0, 0, 0, 15));
-            if (item.getKey().getItemName().length() > 20) {
-                itemLabel.setTooltip(new Tooltip(itemLabel.getText()));
-                itemLabel.getTooltip().setFont(resizableMainFont(16));
-                itemLabel.getTooltip().setWrapText(true);
-                itemLabel.getTooltip().setShowDelay(new Duration(0.1));
+    private void setItemsListViewActions() {
+        passageView.getItemsListView().setItems(inventory);
+        passageView.getItemsListView().setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Item item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(null);
+                setText(null);
+                if (item != null && !empty) {
+                    ItemCell cell = new ItemCell(item, game.player().getInventory());
+                    setGraphic(cell.getHBox());
+                    setTooltip(cell.getNewTooltip());
+                }
             }
-            passageView.getItemsVBox().getChildren().add(itemLabel);
-        }
+        });
+
+        passageView.getItemsListView().setOnMouseClicked(mouseEvent -> {
+            Item usedItem = passageView.getItemsListView().getSelectionModel().getSelectedItem();
+            if (usedItem.isUsable()) {
+                usedItem.useItem(game.player());
+                game.player().removeFromInventory(usedItem);
+                if (game.player().getInventory().get(usedItem) == 1)
+                    inventory.remove(usedItem);
+                passageView.getItemsListView().refresh();
+            }
+
+        });
     }
 
     private void updatePlayerInfo() {
