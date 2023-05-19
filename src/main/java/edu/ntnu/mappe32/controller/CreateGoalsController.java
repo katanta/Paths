@@ -211,10 +211,12 @@ public class CreateGoalsController {
                 showNoMandatoryItemAlert();
                 return;
             }
-            createdGoals.add(new InventoryGoal(mandatoryItems));
+            createdGoals.add(new InventoryGoal(new HashMap<>(mandatoryItems)));
             view.getCurrentMandatoryInventory().getItems().forEach(item -> view
                     .getSelectItem().getItems().add(item.substring(0, item.lastIndexOf(':'))));
             view.getCurrentMandatoryInventory().getItems().clear();
+            view.getQuantity().clear();
+            mandatoryItems.clear();
         });
     }
     private void setAddGoalToInventoryActions() {
