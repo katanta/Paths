@@ -38,7 +38,7 @@ public class HealthAction implements Action, Serializable {
     public String toEventString(Player player) {
         if (health < 0) {
             if (player.getHealth() + health <= 0) {
-                return player.getName() + " has lost " + -health + " health and has perished! + \n Oh dear! You have died!";
+                return "Oh dear! You have died \n" + player.getName() + " has lost " + -health + " health and has perished!";
             } else return player.getName() + " has lost " + health + " health!";
         } else if (health > 0) return player.getName() + " has gained " + health + " health!";
         return null;

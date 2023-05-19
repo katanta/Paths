@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -44,7 +45,7 @@ public class PassageViewController {
         this.passageView = passageView;
         this.originalPlayer = game.player().copyPlayer();
         this.game = game;
-        completedGoals = new ArrayList<Goal>();
+        completedGoals = new ArrayList<>();
         currentPassage = game.begin();
         updateScene();
         configureAllTopLeftButtonActions();
@@ -116,12 +117,13 @@ public class PassageViewController {
         passageView.getGameGoalsVBox().getChildren().clear();
 
         for (Goal goal : game.goals()) {
-
             Label goalLabel = new Label(goal.getClass().getSimpleName() + ": " + goal);
-            goalLabel.setFont(resizableMainFont(16));
+            goalLabel.setFont(resizableMainFont(20));
             goalLabel.setTooltip(new Tooltip(goalLabel.getText()));
             goalLabel.getTooltip().setFont(resizableMainFont(14));
-            goalLabel.setMaxWidth(320);
+            goalLabel.setMaxWidth(300);
+            goalLabel.setWrapText(true);
+            goalLabel.setTextAlignment(TextAlignment.CENTER);
 
             Label completionStatus = new Label("INCOMPLETE!");
             completionStatus.setFont(resizableMainFont(16));
@@ -129,14 +131,15 @@ public class PassageViewController {
             completionStatus.getTooltip().setFont(resizableMainFont(20));
             completionStatus.setTextFill(Color.RED);
 
-            if (goal.isFulfilled(game.player()) && !completedGoals.contains(goal)) {
+            if ((goal.isFulfilled(game.player()) && !completedGoals.contains(goal))) {
                 completedGoals.add(goal);
+                game.goals().remove(goal);
                 addNewGoalCompletionToEventsPane(goal);
                 completionStatus.setText("GOAL COMPLETED!");
                 completionStatus.setTextFill(Color.GREEN);
                 completionStatus.getTooltip().setText("The goal above is complete!");
-
-            } else if ((!goal.isFulfilled(game.player())) && completedGoals.contains(goal)) {
+            } else if ((!goal.isFulfilled(game.player()) && completedGoals.contains(goal))
+            || goal.isFulfilled(game.player()) && completedGoals.contains(goal)) {
                 completionStatus.setText("GOAL COMPLETED!");
                 completionStatus.setTextFill(Color.GREEN);
                 completionStatus.getTooltip().setText("The goal above is complete!");
