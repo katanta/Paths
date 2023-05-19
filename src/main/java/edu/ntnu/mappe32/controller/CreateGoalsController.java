@@ -216,12 +216,15 @@ public class CreateGoalsController {
                 if (validateGoalValueInput()) {
                     if (view.getP2().isVisible()) {
                         createdGoals.add(new ScoreGoal(Integer.parseInt(view.getValueTextField().getText())));
+                        view.getValueTextField().clear();
                     }
                     if (view.getP1().isVisible()) {
                         createdGoals.add(new HealthGoal(Integer.parseInt(view.getValueTextField().getText())));
+                        view.getValueTextField().clear();
                     }
                     if (view.getP3().isVisible()) {
                         createdGoals.add(new GoldGoal(Integer.parseInt(view.getValueTextField().getText())));
+                        view.getValueTextField().clear();
                     }
                 }
             }

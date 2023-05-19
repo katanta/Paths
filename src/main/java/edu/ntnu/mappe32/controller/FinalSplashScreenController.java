@@ -1,6 +1,9 @@
 package edu.ntnu.mappe32.controller;
 
+import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.view.FinalSplashScreenView;
+import edu.ntnu.mappe32.view.PathsSplashScreenView;
+import edu.ntnu.mappe32.view.StorySelectorView;
 import javafx.stage.Stage;
 
 public class FinalSplashScreenController {
@@ -11,6 +14,7 @@ public class FinalSplashScreenController {
         this.stage = stage;
         this.splashScreenView = splashScreenView;
         configureButtonActions();
+        stage.setScene(splashScreenView.getScene());
     }
 
     private void configureButtonActions() {
@@ -27,6 +31,7 @@ public class FinalSplashScreenController {
         splashScreenView.getPlayButton().setOnMouseClicked(e -> {
             splashScreenView.getPlayButton().setStyle("-fx-background-color: #888383");
             //TODO: make this switch to choose story scene
+            GameSetupController gameSetupController = new GameSetupController(stage, new PathsSplashScreenView(), new StorySelectorView());
         });
         splashScreenView.getPlayButton().setOnMouseReleased(e -> {
             //Todo: change to show existing stories

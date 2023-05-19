@@ -15,11 +15,9 @@ public class GameSetupController {
     public GameSetupController(Stage stage, PathsSplashScreenView splashScreen,
                                StorySelectorView storySelectorView) {
 
-        splashScreen.getPlayAnExistingStoryButton().setOnAction(actionEvent -> {
             stage.setScene(storySelectorView.getScene());
             storySelectorView.createStoryTable();
             storySelectorView.fillStoryTable();
-        });
 
         storySelectorView.getAddStoryButton().setOnAction(actionEvent -> {
             FileChooser.ExtensionFilter pathsExtension = new FileChooser.ExtensionFilter("Paths Files (.paths)",
