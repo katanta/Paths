@@ -36,6 +36,8 @@ public class ItemCell extends ListCell<Item> {
         String quantity = String.valueOf(inventory.get(item));
         itemInfo.setText(quantity + "x " + item.getItemName());
 
+        if (!item.isUsable())
+            itemInfo.setStyle("-fx-text-fill: grey;");
         hBox.getChildren().add(itemInfo);
     }
 
@@ -51,7 +53,6 @@ public class ItemCell extends ListCell<Item> {
 
         if (!item.isUsable()) {
             tooltip.setText("You cannot use this item!");
-            tooltip.setStyle("-fx-text-fill: grey;");
         }
 
     }

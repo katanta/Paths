@@ -87,11 +87,13 @@ public class PassageViewController {
             if (usedItem.isUsable()) {
                 usedItem.useItem(game.player());
                 game.player().removeFromInventory(usedItem);
-                if (game.player().getInventory().get(usedItem) == 1)
+
+                if (game.player().getInventory().get(usedItem) == null)
                     inventory.remove(usedItem);
+
+                updateRecentEventsPane(usedItem);
                 passageView.getItemsListView().refresh();
             }
-
         });
     }
 
@@ -237,16 +239,25 @@ public class PassageViewController {
         passageView.getRestartButton().setOnMouseReleased(e -> passageView.getRestartButton().setImage(normalRestartButton));
     }
 
-    private void updateRecentEventsPane(Link linkPressed) {
+    private void updateRecentEventsPane(Object linkOrItem) {
+
+        if (!(linkOrItem instanceof Link) && !(linkOrItem instanceof Item))
+            return;
+
         Text allEventText = new Text();
         allEventText.setFont(resizableMainFont(18));
         allEventText.setWrappingWidth(620);
         StringBuilder finalEventString = new StringBuilder();
 
-        for (Action a : linkPressed.getActions()) {
-            finalEventString.append(a.toEventString(game.player()) + "\n");
+        if (linkOrItem instanceof Link) {
+            for (Action a : ((Link) linkOrItem).getActions()) {
+                finalEventString.append(a.toEventString(game.player())).append("\n");
+            }
+        } else {
+            for (Action a : ((Item) linkOrItem).getActions()) {
+                finalEventString.append(a.toEventString(game.player())).append("\n");
+            }
         }
-
         allEventText.setText(finalEventString.toString());
         passageView.getEventsVBox().getChildren().add(0, allEventText);
     }

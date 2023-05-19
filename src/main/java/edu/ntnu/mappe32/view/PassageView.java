@@ -41,7 +41,6 @@ public class PassageView {
     private ImageView restartButton;
     private ScrollPane recentEventsPane;
     private VBox eventsVBox;
-    private ScrollPane inventoryPane;
     private ListView<Item> itemsListView;
 
     public PassageView() {
@@ -274,9 +273,6 @@ public class PassageView {
         recentEventsPane.setMaxWidth(recentEventsPane.getMinWidth());
         StackPane.setAlignment(recentEventsPane, Pos.BOTTOM_CENTER);
         root.getChildren().add(recentEventsPane);
-    }
-    public VBox getItemsVBox() {
-        return itemsVBox;
     }
 
     public Label getPlayerNameLabel() {
