@@ -20,12 +20,12 @@ public class InventoryGoalTest {
     @BeforeEach
     void setUp() {
         player = new Player("Olav", 100, 0, 25, new HashMap<>());
-        player.addToInventory(new Item("Master Sword", true, new ScoreAction(10)));
-        player.addToInventory(new Item("Length of Rope", true, new ScoreAction(10)));
-        player.addToInventory(new Item("Legendary Ring of Fortifying", true, new ScoreAction(10)));
-        player.addToInventory(new Item("Potato", true, new HealthAction(10)));
-        player.addToInventory(new Item("The King's Crown", true, new ScoreAction(10)));
-        player.addToInventory(new Item("Potion of Healing", true, new HealthAction(100)));
+        player.addToInventory(new Item("Master Sword", true, new ScoreAction(10)), 1);
+        player.addToInventory(new Item("Length of Rope", true, new ScoreAction(10)), 1);
+        player.addToInventory(new Item("Legendary Ring of Fortifying", true, new ScoreAction(10)), 1);
+        player.addToInventory(new Item("Potato", true, new HealthAction(10)), 1);
+        player.addToInventory(new Item("The King's Crown", true, new ScoreAction(10)), 1);
+        player.addToInventory(new Item("Potion of Healing", true, new HealthAction(100)), 1);
     }
 
     @DisplayName("isFulFilled")
