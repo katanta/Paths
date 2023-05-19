@@ -50,7 +50,7 @@ public class Item implements Serializable {
         actions.forEach(action -> s.append(action).append(" "));
         return s.toString();
     }
-    private boolean isUsable() {
+    public boolean isUsable() {
         return usable;
     }
     @Override
