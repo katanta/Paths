@@ -129,20 +129,21 @@ public class PassageViewController {
             completionStatus.getTooltip().setFont(resizableMainFont(20));
             completionStatus.setTextFill(Color.RED);
 
-            VBox goalStatus = new VBox(goalLabel, completionStatus);
-            goalStatus.setAlignment(Pos.CENTER);
-            VBox.setMargin(goalStatus, new Insets(30, 0, 0, 0));
-
             if (goal.isFulfilled(game.player()) && !completedGoals.contains(goal)) {
                 completedGoals.add(goal);
+                addNewGoalCompletionToEventsPane(goal);
                 completionStatus.setText("GOAL COMPLETED!");
                 completionStatus.setTextFill(Color.GREEN);
                 completionStatus.getTooltip().setText("The goal above is complete!");
-            } else if (!goal.isFulfilled(game.player()) && completedGoals.contains(goal)) {
+
+            } else if ((!goal.isFulfilled(game.player())) && completedGoals.contains(goal)) {
                 completionStatus.setText("GOAL COMPLETED!");
                 completionStatus.setTextFill(Color.GREEN);
                 completionStatus.getTooltip().setText("The goal above is complete!");
             }
+            VBox goalStatus = new VBox(goalLabel, completionStatus);
+            goalStatus.setAlignment(Pos.CENTER);
+            VBox.setMargin(goalStatus, new Insets(30, 0, 0, 0));
             passageView.getGameGoalsVBox().getChildren().add(goalStatus);
         }
     }
@@ -222,11 +223,23 @@ public class PassageViewController {
         StringBuilder finalEventString = new StringBuilder();
 
         for (Action a : linkPressed.getActions()) {
-            finalEventString.append(a.toEventString(game.player()));
+            finalEventString.append(a.toEventString(game.player()) + "\n");
         }
 
         allEventText.setText(finalEventString.toString());
         passageView.getEventsVBox().getChildren().add(0, allEventText);
+    }
+
+    private void addNewGoalCompletionToEventsPane(Goal newCompletedGoal) {
+        StringBuilder goalCompleted = new StringBuilder(game.player().getName() + " has completed a ");
+        goalCompleted.append(newCompletedGoal.getClass().getSimpleName() + ": " + newCompletedGoal + "!");
+
+        Text goalCompletionText = new Text(goalCompleted.toString());
+        goalCompletionText.setFont(resizableMainFont(18));
+        goalCompletionText.setWrappingWidth(620);
+        goalCompletionText.setFill(Color.GREEN);
+
+        passageView.getEventsVBox().getChildren().add(0, goalCompletionText);
     }
 }
 
