@@ -1,6 +1,7 @@
 package edu.ntnu.mappe32.view;
 
 import edu.ntnu.mappe32.model.goal_related.Goal;
+import edu.ntnu.mappe32.model.goal_related.InventoryGoal;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -117,6 +118,7 @@ public class CreateGoalsView {
         goalsListView.setMaxWidth(500);
         goalsListView.setPrefHeight(100);
         goalsListView.setFixedCellSize(40);
+        getGoalsListView().getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         goalsListView.setCellFactory(param -> new ListCell<>() {
             @Override
             public void updateItem(Goal goal, boolean empty) {
