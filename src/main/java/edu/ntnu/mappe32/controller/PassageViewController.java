@@ -7,10 +7,7 @@ import edu.ntnu.mappe32.model.action_related.Action;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Link;
 import edu.ntnu.mappe32.model.story_related.Passage;
-import edu.ntnu.mappe32.view.ItemCell;
-import edu.ntnu.mappe32.view.PassageView;
-import edu.ntnu.mappe32.view.PathsSplashScreenView;
-import edu.ntnu.mappe32.view.StorySelectorView;
+import edu.ntnu.mappe32.view.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -171,10 +168,8 @@ public class PassageViewController {
     }
 
     private void setHomeButtonClickAction() {
-        PathsSplashScreenView splashScreen = new PathsSplashScreenView();
         passageView.getHomeButton().setOnMouseClicked(e -> {
-            stage.setScene(splashScreen.getScene());
-            GameSetupController gameSetup = new GameSetupController(stage, splashScreen, new StorySelectorView());
+            FinalSplashScreenController finalSplashScreenController = new FinalSplashScreenController(stage, new FinalSplashScreenView());
         });
     }
 

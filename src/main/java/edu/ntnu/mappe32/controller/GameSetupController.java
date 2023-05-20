@@ -2,16 +2,22 @@ package edu.ntnu.mappe32.controller;
 
 import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.view.CreatePlayerView;
-import edu.ntnu.mappe32.view.PathsSplashScreenView;
+import edu.ntnu.mappe32.view.FinalSplashScreenView;
 import edu.ntnu.mappe32.view.StorySelectorView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
 
 public class GameSetupController {
 
@@ -19,7 +25,7 @@ public class GameSetupController {
     private final StorySelectorView storySelectorView;
     private final Stage stage;
 
-    public GameSetupController(Stage stage, PathsSplashScreenView splashScreen, StorySelectorView storySelectorView) {
+    public GameSetupController(Stage stage, StorySelectorView storySelectorView) {
         this.pathsFiles = FXCollections.observableArrayList();
         this.storySelectorView = storySelectorView;
         storySelectorView.getStoryTable().setItems(pathsFiles);
@@ -29,9 +35,15 @@ public class GameSetupController {
         getFilesInDirectory();
         setStoryTableActions();
         setAddPathsFileAction();
+        setBackButtonActions();
 
     }
 
+    private void setBackButtonActions() {
+        storySelectorView.getBackButton().setOnMouseEntered(mouseEvent -> setButtonImage(storySelectorView.getBackButton(), storySelectorView.getBackButtonHover()));
+        storySelectorView.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(storySelectorView.getBackButton(), storySelectorView.getBackButtonImage()));
+        storySelectorView.getBackButton().setOnMouseClicked(mouseEvent -> new FinalSplashScreenController(stage, new FinalSplashScreenView()));
+    }
     private void setAddPathsFileAction() {
         storySelectorView.getAddPathsFileButton().setOnAction(actionEvent -> {
             FileChooser.ExtensionFilter pathsExtension = new FileChooser.ExtensionFilter("Paths Files (.paths)", "*.paths");
@@ -65,13 +77,27 @@ public class GameSetupController {
         storySelectorView.getStoryTable().setOnMousePressed(mouseEvent -> {
 
             if (mouseEvent.isPrimaryButtonDown() && (mouseEvent.getClickCount() == 2)) {
-                //TODO: Show confirmation alert
-                //TODO: Callback get button type is ok
                 PathsFile pathsFile = storySelectorView.getStoryTable().getSelectionModel().getSelectedItem();
-                CreatePlayerController createPlayerController = new CreatePlayerController(new CreatePlayerView(), stage, pathsFile, null);
+                Optional<ButtonType> result = getConfirmationBox(pathsFile).showAndWait();
 
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    CreatePlayerController createPlayerController = new CreatePlayerController(new CreatePlayerView(), stage, pathsFile, null);
+                }
             }
         });
     }
 
+    private Alert getConfirmationBox(PathsFile pathsFile) {
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Confirm Selected Story");
+        confirmation.setHeaderText("Confirm: " + pathsFile.getStoryTitle());
+        confirmation.setContentText("Story Title: " + pathsFile.getStoryTitle() + "\n\nBroken Links: " + pathsFile.getBrokenLinks() + "\n\nFile Path: " + pathsFile.getFilePath());
+        DialogPane dialogPane = confirmation.getDialogPane();
+        dialogPane.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css")).toExternalForm());
+        return confirmation;
+    }
+    private void setButtonImage(ImageView button, Image image) {
+        button.setImage(image);
+    }
 }

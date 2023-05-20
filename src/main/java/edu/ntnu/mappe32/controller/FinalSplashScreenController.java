@@ -31,7 +31,7 @@ public class FinalSplashScreenController {
         splashScreenView.getPlayButton().setOnMouseClicked(e -> {
             splashScreenView.getPlayButton().setStyle("-fx-background-color: #888383");
             //TODO: make this switch to choose story scene
-            GameSetupController gameSetupController = new GameSetupController(stage, new PathsSplashScreenView(), new StorySelectorView());
+            GameSetupController gameSetupController = new GameSetupController(stage, new StorySelectorView());
         });
         splashScreenView.getPlayButton().setOnMouseReleased(e -> {
             //Todo: change to show existing stories

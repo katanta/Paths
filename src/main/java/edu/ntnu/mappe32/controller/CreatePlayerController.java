@@ -4,6 +4,8 @@ import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.view.CreateGoalsView;
 import edu.ntnu.mappe32.view.CreatePlayerView;
+import edu.ntnu.mappe32.view.PathsSplashScreenView;
+import edu.ntnu.mappe32.view.StorySelectorView;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,7 +48,7 @@ public class CreatePlayerController {
         setButtonTooltip(view.getBackButton(), "Click to go back to Select Story");
         view.getBackButton().setOnMouseEntered(mouseEvent -> setButtonImage(view.getBackButton(), view.getBackButtonHover()));
         view.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getBackButton(), view.getBackButtonImage()));
-
+        view.getBackButton().setOnMouseClicked(mouseEvent -> new GameSetupController(stage, new StorySelectorView()));
         view.getNextButton().setOnMouseClicked(mouseEvent -> goToCreateGoals());
         setButtonTooltip(view.getNextButton(), "Click to continue");
 

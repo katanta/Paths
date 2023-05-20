@@ -2,3 +2,7 @@
     -fx-font-family: "Pixeloid Sans";
     -fx-font-size: 20;
 }
+
+.table-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+}
