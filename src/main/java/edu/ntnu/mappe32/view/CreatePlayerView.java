@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
@@ -59,7 +60,7 @@ public class CreatePlayerView {
         root.setCenter(centerVBox);
         root.getChildren().add(backButton);
         this.scene = new Scene(root, 1280, 720);
-        scene.getStylesheets().add(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css")).toExternalForm());
 
     }
     private void configureTop() {
@@ -161,6 +162,7 @@ public class CreatePlayerView {
         playerNameTextField.setPromptText("Player Name");
         playerNameTextField.setMaxWidth(170);
         playerNameTextField.setFont(textFieldFont);
+        playerNameTextField.setTextFormatter(restrictTextFieldFormatter(14));
         this.playerNameLabel = new Label("Name:");
         playerNameLabel.setFont(statLabelFont);
     }
@@ -169,7 +171,7 @@ public class CreatePlayerView {
         playerGoldTextField.setPromptText("Player Gold");
         playerGoldTextField.setMaxWidth(170);
         playerGoldTextField.setFont(textFieldFont);
-        playerGoldTextField.setTextFormatter(maxNineCharactersFormatter());
+        playerGoldTextField.setTextFormatter(restrictTextFieldFormatter(9));
         this.playerGoldLabel = new Label("Gold:");
         playerGoldLabel.setFont(statLabelFont);
     }
@@ -178,7 +180,7 @@ public class CreatePlayerView {
         playerHealthTextField.setPromptText("Player Health");
         playerHealthTextField.setMaxWidth(170);
         playerHealthTextField.setFont(textFieldFont);
-        playerHealthTextField.setTextFormatter(maxNineCharactersFormatter());
+        playerHealthTextField.setTextFormatter(restrictTextFieldFormatter(9));
         this.playerHealthLabel = new Label("Health:");
         playerHealthLabel.setFont(statLabelFont);
     }
@@ -204,8 +206,8 @@ public class CreatePlayerView {
         label.setAlignment(Pos.CENTER);
         return label;
     }
-    private TextFormatter<TextFormatter.Change> maxNineCharactersFormatter() {
-        Pattern pattern = Pattern.compile(".{0,9}");
+    private TextFormatter<TextFormatter.Change> restrictTextFieldFormatter(int characters) {
+        Pattern pattern = Pattern.compile(".{0," + characters + "}");
         return new TextFormatter<>((change -> pattern.matcher(change.getControlNewText()).matches() ? change : null));
     }
 
