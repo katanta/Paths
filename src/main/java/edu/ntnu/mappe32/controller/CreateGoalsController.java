@@ -15,6 +15,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -22,6 +24,7 @@ import javafx.util.Duration;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
 
@@ -33,6 +36,7 @@ public class CreateGoalsController {
     private final List<String> itemsAsString;
     private final HashMap<Item, Integer> mandatoryItems;
     private final Stage stage;
+    private final Boolean[] clickedButton;
     private Tooltip addGoalButtonTooltip;
 
     public CreateGoalsController(Stage stage, CreateGoalsView view, Player player, PathsFile pathsFile) {
@@ -44,7 +48,7 @@ public class CreateGoalsController {
         this.itemsAsString = pathsFile.getStory().getItems()
                 .stream().map(Item::getItemName).collect(Collectors.toList());
         this.mandatoryItems = new HashMap<>();
-
+        this.clickedButton = new Boolean[]{true, false, false, false};
         view.getGoalsListView().setItems(createdGoals);
         view.getValueTypeLabel().setText("Health Goal Value:");
         setTopActions();
@@ -89,6 +93,7 @@ public class CreateGoalsController {
         setAddGoalToInventoryActions();
         setStartButtonActions();
         setGoalsIconsTooltips();
+        setPointerBarActions();
     }
     private void setStartButtonActions() {
         Tooltip startButtonTooltip = createTooltip("Press To Start Game!", 18);
@@ -124,7 +129,7 @@ public class CreateGoalsController {
         String goalValueText = " Goal Value:";
 
         view.getHealthIcon().setOnMouseClicked(mouseEvent -> {
-            setVisibility(true, false, false, false);
+            setPointersVisibility(true, false, false, false, mouseEvent);
             clearValueField();
             clearInvalidValueBox();
             showNumericalGoalBox();
@@ -133,7 +138,7 @@ public class CreateGoalsController {
         });
 
         view.getScoreIcon().setOnMouseClicked(mouseEvent -> {
-            setVisibility(false, true, false, false);
+            setPointersVisibility(false, true, false, false, mouseEvent);
             clearValueField();
             clearInvalidValueBox();
             showNumericalGoalBox();
@@ -142,7 +147,7 @@ public class CreateGoalsController {
         });
 
         view.getGoldIcon().setOnMouseClicked(mouseEvent -> {
-            setVisibility(false, false, true, false);
+            setPointersVisibility(false, false, true, false, mouseEvent);
             clearValueField();
             clearInvalidValueBox();
             showNumericalGoalBox();
@@ -151,7 +156,7 @@ public class CreateGoalsController {
         });
 
         view.getInventoryIcon().setOnMouseClicked(mouseEvent -> {
-            setVisibility(false, false, false, true);
+            setPointersVisibility(false, false, false, true, mouseEvent);
             clearValueField();
             clearInvalidValueBox();
             hideNumericalGoalBox();
@@ -160,7 +165,52 @@ public class CreateGoalsController {
         });
     }
 
-    private void setVisibility(boolean p1, boolean p2, boolean p3, boolean p4) {
+    private void setPointerBarActions() {
+        view.getHealthIcon().setOnMouseEntered(mouseEvent -> setPointersVisibility(true, false, false, false, mouseEvent));
+        view.getHealthIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
+
+        view.getScoreIcon().setOnMouseEntered(mouseEvent -> setPointersVisibility(false, true, false, false, mouseEvent));
+        view.getScoreIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
+
+        view.getGoldIcon().setOnMouseEntered(mouseEvent -> setPointersVisibility(false, false, true, false, mouseEvent));
+        view.getGoldIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
+
+        view.getInventoryIcon().setOnMouseEntered(mouseEvent -> setPointersVisibility(false, false, false, true, mouseEvent));
+        view.getInventoryIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
+
+    }
+
+    private void setPointersVisibility(boolean p1, boolean p2, boolean p3, boolean p4, MouseEvent mouseEvent) {
+        ImageView[] pointers = {view.getP1(), view.getP2(), view.getP3(), view.getP4()};
+
+        if (mouseEvent.getEventType() == MouseEvent.MOUSE_CLICKED) {
+            clickedButton[0] = p1;
+            clickedButton[1] = p2;
+            clickedButton[2] = p3;
+            clickedButton[3] = p4;
+            setPointersVisibility(p1, p2, p3, p4);
+            return;
+        }
+
+        OptionalInt indexOpt = IntStream.range(0, clickedButton.length)
+                .filter(i -> clickedButton[i])
+                .findFirst();
+
+        if (mouseEvent.getEventType() == MouseEvent.MOUSE_EXITED) {
+            setPointersVisibility(false, false, false, false);
+
+            indexOpt.ifPresent(action -> pointers[indexOpt.getAsInt()].setVisible(true));
+            return;
+        }
+
+        if (mouseEvent.getEventType() == MouseEvent.MOUSE_ENTERED) {
+            setPointersVisibility(p1, p2, p3, p4);
+
+            indexOpt.ifPresent(action -> pointers[indexOpt.getAsInt()].setVisible(true));
+        }
+    }
+
+    private void setPointersVisibility(boolean p1, boolean p2, boolean p3, boolean p4) {
         view.getP1().setVisible(p1);
         view.getP2().setVisible(p2);
         view.getP3().setVisible(p3);
