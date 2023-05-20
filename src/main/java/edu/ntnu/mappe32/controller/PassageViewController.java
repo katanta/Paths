@@ -119,8 +119,8 @@ public class PassageViewController {
             linkButton.setPrefSize(200, 50);
             linkButton.setMaxWidth(400);
             linkButton.setOnMouseClicked(mouseEvent -> {
-                currentPassage = game.go(link); //this.game can be used to update player information
                 updateRecentEventsPane(link);
+                currentPassage = game.go(link); //this.game can be used to update player information
                 updateScene(); //make the buttons change the current active passage, changing the scene
             });
             linkButton.setOnMouseEntered(e -> linkButton.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff"));
