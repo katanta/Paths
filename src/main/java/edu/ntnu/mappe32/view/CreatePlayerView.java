@@ -58,7 +58,7 @@ public class CreatePlayerView {
         root.setTop(top);
         root.setCenter(centerVBox);
         root.getChildren().add(backButton);
-        this.scene = new Scene(root, 1080, 720);
+        this.scene = new Scene(root, 1280, 720);
         scene.getStylesheets().add(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css").toExternalForm());
 
     }
@@ -97,7 +97,7 @@ public class CreatePlayerView {
     }
 
     private void configureCenter() {
-        centerVBox = new VBox(10);
+        centerVBox = new VBox(50);
         centerVBox.setPadding(new Insets(30,0,0,0));
         centerVBox.setAlignment(Pos.TOP_CENTER);
         Label chooseYourStats = new Label("Choose Your Stats");

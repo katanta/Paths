@@ -71,7 +71,7 @@ public class CreateGoalsView {
         root.setTop(top);
         root.setCenter(centerVBox);
         root.getChildren().addAll(backButton, startButton);
-        this.scene = new Scene(root, 1080, 720);
+        this.scene = new Scene(root, 1280, 720);
     }
 
     private void configureTop() {
@@ -89,8 +89,8 @@ public class CreateGoalsView {
         }
         startButton.setFitWidth(200);
         startButton.setFitHeight(100);
-        startButton.setX(860);
-        startButton.setY(600);
+        startButton.setX(1020);
+        startButton.setY(560);
         startButton.setPickOnBounds(true);
         backButton = new ImageView(backButtonImage);
         infoButton = new ImageView(infoButtonImage);
