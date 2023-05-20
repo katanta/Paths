@@ -78,6 +78,9 @@ public class GameSetupController {
 
             if (mouseEvent.isPrimaryButtonDown() && (mouseEvent.getClickCount() == 2)) {
                 PathsFile pathsFile = storySelectorView.getStoryTable().getSelectionModel().getSelectedItem();
+                if (pathsFile == null) {
+                    return;
+                }
                 Optional<ButtonType> result = getConfirmationBox(pathsFile).showAndWait();
 
                 if (result.isPresent() && result.get() == ButtonType.OK) {
