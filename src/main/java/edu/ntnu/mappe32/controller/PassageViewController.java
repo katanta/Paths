@@ -4,7 +4,6 @@ import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.Action;
-import edu.ntnu.mappe32.model.action_related.ScoreAction;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Link;
 import edu.ntnu.mappe32.model.story_related.Passage;
@@ -14,7 +13,6 @@ import edu.ntnu.mappe32.view.PathsSplashScreenView;
 import edu.ntnu.mappe32.view.StorySelectorView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -191,7 +189,14 @@ public class PassageViewController {
     }
 
     private void setHelpButtonClickAction() {
-        //todo: create a "help" image and display it on a separate stage
+        passageView.getHelpButton().setOnMouseClicked(e -> {
+            passageView.getTutorialImageView().toFront();
+            passageView.getTutorialImageView().setVisible(true);
+            passageView.getTutorialImageView().setOnMouseClicked(e1 -> {
+                passageView.getTutorialImageView().toBack();
+                passageView.getTutorialImageView().setVisible(false);
+            });
+        });
     }
 
     private void configureAllTopLeftButtonActions() {

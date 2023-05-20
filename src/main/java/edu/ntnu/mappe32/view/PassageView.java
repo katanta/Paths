@@ -42,6 +42,7 @@ public class PassageView {
     private ScrollPane recentEventsPane;
     private VBox eventsVBox;
     private ListView<Item> itemsListView;
+    private ImageView tutorialImageView;
 
     public PassageView() {
         root = new StackPane();
@@ -53,6 +54,7 @@ public class PassageView {
         configurePlayerInfo();
         configureRecentEventsPane();
         setTestBackground();
+        configureTutorialImageView();
         this.scene = new Scene(root, 1280, 720);
     }
 
@@ -274,6 +276,17 @@ public class PassageView {
         StackPane.setAlignment(recentEventsPane, Pos.BOTTOM_CENTER);
         root.getChildren().add(recentEventsPane);
     }
+    private void configureTutorialImageView() {
+        try {
+            tutorialImageView = new ImageView(new Image(new FileInputStream("src/main/resources/img/passageViewTutorial.png")));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        StackPane.setAlignment(tutorialImageView, Pos.CENTER);
+        root.getChildren().add(tutorialImageView);
+        tutorialImageView.toBack();
+        tutorialImageView.setVisible(false);
+    }
 
     public Label getPlayerNameLabel() {
         return playerNameLabel;
@@ -333,5 +346,9 @@ public class PassageView {
 
     public ListView<Item> getItemsListView() {
         return itemsListView;
+    }
+
+    public ImageView getTutorialImageView() {
+        return tutorialImageView;
     }
 }
