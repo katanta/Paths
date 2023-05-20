@@ -160,7 +160,7 @@ public class PassageViewController {
                 completionStatus.setTextFill(Color.GREEN);
                 completionStatus.getTooltip().setText("The goal above is complete!");
             } else if ((!goal.isFulfilled(game.player()) && completedGoals.contains(goal))
-            || goal.isFulfilled(game.player()) && completedGoals.contains(goal)) {
+                    || goal.isFulfilled(game.player()) && completedGoals.contains(goal)) {
                 completionStatus.setText("GOAL COMPLETED!");
                 completionStatus.setTextFill(Color.GREEN);
                 completionStatus.getTooltip().setText("The goal above is complete!");
@@ -193,7 +193,7 @@ public class PassageViewController {
     private void setHelpButtonClickAction() {
         //todo: create a "help" image and display it on a separate stage
     }
-    
+
     private void configureAllTopLeftButtonActions() {
         ImageView helpButtonHover;
         ImageView homeButtonHover;
@@ -264,10 +264,8 @@ public class PassageViewController {
     }
 
     private void addNewGoalCompletionToEventsPane(Goal newCompletedGoal) {
-        StringBuilder goalCompleted = new StringBuilder(game.player().getName() + " has completed a ");
-        goalCompleted.append(newCompletedGoal.getClass().getSimpleName() + ": " + newCompletedGoal + "!");
 
-        Text goalCompletionText = new Text(goalCompleted.toString());
+        Text goalCompletionText = new Text(game.player().getName() + " has completed a " + newCompletedGoal.getClass().getSimpleName() + ": " + newCompletedGoal + "!");
         goalCompletionText.setFont(resizableMainFont(18));
         goalCompletionText.setWrappingWidth(620);
         goalCompletionText.setFill(Color.GREEN);
