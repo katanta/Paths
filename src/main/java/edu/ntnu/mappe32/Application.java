@@ -17,6 +17,7 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) {
         FinalSplashScreenController splashScreenController = new FinalSplashScreenController(stage, new FinalSplashScreenView());
+        stage.setResizable(false);
         stage.setTitle("Paths Game");
         stage.show();
     }
