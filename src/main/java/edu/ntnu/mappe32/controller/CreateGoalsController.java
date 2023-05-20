@@ -10,6 +10,7 @@ import edu.ntnu.mappe32.view.CreatePlayerView;
 import edu.ntnu.mappe32.view.PassageView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
@@ -38,16 +39,17 @@ public class CreateGoalsController {
         this.player = player;
         this.pathsFile = pathsFile;
         this.view = view;
-        createdGoals = FXCollections.observableArrayList();
+        this.stage = stage;
+        this.createdGoals = FXCollections.observableArrayList();
         this.itemsAsString = pathsFile.getStory().getItems()
                 .stream().map(Item::getItemName).collect(Collectors.toList());
         this.mandatoryItems = new HashMap<>();
+
         view.getGoalsListView().setItems(createdGoals);
         view.getValueTypeLabel().setText("Health Goal Value:");
         setTopActions();
         setCenterActions();
         stage.setScene(view.getScene());
-        this.stage = stage;
     }
 
     private void setTopActions() {
@@ -78,19 +80,6 @@ public class CreateGoalsController {
         tooltip.setFont(resizableMainFont(fontSize));
         return tooltip;
     }
-    private void showInformationBox() {
-        view.getInfoButton().setOnMouseClicked(mouseEvent -> {
-            Alert information = new Alert(Alert.AlertType.INFORMATION);
-            information.setTitle("Player and Story Information");
-            information.setHeaderText("Information on " + player.getName() + " and '" + pathsFile.getStoryTitle() + "'");
-            String playerStats = player.getName() + "'s Health: " + player.getHealth() + "\n" + player.getName() + "'s Gold: " + player.getGold() + "\n";
-            information.setContentText(playerStats + "\nBroken Links: " + pathsFile.getBrokenLinks() + "\n\nFile Path: " + pathsFile.getFilePath());
-            DialogPane dialogPane = information.getDialogPane();
-            dialogPane.getStylesheets().add(
-                    Objects.requireNonNull(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css")).toExternalForm());
-            information.show();
-        });
-    }
     private void setCenterActions() {
         addGoalButtonTooltip = createTooltip("Press to add your Goal", 18);
         setGoalIconActions();
@@ -119,114 +108,114 @@ public class CreateGoalsController {
     }
 
     private void setGoalsIconsTooltips() {
-        Tooltip healthIconTooltip = createTooltip("Create a Health Goal!", 15);
-        Tooltip scoreIconTooltip = createTooltip("Create a Score Goal!", 15);
-        Tooltip goldIconTooltip = createTooltip("Create a Gold Goal!", 15);
-        Tooltip inventoryIconTooltip = createTooltip("Create an Inventory Goal!", 15);
-        view.getHealthIcon().setPickOnBounds(true);
-        view.getScoreIcon().setPickOnBounds(true);
-        view.getGoldIcon().setPickOnBounds(true);
-        view.getInventoryIcon().setPickOnBounds(true);
-        Tooltip.install(view.getHealthIcon(), healthIconTooltip);
-        Tooltip.install(view.getScoreIcon(), scoreIconTooltip);
-        Tooltip.install(view.getGoldIcon(), goldIconTooltip);
-        Tooltip.install(view.getInventoryIcon(), inventoryIconTooltip);
+        Map<Node, String> iconTooltips = new HashMap<>();
+        iconTooltips.put(view.getHealthIcon(), "Create a Health Goal!");
+        iconTooltips.put(view.getScoreIcon(), "Create a Score Goal!");
+        iconTooltips.put(view.getGoldIcon(), "Create a Gold Goal!");
+        iconTooltips.put(view.getInventoryIcon(), "Create an Inventory Goal!");
+
+        iconTooltips.forEach((icon, tooltipText) -> {
+            Tooltip tooltip = createTooltip(tooltipText, 15);
+            icon.setPickOnBounds(true);
+            Tooltip.install(icon, tooltip);
+        });
     }
     private void setGoalIconActions() {
         String goalValueText = " Goal Value:";
+
         view.getHealthIcon().setOnMouseClicked(mouseEvent -> {
-            view.getP1().setVisible(true);
-            view.getP2().setVisible(false);
-            view.getP3().setVisible(false);
-            view.getP4().setVisible(false);
-
-            view.getInvalidValueBox().setVisible(false);
-            view.getValueTextField().clear();
-            view.getValueTextField().setStyle(null);
-
-            view.getCurrentMandatoryInventory().getItems().clear();
-            view.getInventoryGoalBox().setManaged(false);
-            view.getInventoryGoalBox().setVisible(false);
-            view.getNumericalGoalBox().setManaged(true);
-            view.getNumericalGoalBox().setVisible(true);
-
+            setVisibility(true, false, false, false);
+            clearValueField();
+            clearInvalidValueBox();
+            showNumericalGoalBox();
+            hideInventoryGoalBox();
             view.getValueTypeLabel().setText("Health" + goalValueText);
         });
 
         view.getScoreIcon().setOnMouseClicked(mouseEvent -> {
-            view.getP1().setVisible(false);
-            view.getP2().setVisible(true);
-            view.getP3().setVisible(false);
-            view.getP4().setVisible(false);
-
-            view.getInvalidValueBox().setVisible(false);
-            view.getValueTextField().clear();
-            view.getValueTextField().setStyle(null);
-
-            view.getCurrentMandatoryInventory().getItems().clear();
-            view.getInventoryGoalBox().setManaged(false);
-            view.getInventoryGoalBox().setVisible(false);
-            view.getNumericalGoalBox().setManaged(true);
-            view.getNumericalGoalBox().setVisible(true);
-
+            setVisibility(false, true, false, false);
+            clearValueField();
+            clearInvalidValueBox();
+            showNumericalGoalBox();
+            hideInventoryGoalBox();
             view.getValueTypeLabel().setText("Score" + goalValueText);
         });
+
         view.getGoldIcon().setOnMouseClicked(mouseEvent -> {
-            view.getP1().setVisible(false);
-            view.getP2().setVisible(false);
-            view.getP3().setVisible(true);
-            view.getP4().setVisible(false);
-
-            view.getInvalidValueBox().setVisible(false);
-            view.getValueTextField().clear();
-            view.getValueTextField().setStyle(null);
-
-            view.getCurrentMandatoryInventory().getItems().clear();
-            view.getInventoryGoalBox().setManaged(false);
-            view.getInventoryGoalBox().setVisible(false);
-            view.getNumericalGoalBox().setManaged(true);
-            view.getNumericalGoalBox().setVisible(true);
-
+            setVisibility(false, false, true, false);
+            clearValueField();
+            clearInvalidValueBox();
+            showNumericalGoalBox();
+            hideInventoryGoalBox();
             view.getValueTypeLabel().setText("Gold" + goalValueText);
         });
 
         view.getInventoryIcon().setOnMouseClicked(mouseEvent -> {
-            view.getP1().setVisible(false);
-            view.getP2().setVisible(false);
-            view.getP3().setVisible(false);
-            view.getP4().setVisible(true);
-
-            view.getInvalidValueBox().setVisible(false);
-            view.getValueTextField().clear();
-            view.getValueTextField().setStyle(null);
-
-            view.getNumericalGoalBox().setManaged(false);
-            view.getNumericalGoalBox().setVisible(false);
-            view.getInventoryGoalBox().setManaged(true);
-            view.getInventoryGoalBox().setVisible(true);
-            List<String> copy = new ArrayList<>(itemsAsString);
-
-            view.getSelectItem().setItems(FXCollections.observableArrayList(copy));
+            setVisibility(false, false, false, true);
+            clearValueField();
+            clearInvalidValueBox();
+            hideNumericalGoalBox();
+            showInventoryGoalBox();
+            updateSelectItem();
         });
+    }
+
+    private void setVisibility(boolean p1, boolean p2, boolean p3, boolean p4) {
+        view.getP1().setVisible(p1);
+        view.getP2().setVisible(p2);
+        view.getP3().setVisible(p3);
+        view.getP4().setVisible(p4);
+    }
+
+    private void clearValueField() {
+        view.getValueTextField().clear();
+        view.getValueTextField().setStyle(null);
+    }
+
+    private void clearInvalidValueBox() {
+        view.getInvalidValueBox().setVisible(false);
+    }
+
+    private void showNumericalGoalBox() {
+        view.getNumericalGoalBox().setManaged(true);
+        view.getNumericalGoalBox().setVisible(true);
+    }
+
+    private void hideNumericalGoalBox() {
+        view.getNumericalGoalBox().setManaged(false);
+        view.getNumericalGoalBox().setVisible(false);
+    }
+
+    private void hideInventoryGoalBox() {
+        view.getInventoryGoalBox().setManaged(false);
+        view.getInventoryGoalBox().setVisible(false);
+    }
+
+    private void showInventoryGoalBox() {
+        view.getInventoryGoalBox().setManaged(true);
+        view.getInventoryGoalBox().setVisible(true);
+    }
+
+    private void updateSelectItem() {
+        List<String> copy = new ArrayList<>(itemsAsString);
+        view.getSelectItem().setItems(FXCollections.observableArrayList(copy));
     }
 
     private void setAddGoalButton1Actions() {
         view.getAddGoalButton1().setOnMouseClicked(mouseEvent -> {
-            if (view.getNumericalGoalBox().isVisible()) {
-                if (validateGoalValueInput()) {
-                    if (view.getP2().isVisible()) {
-                        createdGoals.add(new ScoreGoal(Integer.parseInt(view.getValueTextField().getText())));
-                        view.getValueTextField().clear();
-                    }
-                    if (view.getP1().isVisible()) {
-                        createdGoals.add(new HealthGoal(Integer.parseInt(view.getValueTextField().getText())));
-                        view.getValueTextField().clear();
-                    }
-                    if (view.getP3().isVisible()) {
-                        createdGoals.add(new GoldGoal(Integer.parseInt(view.getValueTextField().getText())));
-                        view.getValueTextField().clear();
-                    }
+            if (validateGoalValueInput()) {
+                String valueText = view.getValueTextField().getText();
+                int goalValue = Integer.parseInt(valueText);
+
+                if (view.getP2().isVisible()) {
+                    createdGoals.add(new ScoreGoal(goalValue));
+                } else if (view.getP1().isVisible()) {
+                    createdGoals.add(new HealthGoal(goalValue));
+                } else if (view.getP3().isVisible()) {
+                    createdGoals.add(new GoldGoal(goalValue));
                 }
+
+                view.getValueTextField().clear();
             }
         });
         Tooltip.install(view.getAddGoalButton1(), addGoalButtonTooltip);
@@ -239,8 +228,10 @@ public class CreateGoalsController {
                 return;
             }
             createdGoals.add(new InventoryGoal(new HashMap<>(mandatoryItems)));
+
             view.getCurrentMandatoryInventory().getItems().forEach(item -> view
                     .getSelectItem().getItems().add(item.substring(0, item.lastIndexOf(':'))));
+
             view.getCurrentMandatoryInventory().getItems().clear();
             view.getQuantity().clear();
             mandatoryItems.clear();
@@ -249,29 +240,50 @@ public class CreateGoalsController {
     }
     private void setAddGoalToInventoryActions() {
         view.getAddToInventoryGoal().setOnMouseClicked(mouseEvent -> {
-            if (view.getSelectItem().getItems().isEmpty())
+            if (view.getSelectItem().getItems().isEmpty()) {
                 return;
-            if (validateQuantityInput() & view.getSelectItem().getValue() != null) {
-                Optional<Item> selectedItem = pathsFile.getStory().getItems().stream()
-                        .filter(item -> item.getItemName().equals(view.getSelectItem().getValue()))
-                        .findFirst();
-                Integer quantity = Integer.parseInt(view.getQuantity().getText());
-                Item item;
+            }
+
+            if (validateQuantityInput() && view.getSelectItem().getValue() != null) {
+                Optional<Item> selectedItem = findSelectedItem(view.getSelectItem().getValue());
+                int quantity = Integer.parseInt(view.getQuantity().getText());
 
                 if (selectedItem.isPresent()) {
-                    item = selectedItem.get();
-                    mandatoryItems.put(item, quantity);
-                    view.getCurrentMandatoryInventory().getItems().add((item.getItemName()) + ": " + quantity);
-                    view.getSelectItem().getItems().remove(item.getItemName());
-                    view.getQuantity().clear();
+                    Item item = selectedItem.get();
+                    addToMandatoryInventory(item, quantity);
+                    updateCurrentMandatoryInventory(item, quantity);
+                    removeSelectedItem(item);
+                    clearQuantityField();
                 }
             }
         });
+    }
+    private Optional<Item> findSelectedItem(String itemName) {
+        return pathsFile.getStory().getItems().stream()
+                .filter(item -> item.getItemName().equals(itemName))
+                .findFirst();
+    }
+
+    private void addToMandatoryInventory(Item item, int quantity) {
+        mandatoryItems.put(item, quantity);
+    }
+
+    private void updateCurrentMandatoryInventory(Item item, int quantity) {
+        view.getCurrentMandatoryInventory().getItems().add(item.getItemName() + ": " + quantity);
+    }
+
+    private void removeSelectedItem(Item item) {
+        view.getSelectItem().getItems().remove(item.getItemName());
+    }
+
+    private void clearQuantityField() {
+        view.getQuantity().clear();
     }
 
     private void setListViewActions() {
         view.getGoalsListView().setOnMouseClicked(mouseEvent -> createdGoals
                 .remove(view.getGoalsListView().getSelectionModel().getSelectedItem()));
+
         view.getCurrentMandatoryInventory().setOnMouseClicked(mouseEvent -> {
             String item = view.getCurrentMandatoryInventory().getSelectionModel().getSelectedItem();
             if (item != null) {
@@ -298,12 +310,6 @@ public class CreateGoalsController {
         view.getInvalidValueBox().setVisible(false);
         return true;
     }
-    private void setInvalidTextFieldStyle(TextField textField) {
-        String borderColor = "red;";
-        String borderWidth = "1px;";
-        textField.setStyle("-fx-border-color: " + borderColor +
-                "-fx-border-width: " + borderWidth);
-    }
     /**
      * This method validates the input of the playerHealthTextField
      * It returns false if the input contains other characters than numbers or is empty
@@ -320,6 +326,12 @@ public class CreateGoalsController {
         view.getQuantity().setStyle(null);
         return true;
     }
+    private void setInvalidTextFieldStyle(TextField textField) {
+        String borderColor = "red;";
+        String borderWidth = "1px;";
+        textField.setStyle("-fx-border-color: " + borderColor +
+                "-fx-border-width: " + borderWidth);
+    }
     private void showNoMandatoryItemAlert() {
         Alert noMandatoryItems = new Alert(Alert.AlertType.WARNING);
         noMandatoryItems.setTitle("No Mandatory Items");
@@ -329,6 +341,20 @@ public class CreateGoalsController {
         dialogPane.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css")).toExternalForm());
         noMandatoryItems.show();
+    }
+
+    private void showInformationBox() {
+        view.getInfoButton().setOnMouseClicked(mouseEvent -> {
+            Alert information = new Alert(Alert.AlertType.INFORMATION);
+            information.setTitle("Player and Story Information");
+            information.setHeaderText("Information on " + player.getName() + " and '" + pathsFile.getStoryTitle() + "'");
+            String playerStats = player.getName() + "'s Health: " + player.getHealth() + "\n" + player.getName() + "'s Gold: " + player.getGold() + "\n";
+            information.setContentText(playerStats + "\nBroken Links: " + pathsFile.getBrokenLinks() + "\n\nFile Path: " + pathsFile.getFilePath());
+            DialogPane dialogPane = information.getDialogPane();
+            dialogPane.getStylesheets().add(
+                    Objects.requireNonNull(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css")).toExternalForm());
+            information.show();
+        });
     }
 
     private void showNoGoalsAlert() {
