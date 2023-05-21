@@ -1,7 +1,13 @@
 package edu.ntnu.mappe32.view;
 
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.Transition;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -10,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,12 +31,18 @@ public class FinalSplashScreenView {
     private HBox playButtonHBox;
     private Button playButton;
     private HBox baitButtonHBox;
+    private ImageView backgroundTrees;
+    private ImageView middleTrees;
+    private ImageView lightLayer;
+    private ImageView frontTrees;
+
 
     public FinalSplashScreenView() {
         root = new StackPane();
         root.setAlignment(Pos.TOP_CENTER);
         configureLogo(); //configureLogo must be done first to apply correct margins for it
         configureButtonsVBox();
+        configureBackGround();
         scene = new Scene(root, 1280, 720);
     }
 
@@ -43,7 +56,45 @@ public class FinalSplashScreenView {
         StackPane.setMargin(root.getChildren().get(0), new Insets(30, 0, 0, 0));
     }
 
+    private void configureBackGround() {
+        ObjectProperty<Integer> backgroundOffsetProperty = new SimpleObjectProperty<>(0);
+        ObjectProperty<Integer> middlegroundOffsetProperty = new SimpleObjectProperty<>(0);
+        ObjectProperty<Integer> lightLayerOffsetProperty = new SimpleObjectProperty<>(0); //dry code just since i'm learning parallax animaton
+        ObjectProperty<Integer> frontgroundOffsetProperty = new SimpleObjectProperty<>(0);
+        //each image needed its own property to be able to move at different speeds, creating a parallax effect.
+        try {
+            backgroundTrees = new ImageView(new Image(new FileInputStream("src/main/resources/img/animationExperiment/backTrees.png")));
+            middleTrees = new ImageView(new Image(new FileInputStream("src/main/resources/img/animationExperiment/middleTrees.png")));
+            lightLayer = new ImageView(new Image(new FileInputStream("src/main/resources/img/animationExperiment/lights.png")));
+            frontTrees = new ImageView(new Image(new FileInputStream("src/main/resources/img/animationExperiment/frontTrees.png")));
+        } catch (FileNotFoundException e) {
+            System.out.println("One or more background images are missing...");
+        }
+        Rectangle2D backGroundViewPort = new Rectangle2D(0, 0, 1280, 720);
+        backgroundTrees.setViewport(backGroundViewPort);
+        middleTrees.setViewport(backGroundViewPort);
+        backgroundOffsetProperty.addListener(observable -> {
+            backgroundTrees.setViewport(new Rectangle2D(backgroundOffsetProperty.get(), 0, 1280, 720));
+        });
+        middlegroundOffsetProperty.addListener(observable -> {
+            middleTrees.setViewport(new Rectangle2D(middlegroundOffsetProperty.get(), 0, 1280, 720));
+        });
+        lightLayerOffsetProperty.addListener(observable -> {
+            lightLayer.setViewport(new Rectangle2D(lightLayerOffsetProperty.get(), 0, 1280, 720));
+        });
+        frontgroundOffsetProperty.addListener(observable -> {
+            frontTrees.setViewport(new Rectangle2D(frontgroundOffsetProperty.get(), 0, 1280, 720));
+        });
 
+        createBackgroundAnimation(backgroundOffsetProperty, 20000).play();
+        createBackgroundAnimation(middlegroundOffsetProperty, 15000).play();
+        createBackgroundAnimation(lightLayerOffsetProperty, 10000).play();
+        createBackgroundAnimation(frontgroundOffsetProperty, 6000).play();
+        root.getChildren().add(0, backgroundTrees);
+        root.getChildren().add(1, middleTrees);
+        root.getChildren().add(2, lightLayer);
+        root.getChildren().add(3, frontTrees);
+    }
     private void configureButtonsVBox(){
         buttonsVBoxContainer = new VBox();
         buttonsVBoxContainer.setAlignment(Pos.CENTER);
@@ -98,6 +149,23 @@ public class FinalSplashScreenView {
         baitButtonHBox.getChildren().get(2).setVisible(false);
         baitButtonHBox.setAlignment(Pos.CENTER);
         buttonsVBoxContainer.getChildren().add(baitButtonHBox);
+    }
+
+    private Animation createBackgroundAnimation(ObjectProperty<Integer> backgroundOffsetProperty, int milliDuration) {
+        Animation animation = new Transition() {
+            @Override
+            protected void interpolate(double frac) {
+                int backGroundOffset = (int) ((frac * 1280) % 12800);
+                backgroundOffsetProperty.set(backGroundOffset);
+            }
+
+            {
+                setCycleDuration(Duration.millis(milliDuration));
+                setInterpolator(Interpolator.LINEAR);
+            }
+        };
+        animation.setCycleCount(Animation.INDEFINITE);
+        return animation;
     }
 
     public Scene getScene() {
