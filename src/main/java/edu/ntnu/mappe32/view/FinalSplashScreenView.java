@@ -176,10 +176,13 @@ public class FinalSplashScreenView {
 
     private void configureMediaPlayers() {
         musicPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/music/MainMenuMusic.mp3").toURI().toString()));
+        musicPlayer.setVolume(0.25);
         selectionPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/Menu Selection Click.wav").toURI().toString()));
 
         musicPlayer.play();
     }
+
+
 
     public MediaPlayer getMusicPlayer() {
         return musicPlayer;
