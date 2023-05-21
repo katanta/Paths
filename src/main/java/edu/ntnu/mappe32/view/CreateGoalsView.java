@@ -1,8 +1,6 @@
 package edu.ntnu.mappe32.view;
 
 import edu.ntnu.mappe32.model.goal_related.Goal;
-import edu.ntnu.mappe32.model.goal_related.InventoryGoal;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -60,24 +58,33 @@ public class CreateGoalsView {
     private Button addToInventoryGoal;
     private ListView<String> currentMandatoryInventory;
     private ImageView startButton;
+    private ImageView helpButton;
+    private Image helpButtonImage;
+    private Image helpButtonHover;
+    private HBox helpAndBackButtonHBox;
+
+    private ImageView tutorialImageView;
+    private final BorderPane root;
 
     public CreateGoalsView() {
+        this.root = new BorderPane();
         statLabelFont = resizableMainFont(30);
         textFieldFont = Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 20);
 
         configureTop();
         configureCenter();
-        BorderPane root = new BorderPane();
+        configureTutorialImageView();
         root.setTop(top);
         root.setCenter(centerVBox);
-        root.getChildren().addAll(backButton, startButton);
+        root.getChildren().addAll(helpAndBackButtonHBox, startButton);
         this.scene = new Scene(root, 1280, 720);
     }
-
     private void configureTop() {
         top = new HBox(50);
 
         try {
+            helpButtonImage = new Image(new FileInputStream("src/main/resources/img/helpButton.png"));
+            helpButtonHover = new Image(new FileInputStream("src/main/resources/img/helpButtonHover.png"));
             backButtonImage = new Image(new FileInputStream("src/main/resources/img/restartButton.png"));
             backButtonHover = new Image(new FileInputStream("src/main/resources/img/restartButtonHover.png"));
             infoButtonImage = new Image(new FileInputStream("src/main/resources/img/info.png"));
@@ -87,21 +94,18 @@ public class CreateGoalsView {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
         startButton.setFitWidth(200);
         startButton.setFitHeight(100);
         startButton.setX(1020);
         startButton.setY(560);
         startButton.setPickOnBounds(true);
-        backButton = new ImageView(backButtonImage);
         infoButton = new ImageView(infoButtonImage);
-        backButton.setFitWidth(62);
-        backButton.setFitHeight(62);
-        backButton.setX(20);
-        backButton.setY(20);
-        backButton.setPickOnBounds(true);
+
         infoButton.setPickOnBounds(true);
         infoButton.setFitWidth(31);
         infoButton.setFitHeight(31);
+        configureHelpAndBackButton();
 
         Label createYourGoals = new Label("Create Your Goals!");
         createYourGoals.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSansBold.ttf", 50));
@@ -112,6 +116,21 @@ public class CreateGoalsView {
 
         top.setPadding(new Insets(20, 0,0,50));
 
+    }
+    private void configureHelpAndBackButton() {
+        helpAndBackButtonHBox = new HBox(10);
+        helpAndBackButtonHBox.setAlignment(Pos.TOP_LEFT);
+        helpAndBackButtonHBox.setPadding(new Insets(20,0,0,20));
+        helpButton = new ImageView(helpButtonImage);
+        helpButton.setFitWidth(62);
+        helpButton.setFitHeight(62);
+        helpButton.setPickOnBounds(true);
+        backButton = new ImageView(backButtonImage);
+        backButton.setFitWidth(62);
+        backButton.setFitHeight(62);
+        backButton.setPickOnBounds(true);
+
+        helpAndBackButtonHBox.getChildren().addAll(backButton, helpButton);
     }
     private void configureGoalsListView() {
         this.goalsListView = new ListView<>();
@@ -342,6 +361,17 @@ public class CreateGoalsView {
         invalidValueBox.setVisible(false);
         HBox.setHgrow(invalidValueBox, Priority.ALWAYS);
     }
+    private void configureTutorialImageView() {
+        try {
+            tutorialImageView = new ImageView(new Image(new FileInputStream("src/main/resources/img/createGoalTutorial.png")));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        BorderPane.setAlignment(tutorialImageView, Pos.CENTER);
+        root.getChildren().add(tutorialImageView);
+        tutorialImageView.toBack();
+        tutorialImageView.setVisible(false);
+    }
 
     public ImageView getAddGoalButton2() {
         return addGoalButton2;
@@ -450,5 +480,21 @@ public class CreateGoalsView {
 
     public Scene getScene() {
         return scene;
+    }
+
+    public ImageView getTutorialImageView() {
+        return tutorialImageView;
+    }
+
+    public Image getHelpButtonHover() {
+        return helpButtonHover;
+    }
+
+    public Image getHelpButtonImage() {
+        return helpButtonImage;
+    }
+
+    public ImageView getHelpButton() {
+        return helpButton;
     }
 }
