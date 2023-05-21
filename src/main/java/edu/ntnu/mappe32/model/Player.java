@@ -1,7 +1,5 @@
 package edu.ntnu.mappe32.model;
 
-import edu.ntnu.mappe32.model.action_related.InsufficientGoldException;
-
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
