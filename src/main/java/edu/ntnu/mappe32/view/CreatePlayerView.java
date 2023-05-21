@@ -2,16 +2,14 @@ package edu.ntnu.mappe32.view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 import java.io.FileInputStream;
@@ -47,7 +45,15 @@ public class CreatePlayerView {
     private ImageView nextButton;
     private final Font statLabelFont;
     private final Font textFieldFont;
+    private Image helpButtonImage;
+    private Image helpButtonHover;
+    private ImageView helpButton;
+    private HBox helpAndBackButtonHBox;
+    private ImageView tutorialImageView;
+    private final BorderPane root;
+
     public CreatePlayerView() {
+        this.root = new BorderPane();
         configureErrorCircleImage();
 
         statLabelFont = resizableMainFont(30);
@@ -55,10 +61,9 @@ public class CreatePlayerView {
         configureTop();
         configureCenter();
 
-        BorderPane root = new BorderPane();
         root.setTop(top);
         root.setCenter(centerVBox);
-        root.getChildren().add(backButton);
+        root.getChildren().add(helpAndBackButtonHBox);
         this.scene = new Scene(root, 1280, 720);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css")).toExternalForm());
 
@@ -67,6 +72,8 @@ public class CreatePlayerView {
         top = new HBox(50);
 
         try {
+            helpButtonImage = new Image(new FileInputStream("src/main/resources/img/helpButton.png"));
+            helpButtonHover = new Image(new FileInputStream("src/main/resources/img/helpButtonHover.png"));
             backButtonImage = new Image(new FileInputStream("src/main/resources/img/restartButton.png"));
             backButtonHover = new Image(new FileInputStream("src/main/resources/img/restartButtonHover.png"));
             infoButtonImage = new Image(new FileInputStream("src/main/resources/img/info.png"));
@@ -75,16 +82,12 @@ public class CreatePlayerView {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        backButton = new ImageView(backButtonImage);
         infoButton = new ImageView(infoButtonImage);
-        backButton.setFitWidth(62);
-        backButton.setFitHeight(62);
-        backButton.setX(20);
-        backButton.setY(20);
-        backButton.setPickOnBounds(true);
         infoButton.setPickOnBounds(true);
         infoButton.setFitWidth(31);
         infoButton.setFitHeight(31);
+        configureHelpAndBackButton();
+        helpAndBackButtonHBox.getChildren().addAll(backButton, helpButton);
 
         storyTitle = new Label();
         storyTitle.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSansBold.ttf", 50));
@@ -97,6 +100,19 @@ public class CreatePlayerView {
 
     }
 
+    private void configureHelpAndBackButton() {
+        helpAndBackButtonHBox = new HBox(10);
+        helpAndBackButtonHBox.setAlignment(Pos.TOP_LEFT);
+        helpAndBackButtonHBox.setPadding(new Insets(20,0,0,20));
+        helpButton = new ImageView(helpButtonImage);
+        helpButton.setFitWidth(62);
+        helpButton.setFitHeight(62);
+        helpButton.setPickOnBounds(true);
+        backButton = new ImageView(backButtonImage);
+        backButton.setFitWidth(62);
+        backButton.setFitHeight(62);
+        backButton.setPickOnBounds(true);
+    }
     private void configureCenter() {
         centerVBox = new VBox(50);
         centerVBox.setPadding(new Insets(30,0,0,0));
@@ -111,6 +127,7 @@ public class CreatePlayerView {
             throw new RuntimeException(e);
         }
         configurePlayerStatsGridPane();
+        configureTutorialImageView();
         playerGridPane.setPadding(new Insets(0, 0,0,330));
         playerGridPane.setAlignment(Pos.TOP_CENTER);
         nextButton.setPickOnBounds(true);
@@ -210,6 +227,17 @@ public class CreatePlayerView {
         Pattern pattern = Pattern.compile(".{0," + characters + "}");
         return new TextFormatter<>((change -> pattern.matcher(change.getControlNewText()).matches() ? change : null));
     }
+    private void configureTutorialImageView() {
+        try {
+            tutorialImageView = new ImageView(new Image(new FileInputStream("src/main/resources/img/createPlayerTutorial.png")));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        BorderPane.setAlignment(tutorialImageView, Pos.CENTER);
+        root.getChildren().add(tutorialImageView);
+        tutorialImageView.toBack();
+        tutorialImageView.setVisible(false);
+    }
 
     public Image getBackButtonImage() {
         return backButtonImage;
@@ -268,5 +296,21 @@ public class CreatePlayerView {
 
     public ImageView getNextButton() {
         return nextButton;
+    }
+
+    public ImageView getHelpButton() {
+        return helpButton;
+    }
+
+    public Image getHelpButtonHover() {
+        return helpButtonHover;
+    }
+
+    public Image getHelpButtonImage() {
+        return helpButtonImage;
+    }
+
+    public ImageView getTutorialImageView() {
+        return tutorialImageView;
     }
 }
