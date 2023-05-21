@@ -42,7 +42,7 @@ public class StorySelectorView {
 
 
     public void configureTop() {
-        top = new HBox(190);
+        top = new HBox(270);
         Label selectYourStory = new Label("Select Your Story!");
         selectYourStory.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSansBold.ttf", 50));
         selectYourStory.setMaxWidth(700);
@@ -62,7 +62,6 @@ public class StorySelectorView {
         backButtonHBox.getChildren().addAll(backButton);
         backButtonHBox.setAlignment(Pos.TOP_LEFT);
         top.getChildren().addAll(backButtonHBox, selectYourStory);
-        selectYourStory.setAlignment(Pos.TOP_CENTER);
 
         top.setPadding(new Insets(20, 0, 0, 20));
     }
