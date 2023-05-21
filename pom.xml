@@ -86,7 +86,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <defaultGoal>test</defaultGoal>
     </build>
 
 </project>

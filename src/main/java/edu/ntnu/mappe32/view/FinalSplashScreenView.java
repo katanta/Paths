@@ -180,6 +180,7 @@ public class FinalSplashScreenView {
         selectionPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/Menu Selection Click.wav").toURI().toString()));
 
         musicPlayer.play();
+        musicPlayer.setOnEndOfMedia(() -> musicPlayer.seek(Duration.ZERO));
     }
 
 

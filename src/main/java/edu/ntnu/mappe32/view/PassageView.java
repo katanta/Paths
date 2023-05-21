@@ -59,7 +59,7 @@ public class PassageView {
         this.scene = new Scene(root, 1280, 720);
     }
 
-    public void setTestBackground() { //Todo: Messed around with this a bit; it is entirely possible to set backgrounds for either the root or each individual node
+    public void setTestBackground() {
         Image backgroundImage;
         try {
             backgroundImage = new Image(new FileInputStream("src/main/resources/img/scrollWallpaper.jpg"));

@@ -47,7 +47,6 @@ public class ItemCell extends ListCell<Item> {
         tooltip.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 12));
 
         String tooltipText = "Click to use: " + item.getItemName();
-        //TODO: skal vi ha actions i tooltipen eller skal det være ukjent for bruker?
         tooltip.setShowDelay(Duration.ZERO);
         tooltip.setShowDuration(Duration.INDEFINITE);
         tooltip.setText(tooltipText);
