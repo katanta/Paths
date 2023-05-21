@@ -232,8 +232,8 @@ public class PathsFileReader {
         int index = Arrays.asList(parts).indexOf(firstAction);
         boolean usable = Boolean.parseBoolean(parts[index - 1]);
 
-        String itemName = Arrays.stream(parts).skip(2)
-                .limit(index - 3)
+        String itemName = Arrays.stream(parts).skip(3)
+                .limit(index - 4)
                 .collect(Collectors.joining(" "));
 
         List<Action> itemsActions = new ArrayList<>();
@@ -243,7 +243,8 @@ public class PathsFileReader {
 
         Item item = new Item(itemName, usable, itemsActions.toArray(Action[]::new));
         boolean add = Boolean.parseBoolean(parts[1]);
+        int quantity = Integer.parseInt(parts[2]);
 
-        return new InventoryAction(item, add);
+        return new InventoryAction(item, add, quantity);
     }
 }

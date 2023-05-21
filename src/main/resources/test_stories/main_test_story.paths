@@ -2,9 +2,9 @@ The story of the troll
 
 ::::You see a :troll
 ::You see a:: 3-meter( )tall troll slowly turning towards you.
-[Run away](Run Away)<Score -100><Health 100><Gold -2000><Inventory true Medal Of The Coward true <Score -10> >
+[Run away](Run Away)<Score -100><Health 100><Inventory true 1 Medal Of The Coward true <Score -10> >
 [Attack the troll](Attack the troll)<Gold 1000><Gold -1000><Health 100><Score 100>
-[Call the chopper](Call the chopper)<Score 90><Health 100><Score 10><Inventory true Keys Yo Whats Up true <Score 10> ><Inventory true Helmet true <Health 100> >
+[Call the chopper](Call the chopper)<Score 90><Health 100><Score 10><Inventory true 1 Keys Yo Whats Up true <Score 10> ><Inventory true 1 Helmet true <Health 100> >
 
 ::Use sword
 The sword barely does so much as tickle the troll, it destroys you in anger. You are dead

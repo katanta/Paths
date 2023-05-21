@@ -9,13 +9,18 @@ import java.util.Objects;
 public class InventoryAction implements Action, Serializable {
     private final boolean add;
     private final Item item;
+    private final int quantity;
 
-    public InventoryAction(final Item item, final boolean add) {
-        if (item == null) {
+    public InventoryAction(final Item item, final boolean add, int quantity) {
+        if (item == null)
             throw new IllegalArgumentException("Item cannot be null");
-        }
+
+        if (quantity == 0)
+            throw new IllegalArgumentException("Quantity cannot be zero");
+
         this.item = item;
         this.add = add;
+        this.quantity = quantity;
     }
 
     public boolean isAdding() {
@@ -59,7 +64,7 @@ public class InventoryAction implements Action, Serializable {
 
     @Override
     public String toString() {
-        return "<Inventory " + this.add + " " + this.item + ">";
+        return "<Inventory " + this.add + " " + this.quantity + " " + this.item + ">";
     }
 
     @Override
