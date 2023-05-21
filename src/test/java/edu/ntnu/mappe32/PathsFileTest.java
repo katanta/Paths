@@ -1,26 +1,24 @@
-package edu.ntnu.mappe32.io;
+package edu.ntnu.mappe32;
 
+import edu.ntnu.mappe32.io.PathsFileWriter;
 import edu.ntnu.mappe32.model.Item;
+import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.action_related.*;
 import edu.ntnu.mappe32.model.story_related.Link;
 import edu.ntnu.mappe32.model.story_related.Passage;
 import edu.ntnu.mappe32.model.story_related.Story;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.File;
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PathsFileWriterTest {
-    Story mainTestStory;
+@DisplayName("PathsFile Test")
+class PathsFileTest {
 
-    Passage lastPassage;
-    Link lastLink;
-    Action goldPlus100;
+    private File testFile;
+    private Story testStory;
+
     @BeforeEach
     void setUp() {
         Action scorePlus10 = new ScoreAction(10);
@@ -30,10 +28,9 @@ class PathsFileWriterTest {
         Action healthPlus100 = new HealthAction(100);
         Action healthMinus100 = new HealthAction(-100);
         Action medalOfTheCoward = new InventoryAction(new Item("Medal Of The Coward", true, new ScoreAction(-10)), true, 1);
-        Action keysYoWhatsUp = new InventoryAction(new Item("Keys Yo Whats Up", true,new ScoreAction(10)), true, 1);
+        Action keysYoWhatsUp = new InventoryAction(new Item("Keys Yo Whats Up", true, new ScoreAction(10)), true, 1);
         Action helmet = new InventoryAction(new Item("Helmet", true, new HealthAction(100)), true, 1);
         Action goldPlus50 = new GoldAction(50);
-        goldPlus100 = new GoldAction(100);
         Action goldPlus1000 = new GoldAction(1000);
         Action goldMinus1000 = new GoldAction(-1000);
 
@@ -66,7 +63,6 @@ class PathsFileWriterTest {
         Link stopAndCastAMagicSpell = new Link("Stop and cast a magic spell", "Cast a magic spell");
         stopAndCastAMagicSpell.addAction(goldPlus50);
 
-        lastLink = new Link("Oooops", "Keep running");
 
         Passage openingPassage1 = new Passage("::You see a :troll", "::You see a:: 3-meter( )tall troll slowly turning towards you.");
         openingPassage1.addLink(runAway);
@@ -81,45 +77,102 @@ class PathsFileWriterTest {
         Passage runAwayPassage = new Passage("Run away", "The troll sees you and runs after you.");
         runAwayPassage.addLink(keepRunning);
         runAwayPassage.addLink(stopAndCastAMagicSpell);
-        lastPassage = new Passage("Keep running", "The troll easily catches you with its long strides and eats you for dinner, literally");
-        mainTestStory = new Story("The story of the troll", openingPassage1);
+        Passage lastPassage = new Passage("Keep running", "The troll easily catches you with its long strides and eats you for dinner, literally");
+        testStory = new Story("The story of the troll", openingPassage1);
 
-        mainTestStory.addPassage(useSword);
-        mainTestStory.addPassage(castAMagicSpellPassage);
-        mainTestStory.addPassage(attackTheTrollPassage);
-        mainTestStory.addPassage(runAwayPassage);
-        mainTestStory.addPassage(lastPassage);
+        testStory.addPassage(useSword);
+        testStory.addPassage(castAMagicSpellPassage);
+        testStory.addPassage(attackTheTrollPassage);
+        testStory.addPassage(runAwayPassage);
+        testStory.addPassage(lastPassage);
+        testFile = new File("src/main/resources/test_stories/main_test_story2.paths");
     }
-    @DisplayName("writeStory()")
-    @Nested
-    class WriteStoryTest {
-        @DisplayName("writes story accurately")
-        @Test
-        void writeStoryAccurately() throws IOException {
-            String testFilePath = "src/main/resources/test_stories/write_main_story_test.paths";
-            PathsFileWriter.writeStory(mainTestStory, testFilePath);
-            File outputFile = new File(testFilePath);
-            assertTrue(outputFile.exists());
-            assertTrue(outputFile.isFile());
-            assertTrue(outputFile.canRead());
-            assertEquals(mainTestStory.toString(),
-                    PathsFileReader.readStory(outputFile.getPath()).toString());
 
-            outputFile.delete();
-        }
-        @DisplayName("throws IllegalArgumentException if file path does not have .paths as extension")
+    @Nested
+    @DisplayName("Constructor")
+    class ConstructorTests {
+
         @Test
-        void throwsIllegalArgumentExceptionIfFilePathDoesNotHaveDotPathsAsExtension() {
-            String testFilePath = "src/main/resources/test_stories/test.txt";
-            assertThrows(IllegalArgumentException.class,
-                    () -> PathsFileWriter.writeStory(mainTestStory, testFilePath));
+        @DisplayName("creates a PathsFile when valid file is entered")
+        void constructorCreatesAPathsFileWhenValidFileIsEntered() {
+
+            PathsFileWriter.writeStory(testStory, testFile.getAbsolutePath());
+
+            PathsFile pathsFile = new PathsFile(testFile);
+
+            assertNotNull(pathsFile);
+            assertEquals(testFile.getAbsolutePath(), pathsFile.getFilePath());
+
+            assertEquals(testStory.toString(), pathsFile.getStory().toString());
+            assertEquals(testStory.getTitle(), pathsFile.getStoryTitle());
+            assertEquals(1, pathsFile.getBrokenLinks());
         }
-        @DisplayName("throws IOException if directory does not exist")
+
         @Test
-        void throwsIOExceptionWhenDirectoryDoesNotExist() {
-            String testFilePath = "src/non/existent/directory/test.paths";
-            assertThrows(RuntimeException.class,
-                    () -> PathsFileWriter.writeStory(mainTestStory, testFilePath));
+        @DisplayName("throws IllegalArgumentException when file is null")
+        void constructorThrowsIllegalArguemntExceptionWhenFileIsNull() {
+
+            File file = null;
+
+            assertThrows(IllegalArgumentException.class, () -> new PathsFile(file));
+        }
+
+        @Test
+        @DisplayName("Negative Case: Non-existent File")
+        void constructorThrowsIllegalArguemntExceptionWhenFileDoesNotExist() {
+
+            File file = new File("nonExistentFilePath.txt");
+
+            assertThrows(IllegalArgumentException.class, () -> new PathsFile(file));
+        }
+    }
+
+    @Nested
+    @DisplayName("Getter Methods")
+    class GetterMethodsTests {
+
+        @Test
+        @DisplayName("getStory()")
+        void testGetStory() {
+
+            PathsFile pathsFile = new PathsFile(testFile);
+
+            Story actualStory = pathsFile.getStory();
+
+            assertEquals(testStory.toString(), actualStory.toString());
+        }
+
+        @Test
+        @DisplayName("getBrokenLinks()")
+        void testGetBrokenLinks() {
+
+            PathsFile pathsFile = new PathsFile(testFile);
+
+            Integer actualBrokenLinks = pathsFile.getBrokenLinks();
+
+            assertEquals(1, actualBrokenLinks);
+        }
+
+        @Test
+        @DisplayName("getFilePath()")
+        void testGetFilePath() {
+
+            PathsFile pathsFile = new PathsFile(testFile);
+
+            String actualFilePath = pathsFile.getFilePath();
+
+            assertEquals(testFile.getAbsolutePath(), actualFilePath);
+        }
+
+        @Test
+        @DisplayName("getStoryTitle()")
+        void testGetStoryTitle() {
+
+            PathsFile pathsFile = new PathsFile(testFile);
+
+            String actualStoryTitle = pathsFile.getStoryTitle();
+
+            assertEquals(testStory.getTitle(), actualStoryTitle);
         }
     }
 }

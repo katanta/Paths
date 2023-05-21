@@ -13,6 +13,8 @@ public class PathsFile {
     private final Story story;
 
     public PathsFile(File file) {
+        if (file == null)
+            throw new IllegalArgumentException("File cannot be null");
         this.filePath = file.getAbsolutePath();
         this.story = PathsFileReader.readStory(filePath);
         this.storyTitle = story.getTitle();
