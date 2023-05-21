@@ -3,10 +3,7 @@ package edu.ntnu.mappe32.controller;
 import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
-import edu.ntnu.mappe32.model.action_related.Action;
-import edu.ntnu.mappe32.model.action_related.InsufficientGoldException;
-import edu.ntnu.mappe32.model.action_related.InventoryAction;
-import edu.ntnu.mappe32.model.action_related.PlayerDoesNotHaveItemException;
+import edu.ntnu.mappe32.model.action_related.*;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Link;
 import edu.ntnu.mappe32.model.story_related.Passage;
@@ -122,14 +119,14 @@ public class PassageViewController {
             linkButton.setPrefSize(200, 50);
             linkButton.setMaxWidth(400);
             linkButton.setOnMouseClicked(mouseEvent -> {
-                try {
+                int goldActionSum = link.getActions().stream().filter(a -> a instanceof GoldAction)
+                        .map(a -> ((GoldAction) a).getGold()).mapToInt(i -> i).sum(); //sum of goldActions in the link
+                if(game.player().getGold() + goldActionSum < 0) { //if gold actions would lead to negative gold
+                    updateRecentEventsFailure(game.player().getName() + " does not have enough gold to choose this path!");
+                } else {
                     updateRecentEventsPane(link);
                     currentPassage = game.go(link); //this.game can be used to update player information
                     updateScene(); //make the buttons change the current active passage, changing the scene
-                } catch (InsufficientGoldException e) {
-
-                } catch (PlayerDoesNotHaveItemException e) {
-
                 }
             });
             linkButton.setOnMouseEntered(e -> linkButton.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff"));
@@ -253,7 +250,6 @@ public class PassageViewController {
     }
 
     private void updateRecentEventsPane(Object linkOrItem) {
-
         if (!(linkOrItem instanceof Link) && !(linkOrItem instanceof Item))
             return;
 
@@ -280,7 +276,7 @@ public class PassageViewController {
         Text failureText = new Text(message);
         failureText.setFont(resizableMainFont(18));
         failureText.setWrappingWidth(620);
-        failureText.setStyle("-fx-text-fill: #ff0000");
+        failureText.setFill(Color.RED);
 
         passageView.getEventsVBox().getChildren().add(0, failureText);
     }

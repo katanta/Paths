@@ -144,9 +144,9 @@ public class Player implements Serializable {
      * the method will throw an IllegalArguemntException.
      * @param newGoldPoints New gold points, as int.
      */
-    public void addGold(final int newGoldPoints) throws InsufficientGoldException {
+    public void addGold(final int newGoldPoints) {
         if (this.gold + newGoldPoints < 0) {
-            throw new InsufficientGoldException("You do not have enough gold");
+            throw new IllegalArgumentException("You do not have enough gold");
         }
         this.gold += newGoldPoints;
     }

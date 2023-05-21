@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.model;
 
+import edu.ntnu.mappe32.model.action_related.InsufficientGoldException;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Passage;
 import edu.ntnu.mappe32.model.story_related.Link;
