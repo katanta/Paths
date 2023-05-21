@@ -27,9 +27,9 @@ public class PathsFileReaderTest {
         Action scoreMinus100 = new ScoreAction(-100);
         Action healthPlus100 = new HealthAction(100);
         Action healthMinus100 = new HealthAction(-100);
-        Action medalOfTheCoward = new InventoryAction(new Item("Medal Of The Coward", true, new ScoreAction(-10)), true);
-        Action keysYoWhatsUp = new InventoryAction(new Item("Keys Yo Whats Up", true, new ScoreAction(10)), true);
-        Action helmet = new InventoryAction(new Item("Helmet", true, new HealthAction(100)), true);
+        Action medalOfTheCoward = new InventoryAction(new Item("Medal Of The Coward", true, new ScoreAction(-10)), true, 1);
+        Action keysYoWhatsUp = new InventoryAction(new Item("Keys Yo Whats Up", true, new ScoreAction(10)), true, 1);
+        Action helmet = new InventoryAction(new Item("Helmet", true, new HealthAction(100)), true, 1);
         Action goldPlus50 = new GoldAction(50);
         goldPlus100 = new GoldAction(100);
         Action goldPlus1000 = new GoldAction(1000);
@@ -99,7 +99,7 @@ public class PathsFileReaderTest {
             Link link = new Link("Run away", "Run away");
             Action health = new HealthAction(-100);
             Action gold = new GoldAction(100);
-            Action inventoryAction = new InventoryAction(new Item("Medal of the Coward", true, health, gold),true);
+            Action inventoryAction = new InventoryAction(new Item("Medal of the Coward", true, health, gold),true, 1);
             Passage passage = new Passage("::You see a :troll", "::You see a:: 3-meter( )tall troll slowly turning towards you.");
             link.addAction(inventoryAction);
             passage.addLink(link);

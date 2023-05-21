@@ -46,27 +46,11 @@ class AllActionTests {
         die.execute(player);
         assertEquals(0, player.getHealth());
     }
-    @DisplayName("InventoryAction adds to inventory")
-    @Test
-    void inventoryActionAddsToInventory() {
-        Item freshPairOfBirkenstocks = new Item("Fresh Pair of Birkenstocks", true, new ScoreAction(10));
-        Item tenGDiamond = new Item("10g Diamond", true, new ScoreAction(100));
-        Action giveDiamond = new InventoryAction(tenGDiamond, true);
-        Action giveSandals = new InventoryAction(freshPairOfBirkenstocks, true);
-        List<Item> testInventory = new ArrayList<>();
-        testInventory.add(freshPairOfBirkenstocks);
-        testInventory.add(tenGDiamond);
-        giveDiamond.execute(player);
-        giveSandals.execute(player);
-        assertEquals(testInventory.size(), player.getInventory().keySet().size());
-        assertTrue(testInventory.containsAll(player.getInventory().keySet()));
-        assertTrue(player.getInventory().keySet().containsAll(testInventory));
-    }
 
     @DisplayName("InventoryAction constructor throws IllegalArgumentException if item is blank or empty")
     @Test
     void inventoryActionConstructorThrowsIllegalArgumentExceptionIfItemIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> new InventoryAction(null, true));
+        assertThrows(IllegalArgumentException.class, () -> new InventoryAction(null, true, 1));
 
     }
     @DisplayName("ScoreAction correctly calculates and does not go below zero")

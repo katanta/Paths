@@ -172,6 +172,9 @@ public class Player implements Serializable {
     }
 
     public void removeFromInventory(final Item item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Item cannot be null");
+        }
         if (!inventory.containsKey(item)) {
             throw new IllegalArgumentException("The player does not have this item");
         }
@@ -244,7 +247,7 @@ public class Player implements Serializable {
             return this;
         }
         public PlayerBuilder score(int scorePoints) {
-            if (score < 0)
+            if (scorePoints < 0)
                 throw new IllegalArgumentException("Score cannot be below zero");
 
             this.score = scorePoints;
@@ -252,7 +255,7 @@ public class Player implements Serializable {
         }
 
         public PlayerBuilder gold(int goldPoints) {
-            if (gold < 0)
+            if (goldPoints < 0)
                 throw new IllegalArgumentException("Gold cannot be below zero");
 
             this.gold = goldPoints;

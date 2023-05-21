@@ -5,15 +5,9 @@ import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.HealthAction;
 import edu.ntnu.mappe32.model.action_related.InsufficientGoldException;
 import edu.ntnu.mappe32.model.action_related.ScoreAction;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -284,6 +278,149 @@ public class PlayerTest {
             assertEquals(0, mutumbu.getScore());
             assertEquals(0, mufasa.getScore());
             assertEquals(0, pumba.getScore());
+        }
+    }
+
+    @DisplayName("removeFromInventory()")
+    @Nested
+    class RemoveFromInventoryTests {
+        @DisplayName("removes valid item from inventory")
+        @Test
+        void removeFromInventoryRemovesValidItem() {
+            Item item = new Item("Tape", true, new ScoreAction(10));
+            mutumbu.removeFromInventory(item);
+
+            assertFalse(mutumbu.getInventory().containsKey(item));
+        }
+        @DisplayName("throws exception when player does not have item")
+        @Test
+        void removeFromInventoryThrowsExceptionWhenPlayerDoesNotHaveItem() {
+            Item invalidItem = new Item("Invalid Item", false, new ScoreAction(10));
+
+            Assertions.assertThrows(IllegalArgumentException.class, () -> mutumbu.removeFromInventory(invalidItem));
+        }
+        @DisplayName("throws exception when item is null")
+        @Test
+        void removeFromInventoryThrowsExceptionWhenItemIsNull() {
+            Assertions.assertThrows(IllegalArgumentException.class, () -> mutumbu.removeFromInventory(null));
+        }
+        @DisplayName("decreases item quantity")
+        @Test
+        void removeFromInventoryItemQuantityDecreased() {
+            Item item = new Item("Tape", true, new ScoreAction(10));
+
+            int initialQuantity = mutumbu.getInventory().get(item);
+
+            mutumbu.removeFromInventory(item);
+
+            int updatedQuantity = mutumbu.getInventory().getOrDefault(item, 0);
+
+            Assertions.assertEquals(initialQuantity - 1, updatedQuantity);
+        }
+        @DisplayName("removes item key when quantity is zero")
+        @Test
+        void removeFromInventoryRemovesItemWhenQuantityIsZero() {
+            Item item = new Item("Tape", true, new ScoreAction(10));
+
+            mutumbu.removeFromInventory(item);
+
+            Assertions.assertFalse(mutumbu.getInventory().containsKey(item));
+        }
+    }
+    @Nested
+    @DisplayName("PlayerBuilder tests")
+    class PlayerBuilderTest {
+
+        @Test
+        void testBuilderWithValidValues() {
+            String name = "John";
+            int health = 100;
+            int score = 50;
+            int gold = 1000;
+            Map<Item, Integer> inventory = new HashMap<>();
+            inventory.put(new Item("Sword", true, new HealthAction(-10)), 1);
+
+            Player.PlayerBuilder builder = new Player.PlayerBuilder(name, health)
+                    .score(score)
+                    .gold(gold)
+                    .inventory(inventory);
+
+            Player player = builder.build();
+
+            assertEquals(name, player.getName());
+            assertEquals(health, player.getHealth());
+            assertEquals(score, player.getScore());
+            assertEquals(gold, player.getGold());
+            assertEquals(inventory, player.getInventory());
+        }
+
+        @Test
+        void testBuilderWithMissingValues() {
+            String name = "John";
+            int health = 100;
+
+            Player.PlayerBuilder builder = new Player.PlayerBuilder(name, health);
+
+            Player player = builder.build();
+
+            assertEquals(name, player.getName());
+            assertEquals(health, player.getHealth());
+            assertEquals(0, player.getScore());
+            assertEquals(0, player.getGold());
+            assertTrue(player.getInventory().isEmpty());
+        }
+
+        @Test
+        void testBuilderWithInvalidValues() {
+            assertThrows(IllegalArgumentException.class, () -> new Player.PlayerBuilder(null, 100));
+            assertThrows(IllegalArgumentException.class, () -> new Player.PlayerBuilder("", 100));
+            assertThrows(IllegalArgumentException.class, () -> new Player.PlayerBuilder("John", -100));
+
+            assertThrows(IllegalArgumentException.class, () -> new Player.PlayerBuilder("John", 100).inventory(null));
+
+            Map<Item, Integer> invalidInventory = new HashMap<>();
+            invalidInventory.put(new Item("Sword", true, new HealthAction(-10)), null);
+            assertThrows(IllegalArgumentException.class, () -> new Player.PlayerBuilder("John", 100).inventory(invalidInventory));
+
+            invalidInventory.clear();
+            invalidInventory.put(new Item("Sword", true, new HealthAction(-10)), 0);
+            assertThrows(IllegalArgumentException.class, () -> new Player.PlayerBuilder("John", 100).inventory(invalidInventory));
+
+            invalidInventory.clear();
+            invalidInventory.put(null, 1);
+            assertThrows(IllegalArgumentException.class, () -> new Player.PlayerBuilder("John", 100).inventory(invalidInventory));
+
+            invalidInventory.clear();
+            invalidInventory.put(new Item("Sword", true, new HealthAction(-10)), -1);
+            assertThrows(IllegalArgumentException.class, () -> new Player.PlayerBuilder("John", 100).inventory(invalidInventory));
+
+            assertThrows(IllegalArgumentException.class, () -> new Player.PlayerBuilder("John", 100).score(-100));
+            assertThrows(IllegalArgumentException.class, () -> new Player.PlayerBuilder("John", 100).gold(-100));
+        }
+    }
+    @DisplayName("copyPlayer()")
+    @Nested
+    class CopyPlayerTest {
+        @DisplayName("returns same player")
+        @Test
+        void testCopyReturnsSamePlayer() {
+            // Create a player with initial values
+            Player originalPlayer = new Player("Test Player", 100, 0, 0, new HashMap<>());
+            originalPlayer.addToInventory(new Item("Item 1", true, new ScoreAction(10)), 5);
+            originalPlayer.addToInventory(new Item("Item 2", true, new ScoreAction(10)), 3);
+
+            // Create a copy of the player
+            Player copiedPlayer = originalPlayer.copyPlayer();
+
+            // Assert that the copied player is not the same object reference
+            Assertions.assertNotSame(originalPlayer, copiedPlayer);
+
+            // Assert that the copied player has the same values as the original player
+            Assertions.assertEquals(originalPlayer.getName(), copiedPlayer.getName());
+            Assertions.assertEquals(originalPlayer.getHealth(), copiedPlayer.getHealth());
+            Assertions.assertEquals(originalPlayer.getScore(), copiedPlayer.getScore());
+            Assertions.assertEquals(originalPlayer.getGold(), copiedPlayer.getGold());
+            Assertions.assertEquals(originalPlayer.getInventory(), copiedPlayer.getInventory());
         }
     }
 }
