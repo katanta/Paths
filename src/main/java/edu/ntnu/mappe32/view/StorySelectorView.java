@@ -3,7 +3,6 @@ package edu.ntnu.mappe32.view;
 import edu.ntnu.mappe32.model.PathsFile;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -38,33 +37,34 @@ public class StorySelectorView {
         BorderPane root = new BorderPane();
         root.setTop(top);
         root.setCenter(center);
-        root.getChildren().add(backButton);
         this.scene = new Scene(root, 1280, 720);
     }
 
 
     public void configureTop() {
-        top = new HBox(50);
+        top = new HBox(190);
         Label selectYourStory = new Label("Select Your Story!");
         selectYourStory.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSansBold.ttf", 50));
         selectYourStory.setMaxWidth(700);
         try {
             backButtonImage = new Image(new FileInputStream("src/main/resources/img/restartButton.png"));
             backButtonHover = new Image(new FileInputStream("src/main/resources/img/restartButtonHover.png"));
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        HBox backButtonHBox = new HBox(10);
         backButton = new ImageView(backButtonImage);
         backButton.setFitWidth(62);
         backButton.setFitHeight(62);
-        backButton.setX(20);
-        backButton.setY(20);
         backButton.setPickOnBounds(true);
-        top.getChildren().addAll(selectYourStory);
-        top.setAlignment(Pos.CENTER);
 
-        top.setPadding(new Insets(20, 0, 0, 0));
+
+        backButtonHBox.getChildren().addAll(backButton);
+        backButtonHBox.setAlignment(Pos.TOP_LEFT);
+        top.getChildren().addAll(backButtonHBox, selectYourStory);
+        selectYourStory.setAlignment(Pos.TOP_CENTER);
+
+        top.setPadding(new Insets(20, 0, 0, 20));
     }
 
     private void configureCenter() {
