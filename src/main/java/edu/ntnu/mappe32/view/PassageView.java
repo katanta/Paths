@@ -46,6 +46,7 @@ public class PassageView {
 
     public PassageView() {
         root = new StackPane();
+        root.setStyle("-fx-border-width: 4px; -fx-border-color: #000000");
         infoFont = resizableMainFont(18);
         configurePassageInfo();
         configureLinkScrollPane();
