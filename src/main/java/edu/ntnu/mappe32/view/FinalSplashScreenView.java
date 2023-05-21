@@ -16,8 +16,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -35,6 +38,8 @@ public class FinalSplashScreenView {
     private ImageView middleTrees;
     private ImageView lightLayer;
     private ImageView frontTrees;
+    private MediaPlayer musicPlayer;
+    private MediaPlayer selectionPlayer;
 
 
     public FinalSplashScreenView() {
@@ -43,6 +48,7 @@ public class FinalSplashScreenView {
         configureLogo(); //configureLogo must be done first to apply correct margins for it
         configureButtonsVBox();
         configureBackGround();
+        configureMediaPlayers();
         scene = new Scene(root, 1280, 720);
     }
 
@@ -166,6 +172,20 @@ public class FinalSplashScreenView {
         };
         animation.setCycleCount(Animation.INDEFINITE);
         return animation;
+    }
+
+    private void configureMediaPlayers() {
+        musicPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/music/MainMenuMusic.mp3").toURI().toString()));
+        selectionPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/Menu Selection Click.wav").toURI().toString()));
+
+        musicPlayer.play();
+    }
+
+    public MediaPlayer getMusicPlayer() {
+        return musicPlayer;
+    }
+    public MediaPlayer getSelectionPlayer() {
+        return selectionPlayer;
     }
 
     public Scene getScene() {

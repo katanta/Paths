@@ -1,4 +1,5 @@
 module IDATT.GROUP32 {
+    requires javafx.media;
     requires javafx.controls;
     requires javafx.graphics;
     exports edu.ntnu.mappe32;
