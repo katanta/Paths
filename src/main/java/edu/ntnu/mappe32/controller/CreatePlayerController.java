@@ -4,7 +4,6 @@ import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.view.CreateGoalsView;
 import edu.ntnu.mappe32.view.CreatePlayerView;
-import edu.ntnu.mappe32.view.PathsSplashScreenView;
 import edu.ntnu.mappe32.view.StorySelectorView;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -40,11 +39,14 @@ public class CreatePlayerController {
     }
 
     private void setActions() {
+
+        //Info button
         setButtonTooltip(view.getInfoButton(), "Click here to see Story information...");
         view.getInfoButton().setOnMouseEntered(mouseEvent -> setButtonImage(view.getInfoButton(), view.getInfoButtonHover()));
         view.getInfoButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getInfoButton(), view.getInfoButtonImage()));
         showInformationBox();
 
+        //Back button
         setButtonTooltip(view.getBackButton(), "Click to go back to Select Story");
         view.getBackButton().setOnMouseEntered(mouseEvent -> setButtonImage(view.getBackButton(), view.getBackButtonHover()));
         view.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getBackButton(), view.getBackButtonImage()));
@@ -52,9 +54,28 @@ public class CreatePlayerController {
         view.getNextButton().setOnMouseClicked(mouseEvent -> goToCreateGoals());
         setButtonTooltip(view.getNextButton(), "Click to continue");
 
+        //Help button
+        setHelpButtonClickAction();
+        view.getHelpButton().setOnMouseEntered(mouseEvent -> {
+            setButtonImage(view.getHelpButton(), view.getHelpButtonHover());
+            setButtonTooltip(view.getHelpButton(), "Need help? Press me! :)");
+        });
+
+        view.getHelpButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getHelpButton(), view.getHelpButtonImage()));
         setKeyPressedAction(view.getPlayerHealthTextField(), this::goToCreateGoals);
         setKeyPressedAction(view.getPlayerGoldTextField(), this::goToCreateGoals);
         setKeyPressedAction(view.getPlayerNameTextField(), this::goToCreateGoals);
+    }
+
+    private void setHelpButtonClickAction() {
+        view.getHelpButton().setOnMouseClicked(e -> {
+            view.getTutorialImageView().toFront();
+            view.getTutorialImageView().setVisible(true);
+            view.getTutorialImageView().setOnMouseClicked(e1 -> {
+                view.getTutorialImageView().toBack();
+                view.getTutorialImageView().setVisible(false);
+            });
+        });
     }
 
     private void setButtonTooltip(ImageView button, String text) {

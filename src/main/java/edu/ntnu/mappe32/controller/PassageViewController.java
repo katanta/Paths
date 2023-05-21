@@ -94,12 +94,14 @@ public class PassageViewController {
     }
 
     private void updatePlayerInfo() {
-        if (game.player().getName().endsWith("s")) {
+        if (game.player().getName().endsWith("s") || game.player().getName().endsWith("z") || game.player().getName().endsWith("x")) {
             passageView.getPlayerNameLabel().setText(game.player().getName() + "' stats");
         } else passageView.getPlayerNameLabel().setText(game.player().getName() + "'s stats");
+
         passageView.getPlayerGoldLabel().setText("GOLD: " + game.player().getGold());
         passageView.getPlayerHealthLabel().setText("HEALTH: " + game.player().getHealth());
         passageView.getPlayerScoreLabel().setText("SCORE: " + game.player().getScore());
+
         inventory.setAll(game.player().getInventory().keySet());
     }
 
