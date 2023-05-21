@@ -1,5 +1,7 @@
 package edu.ntnu.mappe32.model;
 
+import edu.ntnu.mappe32.model.action_related.InsufficientGoldException;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -142,9 +144,9 @@ public class Player implements Serializable {
      * the method will throw an IllegalArguemntException.
      * @param newGoldPoints New gold points, as int.
      */
-    public void addGold(final int newGoldPoints) throws IllegalArgumentException {
+    public void addGold(final int newGoldPoints) throws InsufficientGoldException {
         if (this.gold + newGoldPoints < 0) {
-            throw new IllegalArgumentException("You do not have enough gold");
+            throw new InsufficientGoldException("You do not have enough gold");
         }
         this.gold += newGoldPoints;
     }

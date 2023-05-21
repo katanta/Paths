@@ -25,7 +25,7 @@ public class GoldAction implements Action, Serializable {
      * @since 0.1
      */
     @Override
-    public void execute(Player player) {
+    public void execute(Player player) throws InsufficientGoldException {
         player.addGold(this.gold);
     }
 

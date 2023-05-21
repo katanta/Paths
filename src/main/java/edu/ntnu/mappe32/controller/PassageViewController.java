@@ -4,7 +4,9 @@ import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.Action;
+import edu.ntnu.mappe32.model.action_related.InsufficientGoldException;
 import edu.ntnu.mappe32.model.action_related.InventoryAction;
+import edu.ntnu.mappe32.model.action_related.PlayerDoesNotHaveItemException;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Link;
 import edu.ntnu.mappe32.model.story_related.Passage;
@@ -120,9 +122,15 @@ public class PassageViewController {
             linkButton.setPrefSize(200, 50);
             linkButton.setMaxWidth(400);
             linkButton.setOnMouseClicked(mouseEvent -> {
-                updateRecentEventsPane(link);
-                currentPassage = game.go(link); //this.game can be used to update player information
-                updateScene(); //make the buttons change the current active passage, changing the scene
+                try {
+                    updateRecentEventsPane(link);
+                    currentPassage = game.go(link); //this.game can be used to update player information
+                    updateScene(); //make the buttons change the current active passage, changing the scene
+                } catch (InsufficientGoldException e) {
+
+                } catch (PlayerDoesNotHaveItemException e) {
+
+                }
             });
             linkButton.setOnMouseEntered(e -> linkButton.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff"));
             linkButton.setOnMouseExited(e -> linkButton.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-border-width: 2px; -fx-border-color: #000000"));
@@ -266,6 +274,15 @@ public class PassageViewController {
         }
         allEventText.setText(finalEventString.toString());
         passageView.getEventsVBox().getChildren().add(0, allEventText);
+    }
+
+    private void updateRecentEventsFailure(String message) {
+        Text failureText = new Text(message);
+        failureText.setFont(resizableMainFont(18));
+        failureText.setWrappingWidth(620);
+        failureText.setStyle("-fx-text-fill: #ff0000");
+
+        passageView.getEventsVBox().getChildren().add(0, failureText);
     }
 
     private void addNewGoalCompletionToEventsPane(Goal newCompletedGoal) {

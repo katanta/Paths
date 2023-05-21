@@ -3,6 +3,7 @@ package edu.ntnu.mappe32;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.HealthAction;
+import edu.ntnu.mappe32.model.action_related.InsufficientGoldException;
 import edu.ntnu.mappe32.model.action_related.ScoreAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -162,7 +163,7 @@ public class PlayerTest {
     class AddGoldTest {
         @DisplayName("adds gold")
         @Test
-        void addGoldAddsGold() {
+        void addGoldAddsGold() throws InsufficientGoldException {
             mutumbu.addGold(100);
             mufasa.addGold(-100);
             pumba.addGold(-100);

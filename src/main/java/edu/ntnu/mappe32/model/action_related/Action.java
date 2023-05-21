@@ -12,7 +12,7 @@ public interface Action {
      * Executes the action on a player.
      * @param player The player affected by the action, as Player.
      */
-    void execute(Player player);
+    void execute(Player player) throws InsufficientGoldException;
 
     /**
      * A string that describes the action occurring to the player.
