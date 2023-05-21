@@ -100,6 +100,7 @@ public class PassageViewController {
         passageView.getPlayerGoldLabel().setText("GOLD: " + game.player().getGold());
         passageView.getPlayerHealthLabel().setText("HEALTH: " + game.player().getHealth());
         passageView.getPlayerScoreLabel().setText("SCORE: " + game.player().getScore());
+        inventory.setAll(game.player().getInventory().keySet());
     }
 
     private void updatePassageInfo() {
