@@ -58,6 +58,19 @@ public class InventoryAction implements Action, Serializable {
         }
     }
 
+    public boolean isAdd() {
+        return add;
+    }
+
+    public boolean isPossible(Player player) {
+        if (!player.getInventory().containsKey(item)) return false;
+        if (player.getInventory().get(item) < quantity) return false;
+        return true;
+    }
+    public int getQuantity() {
+        return quantity;
+    }
+
     public Item getItem() {
         return item;
     }

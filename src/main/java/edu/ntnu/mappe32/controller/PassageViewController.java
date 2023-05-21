@@ -121,8 +121,16 @@ public class PassageViewController {
             linkButton.setOnMouseClicked(mouseEvent -> {
                 int goldActionSum = link.getActions().stream().filter(a -> a instanceof GoldAction)
                         .map(a -> ((GoldAction) a).getGold()).mapToInt(i -> i).sum(); //sum of goldActions in the link
+                List<Action> impossibleActions = link.getActions().stream()
+                        .filter(action -> action instanceof InventoryAction)
+                        .filter(action -> !((InventoryAction) action).isPossible(game.player())).toList();
                 if(game.player().getGold() + goldActionSum < 0) { //if gold actions would lead to negative gold
                     updateRecentEventsFailure(game.player().getName() + " does not have enough gold to choose this path!");
+                } else if (!impossibleActions.isEmpty()) {
+                    impossibleActions.forEach(action -> {
+                        InventoryAction inventoryAction = (InventoryAction) action;
+                        updateRecentEventsFailure(game.player().getName() + " needs " + inventoryAction.getQuantity() + "x " + inventoryAction.getItem().getItemName() + " to access this path!" );
+                    });
                 } else {
                     updateRecentEventsPane(link);
                     currentPassage = game.go(link); //this.game can be used to update player information
