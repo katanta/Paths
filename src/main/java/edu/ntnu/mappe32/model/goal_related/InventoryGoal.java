@@ -68,5 +68,9 @@ public class InventoryGoal implements Goal {
         });
         return wholeGoal.toString();
     }
+
+    public HashMap<Item, Integer> getMandatoryItems() {
+        return mandatoryItems;
+    }
 }
 

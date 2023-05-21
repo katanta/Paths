@@ -70,27 +70,83 @@ public class InventoryGoalTest {
             assertFalse(helpStranger.isFulfilled(player));
         }
     }
-    @DisplayName("constructor")
     @Nested
-    class ConstructorTest {
-        @DisplayName("throws IllegalArgumentException when mandatoryItems is null")
+    @DisplayName("Constructor")
+    class ConstructorTests {
         @Test
-        void constructorThrowsIllegalArgumentExceptionWhenMandatoryItemsIsNull() {
-            assertThrows(IllegalArgumentException.class, () -> new InventoryGoal(null));
-        }
-        @DisplayName("throws IllegalArgumentException when mandatoryItems is empty")
-        @Test
-        void constructorThrowsIllegalArgumentExceptionWhenMandatoryItemsIsEmpty() {
-            assertThrows(IllegalArgumentException.class, () -> new InventoryGoal(new HashMap<>()));
-        }
-        @DisplayName("does not throw IllegalArgumentException when mandatory items contains elements")
-        @Test
-        void doesNotThrowIllegalArgumentExceptionWhenMandatoryItemsContainsElements() {
+        @DisplayName("creates Inventory Goal when Mandatory Items is valid")
+        void constructorCreatesAnInventoryGoalWhenMandatoryItemsIsValid() {
+
             HashMap<Item, Integer> mandatoryItems = new HashMap<>();
-            mandatoryItems.put(new Item("Potion of Healing", true, new HealthAction(100)), 1);
-            mandatoryItems.put(new Item("The King's Crown", true, new ScoreAction(10)), 1);
-            mandatoryItems.put(new Item("24-karat diamond", true, new ScoreAction(10)), 1);
-            assertDoesNotThrow(() -> new InventoryGoal(mandatoryItems));
+            mandatoryItems.put(new Item("Master Sword", true, new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("Potato", true, new HealthAction(10)), 1);
+
+            InventoryGoal goal = new InventoryGoal(mandatoryItems);
+
+            assertNotNull(goal);
+            assertEquals(mandatoryItems, goal.getMandatoryItems());
+        }
+
+        @Test
+        @DisplayName("throws exception when Mandatory Items is null")
+        void constructorThrowsWhenMandatoryItemsIsNull() {
+
+            HashMap<Item, Integer> mandatoryItems = null;
+
+            assertThrows(IllegalArgumentException.class, () -> new InventoryGoal(mandatoryItems));
+        }
+
+        @Test
+        @DisplayName("throws exception when Mandatory Items is empty")
+        void testConstructor_EmptyMandatoryItems_Negative() {
+
+            HashMap<Item, Integer> mandatoryItems = new HashMap<>();
+
+            assertThrows(IllegalArgumentException.class, () -> new InventoryGoal(mandatoryItems));
+        }
+
+        @Test
+        @DisplayName("throws exception when Mandatory Items contains a null value")
+        void constructorThrowsExceptionWhenMandatoryItemsContainsANullValue() {
+
+            HashMap<Item, Integer> mandatoryItems = new HashMap<>();
+            mandatoryItems.put(new Item("Master Sword", true, new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("Potato", true, new HealthAction(10)), null);
+
+            assertThrows(IllegalArgumentException.class, () -> new InventoryGoal(mandatoryItems));
+        }
+
+        @Test
+        @DisplayName("throws exception when Mandatory Items contains a 0 value")
+        void constructorThrowsExceptionWhenMandatoryItemsContainsA0Value() {
+
+            HashMap<Item, Integer> mandatoryItems = new HashMap<>();
+            mandatoryItems.put(new Item("Master Sword", true, new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("Potato", true, new HealthAction(10)), 0);
+
+            assertThrows(IllegalArgumentException.class, () -> new InventoryGoal(mandatoryItems));
+        }
+
+        @Test
+        @DisplayName("throws exception when Mandatory Items contains a negative value")
+        void constructorThrowsExceptionWhenMandatoryItemsContainsANegativeValue() {
+
+            HashMap<Item, Integer> mandatoryItems = new HashMap<>();
+            mandatoryItems.put(new Item("Master Sword", true, new ScoreAction(10)), 1);
+            mandatoryItems.put(new Item("Potato", true, new HealthAction(10)), -2);
+
+            assertThrows(IllegalArgumentException.class, () -> new InventoryGoal(mandatoryItems));
+        }
+
+        @Test
+        @DisplayName("throws exception when Mandatory Items contains a null key")
+        void constructorThrowsExceptionWhenMandatoryItemsContainsANullKey() {
+
+            HashMap<Item, Integer> mandatoryItems = new HashMap<>();
+            mandatoryItems.put(new Item("Master Sword", true, new ScoreAction(10)), 1);
+            mandatoryItems.put(null, 2);
+
+            assertThrows(IllegalArgumentException.class, () -> new InventoryGoal(mandatoryItems));
         }
     }
 }
