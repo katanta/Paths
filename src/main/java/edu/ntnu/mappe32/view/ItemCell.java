@@ -30,6 +30,7 @@ public class ItemCell extends ListCell<Item> {
 
     private void configureHBox() {
         Label itemInfo = new Label();
+        itemInfo.setMaxWidth(262.5);
         itemInfo.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 15));
         HBox.setMargin(itemInfo, new Insets(6));
 

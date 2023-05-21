@@ -59,7 +59,9 @@ public class Item implements Serializable {
         if (!(o instanceof Item item)) return false;
         return itemName.equals(item.itemName) && actions.equals(item.actions);
     }
-
+    public String usageString(Player player) {
+        return (player.getName() + " has used x1 " + itemName + "!");
+    }
     @Override
     public int hashCode() {
         return Objects.hash(itemName, actions);

@@ -4,6 +4,7 @@ import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.Action;
+import edu.ntnu.mappe32.model.action_related.InventoryAction;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Link;
 import edu.ntnu.mappe32.model.story_related.Passage;
@@ -258,8 +259,9 @@ public class PassageViewController {
                 finalEventString.append(a.toEventString(game.player())).append("\n");
             }
         } else {
+                finalEventString.append( "\n" + ((Item) linkOrItem).usageString(game.player()));
             for (Action a : ((Item) linkOrItem).getActions()) {
-                finalEventString.append(a.toEventString(game.player())).append("\n");
+                finalEventString.append("\n" + a.toEventString(game.player()));
             }
         }
         allEventText.setText(finalEventString.toString());
