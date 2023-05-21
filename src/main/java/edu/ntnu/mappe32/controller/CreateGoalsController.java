@@ -75,6 +75,26 @@ public class CreateGoalsController {
             CreatePlayerController createPlayerController = new CreatePlayerController(new CreatePlayerView(), stage, pathsFile, player);
         });
 
+        //Help button
+        setHelpButtonClickAction();
+        view.getHelpButton().setOnMouseEntered(mouseEvent -> {
+            Tooltip helpButtonTooltip = createTooltip("Need help? Press me! :)", 18);
+            Tooltip.install(view.getHelpButton(), helpButtonTooltip);
+        });
+        view.getHelpButton().setOnMouseEntered(mouseEvent -> view.getHelpButton().setImage(view.getHelpButtonHover()));
+        view.getHelpButton().setOnMouseExited(mouseEvent -> view.getHelpButton().setImage(view.getHelpButtonImage()));
+
+    }
+
+    private void setHelpButtonClickAction() {
+        view.getHelpButton().setOnMouseClicked(e -> {
+            view.getTutorialImageView().toFront();
+            view.getTutorialImageView().setVisible(true);
+            view.getTutorialImageView().setOnMouseClicked(e1 -> {
+                view.getTutorialImageView().toBack();
+                view.getTutorialImageView().setVisible(false);
+            });
+        });
     }
 
     private Tooltip createTooltip(String text, int fontSize) {
