@@ -51,4 +51,40 @@ class InventoryActionTest {
             assertThrows(IllegalArgumentException.class, () -> new InventoryAction(null, true, 1));
         }
     }
+    @Nested
+    @DisplayName("isPossible()")
+    class IsPossibleTests {
+        @Test
+        @DisplayName("returns true when sufficient quantity in inventory")
+        void isPossibleSufficientQuantityInInventoryReturnsTrue() {
+            // Add an item with the required quantity to the player's inventory
+            player.addToInventory(item, 2);
+
+            InventoryAction action = new InventoryAction(item, false, 1);
+            boolean isPossible = action.isPossible(player);
+
+            assertTrue(isPossible);
+        }
+
+        @Test
+        @DisplayName("returns false when insufficient quantity in inventory")
+        void isPossibleInsufficientQuantityInInventoryReturnsFalse() {
+            // Add an item with a lower quantity to the player's inventory
+            player.addToInventory(item, 1);
+
+            InventoryAction action = new InventoryAction(item, false, 2);
+            boolean isPossible = action.isPossible(player);
+
+            assertFalse(isPossible);
+        }
+
+        @Test
+        @DisplayName("returns false when item is not in inventory")
+        void testIsPossible_ItemNotInInventory_Negative() {
+            InventoryAction action = new InventoryAction(item, false, 1);
+            boolean isPossible = action.isPossible(player);
+
+            assertFalse(isPossible);
+        }
+    }
 }
