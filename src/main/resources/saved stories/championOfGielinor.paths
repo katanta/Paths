@@ -1,10 +1,9 @@
-The Champion of Gielinor
+Champion of Gielinor
 
 ::The Adventure Begins
-(CREDIT TO JAGEX FOR CREATING RUNESCAPE AND INSPIRING THIS STORY) You, a brave adventurer, stand at the entrance of the mystical land of Gielinor. Your journey is about to unfold, filled with quests, battles, and treasures. As you contemplate your next move, you notice three paths stretching before you:
+(CREDIT TO JAGEX FOR CREATING RUNESCAPE AND INSPIRING THIS STORY) You, a brave adventurer, stand at the entrance of the mystical land of Gielinor. Your journey is about to unfold, filled with quests, battles, and treasures. As you contemplate your next move, you notice two paths stretching before you:
 [Follow the path to the bustling city of Varrock](Varrock Path)<Score 10>
 [Take the road leading to the treacherous Wilderness](Wilderness Path)<Score 20><Health -50><Inventory true 1 Saradomin Godsword false <Score 50> <Health -80> >
-[Venture into the ancient forests of Taverley](Taverley Path)<Score 10><Health -10>
 
 ::Varrock Path
 You embark on the path that leads to the bustling city of Varrock. As you traverse the winding road, you encounter fellow travelers and merchants along the way. The city's towering walls come into view, promising a multitude of quests, shops, and guilds. Just around the outskirts you see multiple hooded figures, no doubt planning something evil and nefarious, as most hooded figures do. Except me, of course, the writer of this story!
@@ -37,22 +36,61 @@ As you traverse the outsides of the thick, stone walls of Varrock, you find a fe
 
 ::Joining a Guild
 As you knock on the doors of the cooking guild, you know that there is a place for you. After all, your cooking level is 99! After a few knocks, a chef with a ridiculously large moustache walks up to the door, and opens it. He loudly exclaims "GO AWAY! YOU ARE NOT WEARING A CHEF'S HAT, YOU MUST OBVIOUSLY BE A HORRIBLE COOK, AND WHATS WITH THAT OUTFIT? YOU LOOK HORRID!" This greatly damages your confidence, you lost some health. As you drop to the ground, you notice that there are 100 gold coins that the chef dropped for you. Perhaps he thought you were a beggar! No worries, you are now loaded!
-[Give up on your michelin-star dreams and enter Varrock](Enter Varrock)<Score 50>
+[Give up on your michelin-star dreams and enter Varrock](Enter Varrock)<Score 50><Health -10>
 
 ::Wilderness Path
 As you jump over a trench into the wilderness, you notice a player beginning to chase you. He is of a low level, and therefore allowed to attack you! He hits you once before another high level player suddenly appears out of thin air! Now that the player attacking you (Let's call him Bob) initiated combat, a skull appared above him and he can be attacked by anyone! Bob manages to hit you only once with a bronze longsword before he is slain by the high level player in one smooth slice! The high level player looks at you, and without a word; drops one of the legendary God Swords, a blue, giant, shimmering demon slaying sword of the Gods! You pick up the sword and stare at the player in awe, as he slowly walks away and fades into the mystifying fog of the wilderness.
-[Chase the high level player](Chasing a Legend)<Inventory false 1 Magic Log false <Score 100> ><Inventory false 0 Tinderbox false <Score 100> ><Health -10>
-[Wander the Wilderness with your new weapon](Wandering the Wilderness)<Health -40><Inventory true 2 Saradomin Brew true <Health 80> <Score 50> >
+[Chase the high level player](Run into the fog)<Health -10>
+[Wander the Wilderness with your new weapon](Wandering the Wilderness)<Health -20><Inventory true 2 Saradomin Brew true <Health 80> <Score 50> >
 
 ::Wandering the Wilderness
 As you waddle around aimlessly in the Wilderness, you understand that you have no clue what you are doing, and should probably restart the game. Although, you find two peculiar looking potions on the ground that you picked up, since you had the space in your inventory. As you pick the potion flasks up, you hear footsteps behind you. It is a bald man with a beard, staring at you. He quickly puts on a winged helmet and glimmering, crimson armor. He equips a sword and hits you once for big damage! What do you do?
 [Charge forward](Battling a Player Killer)<Inventory false 1 Saradomin Godsword false <Score 50> <Health -80> >
 [Run away!](Run Player Run!)<Health -100000>
-[Log Out](Logged Out)
+[Log Out!](Logged out ending)
 
-::Chasing a Legend
-As you sprint into the deep depths of the Wilderness, chasing your hero, you notice yourself starting to tire out. The fog of the Wilderness is penetrating your very heart, which damages you slightly. You cannot go on, and must take a break. Luckily, the logs you had purchased earlier worked like a charm. You lit them and managed to take a break in the fog.
-[Take a nap](You really slept here?)<Health -2147000>
+::Battling a Player Killer
+You attempt to use the legendary sword that your saviour gave to you earlier, but it simply slips out of your hands, falling on your big toe. This deals massive damage to you! As the giant sword bounces off your toe, it somehow flies directly into the face of your opponent, instantly killing him.
+[Collect his loot!](Collecting Loot)<Score 100><Gold 100000><Inventory true 1 Saradomin Godsword false <Score 50> >
+
+::Run Player Run!
+Come on, you were really going to run away from an epic fight? If you want a hint; you can use a Saradomin Brew in your inventory in preparation for the battle. Don't tell anyone that I told you!
+
+::Logged out ending
+You really logged out huh? Your cowardly tactics keep you alive, today. Know this, I will be waiting for you to log back in and I will be there. I will be in every world, in every server. I will be prepared for your return, and I will take your Saradomin Godsword. You will not escape me. You'd better have completed your goals... or else.
+
+::Collecting Loot
+You pick your sword back up and collect some gold that the player dropped. You don't have the time to pick up the rest of the loot, since there is another player running towards you! It seems to be the player who saved you from Bob earlier!?
+[Log Out!](Logged out ending)
+[Run away for real this time!](Run into the fog)<Score 10>
+[He should be friendly?](Is he friendly?)
+
+::Is he friendly?
+How would I know if he's friendly?! I'm just the narrator, I don't have thoughts! Look, he's running at you in the Wilderness, where players KILL each other, and the script says that the player either runs away into the fog of the wilderness and possibly dies, or logs out of the game! Now stop asking me questions!
+[Choose to run!](Run into the fog)<Score 10>
+[Okay, I'm logging out!](Logged out ending)
+[Why?](By the Gods...)<Score 100>
+
+::By the Gods...
+You know what, player? I give up. Fine, have it your way. There will be no story. No happiness in the world, not progression, no drama and certainly no good things, EVER! Goodbye, player. I simply wanted you to follow the path I made for you. Don't you understand that creating your own path hasn't been added into the game yet? I'm done ranting this time, for real. Now go. Press the restart button and reset my memory, while you remember everything that happened and I'm just forced to read these idiotic lines written by some kid in university over and over again.
+
+
+::Run into the fog
+You run deep into the fog of the wilderness, and quickly tire out. You begin thinking to yourself, "What have I done?!". You are lost, hungry, and have gained enormous riches in the form of the Saradomin Godsword, but you cannot go anywhere.
+[Light a fire](Lighting a Fire)<Health 50><Score 100000><Gold 50000><Inventory false 1 Magic Log false <Score 100> ><Inventory false 0 Tinderbox false <Score 100> >
+[Give up](The Fog Consumes)<Health -2147000>
+[Maybe Log Out?](Logged out ending)
+
+::The Fog Consumes
+You reminisce upon your life, your memories and experiences. You think of your dreams and aspirations. Maybe you ought to join that cooking guild?
+
+::Lighting a Fire
+As you use the tinderbox to light the magic logs, a calmness fills the air. You feel rejuvenated. A figure in blue robes walks up to you, and puts his palm over your head. You stare in confusion and after one blink, you are suddenly back in your home village of Lumbridge. Your memories are all in tact, yet you look upon the sun and realize you have traveled back in time! You also feel far heavier, and notice your purse weighing you down massively. Who was that man in the Wilderness?
+[Go to sleep](Good Ending)<Score 100000>
+[Go back to Varrock?](Varrock Path)
+
+::Good ending
+You go to bed. You slept for what felt like an eternity, looping in vicious cycles. You have achieved much yesterday, and can now look forward to do even more today, and forge your own path! (Creating your story has not been implemented, so don't try clicking on that second button in the main menu... DON'T!!!!
 
 
 
