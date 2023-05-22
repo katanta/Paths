@@ -1,8 +1,6 @@
 package edu.ntnu.mappe32.controller;
 
-import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.view.FinalSplashScreenView;
-import edu.ntnu.mappe32.view.PathsSplashScreenView;
 import edu.ntnu.mappe32.view.StorySelectorView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -10,7 +8,6 @@ import javafx.util.Duration;
 public class FinalSplashScreenController {
     FinalSplashScreenView splashScreenView;
     Stage stage;
-
     public FinalSplashScreenController(Stage stage, FinalSplashScreenView splashScreenView) {
         this.stage = stage;
         this.splashScreenView = splashScreenView;

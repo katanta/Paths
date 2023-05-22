@@ -43,6 +43,7 @@ public class FinalSplashScreenView {
 
 
     public FinalSplashScreenView() {
+        ViewUtils.getInstance();
         root = new StackPane();
         root.setAlignment(Pos.TOP_CENTER);
         configureLogo(); //configureLogo must be done first to apply correct margins for it
@@ -50,6 +51,7 @@ public class FinalSplashScreenView {
         configureBackGround();
         configureMediaPlayers();
         scene = new Scene(root, 1280, 720);
+        System.out.println("hei");
     }
 
     private void configureLogo() {
@@ -83,7 +85,6 @@ public class FinalSplashScreenView {
         middlegroundOffsetProperty.addListener(observable -> middleTrees.setViewport(new Rectangle2D(middlegroundOffsetProperty.get(), 0, 1280, 720)));
         lightLayerOffsetProperty.addListener(observable -> lightLayer.setViewport(new Rectangle2D(lightLayerOffsetProperty.get(), 0, 1280, 720)));
         frontgroundOffsetProperty.addListener(observable -> frontTrees.setViewport(new Rectangle2D(frontgroundOffsetProperty.get(), 0, 1280, 720)));
-
         createBackgroundAnimation(backgroundOffsetProperty, 20000).play();
         createBackgroundAnimation(middlegroundOffsetProperty, 15000).play();
         createBackgroundAnimation(lightLayerOffsetProperty, 10000).play();
@@ -164,6 +165,7 @@ public class FinalSplashScreenView {
     }
 
     private void configureMediaPlayers() {
+        System.out.println("hei");
         musicPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/music/MainMenuMusic.mp3").toURI().toString()));
         musicPlayer.setVolume(0.25);
         selectionPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/Menu Selection Click.wav").toURI().toString()));
