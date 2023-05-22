@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.controller;
 
+import edu.ntnu.mappe32.ViewUtils;
 import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.view.CreatePlayerView;
 import edu.ntnu.mappe32.view.FinalSplashScreenView;
@@ -40,8 +41,8 @@ public class GameSetupController {
     }
 
     private void setBackButtonActions() {
-        storySelectorView.getBackButton().setOnMouseEntered(mouseEvent -> setButtonImage(storySelectorView.getBackButton(), storySelectorView.getBackButtonHover()));
-        storySelectorView.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(storySelectorView.getBackButton(), storySelectorView.getBackButtonImage()));
+        storySelectorView.getBackButton().setOnMouseEntered(mouseEvent -> setButtonImage(storySelectorView.getBackButton(), ViewUtils.restartHoverImage()));
+        storySelectorView.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(storySelectorView.getBackButton(), ViewUtils.restartImage()));
         storySelectorView.getBackButton().setOnMouseClicked(mouseEvent -> new FinalSplashScreenController(stage, new FinalSplashScreenView()));
     }
     private void setAddPathsFileAction() {

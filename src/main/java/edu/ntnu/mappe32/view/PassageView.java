@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.view;
 
+import edu.ntnu.mappe32.ViewUtils;
 import edu.ntnu.mappe32.model.Item;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -47,7 +48,7 @@ public class PassageView {
     public PassageView() {
         root = new StackPane();
         root.setStyle("-fx-border-width: 4px; -fx-border-color: #000000");
-        infoFont = resizableMainFont(18);
+        infoFont = ViewUtils.pixeloidSans(18);
         configurePassageInfo();
         configureLinkScrollPane();
         configureGameGoalsVBox();
@@ -70,9 +71,6 @@ public class PassageView {
         BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
         buttonsHBox.setBackground(new Background(background));
-    }
-    public static Font resizableMainFont(double fontSize) {
-        return Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", fontSize);
     }
     private void configureInventoryPane() {
         itemsVBox = new VBox();
@@ -104,12 +102,8 @@ public class PassageView {
     }
 
     private void configurePlayerScoreLabel() {
-        ImageView scoreIcon;
-        try {
-            scoreIcon = new ImageView(new Image(new FileInputStream("src/main/resources/img/score.png")));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        ImageView scoreIcon = new ImageView(ViewUtils.scoreImage());
+
         playerScoreLabel = new Label("");
         playerScoreLabel.setFont(infoFont);
         playerScoreLabel.setLabelFor(scoreIcon);
@@ -122,16 +116,11 @@ public class PassageView {
 
     private void configurePlayerNameLabel() {
         playerNameLabel = new Label();
-        playerNameLabel.setFont(resizableMainFont(25));
+        playerNameLabel.setFont(ViewUtils.pixeloidSans(25));
     }
 
     private void configurePlayerHealthLabel() {
-        ImageView healthIcon;
-        try {
-            healthIcon = new ImageView(new Image(new FileInputStream("src/main/resources/img/hp.png")));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        ImageView healthIcon = new ImageView(ViewUtils.healthImage());
         playerHealthLabel = new Label("");
         playerHealthLabel.setFont(infoFont);
         playerHealthLabel.setLabelFor(healthIcon);
@@ -143,12 +132,7 @@ public class PassageView {
     }
 
     private void configurePlayerGoldLabel() {
-        ImageView goldIcon;
-        try {
-            goldIcon = new ImageView(new Image(new FileInputStream("src/main/resources/img/gold.png")));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        ImageView goldIcon = new ImageView(ViewUtils.goldImage());
         playerGoldLabel = new Label("");
         playerGoldLabel.setFont(infoFont);
         playerGoldLabel.setLabelFor(goldIcon);
@@ -163,13 +147,13 @@ public class PassageView {
         storyTitle = new Label();
         storyTitle.setLabelFor(passageTitle);
         storyTitle.setMinSize(10, 10);
-        storyTitle.setFont(resizableMainFont(45));
+        storyTitle.setFont(ViewUtils.pixeloidSansBold(45));
         passageTitle = new Text();
-        passageTitle.setFont(resizableMainFont(28));
+        passageTitle.setFont(ViewUtils.pixeloidSans(28));
 
         ScrollPane passageContentScrollPane = new ScrollPane();
         passageContent = new Text();
-        passageContent.setFont(resizableMainFont(18));
+        passageContent.setFont(ViewUtils.pixeloidSans(18));
         passageContentScrollPane.setMaxWidth(600);
         passageContent.setWrappingWidth(passageContentScrollPane.getMaxWidth() - 15);
         passageContentScrollPane.setMaxHeight(180);
@@ -224,11 +208,7 @@ public class PassageView {
     }
 
     private void configureHelpButton() {
-        try {
-            helpButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/helpButton.png")));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        helpButton = new ImageView(ViewUtils.helpButtonImage());
         helpButton.setFitHeight(50);
         helpButton.setFitWidth(50);
         buttonsHBox.setMargin(helpButton, new Insets(0, 0, 0, 20));
@@ -236,22 +216,14 @@ public class PassageView {
     }
 
     private void configureHomeButton() {
-        try {
-            homeButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/homeButton.png")));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        homeButton = new ImageView(ViewUtils.homeButtonImage());
         homeButton.setFitHeight(50);
         homeButton.setFitWidth(50);
         buttonsHBox.getChildren().add(homeButton);
     }
 
     private void configureRestartButton() {
-        try {
-            restartButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/restartButton.png")));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        restartButton = new ImageView(ViewUtils.restartImage());
         restartButton.setFitHeight(50);
         restartButton.setFitWidth(50);
         buttonsHBox.getChildren().add(restartButton);

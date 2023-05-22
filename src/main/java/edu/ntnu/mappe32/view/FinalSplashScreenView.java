@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.view;
 
+import edu.ntnu.mappe32.ViewUtils;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
@@ -24,7 +25,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
 
 public class FinalSplashScreenView {
     private final Scene scene;
@@ -79,18 +79,10 @@ public class FinalSplashScreenView {
         Rectangle2D backGroundViewPort = new Rectangle2D(0, 0, 1280, 720);
         backgroundTrees.setViewport(backGroundViewPort);
         middleTrees.setViewport(backGroundViewPort);
-        backgroundOffsetProperty.addListener(observable -> {
-            backgroundTrees.setViewport(new Rectangle2D(backgroundOffsetProperty.get(), 0, 1280, 720));
-        });
-        middlegroundOffsetProperty.addListener(observable -> {
-            middleTrees.setViewport(new Rectangle2D(middlegroundOffsetProperty.get(), 0, 1280, 720));
-        });
-        lightLayerOffsetProperty.addListener(observable -> {
-            lightLayer.setViewport(new Rectangle2D(lightLayerOffsetProperty.get(), 0, 1280, 720));
-        });
-        frontgroundOffsetProperty.addListener(observable -> {
-            frontTrees.setViewport(new Rectangle2D(frontgroundOffsetProperty.get(), 0, 1280, 720));
-        });
+        backgroundOffsetProperty.addListener(observable -> backgroundTrees.setViewport(new Rectangle2D(backgroundOffsetProperty.get(), 0, 1280, 720)));
+        middlegroundOffsetProperty.addListener(observable -> middleTrees.setViewport(new Rectangle2D(middlegroundOffsetProperty.get(), 0, 1280, 720)));
+        lightLayerOffsetProperty.addListener(observable -> lightLayer.setViewport(new Rectangle2D(lightLayerOffsetProperty.get(), 0, 1280, 720)));
+        frontgroundOffsetProperty.addListener(observable -> frontTrees.setViewport(new Rectangle2D(frontgroundOffsetProperty.get(), 0, 1280, 720)));
 
         createBackgroundAnimation(backgroundOffsetProperty, 20000).play();
         createBackgroundAnimation(middlegroundOffsetProperty, 15000).play();
@@ -111,7 +103,7 @@ public class FinalSplashScreenView {
     }
     private void configurePlayButtonHBox() {
         playButton = new Button("Play an existing story");
-        playButton.setFont(resizableMainFont(30));
+        playButton.setFont(ViewUtils.pixeloidSans(30));
         playButton.setStyle("-fx-border-color: #000000; -fx-border-width: 5px; -fx-background-color: #ffffff");
         playButtonHBox = new HBox(playButton);
         configureSelectionPointers(playButtonHBox);
@@ -124,30 +116,27 @@ public class FinalSplashScreenView {
     }
 
     private void configureSelectionPointers(HBox hBox) {
-        ImageView pointer;
+        ImageView pointer = new ImageView(ViewUtils.pointerImage());
         ImageView pointerClone;
-        try {
-            pointer = new ImageView(new Image(new FileInputStream("src/main/resources/img/Pointer.png")));
-            pointer.setFitWidth(75);
-            pointer.setFitHeight(75);
-            pointer.setRotate(270);
-            pointerClone = new ImageView(pointer.getImage());
-            pointerClone.setRotate(90);
-            pointerClone.setFitWidth(pointer.getFitWidth());
-            pointerClone.setFitHeight(pointer.getFitHeight());
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        pointer.setFitWidth(75);
+        pointer.setFitHeight(75);
+        pointer.setRotate(270);
+        pointerClone = new ImageView(pointer.getImage());
+        pointerClone.setRotate(90);
+        pointerClone.setFitWidth(pointer.getFitWidth());
+        pointerClone.setFitHeight(pointer.getFitHeight());
         hBox.getChildren().add(0, pointer);
         hBox.getChildren().add(2, pointerClone);
     }
 
     private void configureBaitButtonHBox() {
         Button baitButton = new Button("Follow your own path \n     (COMING SOON!)");
-        baitButton.setFont(resizableMainFont(30));
+        baitButton.setFont(ViewUtils.pixeloidSans(30));
         baitButton.setStyle("-fx-border-color: #000000; -fx-border-width: 5px; -fx-background-color: #6b6b6b");
-        baitButton.setTooltip(new Tooltip("This Feature is unavailable but you can still click me :)"));
-        baitButton.getTooltip().setFont(resizableMainFont(15));
+
+        Tooltip baitButtonTooltip = ViewUtils.createTooltip("This Feature is unavailable but you can still click me :)", 15);
+        baitButton.setTooltip(baitButtonTooltip);
+
         baitButtonHBox = new HBox(baitButton);
         baitButtonHBox.setSpacing(50);
         configureSelectionPointers(baitButtonHBox);

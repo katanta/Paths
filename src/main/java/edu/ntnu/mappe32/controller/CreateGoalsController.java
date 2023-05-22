@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.controller;
 
+import edu.ntnu.mappe32.ViewUtils;
 import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.PathsFile;
@@ -18,7 +19,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 import java.util.*;
@@ -26,7 +26,8 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
+import static edu.ntnu.mappe32.ViewUtils.createTooltip;
+
 
 public class CreateGoalsController {
     private final PathsFile pathsFile;
@@ -61,15 +62,15 @@ public class CreateGoalsController {
         // Set info button tooltip and change image
         Tooltip tooltip = createTooltip("See Player and Story information", 18);
         Tooltip.install(view.getInfoButton(), tooltip);
-        view.getInfoButton().setOnMouseEntered(mouseEvent -> view.getInfoButton().setImage(view.getInfoButtonHover()));
-        view.getInfoButton().setOnMouseExited(mouseEvent -> view.getInfoButton().setImage(view.getInfoButtonImage()));
+        view.getInfoButton().setOnMouseEntered(mouseEvent -> view.getInfoButton().setImage(ViewUtils.infoHoverImage()));
+        view.getInfoButton().setOnMouseExited(mouseEvent -> view.getInfoButton().setImage(ViewUtils.infoImage()));
         showInformationBox();
 
         // Set back button tooltip and change image
         Tooltip backButtonTooltip = createTooltip("Back to Create Player", 18);
         Tooltip.install(view.getBackButton(), backButtonTooltip);
-        view.getBackButton().setOnMouseEntered(mouseEvent -> view.getBackButton().setImage(view.getBackButtonHover()));
-        view.getBackButton().setOnMouseExited(mouseEvent -> view.getBackButton().setImage(view.getBackButtonImage()));
+        view.getBackButton().setOnMouseEntered(mouseEvent -> view.getBackButton().setImage(ViewUtils.restartHoverImage()));
+        view.getBackButton().setOnMouseExited(mouseEvent -> view.getBackButton().setImage(ViewUtils.restartImage()));
 
         view.getBackButton().setOnMouseClicked(mouseEvent -> {
             CreatePlayerController createPlayerController = new CreatePlayerController(new CreatePlayerView(), stage, pathsFile, player);
@@ -81,8 +82,8 @@ public class CreateGoalsController {
             Tooltip helpButtonTooltip = createTooltip("Need help? Press me! :)", 18);
             Tooltip.install(view.getHelpButton(), helpButtonTooltip);
         });
-        view.getHelpButton().setOnMouseEntered(mouseEvent -> view.getHelpButton().setImage(view.getHelpButtonHover()));
-        view.getHelpButton().setOnMouseExited(mouseEvent -> view.getHelpButton().setImage(view.getHelpButtonImage()));
+        view.getHelpButton().setOnMouseEntered(mouseEvent -> view.getHelpButton().setImage(ViewUtils.helpButtonHoverImage()));
+        view.getHelpButton().setOnMouseExited(mouseEvent -> view.getHelpButton().setImage(ViewUtils.helpButtonImage()));
 
     }
 
@@ -97,15 +98,8 @@ public class CreateGoalsController {
         });
     }
 
-    private Tooltip createTooltip(String text, int fontSize) {
-        Tooltip tooltip = new Tooltip(text);
-        tooltip.setShowDelay(Duration.ZERO);
-        tooltip.setShowDuration(Duration.INDEFINITE);
-        tooltip.setFont(resizableMainFont(fontSize));
-        return tooltip;
-    }
     private void setCenterActions() {
-        addGoalButtonTooltip = createTooltip("Press to add your Goal", 18);
+        addGoalButtonTooltip = ViewUtils.createTooltip("Press to add your Goal", 18);
         setGoalIconActions();
         setAddGoalButton1Actions();
         setAddGoalButton2Actions();
@@ -116,7 +110,7 @@ public class CreateGoalsController {
         setPointerBarActions();
     }
     private void setStartButtonActions() {
-        Tooltip startButtonTooltip = createTooltip("Press To Start Game!", 18);
+        Tooltip startButtonTooltip = ViewUtils.createTooltip("Press To Start Game!", 18);
 
         Tooltip.install(view.getStartButton(), startButtonTooltip);
         view.getStartButton().setPickOnBounds(true);
@@ -140,7 +134,7 @@ public class CreateGoalsController {
         iconTooltips.put(view.getInventoryIcon(), "Create an Inventory Goal!");
 
         iconTooltips.forEach((icon, tooltipText) -> {
-            Tooltip tooltip = createTooltip(tooltipText, 15);
+            Tooltip tooltip = ViewUtils.createTooltip(tooltipText, 15);
             icon.setPickOnBounds(true);
             Tooltip.install(icon, tooltip);
         });
