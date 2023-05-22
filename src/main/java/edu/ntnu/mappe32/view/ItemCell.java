@@ -1,13 +1,12 @@
 package edu.ntnu.mappe32.view;
 
+import edu.ntnu.mappe32.ViewUtils;
 import edu.ntnu.mappe32.model.Item;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-import javafx.util.Duration;
 
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class ItemCell extends ListCell<Item> {
     private void configureHBox() {
         Label itemInfo = new Label();
         itemInfo.setMaxWidth(262.5);
-        itemInfo.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 15));
+        itemInfo.setFont(ViewUtils.pixeloidSans(15));
         HBox.setMargin(itemInfo, new Insets(6));
 
         String quantity = String.valueOf(inventory.get(item));
@@ -43,18 +42,15 @@ public class ItemCell extends ListCell<Item> {
     }
 
     private void configureTooltip() {
-        tooltip = new Tooltip();
-        tooltip.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 12));
+        String toolTipText = "Click to use: " + item.getItemName();
 
-        String tooltipText = "Click to use: " + item.getItemName();
-        tooltip.setShowDelay(Duration.ZERO);
-        tooltip.setShowDuration(Duration.INDEFINITE);
-        tooltip.setText(tooltipText);
+        if (!item.isUsable())
+            toolTipText = "You cannot use this item!";
 
-        if (!item.isUsable()) {
-            tooltip.setText("You cannot use this item!");
-        }
 
+        tooltip = ViewUtils.createTooltip(toolTipText, 12);
+
+        tooltip.setFont(ViewUtils.pixeloidSansBold(12));
     }
 
     public Tooltip getNewTooltip() {

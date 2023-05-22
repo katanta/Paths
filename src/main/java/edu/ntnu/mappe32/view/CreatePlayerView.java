@@ -1,8 +1,8 @@
 package edu.ntnu.mappe32.view;
 
+import edu.ntnu.mappe32.ViewUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,16 +17,13 @@ import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
 
 public class CreatePlayerView {
 
     private final Scene scene;
     private HBox top;
     private ImageView backButton;
-    private Image backButtonHover;
     private ImageView infoButton;
-    private Image infoButtonHover;
     private Label storyTitle;
     private VBox centerVBox;
     private GridPane playerGridPane;
@@ -39,14 +36,9 @@ public class CreatePlayerView {
     private TextField playerNameTextField;
     private TextField playerHealthTextField;
     private TextField playerGoldTextField;
-    private Image errorCircleImage;
-    private Image infoButtonImage;
-    private Image backButtonImage;
     private ImageView nextButton;
     private final Font statLabelFont;
     private final Font textFieldFont;
-    private Image helpButtonImage;
-    private Image helpButtonHover;
     private ImageView helpButton;
     private HBox helpAndBackButtonHBox;
     private ImageView tutorialImageView;
@@ -54,10 +46,8 @@ public class CreatePlayerView {
 
     public CreatePlayerView() {
         this.root = new BorderPane();
-        configureErrorCircleImage();
-
-        statLabelFont = resizableMainFont(30);
-        textFieldFont = Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 20);
+        statLabelFont = ViewUtils.pixeloidSans(30);
+        textFieldFont = ViewUtils.pixeloidSans(20);
         configureTop();
         configureCenter();
 
@@ -71,18 +61,7 @@ public class CreatePlayerView {
     private void configureTop() {
         top = new HBox(50);
 
-        try {
-            helpButtonImage = new Image(new FileInputStream("src/main/resources/img/helpButton.png"));
-            helpButtonHover = new Image(new FileInputStream("src/main/resources/img/helpButtonHover.png"));
-            backButtonImage = new Image(new FileInputStream("src/main/resources/img/restartButton.png"));
-            backButtonHover = new Image(new FileInputStream("src/main/resources/img/restartButtonHover.png"));
-            infoButtonImage = new Image(new FileInputStream("src/main/resources/img/info.png"));
-            infoButtonHover = new Image(new FileInputStream("src/main/resources/img/info_hover.png"));
-
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        infoButton = new ImageView(infoButtonImage);
+        infoButton = new ImageView(ViewUtils.infoImage());
         infoButton.setPickOnBounds(true);
         infoButton.setFitWidth(31);
         infoButton.setFitHeight(31);
@@ -90,7 +69,7 @@ public class CreatePlayerView {
         helpAndBackButtonHBox.getChildren().addAll(backButton, helpButton);
 
         storyTitle = new Label();
-        storyTitle.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSansBold.ttf", 50));
+        storyTitle.setFont(ViewUtils.pixeloidSansBold(50));
         storyTitle.setMaxWidth(700);
 
         top.getChildren().addAll(storyTitle, infoButton);
@@ -104,11 +83,11 @@ public class CreatePlayerView {
         helpAndBackButtonHBox = new HBox(10);
         helpAndBackButtonHBox.setAlignment(Pos.TOP_LEFT);
         helpAndBackButtonHBox.setPadding(new Insets(20,0,0,20));
-        helpButton = new ImageView(helpButtonImage);
+        helpButton = new ImageView(ViewUtils.helpButtonImage());
         helpButton.setFitWidth(62);
         helpButton.setFitHeight(62);
         helpButton.setPickOnBounds(true);
-        backButton = new ImageView(backButtonImage);
+        backButton = new ImageView(ViewUtils.restartImage());
         backButton.setFitWidth(62);
         backButton.setFitHeight(62);
         backButton.setPickOnBounds(true);
@@ -118,14 +97,10 @@ public class CreatePlayerView {
         centerVBox.setPadding(new Insets(30,0,0,0));
         centerVBox.setAlignment(Pos.TOP_CENTER);
         Label chooseYourStats = new Label("Choose Your Stats");
-        chooseYourStats.setFont(resizableMainFont(40));
+        chooseYourStats.setFont(ViewUtils.pixeloidSans(40));
         chooseYourStats.setAlignment(Pos.CENTER);
 
-        try {
-            nextButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/next_button.png")));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        nextButton = new ImageView(ViewUtils.nextImage());
         configurePlayerStatsGridPane();
         configureTutorialImageView();
         playerGridPane.setPadding(new Insets(0, 0,0,330));
@@ -202,24 +177,18 @@ public class CreatePlayerView {
         playerHealthLabel.setFont(statLabelFont);
     }
     private VBox createErrorCircle() {
-        ImageView errorCircle = new ImageView(errorCircleImage);
+        ImageView errorCircle = new ImageView(ViewUtils.errorCircleImage());
         errorCircle.setFitWidth(20);
         errorCircle.setFitHeight(20);
         VBox errorCircleBox = new VBox(errorCircle);
         VBox.setMargin(errorCircle, new Insets(9.2,0,0, 0));
         return errorCircleBox;
     }
-    private void configureErrorCircleImage() {
-        try {
-            errorCircleImage = new Image(new FileInputStream("src/main/resources/img/error-circle-solid-24.png"));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     private Label createInvalidErrorLabel(String errorMessage) {
         Label label = new Label(errorMessage);
         label.setStyle("-fx-text-fill: #D80D0D;");
-        label.setFont(resizableMainFont(15));
+        label.setFont(ViewUtils.pixeloidSans(15));
         label.setAlignment(Pos.CENTER);
         return label;
     }
@@ -239,10 +208,6 @@ public class CreatePlayerView {
         tutorialImageView.setVisible(false);
     }
 
-    public Image getBackButtonImage() {
-        return backButtonImage;
-    }
-
     public Label getStoryTitle() {
         return storyTitle;
     }
@@ -250,20 +215,8 @@ public class CreatePlayerView {
         return infoButton;
     }
 
-    public Image getInfoButtonHover() {
-        return infoButtonHover;
-    }
-
-    public Image getBackButtonHover() {
-        return backButtonHover;
-    }
-
     public ImageView getBackButton() {
         return backButton;
-    }
-
-    public Image getInfoButtonImage() {
-        return infoButtonImage;
     }
 
     public Scene getScene() {
@@ -302,13 +255,6 @@ public class CreatePlayerView {
         return helpButton;
     }
 
-    public Image getHelpButtonHover() {
-        return helpButtonHover;
-    }
-
-    public Image getHelpButtonImage() {
-        return helpButtonImage;
-    }
 
     public ImageView getTutorialImageView() {
         return tutorialImageView;

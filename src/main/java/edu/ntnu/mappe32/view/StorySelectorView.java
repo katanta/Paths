@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.view;
 
+import edu.ntnu.mappe32.ViewUtils;
 import edu.ntnu.mappe32.model.PathsFile;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,11 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.util.Duration;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Objects;
 
 public class StorySelectorView {
@@ -27,7 +24,6 @@ public class StorySelectorView {
     private TableColumn<PathsFile, Integer> brokenLinksColumn;
     private VBox center;
     private Button addPathsFile;
-    private Image backButtonImage;
     private Image backButtonHover;
     private ImageView backButton;
 
@@ -44,16 +40,11 @@ public class StorySelectorView {
     public void configureTop() {
         top = new HBox(270);
         Label selectYourStory = new Label("Select Your Story!");
-        selectYourStory.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSansBold.ttf", 50));
+        selectYourStory.setFont(ViewUtils.pixeloidSansBold(50));
         selectYourStory.setMaxWidth(700);
-        try {
-            backButtonImage = new Image(new FileInputStream("src/main/resources/img/restartButton.png"));
-            backButtonHover = new Image(new FileInputStream("src/main/resources/img/restartButtonHover.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
         HBox backButtonHBox = new HBox(10);
-        backButton = new ImageView(backButtonImage);
+        backButton = new ImageView(ViewUtils.restartImage());
         backButton.setFitWidth(62);
         backButton.setFitHeight(62);
         backButton.setPickOnBounds(true);
@@ -72,7 +63,7 @@ public class StorySelectorView {
         center.setPadding(new Insets(30, 0, 0, 0));
         center.setMaxWidth(1000);
         Label clickStoryLabel = new Label("Double-click to Play a Story!");
-        clickStoryLabel.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSansBold.ttf", 30));
+        clickStoryLabel.setFont(ViewUtils.pixeloidSansBold(30));
         clickStoryLabel.setStyle("-fx-text-fill: #2b862c");
         createStoryTable();
         setCellFactories();
@@ -82,7 +73,7 @@ public class StorySelectorView {
 
     private void configureAddButton() {
         addPathsFile = new Button("Add Paths File");
-        addPathsFile.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 30));
+        addPathsFile.setFont(ViewUtils.pixeloidSans(30));
     }
 
     public void createStoryTable() {
@@ -111,12 +102,10 @@ public class StorySelectorView {
                 setText(null);
 
                 if (string != null && !empty) {
-                    setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 12));
+                    setFont(ViewUtils.pixeloidSans(12));
                     setText(string);
-                    Tooltip tooltip = new Tooltip(string);
-                    tooltip.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 10));
-                    tooltip.setShowDelay(Duration.millis(100));
-                    tooltip.setShowDuration(Duration.INDEFINITE);
+                    Tooltip tooltip = ViewUtils.createTooltip(string, 10);
+
                     setTooltip(tooltip);
                 }
             }
@@ -128,12 +117,9 @@ public class StorySelectorView {
                 setGraphic(null);
                 setText(null);
                 if (string != null && !empty) {
-                    setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 12));
+                    setFont(ViewUtils.pixeloidSans(12));
                     setText(string);
-                    Tooltip tooltip = new Tooltip(string);
-                    tooltip.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 10));
-                    tooltip.setShowDelay(Duration.millis(100));
-                    tooltip.setShowDuration(Duration.INDEFINITE);
+                    Tooltip tooltip = ViewUtils.createTooltip(string, 10);
                     setTooltip(tooltip);
                 }
             }
@@ -145,7 +131,7 @@ public class StorySelectorView {
                 setGraphic(null);
                 setText(null);
                 if (integer != null && !empty) {
-                    setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 12));
+                    setFont(ViewUtils.pixeloidSans(12));
                     setText(integer.toString());
                 }
             }
@@ -178,7 +164,4 @@ public class StorySelectorView {
         return backButtonHover;
     }
 
-    public Image getBackButtonImage() {
-        return backButtonImage;
-    }
 }

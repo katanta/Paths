@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.controller;
 
+import edu.ntnu.mappe32.ViewUtils;
 import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.view.CreateGoalsView;
@@ -10,12 +11,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
 
 public class CreatePlayerController {
 
@@ -42,14 +41,14 @@ public class CreatePlayerController {
 
         //Info button
         setButtonTooltip(view.getInfoButton(), "Click here to see Story information...");
-        view.getInfoButton().setOnMouseEntered(mouseEvent -> setButtonImage(view.getInfoButton(), view.getInfoButtonHover()));
-        view.getInfoButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getInfoButton(), view.getInfoButtonImage()));
+        view.getInfoButton().setOnMouseEntered(mouseEvent -> setButtonImage(view.getInfoButton(), ViewUtils.infoHoverImage()));
+        view.getInfoButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getInfoButton(), ViewUtils.infoImage()));
         showInformationBox();
 
         //Back button
         setButtonTooltip(view.getBackButton(), "Click to go back to Select Story");
-        view.getBackButton().setOnMouseEntered(mouseEvent -> setButtonImage(view.getBackButton(), view.getBackButtonHover()));
-        view.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getBackButton(), view.getBackButtonImage()));
+        view.getBackButton().setOnMouseEntered(mouseEvent -> setButtonImage(view.getBackButton(), ViewUtils.restartHoverImage()));
+        view.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getBackButton(), ViewUtils.restartImage()));
         view.getBackButton().setOnMouseClicked(mouseEvent -> new GameSetupController(stage, new StorySelectorView()));
         view.getNextButton().setOnMouseClicked(mouseEvent -> goToCreateGoals());
         setButtonTooltip(view.getNextButton(), "Click to continue");
@@ -57,11 +56,11 @@ public class CreatePlayerController {
         //Help button
         setHelpButtonClickAction();
         view.getHelpButton().setOnMouseEntered(mouseEvent -> {
-            setButtonImage(view.getHelpButton(), view.getHelpButtonHover());
+            setButtonImage(view.getHelpButton(), ViewUtils.helpButtonHoverImage());
             setButtonTooltip(view.getHelpButton(), "Need help? Press me! :)");
         });
 
-        view.getHelpButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getHelpButton(), view.getHelpButtonImage()));
+        view.getHelpButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getHelpButton(), ViewUtils.helpButtonImage()));
         setKeyPressedAction(view.getPlayerHealthTextField(), this::goToCreateGoals);
         setKeyPressedAction(view.getPlayerGoldTextField(), this::goToCreateGoals);
         setKeyPressedAction(view.getPlayerNameTextField(), this::goToCreateGoals);
@@ -79,7 +78,7 @@ public class CreatePlayerController {
     }
 
     private void setButtonTooltip(ImageView button, String text) {
-        Tooltip tooltip = createTooltip(text);
+        Tooltip tooltip = ViewUtils.createTooltip(text, 18);
         Tooltip.install(button, tooltip);
     }
 
@@ -95,13 +94,6 @@ public class CreatePlayerController {
         });
     }
 
-    private Tooltip createTooltip(String text) {
-        Tooltip tooltip = new Tooltip(text);
-        tooltip.setShowDelay(Duration.ZERO);
-        tooltip.setShowDuration(Duration.INDEFINITE);
-        tooltip.setFont(resizableMainFont(18));
-        return tooltip;
-    }
 
     /**
      * This method sends the user to CreateGoalsView

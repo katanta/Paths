@@ -1,5 +1,6 @@
 package edu.ntnu.mappe32.view;
 
+import edu.ntnu.mappe32.ViewUtils;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,25 +13,19 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
 
 
 public class CreateGoalsView {
     private final Scene scene;
     private HBox top;
     private ImageView backButton;
-    private Image backButtonHover;
     private ImageView infoButton;
-    private Image infoButtonHover;
-    private Image infoButtonImage;
-    private Image backButtonImage;
     private ListView<Goal> goalsListView;
     private VBox centerVBox;
     private HBox goalBox;
@@ -59,8 +54,6 @@ public class CreateGoalsView {
     private ListView<String> currentMandatoryInventory;
     private ImageView startButton;
     private ImageView helpButton;
-    private Image helpButtonImage;
-    private Image helpButtonHover;
     private HBox helpAndBackButtonHBox;
 
     private ImageView tutorialImageView;
@@ -68,8 +61,8 @@ public class CreateGoalsView {
 
     public CreateGoalsView() {
         this.root = new BorderPane();
-        statLabelFont = resizableMainFont(30);
-        textFieldFont = Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 20);
+        statLabelFont = ViewUtils.pixeloidSans(30);
+        textFieldFont = ViewUtils.pixeloidSans(20);
 
         configureTop();
         configureCenter();
@@ -82,25 +75,14 @@ public class CreateGoalsView {
     private void configureTop() {
         top = new HBox(50);
 
-        try {
-            helpButtonImage = new Image(new FileInputStream("src/main/resources/img/helpButton.png"));
-            helpButtonHover = new Image(new FileInputStream("src/main/resources/img/helpButtonHover.png"));
-            backButtonImage = new Image(new FileInputStream("src/main/resources/img/restartButton.png"));
-            backButtonHover = new Image(new FileInputStream("src/main/resources/img/restartButtonHover.png"));
-            infoButtonImage = new Image(new FileInputStream("src/main/resources/img/info.png"));
-            infoButtonHover = new Image(new FileInputStream("src/main/resources/img/info_hover.png"));
-            startButton = new ImageView(new Image(new FileInputStream("src/main/resources/img/start.png")));
-
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        startButton = new ImageView(ViewUtils.startImage());
 
         startButton.setFitWidth(200);
         startButton.setFitHeight(100);
         startButton.setX(1020);
         startButton.setY(560);
         startButton.setPickOnBounds(true);
-        infoButton = new ImageView(infoButtonImage);
+        infoButton = new ImageView(ViewUtils.infoImage());
 
         infoButton.setPickOnBounds(true);
         infoButton.setFitWidth(31);
@@ -108,7 +90,7 @@ public class CreateGoalsView {
         configureHelpAndBackButton();
 
         Label createYourGoals = new Label("Create Your Goals!");
-        createYourGoals.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSansBold.ttf", 50));
+        createYourGoals.setFont(ViewUtils.pixeloidSansBold(50));
         createYourGoals.setMaxWidth(700);
 
         top.getChildren().addAll(createYourGoals, infoButton);
@@ -121,11 +103,11 @@ public class CreateGoalsView {
         helpAndBackButtonHBox = new HBox(10);
         helpAndBackButtonHBox.setAlignment(Pos.TOP_LEFT);
         helpAndBackButtonHBox.setPadding(new Insets(20,0,0,20));
-        helpButton = new ImageView(helpButtonImage);
+        helpButton = new ImageView(ViewUtils.helpButtonImage());
         helpButton.setFitWidth(62);
         helpButton.setFitHeight(62);
         helpButton.setPickOnBounds(true);
-        backButton = new ImageView(backButtonImage);
+        backButton = new ImageView(ViewUtils.restartImage());
         backButton.setFitWidth(62);
         backButton.setFitHeight(62);
         backButton.setPickOnBounds(true);
@@ -149,11 +131,8 @@ public class CreateGoalsView {
                 if (goal != null && !empty) {
                     GoalCell cell = new GoalCell(goal);
                     setGraphic(cell.getHBox());
-                    Tooltip cellTooltip = new Tooltip("Click to remove '" + goal.goalType() + " Goal: " + goal.goalValue() + "'");
-                    cellTooltip.setShowDelay(Duration.ZERO);
-                    cellTooltip.setShowDuration(Duration.INDEFINITE);
+                    Tooltip cellTooltip = ViewUtils.createTooltip("Click to remove '" + goal.goalType() + " Goal: " + goal.goalValue() + "'", 20);
                     setTooltip(cellTooltip);
-                    cellTooltip.setFont(resizableMainFont(20));
                     cellTooltip.setStyle("-fx-text-fill: red;");
                 }
             }
@@ -164,7 +143,7 @@ public class CreateGoalsView {
         centerVBox.setPadding(new Insets(15,0,0,0));
         centerVBox.setAlignment(Pos.TOP_CENTER);
         Label yourGoals = new Label("Your Goals");
-        yourGoals.setFont(resizableMainFont(30));
+        yourGoals.setFont(ViewUtils.pixeloidSans(30));
         yourGoals.setAlignment(Pos.CENTER);
         configureGoalsListView();
         configureGoalBox();
@@ -175,11 +154,11 @@ public class CreateGoalsView {
     }
     private void configureGoalBox() {
      goalBox = new HBox(80);
+     healthIcon = new ImageView(ViewUtils.healthImage());
+     scoreIcon = new ImageView(ViewUtils.scoreImage());
+     goldIcon = new ImageView(ViewUtils.goldImage());
+     inventoryIcon = new ImageView(ViewUtils.inventoryImage());
      try {
-         healthIcon = new ImageView(new Image(new FileInputStream("src/main/resources/img/hp-removebg-preview.png")));
-         scoreIcon = new ImageView(new Image(new FileInputStream("src/main/resources/img/score-removebg-preview.png")));
-         goldIcon = new ImageView(new Image(new FileInputStream("src/main/resources/img/gold-removebg-preview.png")));
-         inventoryIcon = new ImageView(new Image(new FileInputStream("src/main/resources/img/inventory-removebg-preview.png")));
          addGoalButtonImage = new Image(new FileInputStream("src/main/resources/img/Add.png"));
      } catch (IOException e) {
          throw new RuntimeException(e.getMessage());
@@ -202,13 +181,8 @@ public class CreateGoalsView {
     }
 
     private void configurePointerBox() {
+        Image pointerImage = ViewUtils.pointerImage();
         final int imageSize = 20;
-        Image pointerImage;
-        try {
-            pointerImage = new Image(new FileInputStream("src/main/resources/img/Pointer.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        }
         p1 = new ImageView(pointerImage);
         p1.setFitWidth(imageSize);
         p1.setFitHeight(imageSize);
@@ -279,12 +253,14 @@ public class CreateGoalsView {
                 setText(null);
                 if (item != null) {
                     setText(item);
-                    setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 15));
-                    Tooltip tooltip = new Tooltip("Click to remove " + item);
-                    tooltip.setFont(Font.loadFont("file:src/main/resources/fonts/PixeloidSans.ttf", 15));
+                    setFont(ViewUtils.pixeloidSansBold(15));
+
+
+                    Tooltip tooltip = ViewUtils.createTooltip("Click to remove " + item, 15);
+                    tooltip.setFont(ViewUtils.pixeloidSansBold(15));
+
                     tooltip.setStyle("-fx-text-fill: red;");
-                    tooltip.setShowDuration(Duration.INDEFINITE);
-                    tooltip.setShowDelay(Duration.ZERO);
+
                     setTooltip(tooltip);
                 }
             }
@@ -319,7 +295,7 @@ public class CreateGoalsView {
         quantity.setPromptText("Quantity");
         quantity.setTextFormatter(maxCharactersFormatter(6));
         addToInventoryGoal = new Button("Add to Goal");
-        addToInventoryGoal.setFont(resizableMainFont(20));
+        addToInventoryGoal.setFont(ViewUtils.pixeloidSans(20));
         createInventoryBar.getChildren().addAll(selectItem, quantity, addToInventoryGoal);
         currentGoalBar.setAlignment(Pos.TOP_CENTER);
         createInventoryBar.setAlignment(Pos.TOP_CENTER);
@@ -342,18 +318,14 @@ public class CreateGoalsView {
     }
 
     private void configureInvalidValueBox() {
-        ImageView errorCircle;
-        try {
-            errorCircle = new ImageView(new Image(new FileInputStream("src/main/resources/img/error-circle-solid-24.png")));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        ImageView errorCircle = new ImageView(ViewUtils.errorCircleImage());
+
         errorCircle.setFitWidth(20);
         errorCircle.setFitHeight(20);
         VBox errorCircleBox = new VBox(errorCircle);
         VBox.setMargin(errorCircle, new Insets(9.2,10,0, 10));
         Label invalidValue = new Label("Invalid value");
-        invalidValue.setFont(resizableMainFont(15));
+        invalidValue.setFont(ViewUtils.pixeloidSans(15));
         invalidValue.setStyle("-fx-text-fill: #D80D0DFF;");
         invalidValueBox = new HBox();
         invalidValueBox.getChildren().addAll(errorCircleBox, invalidValue);
@@ -378,22 +350,6 @@ public class CreateGoalsView {
     }
     public ImageView getBackButton() {
         return backButton;
-    }
-
-    public Image getBackButtonImage() {
-        return backButtonImage;
-    }
-
-    public Image getInfoButtonImage() {
-        return infoButtonImage;
-    }
-
-    public Image getBackButtonHover() {
-        return backButtonHover;
-    }
-
-    public Image getInfoButtonHover() {
-        return infoButtonHover;
     }
 
     public ImageView getInfoButton() {
@@ -486,13 +442,6 @@ public class CreateGoalsView {
         return tutorialImageView;
     }
 
-    public Image getHelpButtonHover() {
-        return helpButtonHover;
-    }
-
-    public Image getHelpButtonImage() {
-        return helpButtonImage;
-    }
 
     public ImageView getHelpButton() {
         return helpButton;
