@@ -128,7 +128,11 @@ public class PassageViewController {
                 } else if (!impossibleActions.isEmpty()) {
                     impossibleActions.forEach(action -> {
                         InventoryAction inventoryAction = (InventoryAction) action;
-                        updateRecentEventsFailure(game.player().getName() + " needs " + inventoryAction.getQuantity() + "x " + inventoryAction.getItem().getItemName() + " to access this path!" );
+                        if (inventoryAction.getQuantity() == 0) {
+                            updateRecentEventsFailure(game.player().getName() + " needs at least one '" + inventoryAction.getItem().getItemName() + "' to access this path!" );
+                        } else {
+                            updateRecentEventsFailure(game.player().getName() + " needs " + inventoryAction.getQuantity() + "x " + inventoryAction.getItem().getItemName() + " to access this path!" );
+                        }
                     });
                 } else {
                     updateRecentEventsPane(link);

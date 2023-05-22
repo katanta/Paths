@@ -28,7 +28,7 @@ You walk up to the bald bearded man and initiate a trade with him. You give him 
 
 ::Grand Exchange Purchase
 You walk up to the Grand Exchange worker and ask them to purchase a single magic log, and a tinderbox. This is indeed a strange combination, but it may be needed later down the line. The players (bots) around you pay no mind to your ludicrous purchase. A magic log for less than 100 coins is a steal nowadays, not in RuneScape 3 though, the economy there is ruined! You now feel highly prepared for the Wilderness. After all, who would attack a fellow with magic logs in his inventory?
-[Bravely Tread the Wilderness](Wilderness Path)<Score 50>
+[Bravely Tread the Wilderness](Wilderness Path)<Score 50><Health -50><Inventory true 1 Saradomin Godsword false <Score 10> >
 [Look for more useless items in the outskirts of Varrock](Exploring the Outskirts)<Health -2147000>
 [Go to the "doubling your money" guy from earlier]("Doubling money!")<Gold -20>
 
@@ -40,8 +40,12 @@ As you knock on the doors of the cooking guild, you know that there is a place f
 [Give up on your michelin-star dreams and enter Varrock](Enter Varrock)<Score 50>
 
 ::Wilderness Path
-As you jump over the ledge of the wilderness, you notice a player beginning to chase you. He is of a low level, and therefore allowed to attack you! He hits you once before another high level player suddenly appears out of thin air! The noob manages to hit you only once with a bronze longsword before he is slain by the high level player! The high level player looks at you, and without a word; drops one of the legendary God Swords, a blue, giant, shimmering demon slaying sword of the Gods! You pick up the sword and stare at the player in awe, as he slowly walks away and fades into the mystifying fog of the wilderness.
-[Chase the high level player](Chasing a Legend)<Inventory false 1 Magic Log false <Score 0> ><Inventory false 1 Tinderbox false <Score 0> >
+As you jump over a trench into the wilderness, you notice a player beginning to chase you. He is of a low level, and therefore allowed to attack you! He hits you once before another high level player suddenly appears out of thin air! Now that the player attacking you (Let's call him Bob) initiated combat, a skull appared above him and he can be attacked by anyone! Bob manages to hit you only once with a bronze longsword before he is slain by the high level player in one smooth slice! The high level player looks at you, and without a word; drops one of the legendary God Swords, a blue, giant, shimmering demon slaying sword of the Gods! You pick up the sword and stare at the player in awe, as he slowly walks away and fades into the mystifying fog of the wilderness.
+[Chase the high level player](Chasing a Legend)<Inventory false 1 Magic Log false <Score 0> ><Inventory false 0 Tinderbox false <Score 0> ><Health -10>
+[Wander the Wilderness with your new weapon](Wandering the Wilderness)<Health -40><Inventory true 2 Saradomin Brew true <Health 80> <Score 50> >
+
+::Chasing a Legend
+As you sprint into the deep depths of the Wilderness, chasing your hero, you notice yourself starting to tire out. The fog of the Wilderness is penetrating your very heart, which damages you slightly. You cannot go on, and must take a break. Luckily, the logs you had purchased earlier worked like a charm
 
 
 

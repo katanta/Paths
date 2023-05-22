@@ -15,8 +15,6 @@ public class InventoryAction implements Action, Serializable {
         if (item == null)
             throw new IllegalArgumentException("Item cannot be null");
 
-        if (quantity == 0)
-            throw new IllegalArgumentException("Quantity cannot be zero");
 
         this.item = item;
         this.add = add;
