@@ -287,7 +287,7 @@ public class PlayerTest {
         @Test
         void removeFromInventoryRemovesValidItem() {
             Item item = new Item("Tape", true, new ScoreAction(10));
-            mutumbu.removeFromInventory(item);
+            mutumbu.removeFromInventory(item, 1);
 
             assertFalse(mutumbu.getInventory().containsKey(item));
         }
@@ -296,12 +296,12 @@ public class PlayerTest {
         void removeFromInventoryThrowsExceptionWhenPlayerDoesNotHaveItem() {
             Item invalidItem = new Item("Invalid Item", false, new ScoreAction(10));
 
-            Assertions.assertThrows(IllegalArgumentException.class, () -> mutumbu.removeFromInventory(invalidItem));
+            Assertions.assertThrows(IllegalArgumentException.class, () -> mutumbu.removeFromInventory(invalidItem , 1));
         }
         @DisplayName("throws exception when item is null")
         @Test
         void removeFromInventoryThrowsExceptionWhenItemIsNull() {
-            Assertions.assertThrows(IllegalArgumentException.class, () -> mutumbu.removeFromInventory(null));
+            Assertions.assertThrows(IllegalArgumentException.class, () -> mutumbu.removeFromInventory(null, 1));
         }
         @DisplayName("decreases item quantity")
         @Test
@@ -310,7 +310,7 @@ public class PlayerTest {
 
             int initialQuantity = mutumbu.getInventory().get(item);
 
-            mutumbu.removeFromInventory(item);
+            mutumbu.removeFromInventory(item, 1);
 
             int updatedQuantity = mutumbu.getInventory().getOrDefault(item, 0);
 
@@ -321,7 +321,7 @@ public class PlayerTest {
         void removeFromInventoryRemovesItemWhenQuantityIsZero() {
             Item item = new Item("Tape", true, new ScoreAction(10));
 
-            mutumbu.removeFromInventory(item);
+            mutumbu.removeFromInventory(item, 1);
 
             Assertions.assertFalse(mutumbu.getInventory().containsKey(item));
         }

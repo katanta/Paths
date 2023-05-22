@@ -32,9 +32,9 @@ public class InventoryAction implements Action, Serializable {
     @Override
     public void execute(Player player) {
         if (add)
-            player.addToInventory(item, 1);
+            player.addToInventory(item, quantity);
         else {
-            player.removeFromInventory(item);
+            player.removeFromInventory(item, quantity);
             item.useItem(player);
         }
     }
@@ -61,6 +61,7 @@ public class InventoryAction implements Action, Serializable {
     }
 
     public boolean isPossible(Player player) {
+        System.out.println(player.getInventory().get(item));
         if(add) return true;
         if (!player.getInventory().containsKey(item)) return false;
         if (player.getInventory().get(item) < quantity) return false;

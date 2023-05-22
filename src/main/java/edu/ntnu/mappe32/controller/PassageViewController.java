@@ -80,7 +80,7 @@ public class PassageViewController {
             Item usedItem = passageView.getItemsListView().getSelectionModel().getSelectedItem();
             if (usedItem != null && usedItem.isUsable()) {
                 usedItem.useItem(game.player());
-                game.player().removeFromInventory(usedItem);
+                game.player().removeFromInventory(usedItem, 1);
 
                 if (game.player().getInventory().get(usedItem) == null)
                     inventory.remove(usedItem);

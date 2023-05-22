@@ -53,17 +53,20 @@ public class Item implements Serializable {
     public boolean isUsable() {
         return usable;
     }
+
+    public String usageString(Player player) {
+        return (player.getName() + " has used x1 " + itemName + "!");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Item item)) return false;
-        return itemName.equals(item.itemName) && actions.equals(item.actions);
+        return usable == item.usable && Objects.equals(itemName, item.itemName) && Objects.equals(actions, item.actions);
     }
-    public String usageString(Player player) {
-        return (player.getName() + " has used x1 " + itemName + "!");
-    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(itemName, actions);
+        return Objects.hash(itemName, usable, actions);
     }
 }

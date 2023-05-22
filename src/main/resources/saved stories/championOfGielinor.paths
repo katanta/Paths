@@ -3,7 +3,7 @@ The Champion of Gielinor
 ::The Adventure Begins
 (CREDIT TO JAGEX FOR CREATING RUNESCAPE AND INSPIRING THIS STORY) You, a brave adventurer, stand at the entrance of the mystical land of Gielinor. Your journey is about to unfold, filled with quests, battles, and treasures. As you contemplate your next move, you notice three paths stretching before you:
 [Follow the path to the bustling city of Varrock](Varrock Path)<Score 10>
-[Take the road leading to the treacherous Wilderness](Wilderness Path)<Score 20><Health -50><Inventory true 1 Saradomin Godsword false <Score 10> >
+[Take the road leading to the treacherous Wilderness](Wilderness Path)<Score 20><Health -50><Inventory true 1 Saradomin Godsword false <Score 50> <Health -80> >
 [Venture into the ancient forests of Taverley](Taverley Path)<Score 10><Health -10>
 
 ::Varrock Path
@@ -15,7 +15,7 @@ You embark on the path that leads to the bustling city of Varrock. As you traver
 ::Enter Varrock
 While entering the city gates, dark mages 17 levels above you fire dark magic upon you, greatly damaging you! Upon entering the city of Varrock, you see multitudes of connecting pathways and streets. What do you do?
 [Go shopping at the Grand Exchange](The Grand Exchange)<Score 10>
-[Go to the Wilderness](Wilderness Path)<Score 40><Health -50><Inventory true 1 Saradomin Godsword false <Score 10> >
+[Go to the Wilderness](Wilderness Path)<Score 40><Health -50><Inventory true 1 Saradomin Godsword false <Score 50> <Health -80> >
 
 ::The Grand Exchange
 As you walk into the Grand Exchange, you notice hundreds of players like you walking mindlessly around. Each and every one of them is bald, with a brown goatee. They all wear yellow t-shirts and long, green pants. You can tell they are mere machines, controlled by someone else. They are all mindlessly screaming things like "GIVE ME YOUR MONEY AND I WILL DOUBLE IT AND GIVE IT BACK". You also notice that the Grand Exchange is available for trades, if of course, you have the gold to purchase anything.
@@ -24,11 +24,11 @@ As you walk into the Grand Exchange, you notice hundreds of players like you wal
 
 ::"Doubling money!"
 You walk up to the bald bearded man and initiate a trade with him. You give him a fairly hefty sum of gold (for your level), trusting that he will double the money. In the same frame that the trade finishes, you see him disappear into thin air, as if he was never there. You just fell for the classic scam... It's a pity, but now you have to go take your anger out at another player in a PvP zone!
-[Go to the Wilderness](Wilderness Path)<Score 30><Health -50><Inventory true 1 Saradomin Godsword false <Score 10> >
+[Go to the Wilderness](Wilderness Path)<Score 30><Health -50><Inventory true 1 Saradomin Godsword false <Score 50> <Health -80> >
 
 ::Grand Exchange Purchase
 You walk up to the Grand Exchange worker and ask them to purchase a single magic log, and a tinderbox. This is indeed a strange combination, but it may be needed later down the line. The players (bots) around you pay no mind to your ludicrous purchase. A magic log for less than 100 coins is a steal nowadays, not in RuneScape 3 though, the economy there is ruined! You now feel highly prepared for the Wilderness. After all, who would attack a fellow with magic logs in his inventory?
-[Bravely Tread the Wilderness](Wilderness Path)<Score 50><Health -50><Inventory true 1 Saradomin Godsword false <Score 10> >
+[Bravely Tread the Wilderness](Wilderness Path)<Score 50><Health -50><Inventory true 1 Saradomin Godsword false <Score 50> <Health -80> >
 [Look for more useless items in the outskirts of Varrock](Exploring the Outskirts)<Health -2147000>
 [Go to the "doubling your money" guy from earlier]("Doubling money!")<Gold -20>
 
@@ -41,11 +41,18 @@ As you knock on the doors of the cooking guild, you know that there is a place f
 
 ::Wilderness Path
 As you jump over a trench into the wilderness, you notice a player beginning to chase you. He is of a low level, and therefore allowed to attack you! He hits you once before another high level player suddenly appears out of thin air! Now that the player attacking you (Let's call him Bob) initiated combat, a skull appared above him and he can be attacked by anyone! Bob manages to hit you only once with a bronze longsword before he is slain by the high level player in one smooth slice! The high level player looks at you, and without a word; drops one of the legendary God Swords, a blue, giant, shimmering demon slaying sword of the Gods! You pick up the sword and stare at the player in awe, as he slowly walks away and fades into the mystifying fog of the wilderness.
-[Chase the high level player](Chasing a Legend)<Inventory false 1 Magic Log false <Score 0> ><Inventory false 0 Tinderbox false <Score 0> ><Health -10>
+[Chase the high level player](Chasing a Legend)<Inventory false 1 Magic Log false <Score 100> ><Inventory false 0 Tinderbox false <Score 100> ><Health -10>
 [Wander the Wilderness with your new weapon](Wandering the Wilderness)<Health -40><Inventory true 2 Saradomin Brew true <Health 80> <Score 50> >
 
+::Wandering the Wilderness
+As you waddle around aimlessly in the Wilderness, you understand that you have no clue what you are doing, and should probably restart the game. Although, you find two peculiar looking potions on the ground that you picked up, since you had the space in your inventory. As you pick the potion flasks up, you hear footsteps behind you. It is a bald man with a beard, staring at you. He quickly puts on a winged helmet and glimmering, crimson armor. He equips a sword and hits you once for big damage! What do you do?
+[Charge forward](Battling a Player Killer)<Inventory false 1 Saradomin Godsword false <Score 50> <Health -80> >
+[Run away!](Run Player Run!)<Health -100000>
+[Log Out](Logged Out)
+
 ::Chasing a Legend
-As you sprint into the deep depths of the Wilderness, chasing your hero, you notice yourself starting to tire out. The fog of the Wilderness is penetrating your very heart, which damages you slightly. You cannot go on, and must take a break. Luckily, the logs you had purchased earlier worked like a charm
+As you sprint into the deep depths of the Wilderness, chasing your hero, you notice yourself starting to tire out. The fog of the Wilderness is penetrating your very heart, which damages you slightly. You cannot go on, and must take a break. Luckily, the logs you had purchased earlier worked like a charm. You lit them and managed to take a break in the fog.
+[Take a nap](You really slept here?)<Health -2147000>
 
 
 

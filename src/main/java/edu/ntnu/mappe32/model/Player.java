@@ -169,14 +169,14 @@ public class Player implements Serializable {
         inventory.merge(item, quantity, Integer::sum);
     }
 
-    public void removeFromInventory(final Item item) {
+    public void removeFromInventory(final Item item, int quantity) {
         if (item == null) {
             throw new IllegalArgumentException("Item cannot be null");
         }
         if (!inventory.containsKey(item)) {
             throw new IllegalArgumentException("The player does not have this item");
         }
-        inventory.merge(item, -1, Integer::sum);
+        inventory.merge(item, -quantity, Integer::sum);
 
         if (inventory.get(item) == 0) {
             inventory.remove(item);
