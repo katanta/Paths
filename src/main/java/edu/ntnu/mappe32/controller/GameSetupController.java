@@ -37,16 +37,18 @@ public class GameSetupController {
         setStoryTableActions();
         setAddPathsFileAction();
         setBackButtonActions();
-
     }
-
     private void setBackButtonActions() {
-        storySelectorView.getBackButton().setOnMouseEntered(mouseEvent -> setButtonImage(storySelectorView.getBackButton(), ViewUtils.restartHoverImage()));
+        storySelectorView.getBackButton().setOnMouseEntered(mouseEvent -> {
+            setButtonImage(storySelectorView.getBackButton(), ViewUtils.restartHoverImage());
+            ViewUtils.playSelectionSound();
+        });
         storySelectorView.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(storySelectorView.getBackButton(), ViewUtils.restartImage()));
         storySelectorView.getBackButton().setOnMouseClicked(mouseEvent -> new FinalSplashScreenController(stage, new FinalSplashScreenView()));
     }
     private void setAddPathsFileAction() {
         storySelectorView.getAddPathsFileButton().setOnAction(actionEvent -> {
+            ViewUtils.setHoverSound(storySelectorView.getAddPathsFileButton());
             FileChooser.ExtensionFilter pathsExtension = new FileChooser.ExtensionFilter("Paths Files (.paths)", "*.paths");
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Paths File");

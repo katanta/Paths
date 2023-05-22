@@ -55,6 +55,7 @@ public class CreateGoalsController {
         setTopActions();
         setCenterActions();
         stage.setScene(view.getScene());
+        setHoverSounds();
     }
 
     private void setTopActions() {
@@ -62,14 +63,20 @@ public class CreateGoalsController {
         // Set info button tooltip and change image
         Tooltip tooltip = createTooltip("See Player and Story information", 18);
         Tooltip.install(view.getInfoButton(), tooltip);
-        view.getInfoButton().setOnMouseEntered(mouseEvent -> view.getInfoButton().setImage(ViewUtils.infoHoverImage()));
+        view.getInfoButton().setOnMouseEntered(mouseEvent -> {
+            view.getInfoButton().setImage(ViewUtils.infoHoverImage());
+            ViewUtils.playSelectionSound();
+        });
         view.getInfoButton().setOnMouseExited(mouseEvent -> view.getInfoButton().setImage(ViewUtils.infoImage()));
         showInformationBox();
 
         // Set back button tooltip and change image
         Tooltip backButtonTooltip = createTooltip("Back to Create Player", 18);
         Tooltip.install(view.getBackButton(), backButtonTooltip);
-        view.getBackButton().setOnMouseEntered(mouseEvent -> view.getBackButton().setImage(ViewUtils.restartHoverImage()));
+        view.getBackButton().setOnMouseEntered(mouseEvent -> {
+            view.getBackButton().setImage(ViewUtils.restartHoverImage());
+            ViewUtils.playSelectionSound();
+        });
         view.getBackButton().setOnMouseExited(mouseEvent -> view.getBackButton().setImage(ViewUtils.restartImage()));
 
         view.getBackButton().setOnMouseClicked(mouseEvent -> {
@@ -78,11 +85,12 @@ public class CreateGoalsController {
 
         //Help button
         setHelpButtonClickAction();
+        Tooltip helpButtonTooltip = createTooltip("Need help? Press me! :)", 18);
+        Tooltip.install(view.getHelpButton(), helpButtonTooltip);
         view.getHelpButton().setOnMouseEntered(mouseEvent -> {
-            Tooltip helpButtonTooltip = createTooltip("Need help? Press me! :)", 18);
-            Tooltip.install(view.getHelpButton(), helpButtonTooltip);
+            view.getHelpButton().setImage(ViewUtils.helpButtonHoverImage());
+            ViewUtils.playSelectionSound();
         });
-        view.getHelpButton().setOnMouseEntered(mouseEvent -> view.getHelpButton().setImage(ViewUtils.helpButtonHoverImage()));
         view.getHelpButton().setOnMouseExited(mouseEvent -> view.getHelpButton().setImage(ViewUtils.helpButtonImage()));
 
     }
@@ -123,7 +131,16 @@ public class CreateGoalsController {
             PassageView passageView = new PassageView();
             PassageViewController passageViewController = new PassageViewController(stage, passageView, game);
             stage.setScene(passageView.getScene());
+            ViewUtils.stopStartScreenMusic();
         });
+        ViewUtils.setHoverSound(view.getStartButton());
+    }
+
+    private void setHoverSounds() {
+        ViewUtils.setHoverSound(view.getAddGoalButton1());
+        ViewUtils.setHoverSound(view.getAddGoalButton2());
+        ViewUtils.setHoverSound(view.getAddToInventoryGoal());
+        ViewUtils.setHoverSound(view.getSelectItem());
     }
 
     private void setGoalsIconsTooltips() {
@@ -180,16 +197,31 @@ public class CreateGoalsController {
     }
 
     private void setPointerBarActions() {
-        view.getHealthIcon().setOnMouseEntered(mouseEvent -> setPointersVisibility(true, false, false, false, mouseEvent));
+        view.getHealthIcon().setOnMouseEntered(mouseEvent -> {
+            ViewUtils.playSelectionSound();
+            setPointersVisibility(true, false, false, false, mouseEvent);
+        });
+
         view.getHealthIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
 
-        view.getScoreIcon().setOnMouseEntered(mouseEvent -> setPointersVisibility(false, true, false, false, mouseEvent));
-        view.getScoreIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
+        view.getScoreIcon().setOnMouseEntered(mouseEvent ->  {
+            ViewUtils.playSelectionSound();
+            setPointersVisibility(false, true, false, false, mouseEvent);
+        });
+        view.getScoreIcon().setOnMouseExited(mouseEvent -> {
+            setPointersVisibility(false, false, false, false, mouseEvent);
+        });
 
-        view.getGoldIcon().setOnMouseEntered(mouseEvent -> setPointersVisibility(false, false, true, false, mouseEvent));
+        view.getGoldIcon().setOnMouseEntered(mouseEvent -> {
+            setPointersVisibility(false, false, true, false, mouseEvent);
+            ViewUtils.playSelectionSound();
+        });
         view.getGoldIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
 
-        view.getInventoryIcon().setOnMouseEntered(mouseEvent -> setPointersVisibility(false, false, false, true, mouseEvent));
+        view.getInventoryIcon().setOnMouseEntered(mouseEvent -> {
+            setPointersVisibility(false, false, false, true, mouseEvent);
+            ViewUtils.playSelectionSound();
+        });
         view.getInventoryIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
 
     }

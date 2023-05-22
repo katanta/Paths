@@ -41,26 +41,36 @@ public class CreatePlayerController {
 
         //Info button
         setButtonTooltip(view.getInfoButton(), "Click here to see Story information...");
-        view.getInfoButton().setOnMouseEntered(mouseEvent -> setButtonImage(view.getInfoButton(), ViewUtils.infoHoverImage()));
+        view.getInfoButton().setOnMouseEntered(mouseEvent -> {
+
+                setButtonImage(view.getInfoButton(), ViewUtils.infoHoverImage());
+                ViewUtils.playSelectionSound();
+        });
         view.getInfoButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getInfoButton(), ViewUtils.infoImage()));
         showInformationBox();
 
         //Back button
         setButtonTooltip(view.getBackButton(), "Click to go back to Select Story");
-        view.getBackButton().setOnMouseEntered(mouseEvent -> setButtonImage(view.getBackButton(), ViewUtils.restartHoverImage()));
+        view.getBackButton().setOnMouseEntered(mouseEvent -> {
+                setButtonImage(view.getBackButton(), ViewUtils.restartHoverImage());
+                ViewUtils.playSelectionSound();
+        });
         view.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getBackButton(), ViewUtils.restartImage()));
         view.getBackButton().setOnMouseClicked(mouseEvent -> new GameSetupController(stage, new StorySelectorView()));
         view.getNextButton().setOnMouseClicked(mouseEvent -> goToCreateGoals());
         setButtonTooltip(view.getNextButton(), "Click to continue");
-
+        ViewUtils.setHoverSound(view.getNextButton());
         //Help button
         setHelpButtonClickAction();
         view.getHelpButton().setOnMouseEntered(mouseEvent -> {
             setButtonImage(view.getHelpButton(), ViewUtils.helpButtonHoverImage());
             setButtonTooltip(view.getHelpButton(), "Need help? Press me! :)");
         });
+        view.getHelpButton().setOnMouseExited(mouseEvent -> {
+                setButtonImage(view.getHelpButton(), ViewUtils.helpButtonImage());
+                ViewUtils.playSelectionSound();
+        });
 
-        view.getHelpButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getHelpButton(), ViewUtils.helpButtonImage()));
         setKeyPressedAction(view.getPlayerHealthTextField(), this::goToCreateGoals);
         setKeyPressedAction(view.getPlayerGoldTextField(), this::goToCreateGoals);
         setKeyPressedAction(view.getPlayerNameTextField(), this::goToCreateGoals);

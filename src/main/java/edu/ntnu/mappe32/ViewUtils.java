@@ -3,9 +3,12 @@ package edu.ntnu.mappe32;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -13,6 +16,7 @@ public class ViewUtils {
 
     private static ViewUtils instance;
     private static final String errorMessage = "Error occurred when ";
+    private static MediaPlayer musicPlayer;
     private static Image helpButtonHoverImage;
     private static Image homeButtonImage;
     private static Image homeButtonHoverImage;
@@ -22,9 +26,6 @@ public class ViewUtils {
     private static Image nextImage;
     private static Image pointerImage;
     private static Image restartImage;
-    private static Font pixeloidMonoFile;
-    private static Font pixeloidSansFile;
-    private static Font pixeloidSansBoldFile;
     private static Image errorCircleImage;
     private static Image goldImage;
     private static Image scoreImage;
@@ -32,11 +33,19 @@ public class ViewUtils {
     private static Image healthImage;
     private static Image inventoryImage;
     private static Image helpButtonImage;
+    private static MediaPlayer selectionPlayer;
 
     private ViewUtils() {
+        configureMediaPlayers();
         instaintiateImages();
     }
 
+    private void configureMediaPlayers() {
+        musicPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/music/MainMenuMusic.mp3").toURI().toString()));
+        musicPlayer.setOnEndOfMedia(() -> ViewUtils.getMusicPlayer().seek(Duration.ZERO));
+        musicPlayer.setVolume(0.25);
+        selectionPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/Menu Selection Click.wav").toURI().toString()));
+    }
     public static ViewUtils getInstance() {
         if (instance == null) {
             synchronized (ViewUtils.class) {
@@ -47,7 +56,23 @@ public class ViewUtils {
         }
         return instance;
     }
-
+    public static void playSelectionSound() {
+        selectionPlayer.play();
+        selectionPlayer.seek(Duration.ZERO);
+    }
+    public static void playStartScreenMusic() {
+        musicPlayer.play();
+    }
+    public static void stopStartScreenMusic() {
+        musicPlayer.stop();
+        musicPlayer.seek(Duration.ZERO);
+    }
+    public static MediaPlayer getMusicPlayer() {
+        return musicPlayer;
+    }
+    public static void setHoverSound(Node node) {
+        node.setOnMouseEntered(mouseEvent -> playSelectionSound());
+    }
     public static Tooltip createTooltip(String text, int fontSize) {
         Tooltip tooltip = new Tooltip(text);
         tooltip.setShowDelay(Duration.ZERO);
@@ -224,7 +249,4 @@ public class ViewUtils {
         return startImage;
     }
 
-    public static void setHoverSound(Node node) {
-
-    }
 }

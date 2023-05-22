@@ -1,14 +1,15 @@
 package edu.ntnu.mappe32.controller;
 
+import edu.ntnu.mappe32.ViewUtils;
 import edu.ntnu.mappe32.view.FinalSplashScreenView;
 import edu.ntnu.mappe32.view.StorySelectorView;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class FinalSplashScreenController {
     FinalSplashScreenView splashScreenView;
     Stage stage;
     public FinalSplashScreenController(Stage stage, FinalSplashScreenView splashScreenView) {
+        ViewUtils.playStartScreenMusic();
         this.stage = stage;
         this.splashScreenView = splashScreenView;
         configureButtonActions();
@@ -20,8 +21,7 @@ public class FinalSplashScreenController {
             splashScreenView.getPlayButtonHBox().getChildren().get(0).setVisible(true);
             splashScreenView.getPlayButtonHBox().getChildren().get(2).setVisible(true);
             splashScreenView.getPlayButton().setStyle(("-fx-border-color: #ffffff; -fx-border-width: 5px; -fx-background-color: #000000; -fx-text-fill: #ffffff;"));
-            splashScreenView.getSelectionPlayer().play();
-            splashScreenView.getSelectionPlayer().seek(Duration.millis(0));
+            ViewUtils.playSelectionSound();
         });
         splashScreenView.getPlayButton().setOnMouseExited(e -> {
             splashScreenView.getPlayButton().setStyle("-fx-border-color: #000000; -fx-border-width: 5px; -fx-background-color: #ffffff; -fx-text-fill: #000000");
@@ -30,16 +30,12 @@ public class FinalSplashScreenController {
         });
         splashScreenView.getPlayButton().setOnMouseClicked(e -> {
             splashScreenView.getPlayButton().setStyle("-fx-background-color: #888383");
-            splashScreenView.getMusicPlayer().stop();
-            splashScreenView.getMusicPlayer().seek(Duration.millis(0));
             GameSetupController gameSetupController = new GameSetupController(stage, new StorySelectorView());
         });
-
         splashScreenView.getBaitButtonHBox().getChildren().get(1).setOnMouseEntered(e -> {
             splashScreenView.getBaitButtonHBox().getChildren().get(0).setVisible(true);
             splashScreenView.getBaitButtonHBox().getChildren().get(2).setVisible(true);
-            splashScreenView.getSelectionPlayer().play();
-            splashScreenView.getSelectionPlayer().seek(Duration.millis(0));
+            ViewUtils.playSelectionSound();
 
         });
         splashScreenView.getBaitButtonHBox().getChildren().get(1).setOnMouseExited(e -> {
@@ -50,6 +46,5 @@ public class FinalSplashScreenController {
             //Todo: add a positively hilarious sound effect to hoodwink, bamboozle, lead astray, run amok and flat out deceive the players.
         });
     }
-
 
 }

@@ -28,8 +28,7 @@ import java.io.FileNotFoundException;
 
 public class FinalSplashScreenView {
     private final Scene scene;
-    private StackPane root;
-    private Image bigPathsLogo;
+    private final StackPane root;
     private VBox buttonsVBoxContainer;
     private HBox playButtonHBox;
     private Button playButton;
@@ -38,8 +37,6 @@ public class FinalSplashScreenView {
     private ImageView middleTrees;
     private ImageView lightLayer;
     private ImageView frontTrees;
-    private MediaPlayer musicPlayer;
-    private MediaPlayer selectionPlayer;
 
 
     public FinalSplashScreenView() {
@@ -49,11 +46,11 @@ public class FinalSplashScreenView {
         configureLogo(); //configureLogo must be done first to apply correct margins for it
         configureButtonsVBox();
         configureBackGround();
-        configureMediaPlayers();
         scene = new Scene(root, 1280, 720);
     }
 
     private void configureLogo() {
+        Image bigPathsLogo;
         try {
             bigPathsLogo = new Image(new FileInputStream("src/main/resources/img/bigPathsLogo.png"));
         } catch (FileNotFoundException e) {
@@ -162,25 +159,6 @@ public class FinalSplashScreenView {
         animation.setCycleCount(Animation.INDEFINITE);
         return animation;
     }
-
-    private void configureMediaPlayers() {
-        musicPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/music/MainMenuMusic.mp3").toURI().toString()));
-        musicPlayer.setVolume(0.25);
-        selectionPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/Menu Selection Click.wav").toURI().toString()));
-
-        musicPlayer.play();
-        musicPlayer.setOnEndOfMedia(() -> musicPlayer.seek(Duration.ZERO));
-    }
-
-
-
-    public MediaPlayer getMusicPlayer() {
-        return musicPlayer;
-    }
-    public MediaPlayer getSelectionPlayer() {
-        return selectionPlayer;
-    }
-
     public Scene getScene() {
         return scene;
     }

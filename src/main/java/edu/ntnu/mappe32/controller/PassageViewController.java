@@ -140,7 +140,10 @@ public class PassageViewController {
                     updateScene(); //make the buttons change the current active passage, changing the scene
                 }
             });
-            linkButton.setOnMouseEntered(e -> linkButton.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff"));
+            linkButton.setOnMouseEntered(e -> {
+                linkButton.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff")  ;
+                ViewUtils.playSelectionSound();
+            });
             linkButton.setOnMouseExited(e -> linkButton.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-border-width: 2px; -fx-border-color: #000000"));
             Tooltip linkTooltip = ViewUtils.createTooltip(link.getText(), 20);
             linkButton.setTooltip(linkTooltip);
@@ -227,6 +230,7 @@ public class PassageViewController {
         final Image normalRestartButton = passageView.getRestartButton().getImage();
         //help button
         passageView.getHelpButton().setOnMouseEntered(e -> {
+            ViewUtils.playSelectionSound();
             passageView.getHelpButton().setImage(helpButtonHover.getImage());
             setHelpButtonClickAction();
             Tooltip tooltip = ViewUtils.createTooltip("Need help? Press me! :)", 18);
@@ -236,6 +240,7 @@ public class PassageViewController {
         passageView.getHelpButton().setOnMouseExited(e -> passageView.getHelpButton().setImage(normalHelpButton));
         //home button
         passageView.getHomeButton().setOnMouseEntered(e -> {
+            ViewUtils.playSelectionSound();
             passageView.getHomeButton().setImage(homeButtonHover.getImage());
             setHomeButtonClickAction();
             Tooltip tooltip = ViewUtils.createTooltip("Press this to go the home screen.", 18);
@@ -245,6 +250,7 @@ public class PassageViewController {
         passageView.getHomeButton().setOnMouseExited(e -> passageView.getHomeButton().setImage(normalHomeButton));
         //restart button
         passageView.getRestartButton().setOnMouseEntered(e -> {
+            ViewUtils.playSelectionSound();
             passageView.getRestartButton().setImage(restartButtonHover.getImage());
             setRestartButtonClickAction();
             Tooltip tooltip = ViewUtils.createTooltip("Press this to restart the story and revert " + game.player().getName() + " to their original stats.", 18);
