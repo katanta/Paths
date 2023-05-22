@@ -63,6 +63,7 @@ public class InventoryAction implements Action, Serializable {
     }
 
     public boolean isPossible(Player player) {
+        if(add) return true;
         if (!player.getInventory().containsKey(item)) return false;
         if (player.getInventory().get(item) < quantity) return false;
         return true;

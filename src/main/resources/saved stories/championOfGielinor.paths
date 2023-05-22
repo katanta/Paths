@@ -1,7 +1,7 @@
 The Champion of Gielinor
 
 ::The Adventure Begins
-You, a brave adventurer, stand at the entrance of the mystical land of Gielinor. Your journey is about to unfold, filled with quests, battles, and treasures. As you contemplate your next move, you notice three paths stretching before you:
+(CREDIT TO JAGEX FOR CREATING RUNESCAPE AND INSPIRING THIS STORY) You, a brave adventurer, stand at the entrance of the mystical land of Gielinor. Your journey is about to unfold, filled with quests, battles, and treasures. As you contemplate your next move, you notice three paths stretching before you:
 [Follow the path to the bustling city of Varrock](Varrock Path)<Score 10>
 [Take the road leading to the treacherous Wilderness](Wilderness Path)<Score 20><Health -50><Inventory true 1 Saradomin Godsword false <Score 10> >
 [Venture into the ancient forests of Taverley](Taverley Path)<Score 10><Health -10>
@@ -10,31 +10,38 @@ You, a brave adventurer, stand at the entrance of the mystical land of Gielinor.
 You embark on the path that leads to the bustling city of Varrock. As you traverse the winding road, you encounter fellow travelers and merchants along the way. The city's towering walls come into view, promising a multitude of quests, shops, and guilds. Just around the outskirts you see multiple hooded figures, no doubt planning something evil and nefarious, as most hooded figures do. Except me, of course, the writer of this story!
 [Enter the city of Varrock](Enter Varrock)<Health -30>
 [Explore the outskirts for hidden treasures](Exploring the Outskirts)<Health -217400000>
-[Join a guild and hone your skills](Joining a Guild)<Health -4>
+[Join a guild and hone your skills](Joining a Guild)<Health -4><Gold 100>
 
 ::Enter Varrock
 While entering the city gates, dark mages 17 levels above you fire dark magic upon you, greatly damaging you! Upon entering the city of Varrock, you see multitudes of connecting pathways and streets. What do you do?
 [Go shopping at the Grand Exchange](The Grand Exchange)<Score 10>
-[Go to the Wilderness](Wilderness Path)<Health -50><Score 50>
+[Go to the Wilderness](Wilderness Path)<Score 40><Health -50><Inventory true 1 Saradomin Godsword false <Score 10> >
 
 ::The Grand Exchange
 As you walk into the Grand Exchange, you notice hundreds of players like you walking mindlessly around. Each and every one of them is bald, with a brown goatee. They all wear yellow t-shirts and long, green pants. You can tell they are mere machines, controlled by someone else. They are all mindlessly screaming things like "GIVE ME YOUR MONEY AND I WILL DOUBLE IT AND GIVE IT BACK". You also notice that the Grand Exchange is available for trades, if of course, you have the gold to purchase anything.
 [Try to double your money]("Doubling money!")<Gold -100>
-[Buy something nice](Grand Exchange Purchase)<Gold -80>
+[Buy something nice](Grand Exchange Purchase)<Gold -80><Inventory true 1 Magic Log false <Score 100> ><Inventory true 1 Tinderbox false <Score 100> >
 
 ::"Doubling money!"
-You walk up to the bald bearded man and initiate a trade with him. You give him a hefty sum of gold, trusting that he will double the money. In the same frame that the trade finishes, you see him disappear into thin air, as if he was never there. You just fell for the classic scam... It's a pity, but now you have to go take your anger out at another player in a PvP zone!
-[Go to the Wilderness](Wilderness Path)
+You walk up to the bald bearded man and initiate a trade with him. You give him a fairly hefty sum of gold (for your level), trusting that he will double the money. In the same frame that the trade finishes, you see him disappear into thin air, as if he was never there. You just fell for the classic scam... It's a pity, but now you have to go take your anger out at another player in a PvP zone!
+[Go to the Wilderness](Wilderness Path)<Score 30><Health -50><Inventory true 1 Saradomin Godsword false <Score 10> >
 
 ::Grand Exchange Purchase
-You walk up to the Grand Exchange worker and ask them to purchase a single magic log, and
+You walk up to the Grand Exchange worker and ask them to purchase a single magic log, and a tinderbox. This is indeed a strange combination, but it may be needed later down the line. The players (bots) around you pay no mind to your ludicrous purchase. A magic log for less than 100 coins is a steal nowadays, not in RuneScape 3 though, the economy there is ruined! You now feel highly prepared for the Wilderness. After all, who would attack a fellow with magic logs in his inventory?
+[Bravely Tread the Wilderness](Wilderness Path)<Score 50>
+[Look for more useless items in the outskirts of Varrock](Exploring the Outskirts)<Health -2147000>
+[Go to the "doubling your money" guy from earlier]("Doubling money!")<Gold -20>
 
 ::Exploring the Outskirts
 As you traverse the outsides of the thick, stone walls of Varrock, you find a few pink harmless berries. As you pick them up, you realize that a dark mage is casting a dark spell upon you. He is level 20, and you are no match for him. He easily casts a spell and disintegrates you, reducing you to simple atoms while your pink berries drop to the ground.
 
 ::Joining a Guild
-As you knock on the doors of the cooking guild, you know that there is a place for you. After all, your cooking level is 99! After a few knocks, a chef with a ridiculously large moustache walks up to the door, and opens it. He loudly exclaims "GO AWAY! YOU ARE NOT WEARING A CHEF'S HAT, YOU MUST OBVIOUSLY BE A HORRIBLE COOK, AND WHATS WITH THAT OUTFIT? YOU LOOK HORRID!" This greatly damages your confidence, you lost some health.
-[Give up on your michelin-star dreams and enter Varrock](Enter the city of Varrock)
+As you knock on the doors of the cooking guild, you know that there is a place for you. After all, your cooking level is 99! After a few knocks, a chef with a ridiculously large moustache walks up to the door, and opens it. He loudly exclaims "GO AWAY! YOU ARE NOT WEARING A CHEF'S HAT, YOU MUST OBVIOUSLY BE A HORRIBLE COOK, AND WHATS WITH THAT OUTFIT? YOU LOOK HORRID!" This greatly damages your confidence, you lost some health. As you drop to the ground, you notice that there are 100 gold coins that the chef dropped for you. Perhaps he thought you were a beggar! No worries, you are now loaded!
+[Give up on your michelin-star dreams and enter Varrock](Enter Varrock)<Score 50>
+
+::Wilderness Path
+As you jump over the ledge of the wilderness, you notice a player beginning to chase you. He is of a low level, and therefore allowed to attack you! He hits you once before another high level player suddenly appears out of thin air! The noob manages to hit you only once with a bronze longsword before he is slain by the high level player! The high level player looks at you, and without a word; drops one of the legendary God Swords, a blue, giant, shimmering demon slaying sword of the Gods! You pick up the sword and stare at the player in awe, as he slowly walks away and fades into the mystifying fog of the wilderness.
+[Chase the high level player](Chasing a Legend)<Inventory false 1 Magic Log false <Score 0> ><Inventory false 1 Tinderbox false <Score 0> >
 
 
 
