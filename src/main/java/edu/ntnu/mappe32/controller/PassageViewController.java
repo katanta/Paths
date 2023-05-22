@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import static edu.ntnu.mappe32.view.PassageView.resizableMainFont;
@@ -297,6 +298,15 @@ public class PassageViewController {
         goalCompletionText.setFill(Color.GREEN);
 
         passageView.getEventsVBox().getChildren().add(0, goalCompletionText);
+
+        if (completedGoals.size() == game.goals().size()) {
+            Text gameCompletionText = new Text("Congratulations! \n" + game.player().getName() + " has completed all their goals! You can continue playing if able, or restart :)");
+            gameCompletionText.setFont(goalCompletionText.getFont());
+            gameCompletionText.setWrappingWidth(goalCompletionText.getWrappingWidth());
+            gameCompletionText.setFill(goalCompletionText.getFill());
+
+            passageView.getEventsVBox().getChildren().add(0, gameCompletionText);
+        }
     }
 }
 
