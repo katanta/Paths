@@ -51,7 +51,6 @@ public class FinalSplashScreenView {
         configureBackGround();
         configureMediaPlayers();
         scene = new Scene(root, 1280, 720);
-        System.out.println("hei");
     }
 
     private void configureLogo() {
@@ -76,7 +75,7 @@ public class FinalSplashScreenView {
             lightLayer = new ImageView(new Image(new FileInputStream("src/main/resources/img/animationExperiment/lights.png")));
             frontTrees = new ImageView(new Image(new FileInputStream("src/main/resources/img/animationExperiment/frontTrees.png")));
         } catch (FileNotFoundException e) {
-            System.out.println("One or more background images are missing...");
+            throw new RuntimeException("One or more background images are missing..." + e.getMessage());
         }
         Rectangle2D backGroundViewPort = new Rectangle2D(0, 0, 1280, 720);
         backgroundTrees.setViewport(backGroundViewPort);
@@ -165,7 +164,6 @@ public class FinalSplashScreenView {
     }
 
     private void configureMediaPlayers() {
-        System.out.println("hei");
         musicPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/music/MainMenuMusic.mp3").toURI().toString()));
         musicPlayer.setVolume(0.25);
         selectionPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/Menu Selection Click.wav").toURI().toString()));

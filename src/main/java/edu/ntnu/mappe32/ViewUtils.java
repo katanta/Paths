@@ -8,8 +8,6 @@ import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.Objects;
 
 public class ViewUtils {
 
@@ -82,9 +80,9 @@ public class ViewUtils {
         }
 
         try {
-            scoreImage = new Image(new FileInputStream("src/main/resources/img/gold.png"));
+            scoreImage = new Image(new FileInputStream("src/main/resources/img/score.png"));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(errorMessage + "reading gold.png " + e.getMessage());
+            throw new RuntimeException(errorMessage + "reading score.png " + e.getMessage());
         }
 
         try {

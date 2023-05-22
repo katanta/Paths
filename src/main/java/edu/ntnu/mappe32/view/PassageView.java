@@ -87,16 +87,13 @@ public class PassageView {
         configurePlayerScoreLabel();
         configurePlayerGoldLabel();
         configureInventoryPane();
-
         VBox playerInfo = new VBox(playerNameLabel , playerHealth, playerScore, playerGold, itemsVBox);
+        playerInfo.getChildren().stream().limit(4).forEach(node -> VBox.setMargin(node, new Insets(0,0,0,20)));
         playerInfo.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         playerInfo.setSpacing(40);
         playerInfo.setMaxWidth(320);
         playerInfo.setAlignment(Pos.TOP_CENTER);
-        VBox.setMargin(playerNameLabel, new Insets(5, 0, 0, 0));
-        VBox.setMargin(playerHealth, new Insets(0, 0, 0, 48));
-        VBox.setMargin(playerScore, new Insets(0, 0, 0, 37));
-        VBox.setMargin(playerGold, new Insets(0, 0, 0, 43));
+
         StackPane.setAlignment(playerInfo, Pos.TOP_RIGHT);
         root.getChildren().add(playerInfo);
     }
@@ -107,8 +104,8 @@ public class PassageView {
         playerScoreLabel = new Label("");
         playerScoreLabel.setFont(infoFont);
         playerScoreLabel.setLabelFor(scoreIcon);
-        scoreIcon.setFitHeight(67);
-        scoreIcon.setFitWidth(67);
+        scoreIcon.setFitHeight(70);
+        scoreIcon.setFitWidth(70);
         playerScore = new HBox(scoreIcon, playerScoreLabel);
         playerScore.setAlignment(Pos.CENTER_LEFT);
         playerScore.setSpacing(20);
@@ -124,8 +121,8 @@ public class PassageView {
         playerHealthLabel = new Label("");
         playerHealthLabel.setFont(infoFont);
         playerHealthLabel.setLabelFor(healthIcon);
-        healthIcon.setFitHeight(50);
-        healthIcon.setFitWidth(50);
+        healthIcon.setFitHeight(70);
+        healthIcon.setFitWidth(70);
         playerHealth = new HBox(healthIcon, playerHealthLabel);
         playerHealth.setAlignment(Pos.CENTER_LEFT);
         playerHealth.setSpacing(20);
@@ -136,8 +133,8 @@ public class PassageView {
         playerGoldLabel = new Label("");
         playerGoldLabel.setFont(infoFont);
         playerGoldLabel.setLabelFor(goldIcon);
-        goldIcon.setFitHeight(58);
-        goldIcon.setFitWidth(60);
+        goldIcon.setFitHeight(70);
+        goldIcon.setFitWidth(70);
         playerGold = new HBox(goldIcon, playerGoldLabel);
         playerGold.setAlignment(Pos.CENTER_LEFT);
         playerGold.setSpacing(20);
