@@ -54,7 +54,7 @@ public class GameSetupController {
             FileChooser.ExtensionFilter pathsExtension = new FileChooser.ExtensionFilter("Paths Files (.paths)", "*.paths");
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Paths File");
-            fileChooser.setInitialDirectory(new File("src/main/resources/saved stories"));
+            fileChooser.setInitialDirectory(new File("src/main/resources/test_stories"));
             fileChooser.getExtensionFilters().add(pathsExtension);
             File selectedFile = fileChooser.showOpenDialog(stage);
 
@@ -71,7 +71,7 @@ public class GameSetupController {
     }
 
     private void getFilesInDirectory() {
-        File directory = new File("src/main/resources/test_stories");
+        File directory = new File("src/main/resources/saved stories");
         File[] files = directory.listFiles((dir, name) -> name.endsWith(".paths"));
         if (files != null) {
             Arrays.stream(files).forEach(file -> pathsFiles.add(new PathsFile(file)));
