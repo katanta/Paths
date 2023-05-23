@@ -58,6 +58,7 @@ public class CreatePlayerView {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css")).toExternalForm());
 
     }
+
     private void configureTop() {
         top = new HBox(50);
 
@@ -75,14 +76,14 @@ public class CreatePlayerView {
         top.getChildren().addAll(storyTitle, infoButton);
         top.setAlignment(Pos.CENTER);
 
-        top.setPadding(new Insets(20, 0,0,0));
+        top.setPadding(new Insets(20, 0, 0, 0));
 
     }
 
     private void configureHelpAndBackButton() {
         helpAndBackButtonHBox = new HBox(10);
         helpAndBackButtonHBox.setAlignment(Pos.TOP_LEFT);
-        helpAndBackButtonHBox.setPadding(new Insets(20,0,0,20));
+        helpAndBackButtonHBox.setPadding(new Insets(20, 0, 0, 20));
         helpButton = new ImageView(FrontendUtils.helpButtonImage());
         helpButton.setFitWidth(62);
         helpButton.setFitHeight(62);
@@ -92,9 +93,10 @@ public class CreatePlayerView {
         backButton.setFitHeight(62);
         backButton.setPickOnBounds(true);
     }
+
     private void configureCenter() {
         centerVBox = new VBox(50);
-        centerVBox.setPadding(new Insets(30,0,0,0));
+        centerVBox.setPadding(new Insets(30, 0, 0, 0));
         centerVBox.setAlignment(Pos.TOP_CENTER);
         Label chooseYourStats = new Label("Choose Your Stats");
         chooseYourStats.setFont(FrontendUtils.pixeloidSans(40));
@@ -103,7 +105,7 @@ public class CreatePlayerView {
         nextButton = new ImageView(FrontendUtils.nextImage());
         configurePlayerStatsGridPane();
         configureTutorialImageView();
-        playerGridPane.setPadding(new Insets(0, 0,0,330));
+        playerGridPane.setPadding(new Insets(0, 0, 0, 330));
         playerGridPane.setAlignment(Pos.TOP_CENTER);
         nextButton.setPickOnBounds(true);
         centerVBox.getChildren().addAll(chooseYourStats, playerGridPane, nextButton);
@@ -117,17 +119,18 @@ public class CreatePlayerView {
         playerGridPane = new GridPane();
         playerGridPane.setHgap(10);
         playerGridPane.setVgap(30);
-        playerGridPane.add(playerNameLabel,0,0);
-        playerGridPane.add(playerHealthLabel,0,1);
-        playerGridPane.add(playerGoldLabel,0,2);
-        playerGridPane.add(playerNameTextField,1,0);
-        playerGridPane.add(playerHealthTextField, 1,1);
-        playerGridPane.add(playerGoldTextField, 1,2);
-        playerGridPane.add(invalidNameBox, 2,0);
-        playerGridPane.add(invalidHealthBox,2,1);
+        playerGridPane.add(playerNameLabel, 0, 0);
+        playerGridPane.add(playerHealthLabel, 0, 1);
+        playerGridPane.add(playerGoldLabel, 0, 2);
+        playerGridPane.add(playerNameTextField, 1, 0);
+        playerGridPane.add(playerHealthTextField, 1, 1);
+        playerGridPane.add(playerGoldTextField, 1, 2);
+        playerGridPane.add(invalidNameBox, 2, 0);
+        playerGridPane.add(invalidHealthBox, 2, 1);
         playerGridPane.add(invalidGoldBox, 2, 2);
-        VBox.setMargin(playerGridPane, new Insets(20,0,0,0));
+        VBox.setMargin(playerGridPane, new Insets(20, 0, 0, 0));
     }
+
     private void configureInvalidInputBoxes() {
 
         Label invalidGoldLabel = createInvalidErrorLabel("Invalid gold (Integers over 0 only)");
@@ -158,6 +161,7 @@ public class CreatePlayerView {
         this.playerNameLabel = new Label("Name:");
         playerNameLabel.setFont(statLabelFont);
     }
+
     private void configureRow1() {
         this.playerGoldTextField = new TextField();
         playerGoldTextField.setPromptText("Player Gold");
@@ -167,6 +171,7 @@ public class CreatePlayerView {
         this.playerGoldLabel = new Label("Gold:");
         playerGoldLabel.setFont(statLabelFont);
     }
+
     private void configureRow2() {
         this.playerHealthTextField = new TextField();
         playerHealthTextField.setPromptText("Player Health");
@@ -176,12 +181,13 @@ public class CreatePlayerView {
         this.playerHealthLabel = new Label("Health:");
         playerHealthLabel.setFont(statLabelFont);
     }
+
     private VBox createErrorCircle() {
         ImageView errorCircle = new ImageView(FrontendUtils.errorCircleImage());
         errorCircle.setFitWidth(20);
         errorCircle.setFitHeight(20);
         VBox errorCircleBox = new VBox(errorCircle);
-        VBox.setMargin(errorCircle, new Insets(9.2,0,0, 0));
+        VBox.setMargin(errorCircle, new Insets(9.2, 0, 0, 0));
         return errorCircleBox;
     }
 
@@ -192,10 +198,12 @@ public class CreatePlayerView {
         label.setAlignment(Pos.CENTER);
         return label;
     }
+
     private TextFormatter<TextFormatter.Change> restrictTextFieldFormatter(int characters) {
         Pattern pattern = Pattern.compile(".{0," + characters + "}");
         return new TextFormatter<>((change -> pattern.matcher(change.getControlNewText()).matches() ? change : null));
     }
+
     private void configureTutorialImageView() {
         try {
             tutorialImageView = new ImageView(new Image(new FileInputStream("src/main/resources/img/createPlayerTutorial.png")));
@@ -211,6 +219,7 @@ public class CreatePlayerView {
     public Label getStoryTitle() {
         return storyTitle;
     }
+
     public ImageView getInfoButton() {
         return infoButton;
     }

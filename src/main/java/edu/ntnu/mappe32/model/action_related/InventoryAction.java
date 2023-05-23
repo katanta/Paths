@@ -11,11 +11,16 @@ public class InventoryAction implements Action, Serializable {
     private final Item item;
     private final int quantity;
 
+    /**
+     * Facilitates the creation of instances of the class InventoryAction.
+     *
+     * @param item     The item of the InventoryAction, as Item.
+     * @param add      Whether the InventoryAction, adds items or removes items, as boolean.
+     * @param quantity The quantity of items to add or remove, as int.
+     */
     public InventoryAction(final Item item, final boolean add, int quantity) {
         if (item == null)
             throw new IllegalArgumentException("Item cannot be null");
-
-
         this.item = item;
         this.add = add;
         this.quantity = quantity;
@@ -27,6 +32,7 @@ public class InventoryAction implements Action, Serializable {
 
     /**
      * Executes an action that affects a players inventory.
+     *
      * @param player The player affected by the action, as Player.
      */
     @Override
@@ -60,12 +66,19 @@ public class InventoryAction implements Action, Serializable {
         return add;
     }
 
+    /**
+     * This method returns whether it is possible to execute an InventoryAction on a player.
+     * It is not possible to execute the action if the Player does not have enough of an Item.
+     *
+     * @param player Player to execute the InvetoryAction on, as Player.
+     * @return Possibility of executing InventoryAction on a Player, as boolean.
+     */
     public boolean isPossible(Player player) {
-        if(add) return true;
+        if (add) return true;
         if (!player.getInventory().containsKey(item)) return false;
-        if (player.getInventory().get(item) < quantity) return false;
-        return true;
+        return player.getInventory().get(item) >= quantity;
     }
+
     public int getQuantity() {
         return quantity;
     }

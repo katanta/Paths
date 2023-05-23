@@ -117,6 +117,7 @@ public class CreateGoalsController {
         setGoalsIconsTooltips();
         setPointerBarActions();
     }
+
     private void setStartButtonActions() {
         Tooltip startButtonTooltip = FrontendUtils.createTooltip("Press To Start Game!", 18);
 
@@ -156,6 +157,7 @@ public class CreateGoalsController {
             Tooltip.install(icon, tooltip);
         });
     }
+
     private void setGoalIconActions() {
         String goalValueText = " Goal Value:";
 
@@ -204,7 +206,7 @@ public class CreateGoalsController {
 
         view.getHealthIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
 
-        view.getScoreIcon().setOnMouseEntered(mouseEvent ->  {
+        view.getScoreIcon().setOnMouseEntered(mouseEvent -> {
             FrontendUtils.playSelectionSound();
             setPointersVisibility(false, true, false, false, mouseEvent);
         });
@@ -332,8 +334,9 @@ public class CreateGoalsController {
             view.getQuantity().clear();
             mandatoryItems.clear();
         });
-        Tooltip.install(view.getAddGoalButton2(),addGoalButtonTooltip);
+        Tooltip.install(view.getAddGoalButton2(), addGoalButtonTooltip);
     }
+
     private void setAddGoalToInventoryActions() {
         view.getAddToInventoryGoal().setOnMouseClicked(mouseEvent -> {
             if (view.getSelectItem().getItems().isEmpty()) {
@@ -354,6 +357,7 @@ public class CreateGoalsController {
             }
         });
     }
+
     private Optional<Item> findSelectedItem(String itemName) {
         return pathsFile.getStory().getItems().stream()
                 .filter(item -> item.getItemName().equals(itemName))
@@ -392,9 +396,10 @@ public class CreateGoalsController {
 
                 removalItem.ifPresent(remove -> mandatoryItems.remove(removalItem.get()));
 
-                }
-            });
+            }
+        });
     }
+
     private boolean validateGoalValueInput() {
         String numbersOnlyRegex = "^[0-9]+$";
         if (!Pattern.matches(numbersOnlyRegex, view.getValueTextField().getText())) {
@@ -406,12 +411,14 @@ public class CreateGoalsController {
         view.getInvalidValueBox().setVisible(false);
         return true;
     }
+
     /**
      * This method validates the input of the playerHealthTextField
      * It returns false if the input contains other characters than numbers or is empty
      * Otherwise, it returns true
+     *
      * @return false if input contains other characters than numbers or is empty, as boolean
-     *         true otherwise, as boolean
+     * true otherwise, as boolean
      */
     private boolean validateQuantityInput() {
         String numbersOnlyRegex = "^[0-9]+$";
@@ -422,12 +429,14 @@ public class CreateGoalsController {
         view.getQuantity().setStyle(null);
         return true;
     }
+
     private void setInvalidTextFieldStyle(TextField textField) {
         String borderColor = "red;";
         String borderWidth = "1px;";
         textField.setStyle("-fx-border-color: " + borderColor +
                 "-fx-border-width: " + borderWidth);
     }
+
     private void showNoMandatoryItemAlert() {
         Alert noMandatoryItems = new Alert(Alert.AlertType.WARNING);
         noMandatoryItems.setTitle("No Mandatory Items");

@@ -37,7 +37,7 @@ public class FrontendUtils {
 
     private FrontendUtils() {
         configureMediaPlayers();
-        instaintiateImages();
+        instantiateImages();
     }
 
     private void configureMediaPlayers() {
@@ -46,23 +46,29 @@ public class FrontendUtils {
         musicPlayer.setVolume(0.25);
         selectionPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/Menu Selection Click.wav").toURI().toString()));
     }
+
     public static FrontendUtils getInstance() {
         return instance;
     }
+
     public static void playSelectionSound() {
         selectionPlayer.play();
         selectionPlayer.seek(Duration.ZERO);
     }
+
     public static void playStartScreenMusic() {
         musicPlayer.play();
     }
+
     public static void stopStartScreenMusic() {
         musicPlayer.stop();
         musicPlayer.seek(Duration.ZERO);
     }
+
     public static void setHoverSound(Node node) {
         node.setOnMouseEntered(mouseEvent -> playSelectionSound());
     }
+
     public static Tooltip createTooltip(String text, int fontSize) {
         Tooltip tooltip = new Tooltip(text);
         tooltip.setShowDelay(Duration.ZERO);
@@ -70,6 +76,7 @@ public class FrontendUtils {
         tooltip.setFont(pixeloidSans(fontSize));
         return tooltip;
     }
+
     public static Font pixeloidMono(int fontSize) {
         return Font.loadFont("file:src/main/resources/fonts/PixeloidMono.ttf", fontSize);
     }
@@ -81,7 +88,8 @@ public class FrontendUtils {
     public static Font pixeloidSansBold(int fontSize) {
         return Font.loadFont("file:src/main/resources/fonts/PixeloidSansBold.ttf", fontSize);
     }
-    private void instaintiateImages() {
+
+    private void instantiateImages() {
         try {
             errorCircleImage = new Image(new FileInputStream("src/main/resources/img/errorCircle.png"));
         } catch (FileNotFoundException e) {
@@ -177,6 +185,7 @@ public class FrontendUtils {
             throw new RuntimeException(errorMessage + "reading start.png " + e.getMessage());
         }
     }
+
     public static Image errorCircleImage() {
         return errorCircleImage;
     }
@@ -216,6 +225,7 @@ public class FrontendUtils {
     public static Image infoImage() {
         return infoImage;
     }
+
     public static Image infoHoverImage() {
         return infoHoverImage;
     }
@@ -231,6 +241,7 @@ public class FrontendUtils {
     public static Image restartImage() {
         return restartImage;
     }
+
     public static Image restartHoverImage() {
         return restartHoverImage;
     }

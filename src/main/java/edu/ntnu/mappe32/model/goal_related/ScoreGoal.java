@@ -8,6 +8,7 @@ public class ScoreGoal implements Goal {
 
     /**
      * This constructor facilitates the creation of instances of the class ScoreGoal.
+     *
      * @param minimumPoints Points required for a goal to be reached, as int.
      * @throws IllegalArgumentException when minimumPoints is negative.
      * @since 0.1
@@ -21,6 +22,7 @@ public class ScoreGoal implements Goal {
 
     /**
      * This method checks if the score goal is reached.
+     *
      * @param player The player a goal-check should be executed on, as Player.
      * @return Whether the player has fulfilled a goal, as boolean.
      * @since 0.1
@@ -33,10 +35,12 @@ public class ScoreGoal implements Goal {
     public String toString() {
         return "Have a total score of " + minimumPoints;
     }
+
     @Override
     public String goalValue() {
         return String.valueOf(minimumPoints);
     }
+
     @Override
     public String goalType() {
         return "Score";

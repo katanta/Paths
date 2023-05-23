@@ -8,6 +8,7 @@ public class HealthGoal implements Goal {
 
     /**
      * This constructor facilitates the creation of instances of the class HealthGoal.
+     *
      * @param minimumHealth Points required for a goal to be reached, as int.
      * @throws IllegalArgumentException when minimumHealth is below zero.
      * @since 0.1
@@ -21,6 +22,7 @@ public class HealthGoal implements Goal {
 
     /**
      * This method checks if the health goal is reached.
+     *
      * @param player The player a goal-check should be executed on, as Player.
      * @return Whether the player has fulfilled the health, as boolean.
      * @since 0.1
@@ -32,10 +34,12 @@ public class HealthGoal implements Goal {
     public String toString() {
         return "Have a total of " + minimumHealth + " health";
     }
+
     @Override
     public String goalValue() {
         return String.valueOf(minimumHealth);
     }
+
     @Override
     public String goalType() {
         return "Health";

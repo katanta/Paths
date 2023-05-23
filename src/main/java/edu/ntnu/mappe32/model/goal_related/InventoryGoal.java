@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 public class InventoryGoal implements Goal {
     // List of mandatory items that a player needs to achieve an InventoryGoal
     private final HashMap<Item, Integer> mandatoryItems;
+
     /**
      * This constructor facilitates the creation of instances of the class InventoryGoal.
+     *
      * @param mandatoryItems items required to reach a particular goal, as a list of strings.
      * @since 0.1
      */
@@ -35,9 +37,10 @@ public class InventoryGoal implements Goal {
     /**
      * This method checks a player's inventory to see if the invetory goal is met
      * For the goal to be met:
-     *  (1) All the keys in mandatoryItems must exist in the player's inventory
-     *  (2) All the values of the keys in mandatoryItems must be less than or equal to their
-     *      conunter-part in the player's inventory
+     * (1) All the keys in mandatoryItems must exist in the player's inventory
+     * (2) All the values of the keys in mandatoryItems must be less than or equal to their
+     * conunter-part in the player's inventory
+     *
      * @param player The player being inspected to see if the requirements/goals are met.
      * @return Whether player's inventory meets the requirements of the goal
      * @since 0.1
@@ -48,6 +51,7 @@ public class InventoryGoal implements Goal {
                 .allMatch(item -> player.getInventory().containsKey(item) &&
                         mandatoryItems.get(item) <= player.getInventory().get(item));
     }
+
     @Override
     public String goalValue() {
         return mandatoryItems.entrySet()
@@ -55,6 +59,7 @@ public class InventoryGoal implements Goal {
                 .map(entry -> entry.getKey().getItemName() + ": " + entry.getValue())
                 .collect(Collectors.joining(", "));
     }
+
     @Override
     public String goalType() {
         return "Inventory";

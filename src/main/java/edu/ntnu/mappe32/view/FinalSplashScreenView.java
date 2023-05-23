@@ -86,7 +86,8 @@ public class FinalSplashScreenView {
         root.getChildren().add(2, lightLayer);
         root.getChildren().add(3, frontTrees);
     }
-    private void configureButtonsVBox(){
+
+    private void configureButtonsVBox() {
         buttonsVBoxContainer = new VBox();
         buttonsVBoxContainer.setAlignment(Pos.CENTER);
         buttonsVBoxContainer.setSpacing(20);
@@ -94,6 +95,7 @@ public class FinalSplashScreenView {
         configureBaitButtonHBox();
         root.getChildren().add(buttonsVBoxContainer);
     }
+
     private void configurePlayButtonHBox() {
         playButton = new Button("Play an existing story");
         playButton.setFont(FrontendUtils.pixeloidSans(30));
@@ -155,6 +157,7 @@ public class FinalSplashScreenView {
         animation.setCycleCount(Animation.INDEFINITE);
         return animation;
     }
+
     public Scene getScene() {
         return scene;
     }

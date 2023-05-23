@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 public class FinalSplashScreenController {
     FinalSplashScreenView splashScreenView;
     Stage stage;
+
     public FinalSplashScreenController(Stage stage, FinalSplashScreenView splashScreenView) {
         FrontendUtils.playStartScreenMusic();
         this.stage = stage;

@@ -9,6 +9,7 @@ import java.io.IOException;
 /**
  * The PathsFileWriter class writes a .paths file, which is a
  * story of the paths game.
+ *
  * @author Kristians J. Matrevics
  */
 public class PathsFileWriter {
@@ -18,7 +19,7 @@ public class PathsFileWriter {
             throw new IllegalArgumentException("Unsupported file format. Only .paths-files are supported.");
         }
 
-        try(FileWriter fileWriter = new FileWriter(file)) {
+        try (FileWriter fileWriter = new FileWriter(file)) {
             fileWriter.write(story.toString());
         } catch (IOException e) {
             throw new RuntimeException("Unable to write the file: " + e.getMessage());

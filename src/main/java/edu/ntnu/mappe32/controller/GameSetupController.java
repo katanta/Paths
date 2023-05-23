@@ -38,6 +38,7 @@ public class GameSetupController {
         setAddPathsFileAction();
         setBackButtonActions();
     }
+
     private void setBackButtonActions() {
         storySelectorView.getBackButton().setOnMouseEntered(mouseEvent -> {
             setButtonImage(storySelectorView.getBackButton(), FrontendUtils.restartHoverImage());
@@ -46,6 +47,7 @@ public class GameSetupController {
         storySelectorView.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(storySelectorView.getBackButton(), FrontendUtils.restartImage()));
         storySelectorView.getBackButton().setOnMouseClicked(mouseEvent -> new FinalSplashScreenController(stage, new FinalSplashScreenView()));
     }
+
     private void setAddPathsFileAction() {
         storySelectorView.getAddPathsFileButton().setOnAction(actionEvent -> {
             FrontendUtils.setHoverSound(storySelectorView.getAddPathsFileButton());
@@ -103,6 +105,7 @@ public class GameSetupController {
                 Objects.requireNonNull(getClass().getResource("/StyleSheets/DialogBoxStyleSheet.css")).toExternalForm());
         return confirmation;
     }
+
     private void setButtonImage(ImageView button, Image image) {
         button.setImage(image);
     }

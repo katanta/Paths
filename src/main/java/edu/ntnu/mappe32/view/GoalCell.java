@@ -23,42 +23,43 @@ public class GoalCell extends ListCell<Goal> {
         ImageView icon = createIcon(goal);
 
         Label label = new Label(goal.goalValue());
-        Font font  = FrontendUtils.pixeloidSans(25);
+        Font font = FrontendUtils.pixeloidSans(25);
         label.setFont(font);
 
         if (goal instanceof InventoryGoal)
             label.setFont(FrontendUtils.pixeloidSans(10));
         hBox.getChildren().addAll(icon, label, pane);
 
-        hBox.setPadding(new Insets(0,0,0,5));
+        hBox.setPadding(new Insets(0, 0, 0, 5));
         HBox.setHgrow(pane, Priority.ALWAYS);
     }
 
     private static ImageView createIcon(Goal goal) {
-            ImageView icon;
-            if (goal instanceof InventoryGoal) {
-                icon = new ImageView(FrontendUtils.inventoryImage());
-                icon.setFitWidth(FIT_WIDTH);
-                icon.setFitHeight(FIT_HEIGHT);
-                return icon;
-            } else if (goal instanceof ScoreGoal) {
-                icon = new ImageView(FrontendUtils.scoreImage());
-                icon.setFitWidth(FIT_WIDTH);
-                icon.setFitHeight(FIT_HEIGHT);
-                return icon;
-            } else if (goal instanceof HealthGoal) {
-                icon = new ImageView(FrontendUtils.healthImage());
-                icon.setFitWidth(FIT_WIDTH);
-                icon.setFitHeight(FIT_HEIGHT);
-                return icon;
-            } else if (goal instanceof GoldGoal) {
-                icon = new ImageView(FrontendUtils.goldImage());
-                icon.setFitWidth(FIT_WIDTH);
-                icon.setFitHeight(FIT_HEIGHT);
-                return icon;
-            }
-            throw new IllegalArgumentException("No image that matches your goal");
+        ImageView icon;
+        if (goal instanceof InventoryGoal) {
+            icon = new ImageView(FrontendUtils.inventoryImage());
+            icon.setFitWidth(FIT_WIDTH);
+            icon.setFitHeight(FIT_HEIGHT);
+            return icon;
+        } else if (goal instanceof ScoreGoal) {
+            icon = new ImageView(FrontendUtils.scoreImage());
+            icon.setFitWidth(FIT_WIDTH);
+            icon.setFitHeight(FIT_HEIGHT);
+            return icon;
+        } else if (goal instanceof HealthGoal) {
+            icon = new ImageView(FrontendUtils.healthImage());
+            icon.setFitWidth(FIT_WIDTH);
+            icon.setFitHeight(FIT_HEIGHT);
+            return icon;
+        } else if (goal instanceof GoldGoal) {
+            icon = new ImageView(FrontendUtils.goldImage());
+            icon.setFitWidth(FIT_WIDTH);
+            icon.setFitHeight(FIT_HEIGHT);
+            return icon;
+        }
+        throw new IllegalArgumentException("No image that matches your goal");
     }
+
     public HBox getHBox() {
         return hBox;
     }

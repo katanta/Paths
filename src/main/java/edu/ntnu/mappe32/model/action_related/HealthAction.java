@@ -10,6 +10,7 @@ public class HealthAction implements Action, Serializable {
 
     /**
      * Facilitates the creation of instances of the class HealthAction.
+     *
      * @param health , the amount of health that this action gives or takes, as int.
      * @since 0.1
      */

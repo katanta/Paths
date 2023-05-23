@@ -122,15 +122,15 @@ public class PassageViewController {
                 List<Action> impossibleActions = link.getActions().stream()
                         .filter(action -> action instanceof InventoryAction)
                         .filter(action -> !((InventoryAction) action).isPossible(game.player())).toList();
-                if(game.player().getGold() + goldActionSum < 0) { //if gold actions would lead to negative gold
+                if (game.player().getGold() + goldActionSum < 0) { //if gold actions would lead to negative gold
                     updateRecentEventsFailure(game.player().getName() + " does not have enough gold to choose this path!");
                 } else if (!impossibleActions.isEmpty()) {
                     impossibleActions.forEach(action -> {
                         InventoryAction inventoryAction = (InventoryAction) action;
                         if (inventoryAction.getQuantity() == 0) {
-                            updateRecentEventsFailure(game.player().getName() + " needs at least one '" + inventoryAction.getItem().getItemName() + "' to access this path!" );
+                            updateRecentEventsFailure(game.player().getName() + " needs at least one '" + inventoryAction.getItem().getItemName() + "' to access this path!");
                         } else {
-                            updateRecentEventsFailure(game.player().getName() + " needs " + inventoryAction.getQuantity() + "x " + inventoryAction.getItem().getItemName() + " to access this path!" );
+                            updateRecentEventsFailure(game.player().getName() + " needs " + inventoryAction.getQuantity() + "x " + inventoryAction.getItem().getItemName() + " to access this path!");
                         }
                     });
                 } else {
@@ -140,7 +140,7 @@ public class PassageViewController {
                 }
             });
             linkButton.setOnMouseEntered(e -> {
-                linkButton.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff")  ;
+                linkButton.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff");
                 FrontendUtils.playSelectionSound();
             });
             linkButton.setOnMouseExited(e -> linkButton.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-border-width: 2px; -fx-border-color: #000000"));
@@ -276,7 +276,7 @@ public class PassageViewController {
                 finalEventString.append(a.toEventString(game.player())).append("\n");
             }
         } else {
-                finalEventString.append( "\n" + ((Item) linkOrItem).usageString(game.player()));
+            finalEventString.append("\n" + ((Item) linkOrItem).usageString(game.player()));
             for (Action a : ((Item) linkOrItem).getActions()) {
                 finalEventString.append("\n" + a.toEventString(game.player()));
             }

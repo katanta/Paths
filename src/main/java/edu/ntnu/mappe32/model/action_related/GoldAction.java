@@ -11,6 +11,7 @@ public class GoldAction implements Action, Serializable {
 
     /**
      * Facilitates the creation of instances of the class GoldAction.
+     *
      * @param gold the amount of gold this action gives or takes, as int.
      * @since 0.1
      */
@@ -40,6 +41,7 @@ public class GoldAction implements Action, Serializable {
 
     /**
      * A string that describes the action to a player.
+     *
      * @param player The player affected by the action, as Player.
      * @return A string describing the action that occurred, as String.
      */

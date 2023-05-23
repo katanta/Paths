@@ -9,6 +9,7 @@ import java.util.Objects;
 /**
  * A link makes it possible to go from one passage to another.
  * Links bind separate parts of the story together.
+ *
  * @author Kristians J. Matrevics
  * @version 0.1
  */
@@ -19,11 +20,12 @@ public class Link {
 
     /**
      * Constructor for objects of the Link class.
-     * @param text (String): A descriptive text that indicates a choice or action in a story.
-     *             The text is the part of the link that is visible to the player.
+     *
+     * @param text      (String): A descriptive text that indicates a choice or action in a story.
+     *                  The text is the part of the link that is visible to the player.
      * @param reference (String): A string that identifies a passage (a part of the story).
      *                  In practice this would be the title of the passage one wishes to refer to.
-     * //@param actions: A list of special objects that make it possible to affect various attributes of the player.
+     *                  //@param actions: A list of special objects that make it possible to affect various attributes of the player.
      * @since 0.1
      */
     public Link(final String text, final String reference) {
@@ -54,13 +56,12 @@ public class Link {
         return reference;
     }
 
-
     public void addAction(Action action) {
         actions.add(action);
-     }
+    }
 
     public List<Action> getActions() {
-            return new ArrayList<>(actions);
+        return new ArrayList<>(actions);
     }
 
     @Override

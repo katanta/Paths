@@ -43,8 +43,8 @@ public class CreatePlayerController {
         setButtonTooltip(view.getInfoButton(), "Click here to see Story information...");
         view.getInfoButton().setOnMouseEntered(mouseEvent -> {
 
-                setButtonImage(view.getInfoButton(), FrontendUtils.infoHoverImage());
-                FrontendUtils.playSelectionSound();
+            setButtonImage(view.getInfoButton(), FrontendUtils.infoHoverImage());
+            FrontendUtils.playSelectionSound();
         });
         view.getInfoButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getInfoButton(), FrontendUtils.infoImage()));
         showInformationBox();
@@ -52,8 +52,8 @@ public class CreatePlayerController {
         //Back button
         setButtonTooltip(view.getBackButton(), "Click to go back to Select Story");
         view.getBackButton().setOnMouseEntered(mouseEvent -> {
-                setButtonImage(view.getBackButton(), FrontendUtils.restartHoverImage());
-                FrontendUtils.playSelectionSound();
+            setButtonImage(view.getBackButton(), FrontendUtils.restartHoverImage());
+            FrontendUtils.playSelectionSound();
         });
         view.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getBackButton(), FrontendUtils.restartImage()));
         view.getBackButton().setOnMouseClicked(mouseEvent -> new GameSetupController(stage, new StorySelectorView()));
@@ -67,8 +67,8 @@ public class CreatePlayerController {
             setButtonTooltip(view.getHelpButton(), "Need help? Press me! :)");
         });
         view.getHelpButton().setOnMouseExited(mouseEvent -> {
-                setButtonImage(view.getHelpButton(), FrontendUtils.helpButtonImage());
-                FrontendUtils.playSelectionSound();
+            setButtonImage(view.getHelpButton(), FrontendUtils.helpButtonImage());
+            FrontendUtils.playSelectionSound();
         });
 
         setKeyPressedAction(view.getPlayerHealthTextField(), this::goToCreateGoals);

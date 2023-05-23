@@ -10,12 +10,14 @@ public interface Action {
 
     /**
      * Executes the action on a player.
+     *
      * @param player The player affected by the action, as Player.
      */
     void execute(Player player);
 
     /**
      * A string that describes the action occurring to the player.
+     *
      * @param player The player affected by the action, as Player.
      * @return a String that describes the action occurring to the player, as String.
      */

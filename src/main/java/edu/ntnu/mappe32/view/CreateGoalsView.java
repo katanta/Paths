@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 
-
 public class CreateGoalsView {
     private final Scene scene;
     private HBox top;
@@ -72,6 +71,7 @@ public class CreateGoalsView {
         root.getChildren().addAll(helpAndBackButtonHBox, startButton);
         this.scene = new Scene(root, 1280, 720);
     }
+
     private void configureTop() {
         top = new HBox(50);
 
@@ -96,13 +96,14 @@ public class CreateGoalsView {
         top.getChildren().addAll(createYourGoals, infoButton);
         top.setAlignment(Pos.CENTER);
 
-        top.setPadding(new Insets(20, 0,0,50));
+        top.setPadding(new Insets(20, 0, 0, 50));
 
     }
+
     private void configureHelpAndBackButton() {
         helpAndBackButtonHBox = new HBox(10);
         helpAndBackButtonHBox.setAlignment(Pos.TOP_LEFT);
-        helpAndBackButtonHBox.setPadding(new Insets(20,0,0,20));
+        helpAndBackButtonHBox.setPadding(new Insets(20, 0, 0, 20));
         helpButton = new ImageView(FrontendUtils.helpButtonImage());
         helpButton.setFitWidth(62);
         helpButton.setFitHeight(62);
@@ -114,6 +115,7 @@ public class CreateGoalsView {
 
         helpAndBackButtonHBox.getChildren().addAll(backButton, helpButton);
     }
+
     private void configureGoalsListView() {
         this.goalsListView = new ListView<>();
         goalsListView.setMaxWidth(500);
@@ -138,9 +140,10 @@ public class CreateGoalsView {
             }
         });
     }
+
     private void configureCenter() {
         centerVBox = new VBox(10);
-        centerVBox.setPadding(new Insets(15,0,0,0));
+        centerVBox.setPadding(new Insets(15, 0, 0, 0));
         centerVBox.setAlignment(Pos.TOP_CENTER);
         Label yourGoals = new Label("Your Goals");
         yourGoals.setFont(FrontendUtils.pixeloidSans(30));
@@ -152,31 +155,32 @@ public class CreateGoalsView {
         configureInventoryGoalBox();
         centerVBox.getChildren().addAll(yourGoals, goalsListView, pointerBox, goalBox, numericalGoalBox, inventoryGoalBox);
     }
-    private void configureGoalBox() {
-     goalBox = new HBox(80);
-     healthIcon = new ImageView(FrontendUtils.healthImage());
-     scoreIcon = new ImageView(FrontendUtils.scoreImage());
-     goldIcon = new ImageView(FrontendUtils.goldImage());
-     inventoryIcon = new ImageView(FrontendUtils.inventoryImage());
-     try {
-         addGoalButtonImage = new Image(new FileInputStream("src/main/resources/img/Add.png"));
-     } catch (IOException e) {
-         throw new RuntimeException(e.getMessage());
-     }
 
-     healthIcon.setFitHeight(50);
-     healthIcon.setFitWidth(50);
-     scoreIcon.setFitWidth(50);
-     scoreIcon.setFitHeight(50);
-     goldIcon.setFitWidth(50);
-     goldIcon.setFitHeight(50);
-     inventoryIcon.setFitWidth(50);
-     inventoryIcon.setFitHeight(50);
-     goalBox.getChildren().addAll(healthIcon, scoreIcon, goldIcon, inventoryIcon);
+    private void configureGoalBox() {
+        goalBox = new HBox(80);
+        healthIcon = new ImageView(FrontendUtils.healthImage());
+        scoreIcon = new ImageView(FrontendUtils.scoreImage());
+        goldIcon = new ImageView(FrontendUtils.goldImage());
+        inventoryIcon = new ImageView(FrontendUtils.inventoryImage());
+        try {
+            addGoalButtonImage = new Image(new FileInputStream("src/main/resources/img/Add.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        healthIcon.setFitHeight(50);
+        healthIcon.setFitWidth(50);
+        scoreIcon.setFitWidth(50);
+        scoreIcon.setFitHeight(50);
+        goldIcon.setFitWidth(50);
+        goldIcon.setFitHeight(50);
+        inventoryIcon.setFitWidth(50);
+        inventoryIcon.setFitHeight(50);
+        goalBox.getChildren().addAll(healthIcon, scoreIcon, goldIcon, inventoryIcon);
 
         goalBox.setMaxWidth(500);
         goalBox.setMaxHeight(100);
-        goalBox.setPadding(new Insets(10,0,10,20));
+        goalBox.setPadding(new Insets(10, 0, 10, 20));
 
     }
 
@@ -200,7 +204,7 @@ public class CreateGoalsView {
         p4.setFitHeight(imageSize);
         p4.setVisible(false);
         pointerBox = new HBox(110);
-        pointerBox.setPadding(new Insets(0,0,0,35));
+        pointerBox.setPadding(new Insets(0, 0, 0, 35));
         pointerBox.getChildren().addAll(p1, p2, p3, p4);
         pointerBox.setMaxWidth(500);
         pointerBox.setMaxHeight(50);
@@ -209,7 +213,7 @@ public class CreateGoalsView {
     private void configureNumericalGoalBox() {
         configureInvalidValueBox();
         numericalGoalBox = new VBox(50);
-        numericalGoalBox.setPadding(new Insets(50,0,0,0));
+        numericalGoalBox.setPadding(new Insets(50, 0, 0, 0));
         HBox goalValueBar = new HBox();
         valueTypeLabel = new Label();
         valueTypeLabel.setFont(statLabelFont);
@@ -218,7 +222,7 @@ public class CreateGoalsView {
         valueTextField.setFont(textFieldFont);
         valueTextField.setPromptText("Enter value");
         valueTextField.setTextFormatter(maxCharactersFormatter(9));
-        HBox.setMargin(valueTextField, new Insets(0,0,0,20));
+        HBox.setMargin(valueTextField, new Insets(0, 0, 0, 20));
         VBox addGoalButtonBox = new VBox();
         addGoalButton1 = new ImageView(addGoalButtonImage);
         addGoalButton1.setFitHeight(100);
@@ -227,14 +231,15 @@ public class CreateGoalsView {
         addGoalButtonBox.setAlignment(Pos.TOP_CENTER);
         numericalGoalBox.setMaxWidth(800);
         goalValueBar.getChildren().addAll(valueTypeLabel, valueTextField, invalidValueBox);
-        goalValueBar.setPadding(new Insets(0,0,0,150));
+        goalValueBar.setPadding(new Insets(0, 0, 0, 150));
         numericalGoalBox.getChildren().addAll(goalValueBar, addGoalButtonBox);
         numericalGoalBox.setVisible(true);
         numericalGoalBox.setManaged(true);
     }
+
     private void configureInventoryGoalBox() {
         inventoryGoalBox = new VBox(20);
-        inventoryGoalBox.setPadding(new Insets(10,0,0,0));
+        inventoryGoalBox.setPadding(new Insets(10, 0, 0, 0));
 
         HBox currentGoalBar = new HBox(10);
 
@@ -276,16 +281,16 @@ public class CreateGoalsView {
         selectItem.setStyle("-fx-font-family: " + fontFamily + ";");
         selectItem.setStyle("-fx-font-size: 20;");
         selectItem.setButtonCell(new ListCell<>() {
-             @Override
-             protected void updateItem(String item, boolean empty) {
-                 super.updateItem(item, empty);
-                 if (item == null || empty) {
-                     setText(selectItem.getPromptText());
-                 } else {
-                     setText(item);
-                 }
-             }
-         });
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(selectItem.getPromptText());
+                } else {
+                    setText(item);
+                }
+            }
+        });
 
         selectItem.setPromptText("Select Item");
         HBox createInventoryBar = new HBox(20);
@@ -305,13 +310,14 @@ public class CreateGoalsView {
         addGoalButton2.setFitHeight(100);
         addGoalButtonBox.getChildren().add(addGoalButton2);
         addGoalButtonBox.setAlignment(Pos.TOP_CENTER);
-        addGoalButtonBox.setPadding(new Insets(10,0,0,0));
+        addGoalButtonBox.setPadding(new Insets(10, 0, 0, 0));
         inventoryGoalBox.getChildren().addAll(currentGoalBar, createInventoryBar, addGoalButtonBox);
         inventoryGoalBox.setVisible(false);
         inventoryGoalBox.setManaged(false);
         inventoryGoalBox.setMaxWidth(600);
-        HBox.setMargin(currentGoal, new Insets(40,0,0,0));
+        HBox.setMargin(currentGoal, new Insets(40, 0, 0, 0));
     }
+
     private TextFormatter<TextFormatter.Change> maxCharactersFormatter(int numberOfCharacters) {
         Pattern pattern = Pattern.compile(".{0," + numberOfCharacters + "}");
         return new TextFormatter<>((change -> pattern.matcher(change.getControlNewText()).matches() ? change : null));
@@ -323,16 +329,17 @@ public class CreateGoalsView {
         errorCircle.setFitWidth(20);
         errorCircle.setFitHeight(20);
         VBox errorCircleBox = new VBox(errorCircle);
-        VBox.setMargin(errorCircle, new Insets(9.2,10,0, 10));
+        VBox.setMargin(errorCircle, new Insets(9.2, 10, 0, 10));
         Label invalidValue = new Label("Invalid value");
         invalidValue.setFont(FrontendUtils.pixeloidSans(15));
         invalidValue.setStyle("-fx-text-fill: #D80D0DFF;");
         invalidValueBox = new HBox();
         invalidValueBox.getChildren().addAll(errorCircleBox, invalidValue);
-        HBox.setMargin(invalidValue, new Insets(10,0,0,0));
+        HBox.setMargin(invalidValue, new Insets(10, 0, 0, 0));
         invalidValueBox.setVisible(false);
         HBox.setHgrow(invalidValueBox, Priority.ALWAYS);
     }
+
     private void configureTutorialImageView() {
         try {
             tutorialImageView = new ImageView(new Image(new FileInputStream("src/main/resources/img/createGoalTutorial.png")));
@@ -348,6 +355,7 @@ public class CreateGoalsView {
     public ImageView getAddGoalButton2() {
         return addGoalButton2;
     }
+
     public ImageView getBackButton() {
         return backButton;
     }
@@ -367,6 +375,7 @@ public class CreateGoalsView {
     public ImageView getP2() {
         return p2;
     }
+
     public VBox getInventoryGoalBox() {
         return inventoryGoalBox;
     }
@@ -414,6 +423,7 @@ public class CreateGoalsView {
     public ImageView getP4() {
         return p4;
     }
+
     public ImageView getAddGoalButton1() {
         return addGoalButton1;
     }

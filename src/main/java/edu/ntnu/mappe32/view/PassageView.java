@@ -72,6 +72,7 @@ public class PassageView {
                 BackgroundSize.DEFAULT);
         buttonsHBox.setBackground(new Background(background));
     }
+
     private void configureInventoryPane() {
         itemsVBox = new VBox();
         itemsVBox.setAlignment(Pos.TOP_LEFT);
@@ -87,8 +88,8 @@ public class PassageView {
         configurePlayerScoreLabel();
         configurePlayerGoldLabel();
         configureInventoryPane();
-        VBox playerInfo = new VBox(playerNameLabel , playerHealth, playerScore, playerGold, itemsVBox);
-        playerInfo.getChildren().stream().limit(4).forEach(node -> VBox.setMargin(node, new Insets(0,0,0,20)));
+        VBox playerInfo = new VBox(playerNameLabel, playerHealth, playerScore, playerGold, itemsVBox);
+        playerInfo.getChildren().stream().limit(4).forEach(node -> VBox.setMargin(node, new Insets(0, 0, 0, 20)));
         playerInfo.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         playerInfo.setSpacing(40);
         playerInfo.setMaxWidth(320);
@@ -246,6 +247,7 @@ public class PassageView {
         StackPane.setAlignment(recentEventsPane, Pos.BOTTOM_CENTER);
         root.getChildren().add(recentEventsPane);
     }
+
     private void configureTutorialImageView() {
         try {
             tutorialImageView = new ImageView(new Image(new FileInputStream("src/main/resources/img/passageViewTutorial.png")));

@@ -20,6 +20,7 @@ public class PathsFile {
         this.storyTitle = story.getTitle();
         this.brokenLinks = story.getBrokenLinks().size();
     }
+
     public Story getStory() {
         return story;
     }

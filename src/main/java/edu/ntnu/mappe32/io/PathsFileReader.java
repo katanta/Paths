@@ -39,6 +39,7 @@ public class PathsFileReader {
 
     /**
      * This method reads a .paths file and returns a story.
+     *
      * @param filePath File path of the .paths file to be read, as String.
      * @return Story of the .paths file, as Story.
      * @throws IllegalArgumentException Throws IllegalArgumentException if the file path does not have the extension '.paths'.
@@ -85,6 +86,7 @@ public class PathsFileReader {
 
     /**
      * This method checks if the file path has the extension '.paths'.
+     *
      * @param filePath File path of file to be read, as String
      * @throws IllegalArgumentException Throws IllegalArgumentException if the file path does not have the extension '.paths'.
      */
@@ -97,7 +99,7 @@ public class PathsFileReader {
         }
         int dotIndex = filePath.lastIndexOf(".");
 
-        String extension =  filePath.substring(dotIndex);
+        String extension = filePath.substring(dotIndex);
         if (!extension.equals(FILE_EXTENSION)) {
             throw new IllegalArgumentException("The file extension does not correspond with ." + FILE_EXTENSION);
         }
@@ -105,6 +107,7 @@ public class PathsFileReader {
 
     /**
      * This method reads the current passage in the BufferedReader and returns a new Passage object.
+     *
      * @param bufferedReader The BufferedReader to read from, as BufferedReader.
      * @return New Passage object based on the content of the BufferedReader, as Passage.
      * @throws IOException Throws IOException if there's a problem reading from the BufferedReader.
@@ -128,10 +131,10 @@ public class PathsFileReader {
             if (currentLine.substring(currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER))
                     .contains(ACTION_DELIMITER)) {
                 //Parse actions and add them to the link
-                Arrays.stream(splitCurrentLineIntoActions()).forEach(action ->{
+                Arrays.stream(splitCurrentLineIntoActions()).forEach(action -> {
                     Action parsedAction = parseAction(action);
-                        link.addAction(parsedAction);
-                        });
+                    link.addAction(parsedAction);
+                });
 
             }
             currentLine = bufferedReader.readLine();
@@ -144,6 +147,7 @@ public class PathsFileReader {
     /**
      * This method parses a line that corresponds to a link (starts with '[').
      * It resolves the title and the refernce of the link using currentLine.
+     *
      * @return New link corresponding to the content of the currentLine, as Link
      */
     private static Link parseLink() {
@@ -160,12 +164,14 @@ public class PathsFileReader {
     /**
      * This method splits the currentLine into an Array of String,
      * where each String represents actions of a link.
+     *
      * @return Array of String which represents actions, as String[].
      */
     public static String[] splitCurrentLineIntoActions() {
         String actions = currentLine.substring(currentLine.lastIndexOf(LINK_REFERENCE_END_DELIMITER) + 1);
         return actions.split(ACTION_END_DELIMITER + ACTION_DELIMITER);
     }
+
     public static String[] getActionsOfInventoryAction(String invetoryAction, String itemNameAndUsability) {
         String actions = invetoryAction.substring(invetoryAction.lastIndexOf(itemNameAndUsability) + itemNameAndUsability.length() + 1);
         String[] actionsArray = actions.split(ACTION_END_DELIMITER);
@@ -178,6 +184,7 @@ public class PathsFileReader {
      * which contains an action in the format "<'actionType' 'value'>".
      * It resolves the action type and the value of the action by splitting the String.
      * The method parses and instantiates an action based on the action type.
+     *
      * @param action String representation of an action, as String
      */
     private static Action parseAction(String action) {
@@ -200,12 +207,13 @@ public class PathsFileReader {
      * This method parses an action with a number based value (Goal, Health or Score Action).
      * It uses the same parsing logic for each type of number based action,
      * but instantiates the action according to its action type.
+     *
      * @param actionType Type of actions, as String
-     * @param action String representation of an action, as String
+     * @param action     String representation of an action, as String
      */
     private static Action parseNumberBasedAction(String action, String actionType) {
         int value = action.endsWith(ACTION_END_DELIMITER) ?
-                Integer.parseInt(action.substring(action.indexOf(" ") + 1, action.length() -1)) :
+                Integer.parseInt(action.substring(action.indexOf(" ") + 1, action.length() - 1)) :
                 Integer.parseInt(action.substring(action.indexOf(" ") + 1));
 
         switch (actionType) {
@@ -221,6 +229,7 @@ public class PathsFileReader {
             default -> throw new IllegalArgumentException("This Action type could not be found");
         }
     }
+
     private static Action parseInventoryAction(String invetoryAction) {
 
         String[] parts = invetoryAction.split(" ");

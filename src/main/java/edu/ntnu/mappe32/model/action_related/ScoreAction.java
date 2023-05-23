@@ -12,6 +12,7 @@ public class ScoreAction implements Action, Serializable {
 
     /**
      * Constructs objects of the ScoreAction class.
+     *
      * @param points , the minimum points required to meet the goal, as int.
      * @since 0.1
      */
@@ -21,6 +22,7 @@ public class ScoreAction implements Action, Serializable {
 
     /**
      * Executes an action that affects player's score.
+     *
      * @param player The player affected by the action, as Player.
      * @since 0.1
      */

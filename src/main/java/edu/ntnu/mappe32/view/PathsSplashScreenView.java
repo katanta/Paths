@@ -12,7 +12,7 @@ public class PathsSplashScreenView {
         this.playAnExistingStoryButton = new Button("Play an Existing Story");
         StackPane root = new StackPane();
         root.getChildren().add(playAnExistingStoryButton);
-        scene = new Scene(root, 1280,720);
+        scene = new Scene(root, 1280, 720);
     }
 
     public Scene getScene() {

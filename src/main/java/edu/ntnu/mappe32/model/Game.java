@@ -4,6 +4,7 @@ import edu.ntnu.mappe32.model.goal_related.Goal;
 import edu.ntnu.mappe32.model.story_related.Passage;
 import edu.ntnu.mappe32.model.story_related.Link;
 import edu.ntnu.mappe32.model.story_related.Story;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public record Game(Player player, Story story, List<Goal> goals) {
      * @param story  (Story): The story object that this game uses.
      * @param goals  (List<Goal>): The goals of this particular game.
      * @throws IllegalArgumentException Throws IllegalArguemntException if player or story is null.
-     * @throws IllegalStateException Throws IllegalStateException if goals is null.
+     * @throws IllegalStateException    Throws IllegalStateException if goals is null.
      * @since 0.1
      */
     public Game {

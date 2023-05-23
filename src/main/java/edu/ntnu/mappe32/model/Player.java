@@ -29,14 +29,16 @@ public class Player implements Serializable {
      * Inventory of a player.
      */
     private final Map<Item, Integer> inventory;
+
     /**
      * This constructor facilitates the creation of instances of the class Player.
      * The constructor throws IllegalArgumentExceptions
      * if negative values are entered in the parameters.
-     * @param name Name of the player, as String.
+     *
+     * @param name   Name of the player, as String.
      * @param health Health of the player, as int.
-     * @param score Score of the player, as int.
-     * @param gold Gold of the player, as int.
+     * @param score  Score of the player, as int.
+     * @param gold   Gold of the player, as int.
      */
     public Player(final String name, final int health,
                   final int score, final int gold, final Map<Item, Integer> inventory) throws IllegalArgumentException {
@@ -88,6 +90,7 @@ public class Player implements Serializable {
 
     /**
      * This method returns the name a player.
+     *
      * @return Name of player as String
      */
     public String getName() {
@@ -97,6 +100,7 @@ public class Player implements Serializable {
     /**
      * This method adds new heath points to a player.
      * If the addition results in a negative value, health is set to 0 instead.
+     *
      * @param newHealthPoints New health points, as int.
      */
     public void addHealth(final int newHealthPoints) {
@@ -109,6 +113,7 @@ public class Player implements Serializable {
 
     /**
      * This method returns the health of a player.
+     *
      * @return Health of player, as int.
      */
     public int getHealth() {
@@ -118,6 +123,7 @@ public class Player implements Serializable {
     /**
      * This method adds new score points to a player.
      * If the addition results in a negative value, score is set to 0 instead.
+     *
      * @param newScorePoints New score points, as int.
      */
     public void addScore(final int newScorePoints) {
@@ -130,6 +136,7 @@ public class Player implements Serializable {
 
     /**
      * This method returns the score of a player.
+     *
      * @return Score of a player, as int.
      */
     public int getScore() {
@@ -140,6 +147,7 @@ public class Player implements Serializable {
      * This method adds new gold points to the player.
      * If the new augend is negative and results in negative gold,
      * the method will throw an IllegalArguemntException.
+     *
      * @param newGoldPoints New gold points, as int.
      */
     public void addGold(final int newGoldPoints) {
@@ -151,6 +159,7 @@ public class Player implements Serializable {
 
     /**
      * This method returns the gold a player.
+     *
      * @return Gold of a player, as int.
      */
     public int getGold() {
@@ -159,6 +168,7 @@ public class Player implements Serializable {
 
     /**
      * This method adds an item to a player's inventory.
+     *
      * @param item Item to be added, as String.
      */
     public void addToInventory(final Item item, final int quantity) {
@@ -185,6 +195,7 @@ public class Player implements Serializable {
 
     /**
      * This method returns the inventory of a player.
+     *
      * @return Returns inventory as, List<String>
      */
     public Map<Item, Integer> getInventory() {
@@ -227,6 +238,7 @@ public class Player implements Serializable {
             this.name = name;
             this.health = health;
         }
+
         public PlayerBuilder inventory(Map<Item, Integer> inventory) {
             if (inventory == null || inventory.isEmpty())
                 throw new IllegalArgumentException("Inventory cannot be empty or null");
@@ -243,6 +255,7 @@ public class Player implements Serializable {
             this.inventory = inventory;
             return this;
         }
+
         public PlayerBuilder score(int scorePoints) {
             if (scorePoints < 0)
                 throw new IllegalArgumentException("Score cannot be below zero");
@@ -258,6 +271,7 @@ public class Player implements Serializable {
             this.gold = goldPoints;
             return this;
         }
+
         public Player build() {
             if (inventory == null)
                 inventory = new HashMap<>();

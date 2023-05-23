@@ -23,12 +23,14 @@ public class Story {
      * The opening passage of the story
      */
     private final Passage openingPassage;
+
     /**
      * This constructor facilitates the creation of instances of the class Story.
      * Throws IllegalArgumentException if either title is blank
      * opening passage is null.
      * Instantiates passages as HashMap<Link, Passage>
-     * @param title Title of a story, as String
+     *
+     * @param title          Title of a story, as String
      * @param openingPassage Opening passage of a story, as Passage
      */
     public Story(final String title, final Passage openingPassage) throws IllegalArgumentException {
@@ -43,22 +45,28 @@ public class Story {
         passages = new HashMap<>();
         passages.put(new Link(openingPassage.getTitle(), openingPassage.getTitle()), openingPassage);
     }
+
     /**
      * This method returns the title a story.
+     *
      * @return Title of story as String.
      */
     public String getTitle() {
         return title;
     }
+
     /**
      * This method returns the opening passage of a story.
+     *
      * @return openingPassage, as int.
      */
     public Passage getOpeningPassage() {
         return openingPassage;
     }
+
     /**
      * This method adds a passage to the passages Map.
+     *
      * @param passage Passage to be added, as Passage
      */
     public void addPassage(Passage passage) {
@@ -66,8 +74,10 @@ public class Story {
             passages.put(new Link(passage.getTitle(), passage.getTitle()), passage);
         }
     }
+
     /**
      * This method returns a passage from the passages Map, using the passage's Link.
+     *
      * @param link Link of the passage, as Link.
      * @return Passage as passage.
      */
@@ -76,17 +86,21 @@ public class Story {
         return passages.get(searchLink);
 
     }
+
     /**
      * This method returns the values of Map<Link, Passage> passages,
      * as well as the openingPassage of the story
+     *
      * @return Passages with openingPassage, as Collection<Passage>.
      */
     public Collection<Passage> getPassages() {
         return passages.values();
     }
+
     /**
      * This method removes a passage from Map <Link, Passage>.
      * Throws IllegalArgumentException if the link refers to multiple or zero passages.
+     *
      * @param removalLink A link of the passage to be removed, as Link
      */
     public void removePassage(Link removalLink) {
@@ -98,10 +112,12 @@ public class Story {
         }
         passages.remove(new Link(removalLink.getReference(), removalLink.getReference()));
     }
+
     /**
      * This method gets the broken links of a story.
      * A broken link is defined as a link that belongs to a passage that does not yet refer to any passage,
      * meaning that attempting to use it in an actual story would not return an existing passage.
+     *
      * @return Broken links in a story, as List<Link>
      */
     public List<Link> getBrokenLinks() {
@@ -111,6 +127,7 @@ public class Story {
 
     /**
      * This method returns a list of the items which are possible to obtain in a story
+     *
      * @return Obtainable items in a story, as List<Item>
      */
     public Set<Item> getItems() {
