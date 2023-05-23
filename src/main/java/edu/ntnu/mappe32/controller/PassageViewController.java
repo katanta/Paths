@@ -148,6 +148,17 @@ public class PassageViewController {
             linkButton.setTooltip(linkTooltip);
             passageView.getLinkButtonsVBox().getChildren().add(linkButton);
         });
+        if (game.player().getHealth() == 0) {
+            passageView.getLinkButtonsVBox().getChildren().clear();
+            updateDeathText();
+        }
+    }
+
+    private void updateDeathText() {
+        Text failureText = new Text(game.player().getName() + " has perished and cannot continue... Restart?");
+        failureText.setFont(FrontendUtils.pixeloidSans(18));
+        failureText.setWrappingWidth(300);
+        passageView.getLinkButtonsVBox().getChildren().add(failureText);
     }
 
     private void updateGameGoalsVBox() {
