@@ -57,7 +57,8 @@ public class InventoryAction implements Action, Serializable {
             return player.getName() + " has received an item: " + item.getItemName();
         } else {
             StringBuilder wholeEvent = new StringBuilder(player.getName() + " has lost their " + item.getItemName());
-            item.getActions().forEach(action -> wholeEvent.append("\n" + action.toEventString(player)));
+            item.getActions().forEach(action -> wholeEvent
+                    .append("\n").append(action.toEventString(player)));
             return wholeEvent.toString();
         }
     }

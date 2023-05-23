@@ -1,15 +1,12 @@
 package edu.ntnu.mappe32.action_related;
 
-import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.model.action_related.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 class AllActionTests {
@@ -29,9 +26,7 @@ class AllActionTests {
         minus500Gold.execute(player);
         assertEquals(500, player.getGold());
         Action impossibleDebt = new GoldAction(-6000000);
-        assertThrows(IllegalArgumentException.class, () -> {
-            impossibleDebt.execute(player);
-        });
+        assertThrows(IllegalArgumentException.class, () -> impossibleDebt.execute(player));
     }
     @DisplayName("HealthAction accurately calculates and does not go below zero")
     @Test

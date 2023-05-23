@@ -296,9 +296,9 @@ public class PassageViewController {
                 finalEventString.append(a.toEventString(game.player())).append("\n");
             }
         } else {
-            finalEventString.append("\n" + ((Item) linkOrItem).usageString(game.player()));
+            finalEventString.append("\n").append(((Item) linkOrItem).usageString(game.player()));
             for (Action a : ((Item) linkOrItem).getActions()) {
-                finalEventString.append("\n" + a.toEventString(game.player()));
+                finalEventString.append("\n").append(a.toEventString(game.player()));
             }
         }
         allEventText.setText(finalEventString.toString());
