@@ -1,10 +1,7 @@
 package edu.ntnu.mappe32;
 
 import edu.ntnu.mappe32.controller.FinalSplashScreenController;
-import edu.ntnu.mappe32.controller.GameSetupController;
 import edu.ntnu.mappe32.view.FinalSplashScreenView;
-import edu.ntnu.mappe32.view.PathsSplashScreenView;
-import edu.ntnu.mappe32.view.StorySelectorView;
 import javafx.stage.Stage;
 
 
