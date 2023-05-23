@@ -40,7 +40,6 @@ public class PassageView {
     private ImageView helpButton;
     private ImageView homeButton;
     private ImageView restartButton;
-    private ScrollPane recentEventsPane;
     private VBox eventsVBox;
     private ListView<Item> itemsListView;
     private ImageView tutorialImageView;
@@ -201,7 +200,7 @@ public class PassageView {
         configureHelpButton();
         configureHomeButton();
         configureRestartButton();
-        setButtonSizes(62); //62 is as big as the buttons get, otherwise they somehow bypass the maxHeight of the buttons VBox
+        setButtonSizes(); //62 is as big as the buttons get, otherwise they somehow bypass the maxHeight of the buttons VBox
         root.getChildren().add(buttonsHBox);
     }
 
@@ -209,7 +208,7 @@ public class PassageView {
         helpButton = new ImageView(FrontendUtils.helpButtonImage());
         helpButton.setFitHeight(50);
         helpButton.setFitWidth(50);
-        buttonsHBox.setMargin(helpButton, new Insets(0, 0, 0, 20));
+        HBox.setMargin(helpButton, new Insets(0, 0, 0, 20));
         buttonsHBox.getChildren().add(helpButton);
     }
 
@@ -227,7 +226,8 @@ public class PassageView {
         buttonsHBox.getChildren().add(restartButton);
     }
 
-    private void setButtonSizes(double buttonSize) {
+    private void setButtonSizes() {
+        int buttonSize = 62;
         restartButton.setFitWidth(buttonSize);
         restartButton.setFitHeight(buttonSize);
         homeButton.setFitWidth(buttonSize);
@@ -239,7 +239,7 @@ public class PassageView {
     private void configureRecentEventsPane() {
         eventsVBox = new VBox();
         eventsVBox.setSpacing(1.5);
-        recentEventsPane = new ScrollPane(eventsVBox);
+        ScrollPane recentEventsPane = new ScrollPane(eventsVBox);
         recentEventsPane.setStyle("-fx-border-color: black; -fx-border-width: 4px;");
         recentEventsPane.setMaxHeight(195);
         recentEventsPane.setMinWidth(643);

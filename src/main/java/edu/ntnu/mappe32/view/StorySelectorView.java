@@ -7,7 +7,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -24,7 +23,6 @@ public class StorySelectorView {
     private TableColumn<PathsFile, Integer> brokenLinksColumn;
     private VBox center;
     private Button addPathsFile;
-    private Image backButtonHover;
     private ImageView backButton;
 
     public StorySelectorView() {
@@ -158,10 +156,6 @@ public class StorySelectorView {
 
     public ImageView getBackButton() {
         return backButton;
-    }
-
-    public Image getBackButtonHover() {
-        return backButtonHover;
     }
 
 }

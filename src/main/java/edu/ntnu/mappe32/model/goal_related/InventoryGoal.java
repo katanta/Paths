@@ -2,10 +2,8 @@ package edu.ntnu.mappe32.model.goal_related;
 
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
-import javafx.application.Platform;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class InventoryGoal implements Goal {
@@ -68,9 +66,9 @@ public class InventoryGoal implements Goal {
     @Override
     public String toString() {
         StringBuilder wholeGoal = new StringBuilder("Have these items at the same time: ");
-        mandatoryItems.entrySet().forEach(entry -> {
-            wholeGoal.append("\n").append(entry.getKey().getItemName() + " x" + entry.getValue().toString());
-        });
+        mandatoryItems.forEach((key, value) -> wholeGoal.append("\n")
+                .append(key.getItemName())
+                .append(" x").append(value.toString()));
         return wholeGoal.toString();
     }
 

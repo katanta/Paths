@@ -6,8 +6,8 @@ import edu.ntnu.mappe32.view.StorySelectorView;
 import javafx.stage.Stage;
 
 public class FinalSplashScreenController {
-    FinalSplashScreenView splashScreenView;
-    Stage stage;
+    private final FinalSplashScreenView splashScreenView;
+    private final Stage stage;
 
     public FinalSplashScreenController(Stage stage, FinalSplashScreenView splashScreenView) {
         FrontendUtils.playStartScreenMusic();

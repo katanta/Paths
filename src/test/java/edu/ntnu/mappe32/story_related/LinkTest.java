@@ -3,7 +3,6 @@ package edu.ntnu.mappe32.story_related;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.action_related.*;
 import edu.ntnu.mappe32.model.story_related.Link;
-import edu.ntnu.mappe32.model.story_related.Passage;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;

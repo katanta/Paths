@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,8 +18,6 @@ class PathsFileWriterTest {
     Story mainTestStory;
 
     Passage lastPassage;
-    Link lastLink;
-    Action goldPlus100;
     @BeforeEach
     void setUp() {
         Action scorePlus10 = new ScoreAction(10);
@@ -33,7 +30,6 @@ class PathsFileWriterTest {
         Action keysYoWhatsUp = new InventoryAction(new Item("Keys Yo Whats Up", true,new ScoreAction(10)), true, 1);
         Action helmet = new InventoryAction(new Item("Helmet", true, new HealthAction(100)), true, 1);
         Action goldPlus50 = new GoldAction(50);
-        goldPlus100 = new GoldAction(100);
         Action goldPlus1000 = new GoldAction(1000);
         Action goldMinus1000 = new GoldAction(-1000);
 
@@ -66,7 +62,6 @@ class PathsFileWriterTest {
         Link stopAndCastAMagicSpell = new Link("Stop and cast a magic spell", "Cast a magic spell");
         stopAndCastAMagicSpell.addAction(goldPlus50);
 
-        lastLink = new Link("Oooops", "Keep running");
 
         Passage openingPassage1 = new Passage("::You see a :troll", "::You see a:: 3-meter( )tall troll slowly turning towards you.");
         openingPassage1.addLink(runAway);
@@ -95,7 +90,7 @@ class PathsFileWriterTest {
     class WriteStoryTest {
         @DisplayName("writes story accurately")
         @Test
-        void writeStoryAccurately() throws IOException {
+        void writeStoryAccurately() {
             String testFilePath = "src/main/resources/test_stories/write_main_story_test.paths";
             PathsFileWriter.writeStory(mainTestStory, testFilePath);
             File outputFile = new File(testFilePath);

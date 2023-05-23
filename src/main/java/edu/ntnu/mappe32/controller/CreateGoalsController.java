@@ -210,9 +210,7 @@ public class CreateGoalsController {
             FrontendUtils.playSelectionSound();
             setPointersVisibility(false, true, false, false, mouseEvent);
         });
-        view.getScoreIcon().setOnMouseExited(mouseEvent -> {
-            setPointersVisibility(false, false, false, false, mouseEvent);
-        });
+        view.getScoreIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
 
         view.getGoldIcon().setOnMouseEntered(mouseEvent -> {
             setPointersVisibility(false, false, true, false, mouseEvent);
