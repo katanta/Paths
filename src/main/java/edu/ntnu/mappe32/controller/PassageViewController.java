@@ -38,6 +38,12 @@ public class PassageViewController {
     private final List<Goal> completedGoals;
     private final ObservableList<Item> inventory;
 
+    /**
+     * Instantiates the controller for a PassageView and adds all game data into it
+     * @param stage as Stage
+     * @param passageView as PassageView
+     * @param game the game being played, as Game.
+     */
     public PassageViewController(Stage stage, PassageView passageView, Game game) {
         this.stage = stage;
         this.passageView = passageView;
@@ -51,6 +57,9 @@ public class PassageViewController {
         passageView.getStoryTitle().setText(game.story().getTitle());
     }
 
+    /**
+     * Updates the scene, filling the PassageView with information from the game.
+     */
     private void updateScene() {
         updatePlayerInfo();
         updateLinkButtons();
