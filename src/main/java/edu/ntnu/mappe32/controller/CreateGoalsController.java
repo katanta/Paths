@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.controller;
 
-import edu.ntnu.mappe32.ViewUtils;
+import edu.ntnu.mappe32.FrontendUtils;
 import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.PathsFile;
@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static edu.ntnu.mappe32.ViewUtils.createTooltip;
+import static edu.ntnu.mappe32.FrontendUtils.createTooltip;
 
 
 public class CreateGoalsController {
@@ -64,20 +64,20 @@ public class CreateGoalsController {
         Tooltip tooltip = createTooltip("See Player and Story information", 18);
         Tooltip.install(view.getInfoButton(), tooltip);
         view.getInfoButton().setOnMouseEntered(mouseEvent -> {
-            view.getInfoButton().setImage(ViewUtils.infoHoverImage());
-            ViewUtils.playSelectionSound();
+            view.getInfoButton().setImage(FrontendUtils.infoHoverImage());
+            FrontendUtils.playSelectionSound();
         });
-        view.getInfoButton().setOnMouseExited(mouseEvent -> view.getInfoButton().setImage(ViewUtils.infoImage()));
+        view.getInfoButton().setOnMouseExited(mouseEvent -> view.getInfoButton().setImage(FrontendUtils.infoImage()));
         showInformationBox();
 
         // Set back button tooltip and change image
         Tooltip backButtonTooltip = createTooltip("Back to Create Player", 18);
         Tooltip.install(view.getBackButton(), backButtonTooltip);
         view.getBackButton().setOnMouseEntered(mouseEvent -> {
-            view.getBackButton().setImage(ViewUtils.restartHoverImage());
-            ViewUtils.playSelectionSound();
+            view.getBackButton().setImage(FrontendUtils.restartHoverImage());
+            FrontendUtils.playSelectionSound();
         });
-        view.getBackButton().setOnMouseExited(mouseEvent -> view.getBackButton().setImage(ViewUtils.restartImage()));
+        view.getBackButton().setOnMouseExited(mouseEvent -> view.getBackButton().setImage(FrontendUtils.restartImage()));
 
         view.getBackButton().setOnMouseClicked(mouseEvent -> {
             CreatePlayerController createPlayerController = new CreatePlayerController(new CreatePlayerView(), stage, pathsFile, player);
@@ -88,10 +88,10 @@ public class CreateGoalsController {
         Tooltip helpButtonTooltip = createTooltip("Need help? Press me! :)", 18);
         Tooltip.install(view.getHelpButton(), helpButtonTooltip);
         view.getHelpButton().setOnMouseEntered(mouseEvent -> {
-            view.getHelpButton().setImage(ViewUtils.helpButtonHoverImage());
-            ViewUtils.playSelectionSound();
+            view.getHelpButton().setImage(FrontendUtils.helpButtonHoverImage());
+            FrontendUtils.playSelectionSound();
         });
-        view.getHelpButton().setOnMouseExited(mouseEvent -> view.getHelpButton().setImage(ViewUtils.helpButtonImage()));
+        view.getHelpButton().setOnMouseExited(mouseEvent -> view.getHelpButton().setImage(FrontendUtils.helpButtonImage()));
 
     }
 
@@ -107,7 +107,7 @@ public class CreateGoalsController {
     }
 
     private void setCenterActions() {
-        addGoalButtonTooltip = ViewUtils.createTooltip("Press to add your Goal", 18);
+        addGoalButtonTooltip = FrontendUtils.createTooltip("Press to add your Goal", 18);
         setGoalIconActions();
         setAddGoalButton1Actions();
         setAddGoalButton2Actions();
@@ -118,7 +118,7 @@ public class CreateGoalsController {
         setPointerBarActions();
     }
     private void setStartButtonActions() {
-        Tooltip startButtonTooltip = ViewUtils.createTooltip("Press To Start Game!", 18);
+        Tooltip startButtonTooltip = FrontendUtils.createTooltip("Press To Start Game!", 18);
 
         Tooltip.install(view.getStartButton(), startButtonTooltip);
         view.getStartButton().setPickOnBounds(true);
@@ -131,16 +131,16 @@ public class CreateGoalsController {
             PassageView passageView = new PassageView();
             PassageViewController passageViewController = new PassageViewController(stage, passageView, game);
             stage.setScene(passageView.getScene());
-            ViewUtils.stopStartScreenMusic();
+            FrontendUtils.stopStartScreenMusic();
         });
-        ViewUtils.setHoverSound(view.getStartButton());
+        FrontendUtils.setHoverSound(view.getStartButton());
     }
 
     private void setHoverSounds() {
-        ViewUtils.setHoverSound(view.getAddGoalButton1());
-        ViewUtils.setHoverSound(view.getAddGoalButton2());
-        ViewUtils.setHoverSound(view.getAddToInventoryGoal());
-        ViewUtils.setHoverSound(view.getSelectItem());
+        FrontendUtils.setHoverSound(view.getAddGoalButton1());
+        FrontendUtils.setHoverSound(view.getAddGoalButton2());
+        FrontendUtils.setHoverSound(view.getAddToInventoryGoal());
+        FrontendUtils.setHoverSound(view.getSelectItem());
     }
 
     private void setGoalsIconsTooltips() {
@@ -151,7 +151,7 @@ public class CreateGoalsController {
         iconTooltips.put(view.getInventoryIcon(), "Create an Inventory Goal!");
 
         iconTooltips.forEach((icon, tooltipText) -> {
-            Tooltip tooltip = ViewUtils.createTooltip(tooltipText, 15);
+            Tooltip tooltip = FrontendUtils.createTooltip(tooltipText, 15);
             icon.setPickOnBounds(true);
             Tooltip.install(icon, tooltip);
         });
@@ -198,14 +198,14 @@ public class CreateGoalsController {
 
     private void setPointerBarActions() {
         view.getHealthIcon().setOnMouseEntered(mouseEvent -> {
-            ViewUtils.playSelectionSound();
+            FrontendUtils.playSelectionSound();
             setPointersVisibility(true, false, false, false, mouseEvent);
         });
 
         view.getHealthIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
 
         view.getScoreIcon().setOnMouseEntered(mouseEvent ->  {
-            ViewUtils.playSelectionSound();
+            FrontendUtils.playSelectionSound();
             setPointersVisibility(false, true, false, false, mouseEvent);
         });
         view.getScoreIcon().setOnMouseExited(mouseEvent -> {
@@ -214,13 +214,13 @@ public class CreateGoalsController {
 
         view.getGoldIcon().setOnMouseEntered(mouseEvent -> {
             setPointersVisibility(false, false, true, false, mouseEvent);
-            ViewUtils.playSelectionSound();
+            FrontendUtils.playSelectionSound();
         });
         view.getGoldIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
 
         view.getInventoryIcon().setOnMouseEntered(mouseEvent -> {
             setPointersVisibility(false, false, false, true, mouseEvent);
-            ViewUtils.playSelectionSound();
+            FrontendUtils.playSelectionSound();
         });
         view.getInventoryIcon().setOnMouseExited(mouseEvent -> setPointersVisibility(false, false, false, false, mouseEvent));
 

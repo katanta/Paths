@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.view;
 
-import edu.ntnu.mappe32.ViewUtils;
+import edu.ntnu.mappe32.FrontendUtils;
 import edu.ntnu.mappe32.model.PathsFile;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -40,11 +40,11 @@ public class StorySelectorView {
     public void configureTop() {
         top = new HBox(270);
         Label selectYourStory = new Label("Select Your Story!");
-        selectYourStory.setFont(ViewUtils.pixeloidSansBold(50));
+        selectYourStory.setFont(FrontendUtils.pixeloidSansBold(50));
         selectYourStory.setMaxWidth(700);
 
         HBox backButtonHBox = new HBox(10);
-        backButton = new ImageView(ViewUtils.restartImage());
+        backButton = new ImageView(FrontendUtils.restartImage());
         backButton.setFitWidth(62);
         backButton.setFitHeight(62);
         backButton.setPickOnBounds(true);
@@ -63,7 +63,7 @@ public class StorySelectorView {
         center.setPadding(new Insets(30, 0, 0, 0));
         center.setMaxWidth(1000);
         Label clickStoryLabel = new Label("Double-click to Play a Story!");
-        clickStoryLabel.setFont(ViewUtils.pixeloidSansBold(30));
+        clickStoryLabel.setFont(FrontendUtils.pixeloidSansBold(30));
         clickStoryLabel.setStyle("-fx-text-fill: #2b862c");
         createStoryTable();
         setCellFactories();
@@ -73,7 +73,7 @@ public class StorySelectorView {
 
     private void configureAddButton() {
         addPathsFile = new Button("Add Paths File");
-        addPathsFile.setFont(ViewUtils.pixeloidSans(30));
+        addPathsFile.setFont(FrontendUtils.pixeloidSans(30));
     }
 
     public void createStoryTable() {
@@ -102,9 +102,9 @@ public class StorySelectorView {
                 setText(null);
 
                 if (string != null && !empty) {
-                    setFont(ViewUtils.pixeloidSans(12));
+                    setFont(FrontendUtils.pixeloidSans(12));
                     setText(string);
-                    Tooltip tooltip = ViewUtils.createTooltip(string, 10);
+                    Tooltip tooltip = FrontendUtils.createTooltip(string, 10);
 
                     setTooltip(tooltip);
                 }
@@ -117,9 +117,9 @@ public class StorySelectorView {
                 setGraphic(null);
                 setText(null);
                 if (string != null && !empty) {
-                    setFont(ViewUtils.pixeloidSans(12));
+                    setFont(FrontendUtils.pixeloidSans(12));
                     setText(string);
-                    Tooltip tooltip = ViewUtils.createTooltip(string, 10);
+                    Tooltip tooltip = FrontendUtils.createTooltip(string, 10);
                     setTooltip(tooltip);
                 }
             }
@@ -131,7 +131,7 @@ public class StorySelectorView {
                 setGraphic(null);
                 setText(null);
                 if (integer != null && !empty) {
-                    setFont(ViewUtils.pixeloidSans(12));
+                    setFont(FrontendUtils.pixeloidSans(12));
                     setText(integer.toString());
                 }
             }

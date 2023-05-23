@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.view;
 
-import edu.ntnu.mappe32.ViewUtils;
+import edu.ntnu.mappe32.FrontendUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -46,8 +46,8 @@ public class CreatePlayerView {
 
     public CreatePlayerView() {
         this.root = new BorderPane();
-        statLabelFont = ViewUtils.pixeloidSans(30);
-        textFieldFont = ViewUtils.pixeloidSans(20);
+        statLabelFont = FrontendUtils.pixeloidSans(30);
+        textFieldFont = FrontendUtils.pixeloidSans(20);
         configureTop();
         configureCenter();
 
@@ -61,7 +61,7 @@ public class CreatePlayerView {
     private void configureTop() {
         top = new HBox(50);
 
-        infoButton = new ImageView(ViewUtils.infoImage());
+        infoButton = new ImageView(FrontendUtils.infoImage());
         infoButton.setPickOnBounds(true);
         infoButton.setFitWidth(31);
         infoButton.setFitHeight(31);
@@ -69,7 +69,7 @@ public class CreatePlayerView {
         helpAndBackButtonHBox.getChildren().addAll(backButton, helpButton);
 
         storyTitle = new Label();
-        storyTitle.setFont(ViewUtils.pixeloidSansBold(50));
+        storyTitle.setFont(FrontendUtils.pixeloidSansBold(50));
         storyTitle.setMaxWidth(700);
 
         top.getChildren().addAll(storyTitle, infoButton);
@@ -83,11 +83,11 @@ public class CreatePlayerView {
         helpAndBackButtonHBox = new HBox(10);
         helpAndBackButtonHBox.setAlignment(Pos.TOP_LEFT);
         helpAndBackButtonHBox.setPadding(new Insets(20,0,0,20));
-        helpButton = new ImageView(ViewUtils.helpButtonImage());
+        helpButton = new ImageView(FrontendUtils.helpButtonImage());
         helpButton.setFitWidth(62);
         helpButton.setFitHeight(62);
         helpButton.setPickOnBounds(true);
-        backButton = new ImageView(ViewUtils.restartImage());
+        backButton = new ImageView(FrontendUtils.restartImage());
         backButton.setFitWidth(62);
         backButton.setFitHeight(62);
         backButton.setPickOnBounds(true);
@@ -97,10 +97,10 @@ public class CreatePlayerView {
         centerVBox.setPadding(new Insets(30,0,0,0));
         centerVBox.setAlignment(Pos.TOP_CENTER);
         Label chooseYourStats = new Label("Choose Your Stats");
-        chooseYourStats.setFont(ViewUtils.pixeloidSans(40));
+        chooseYourStats.setFont(FrontendUtils.pixeloidSans(40));
         chooseYourStats.setAlignment(Pos.CENTER);
 
-        nextButton = new ImageView(ViewUtils.nextImage());
+        nextButton = new ImageView(FrontendUtils.nextImage());
         configurePlayerStatsGridPane();
         configureTutorialImageView();
         playerGridPane.setPadding(new Insets(0, 0,0,330));
@@ -177,7 +177,7 @@ public class CreatePlayerView {
         playerHealthLabel.setFont(statLabelFont);
     }
     private VBox createErrorCircle() {
-        ImageView errorCircle = new ImageView(ViewUtils.errorCircleImage());
+        ImageView errorCircle = new ImageView(FrontendUtils.errorCircleImage());
         errorCircle.setFitWidth(20);
         errorCircle.setFitHeight(20);
         VBox errorCircleBox = new VBox(errorCircle);
@@ -188,7 +188,7 @@ public class CreatePlayerView {
     private Label createInvalidErrorLabel(String errorMessage) {
         Label label = new Label(errorMessage);
         label.setStyle("-fx-text-fill: #D80D0D;");
-        label.setFont(ViewUtils.pixeloidSans(15));
+        label.setFont(FrontendUtils.pixeloidSans(15));
         label.setAlignment(Pos.CENTER);
         return label;
     }

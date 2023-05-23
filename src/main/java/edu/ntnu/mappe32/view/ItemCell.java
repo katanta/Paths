@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.view;
 
-import edu.ntnu.mappe32.ViewUtils;
+import edu.ntnu.mappe32.FrontendUtils;
 import edu.ntnu.mappe32.model.Item;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -30,7 +30,7 @@ public class ItemCell extends ListCell<Item> {
     private void configureHBox() {
         Label itemInfo = new Label();
         itemInfo.setMaxWidth(262.5);
-        itemInfo.setFont(ViewUtils.pixeloidSans(15));
+        itemInfo.setFont(FrontendUtils.pixeloidSans(15));
         HBox.setMargin(itemInfo, new Insets(6));
 
         String quantity = String.valueOf(inventory.get(item));
@@ -48,9 +48,9 @@ public class ItemCell extends ListCell<Item> {
             toolTipText = "You cannot use this item!";
 
 
-        tooltip = ViewUtils.createTooltip(toolTipText, 12);
+        tooltip = FrontendUtils.createTooltip(toolTipText, 12);
 
-        tooltip.setFont(ViewUtils.pixeloidSansBold(12));
+        tooltip.setFont(FrontendUtils.pixeloidSansBold(12));
     }
 
     public Tooltip getNewTooltip() {

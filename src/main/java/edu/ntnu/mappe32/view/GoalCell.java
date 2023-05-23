@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.view;
 
-import edu.ntnu.mappe32.ViewUtils;
+import edu.ntnu.mappe32.FrontendUtils;
 import edu.ntnu.mappe32.model.goal_related.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -23,11 +23,11 @@ public class GoalCell extends ListCell<Goal> {
         ImageView icon = createIcon(goal);
 
         Label label = new Label(goal.goalValue());
-        Font font  = ViewUtils.pixeloidSans(25);
+        Font font  = FrontendUtils.pixeloidSans(25);
         label.setFont(font);
 
         if (goal instanceof InventoryGoal)
-            label.setFont(ViewUtils.pixeloidSans(10));
+            label.setFont(FrontendUtils.pixeloidSans(10));
         hBox.getChildren().addAll(icon, label, pane);
 
         hBox.setPadding(new Insets(0,0,0,5));
@@ -37,22 +37,22 @@ public class GoalCell extends ListCell<Goal> {
     private static ImageView createIcon(Goal goal) {
             ImageView icon;
             if (goal instanceof InventoryGoal) {
-                icon = new ImageView(ViewUtils.inventoryImage());
+                icon = new ImageView(FrontendUtils.inventoryImage());
                 icon.setFitWidth(FIT_WIDTH);
                 icon.setFitHeight(FIT_HEIGHT);
                 return icon;
             } else if (goal instanceof ScoreGoal) {
-                icon = new ImageView(ViewUtils.scoreImage());
+                icon = new ImageView(FrontendUtils.scoreImage());
                 icon.setFitWidth(FIT_WIDTH);
                 icon.setFitHeight(FIT_HEIGHT);
                 return icon;
             } else if (goal instanceof HealthGoal) {
-                icon = new ImageView(ViewUtils.healthImage());
+                icon = new ImageView(FrontendUtils.healthImage());
                 icon.setFitWidth(FIT_WIDTH);
                 icon.setFitHeight(FIT_HEIGHT);
                 return icon;
             } else if (goal instanceof GoldGoal) {
-                icon = new ImageView(ViewUtils.goldImage());
+                icon = new ImageView(FrontendUtils.goldImage());
                 icon.setFitWidth(FIT_WIDTH);
                 icon.setFitHeight(FIT_HEIGHT);
                 return icon;

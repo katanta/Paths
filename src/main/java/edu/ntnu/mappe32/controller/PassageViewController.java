@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.controller;
 
-import edu.ntnu.mappe32.ViewUtils;
+import edu.ntnu.mappe32.FrontendUtils;
 import edu.ntnu.mappe32.model.Game;
 import edu.ntnu.mappe32.model.Item;
 import edu.ntnu.mappe32.model.Player;
@@ -26,7 +26,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -114,7 +113,7 @@ public class PassageViewController {
         currentPassage.getLinks().forEach(link -> {
             Button linkButton = new Button(link.getText());
             linkButton.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-border-width: 2px; -fx-border-color: #000000");
-            linkButton.setFont(ViewUtils.pixeloidSans(18));
+            linkButton.setFont(FrontendUtils.pixeloidSans(18));
             linkButton.setPrefSize(200, 50);
             linkButton.setMaxWidth(400);
             linkButton.setOnMouseClicked(mouseEvent -> {
@@ -142,10 +141,10 @@ public class PassageViewController {
             });
             linkButton.setOnMouseEntered(e -> {
                 linkButton.setStyle("-fx-background-color: #000000; -fx-text-fill: #ffffff")  ;
-                ViewUtils.playSelectionSound();
+                FrontendUtils.playSelectionSound();
             });
             linkButton.setOnMouseExited(e -> linkButton.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-border-width: 2px; -fx-border-color: #000000"));
-            Tooltip linkTooltip = ViewUtils.createTooltip(link.getText(), 20);
+            Tooltip linkTooltip = FrontendUtils.createTooltip(link.getText(), 20);
             linkButton.setTooltip(linkTooltip);
             passageView.getLinkButtonsVBox().getChildren().add(linkButton);
         });
@@ -157,9 +156,9 @@ public class PassageViewController {
 
         for (Goal goal : game.goals()) {
             Label goalLabel = new Label(goal.getClass().getSimpleName() + ": " + goal);
-            goalLabel.setFont(ViewUtils.pixeloidSans(20));
+            goalLabel.setFont(FrontendUtils.pixeloidSans(20));
 
-            Tooltip goalLabelTooltip = ViewUtils.createTooltip(goalLabel.getText(), 14);
+            Tooltip goalLabelTooltip = FrontendUtils.createTooltip(goalLabel.getText(), 14);
 
             goalLabel.setTooltip(goalLabelTooltip);
             goalLabel.setMaxWidth(300);
@@ -167,9 +166,9 @@ public class PassageViewController {
             goalLabel.setTextAlignment(TextAlignment.CENTER);
 
             Label completionStatus = new Label("INCOMPLETE!");
-            completionStatus.setFont(ViewUtils.pixeloidSans(16));
+            completionStatus.setFont(FrontendUtils.pixeloidSans(16));
 
-            Tooltip completionStatusToolTip = ViewUtils.createTooltip("The goal above is incomplete!", 20);
+            Tooltip completionStatusToolTip = FrontendUtils.createTooltip("The goal above is incomplete!", 20);
             completionStatus.setTooltip(completionStatusToolTip);
             completionStatus.setTextFill(Color.RED);
 
@@ -221,42 +220,42 @@ public class PassageViewController {
     }
 
     private void configureAllTopLeftButtonActions() {
-        ImageView helpButtonHover = new ImageView(ViewUtils.helpButtonHoverImage());
-        ImageView homeButtonHover = new ImageView(ViewUtils.homeButtonHoverImage());
-        ImageView restartButtonHover = new ImageView(ViewUtils.restartHoverImage());
+        ImageView helpButtonHover = new ImageView(FrontendUtils.helpButtonHoverImage());
+        ImageView homeButtonHover = new ImageView(FrontendUtils.homeButtonHoverImage());
+        ImageView restartButtonHover = new ImageView(FrontendUtils.restartHoverImage());
 
         final Image normalHelpButton = passageView.getHelpButton().getImage();
         final Image normalHomeButton = passageView.getHomeButton().getImage();
         final Image normalRestartButton = passageView.getRestartButton().getImage();
         //help button
         passageView.getHelpButton().setOnMouseEntered(e -> {
-            ViewUtils.playSelectionSound();
+            FrontendUtils.playSelectionSound();
             passageView.getHelpButton().setImage(helpButtonHover.getImage());
             setHelpButtonClickAction();
-            Tooltip tooltip = ViewUtils.createTooltip("Need help? Press me! :)", 18);
+            Tooltip tooltip = FrontendUtils.createTooltip("Need help? Press me! :)", 18);
 
             Tooltip.install(passageView.getHelpButton(), tooltip);
         });
         passageView.getHelpButton().setOnMouseExited(e -> passageView.getHelpButton().setImage(normalHelpButton));
         //home button
         passageView.getHomeButton().setOnMouseEntered(e -> {
-            ViewUtils.playSelectionSound();
+            FrontendUtils.playSelectionSound();
             passageView.getHomeButton().setImage(homeButtonHover.getImage());
             setHomeButtonClickAction();
-            Tooltip tooltip = ViewUtils.createTooltip("Press this to go the home screen.", 18);
+            Tooltip tooltip = FrontendUtils.createTooltip("Press this to go the home screen.", 18);
 
             Tooltip.install(passageView.getHomeButton(), tooltip);
         });
         passageView.getHomeButton().setOnMouseExited(e -> passageView.getHomeButton().setImage(normalHomeButton));
         //restart button
         passageView.getRestartButton().setOnMouseEntered(e -> {
-            ViewUtils.playSelectionSound();
+            FrontendUtils.playSelectionSound();
             passageView.getRestartButton().setImage(restartButtonHover.getImage());
             setRestartButtonClickAction();
-            Tooltip tooltip = ViewUtils.createTooltip("Press this to restart the story and revert " + game.player().getName() + " to their original stats.", 18);
+            Tooltip tooltip = FrontendUtils.createTooltip("Press this to restart the story and revert " + game.player().getName() + " to their original stats.", 18);
             tooltip.setMaxWidth(500);
             tooltip.setWrapText(true);
-            tooltip.setFont(ViewUtils.pixeloidSans(18));
+            tooltip.setFont(FrontendUtils.pixeloidSans(18));
             Tooltip.install(passageView.getRestartButton(), tooltip);
         });
         passageView.getRestartButton().setOnMouseExited(e -> passageView.getRestartButton().setImage(normalRestartButton));
@@ -268,7 +267,7 @@ public class PassageViewController {
             return;
 
         Text allEventText = new Text();
-        allEventText.setFont(ViewUtils.pixeloidSans(18));
+        allEventText.setFont(FrontendUtils.pixeloidSans(18));
         allEventText.setWrappingWidth(620);
         StringBuilder finalEventString = new StringBuilder();
 
@@ -288,7 +287,7 @@ public class PassageViewController {
 
     private void updateRecentEventsFailure(String message) {
         Text failureText = new Text(message);
-        failureText.setFont(ViewUtils.pixeloidSans(18));
+        failureText.setFont(FrontendUtils.pixeloidSans(18));
         failureText.setWrappingWidth(620);
         failureText.setFill(Color.RED);
 
@@ -298,7 +297,7 @@ public class PassageViewController {
     private void addNewGoalCompletionToEventsPane(Goal newCompletedGoal) {
 
         Text goalCompletionText = new Text(game.player().getName() + " has completed a " + newCompletedGoal.getClass().getSimpleName() + ": " + newCompletedGoal + "!");
-        goalCompletionText.setFont(ViewUtils.pixeloidSans(18));
+        goalCompletionText.setFont(FrontendUtils.pixeloidSans(18));
         goalCompletionText.setWrappingWidth(620);
         goalCompletionText.setFill(Color.GREEN);
 

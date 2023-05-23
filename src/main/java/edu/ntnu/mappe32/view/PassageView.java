@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.view;
 
-import edu.ntnu.mappe32.ViewUtils;
+import edu.ntnu.mappe32.FrontendUtils;
 import edu.ntnu.mappe32.model.Item;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -48,7 +48,7 @@ public class PassageView {
     public PassageView() {
         root = new StackPane();
         root.setStyle("-fx-border-width: 4px; -fx-border-color: #000000");
-        infoFont = ViewUtils.pixeloidSans(18);
+        infoFont = FrontendUtils.pixeloidSans(18);
         configurePassageInfo();
         configureLinkScrollPane();
         configureGameGoalsVBox();
@@ -99,7 +99,7 @@ public class PassageView {
     }
 
     private void configurePlayerScoreLabel() {
-        ImageView scoreIcon = new ImageView(ViewUtils.scoreImage());
+        ImageView scoreIcon = new ImageView(FrontendUtils.scoreImage());
 
         playerScoreLabel = new Label("");
         playerScoreLabel.setFont(infoFont);
@@ -113,11 +113,11 @@ public class PassageView {
 
     private void configurePlayerNameLabel() {
         playerNameLabel = new Label();
-        playerNameLabel.setFont(ViewUtils.pixeloidSans(25));
+        playerNameLabel.setFont(FrontendUtils.pixeloidSans(25));
     }
 
     private void configurePlayerHealthLabel() {
-        ImageView healthIcon = new ImageView(ViewUtils.healthImage());
+        ImageView healthIcon = new ImageView(FrontendUtils.healthImage());
         playerHealthLabel = new Label("");
         playerHealthLabel.setFont(infoFont);
         playerHealthLabel.setLabelFor(healthIcon);
@@ -129,7 +129,7 @@ public class PassageView {
     }
 
     private void configurePlayerGoldLabel() {
-        ImageView goldIcon = new ImageView(ViewUtils.goldImage());
+        ImageView goldIcon = new ImageView(FrontendUtils.goldImage());
         playerGoldLabel = new Label("");
         playerGoldLabel.setFont(infoFont);
         playerGoldLabel.setLabelFor(goldIcon);
@@ -144,13 +144,13 @@ public class PassageView {
         storyTitle = new Label();
         storyTitle.setLabelFor(passageTitle);
         storyTitle.setMinSize(10, 10);
-        storyTitle.setFont(ViewUtils.pixeloidSansBold(45));
+        storyTitle.setFont(FrontendUtils.pixeloidSansBold(45));
         passageTitle = new Text();
-        passageTitle.setFont(ViewUtils.pixeloidSans(28));
+        passageTitle.setFont(FrontendUtils.pixeloidSans(28));
 
         ScrollPane passageContentScrollPane = new ScrollPane();
         passageContent = new Text();
-        passageContent.setFont(ViewUtils.pixeloidSans(18));
+        passageContent.setFont(FrontendUtils.pixeloidSans(18));
         passageContentScrollPane.setMaxWidth(600);
         passageContent.setWrappingWidth(passageContentScrollPane.getMaxWidth() - 15);
         passageContentScrollPane.setMaxHeight(180);
@@ -205,7 +205,7 @@ public class PassageView {
     }
 
     private void configureHelpButton() {
-        helpButton = new ImageView(ViewUtils.helpButtonImage());
+        helpButton = new ImageView(FrontendUtils.helpButtonImage());
         helpButton.setFitHeight(50);
         helpButton.setFitWidth(50);
         buttonsHBox.setMargin(helpButton, new Insets(0, 0, 0, 20));
@@ -213,14 +213,14 @@ public class PassageView {
     }
 
     private void configureHomeButton() {
-        homeButton = new ImageView(ViewUtils.homeButtonImage());
+        homeButton = new ImageView(FrontendUtils.homeButtonImage());
         homeButton.setFitHeight(50);
         homeButton.setFitWidth(50);
         buttonsHBox.getChildren().add(homeButton);
     }
 
     private void configureRestartButton() {
-        restartButton = new ImageView(ViewUtils.restartImage());
+        restartButton = new ImageView(FrontendUtils.restartImage());
         restartButton.setFitHeight(50);
         restartButton.setFitWidth(50);
         buttonsHBox.getChildren().add(restartButton);

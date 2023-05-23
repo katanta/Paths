@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.view;
 
-import edu.ntnu.mappe32.ViewUtils;
+import edu.ntnu.mappe32.FrontendUtils;
 import edu.ntnu.mappe32.model.goal_related.Goal;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -61,8 +61,8 @@ public class CreateGoalsView {
 
     public CreateGoalsView() {
         this.root = new BorderPane();
-        statLabelFont = ViewUtils.pixeloidSans(30);
-        textFieldFont = ViewUtils.pixeloidSans(20);
+        statLabelFont = FrontendUtils.pixeloidSans(30);
+        textFieldFont = FrontendUtils.pixeloidSans(20);
 
         configureTop();
         configureCenter();
@@ -75,14 +75,14 @@ public class CreateGoalsView {
     private void configureTop() {
         top = new HBox(50);
 
-        startButton = new ImageView(ViewUtils.startImage());
+        startButton = new ImageView(FrontendUtils.startImage());
 
         startButton.setFitWidth(200);
         startButton.setFitHeight(100);
         startButton.setX(1020);
         startButton.setY(560);
         startButton.setPickOnBounds(true);
-        infoButton = new ImageView(ViewUtils.infoImage());
+        infoButton = new ImageView(FrontendUtils.infoImage());
 
         infoButton.setPickOnBounds(true);
         infoButton.setFitWidth(31);
@@ -90,7 +90,7 @@ public class CreateGoalsView {
         configureHelpAndBackButton();
 
         Label createYourGoals = new Label("Create Your Goals!");
-        createYourGoals.setFont(ViewUtils.pixeloidSansBold(50));
+        createYourGoals.setFont(FrontendUtils.pixeloidSansBold(50));
         createYourGoals.setMaxWidth(700);
 
         top.getChildren().addAll(createYourGoals, infoButton);
@@ -103,11 +103,11 @@ public class CreateGoalsView {
         helpAndBackButtonHBox = new HBox(10);
         helpAndBackButtonHBox.setAlignment(Pos.TOP_LEFT);
         helpAndBackButtonHBox.setPadding(new Insets(20,0,0,20));
-        helpButton = new ImageView(ViewUtils.helpButtonImage());
+        helpButton = new ImageView(FrontendUtils.helpButtonImage());
         helpButton.setFitWidth(62);
         helpButton.setFitHeight(62);
         helpButton.setPickOnBounds(true);
-        backButton = new ImageView(ViewUtils.restartImage());
+        backButton = new ImageView(FrontendUtils.restartImage());
         backButton.setFitWidth(62);
         backButton.setFitHeight(62);
         backButton.setPickOnBounds(true);
@@ -131,7 +131,7 @@ public class CreateGoalsView {
                 if (goal != null && !empty) {
                     GoalCell cell = new GoalCell(goal);
                     setGraphic(cell.getHBox());
-                    Tooltip cellTooltip = ViewUtils.createTooltip("Click to remove '" + goal.goalType() + " Goal: " + goal.goalValue() + "'", 20);
+                    Tooltip cellTooltip = FrontendUtils.createTooltip("Click to remove '" + goal.goalType() + " Goal: " + goal.goalValue() + "'", 20);
                     setTooltip(cellTooltip);
                     cellTooltip.setStyle("-fx-text-fill: red;");
                 }
@@ -143,7 +143,7 @@ public class CreateGoalsView {
         centerVBox.setPadding(new Insets(15,0,0,0));
         centerVBox.setAlignment(Pos.TOP_CENTER);
         Label yourGoals = new Label("Your Goals");
-        yourGoals.setFont(ViewUtils.pixeloidSans(30));
+        yourGoals.setFont(FrontendUtils.pixeloidSans(30));
         yourGoals.setAlignment(Pos.CENTER);
         configureGoalsListView();
         configureGoalBox();
@@ -154,10 +154,10 @@ public class CreateGoalsView {
     }
     private void configureGoalBox() {
      goalBox = new HBox(80);
-     healthIcon = new ImageView(ViewUtils.healthImage());
-     scoreIcon = new ImageView(ViewUtils.scoreImage());
-     goldIcon = new ImageView(ViewUtils.goldImage());
-     inventoryIcon = new ImageView(ViewUtils.inventoryImage());
+     healthIcon = new ImageView(FrontendUtils.healthImage());
+     scoreIcon = new ImageView(FrontendUtils.scoreImage());
+     goldIcon = new ImageView(FrontendUtils.goldImage());
+     inventoryIcon = new ImageView(FrontendUtils.inventoryImage());
      try {
          addGoalButtonImage = new Image(new FileInputStream("src/main/resources/img/Add.png"));
      } catch (IOException e) {
@@ -181,7 +181,7 @@ public class CreateGoalsView {
     }
 
     private void configurePointerBox() {
-        Image pointerImage = ViewUtils.pointerImage();
+        Image pointerImage = FrontendUtils.pointerImage();
         final int imageSize = 20;
         p1 = new ImageView(pointerImage);
         p1.setFitWidth(imageSize);
@@ -253,11 +253,11 @@ public class CreateGoalsView {
                 setText(null);
                 if (item != null) {
                     setText(item);
-                    setFont(ViewUtils.pixeloidSansBold(15));
+                    setFont(FrontendUtils.pixeloidSansBold(15));
 
 
-                    Tooltip tooltip = ViewUtils.createTooltip("Click to remove " + item, 15);
-                    tooltip.setFont(ViewUtils.pixeloidSansBold(15));
+                    Tooltip tooltip = FrontendUtils.createTooltip("Click to remove " + item, 15);
+                    tooltip.setFont(FrontendUtils.pixeloidSansBold(15));
 
                     tooltip.setStyle("-fx-text-fill: red;");
 
@@ -295,7 +295,7 @@ public class CreateGoalsView {
         quantity.setPromptText("Quantity");
         quantity.setTextFormatter(maxCharactersFormatter(6));
         addToInventoryGoal = new Button("Add to Goal");
-        addToInventoryGoal.setFont(ViewUtils.pixeloidSans(20));
+        addToInventoryGoal.setFont(FrontendUtils.pixeloidSans(20));
         createInventoryBar.getChildren().addAll(selectItem, quantity, addToInventoryGoal);
         currentGoalBar.setAlignment(Pos.TOP_CENTER);
         createInventoryBar.setAlignment(Pos.TOP_CENTER);
@@ -318,14 +318,14 @@ public class CreateGoalsView {
     }
 
     private void configureInvalidValueBox() {
-        ImageView errorCircle = new ImageView(ViewUtils.errorCircleImage());
+        ImageView errorCircle = new ImageView(FrontendUtils.errorCircleImage());
 
         errorCircle.setFitWidth(20);
         errorCircle.setFitHeight(20);
         VBox errorCircleBox = new VBox(errorCircle);
         VBox.setMargin(errorCircle, new Insets(9.2,10,0, 10));
         Label invalidValue = new Label("Invalid value");
-        invalidValue.setFont(ViewUtils.pixeloidSans(15));
+        invalidValue.setFont(FrontendUtils.pixeloidSans(15));
         invalidValue.setStyle("-fx-text-fill: #D80D0DFF;");
         invalidValueBox = new HBox();
         invalidValueBox.getChildren().addAll(errorCircleBox, invalidValue);

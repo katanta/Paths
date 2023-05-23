@@ -192,9 +192,8 @@ public class Player implements Serializable {
     }
 
     /**
-     * This is the builder class for Player, which makes it able to
-     * instantiate a player without an inventory.
-     * If gold or score is not set, it is
+     * This is the builder class for Player.
+     * If inventory, gold or score is not explicitly set, it is defaulted to zero/empty.
      */
     public static class PlayerBuilder {
         /**

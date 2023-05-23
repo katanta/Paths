@@ -12,9 +12,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class ViewUtils {
+public class FrontendUtils {
 
-    private static ViewUtils instance;
+    private static final FrontendUtils instance = new FrontendUtils();
     private static final String errorMessage = "Error occurred when ";
     private static MediaPlayer musicPlayer;
     private static Image helpButtonHoverImage;
@@ -35,25 +35,18 @@ public class ViewUtils {
     private static Image helpButtonImage;
     private static MediaPlayer selectionPlayer;
 
-    private ViewUtils() {
+    private FrontendUtils() {
         configureMediaPlayers();
         instaintiateImages();
     }
 
     private void configureMediaPlayers() {
         musicPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/music/MainMenuMusic.mp3").toURI().toString()));
-        musicPlayer.setOnEndOfMedia(() -> ViewUtils.getMusicPlayer().seek(Duration.ZERO));
+        musicPlayer.setOnEndOfMedia(() -> musicPlayer.seek(Duration.ZERO));
         musicPlayer.setVolume(0.25);
         selectionPlayer = new MediaPlayer(new Media(new File("src/main/resources/audio/Menu Selection Click.wav").toURI().toString()));
     }
-    public static ViewUtils getInstance() {
-        if (instance == null) {
-            synchronized (ViewUtils.class) {
-                if (instance == null) {
-                    instance = new ViewUtils();
-                }
-            }
-        }
+    public static FrontendUtils getInstance() {
         return instance;
     }
     public static void playSelectionSound() {
@@ -66,9 +59,6 @@ public class ViewUtils {
     public static void stopStartScreenMusic() {
         musicPlayer.stop();
         musicPlayer.seek(Duration.ZERO);
-    }
-    public static MediaPlayer getMusicPlayer() {
-        return musicPlayer;
     }
     public static void setHoverSound(Node node) {
         node.setOnMouseEntered(mouseEvent -> playSelectionSound());

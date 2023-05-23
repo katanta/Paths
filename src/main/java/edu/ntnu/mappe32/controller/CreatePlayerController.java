@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.controller;
 
-import edu.ntnu.mappe32.ViewUtils;
+import edu.ntnu.mappe32.FrontendUtils;
 import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.model.Player;
 import edu.ntnu.mappe32.view.CreateGoalsView;
@@ -43,32 +43,32 @@ public class CreatePlayerController {
         setButtonTooltip(view.getInfoButton(), "Click here to see Story information...");
         view.getInfoButton().setOnMouseEntered(mouseEvent -> {
 
-                setButtonImage(view.getInfoButton(), ViewUtils.infoHoverImage());
-                ViewUtils.playSelectionSound();
+                setButtonImage(view.getInfoButton(), FrontendUtils.infoHoverImage());
+                FrontendUtils.playSelectionSound();
         });
-        view.getInfoButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getInfoButton(), ViewUtils.infoImage()));
+        view.getInfoButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getInfoButton(), FrontendUtils.infoImage()));
         showInformationBox();
 
         //Back button
         setButtonTooltip(view.getBackButton(), "Click to go back to Select Story");
         view.getBackButton().setOnMouseEntered(mouseEvent -> {
-                setButtonImage(view.getBackButton(), ViewUtils.restartHoverImage());
-                ViewUtils.playSelectionSound();
+                setButtonImage(view.getBackButton(), FrontendUtils.restartHoverImage());
+                FrontendUtils.playSelectionSound();
         });
-        view.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getBackButton(), ViewUtils.restartImage()));
+        view.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(view.getBackButton(), FrontendUtils.restartImage()));
         view.getBackButton().setOnMouseClicked(mouseEvent -> new GameSetupController(stage, new StorySelectorView()));
         view.getNextButton().setOnMouseClicked(mouseEvent -> goToCreateGoals());
         setButtonTooltip(view.getNextButton(), "Click to continue");
-        ViewUtils.setHoverSound(view.getNextButton());
+        FrontendUtils.setHoverSound(view.getNextButton());
         //Help button
         setHelpButtonClickAction();
         view.getHelpButton().setOnMouseEntered(mouseEvent -> {
-            setButtonImage(view.getHelpButton(), ViewUtils.helpButtonHoverImage());
+            setButtonImage(view.getHelpButton(), FrontendUtils.helpButtonHoverImage());
             setButtonTooltip(view.getHelpButton(), "Need help? Press me! :)");
         });
         view.getHelpButton().setOnMouseExited(mouseEvent -> {
-                setButtonImage(view.getHelpButton(), ViewUtils.helpButtonImage());
-                ViewUtils.playSelectionSound();
+                setButtonImage(view.getHelpButton(), FrontendUtils.helpButtonImage());
+                FrontendUtils.playSelectionSound();
         });
 
         setKeyPressedAction(view.getPlayerHealthTextField(), this::goToCreateGoals);
@@ -88,7 +88,7 @@ public class CreatePlayerController {
     }
 
     private void setButtonTooltip(ImageView button, String text) {
-        Tooltip tooltip = ViewUtils.createTooltip(text, 18);
+        Tooltip tooltip = FrontendUtils.createTooltip(text, 18);
         Tooltip.install(button, tooltip);
     }
 

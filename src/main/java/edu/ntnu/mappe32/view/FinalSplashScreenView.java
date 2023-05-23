@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.view;
 
-import edu.ntnu.mappe32.ViewUtils;
+import edu.ntnu.mappe32.FrontendUtils;
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
@@ -17,11 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -40,7 +37,6 @@ public class FinalSplashScreenView {
 
 
     public FinalSplashScreenView() {
-        ViewUtils.getInstance();
         root = new StackPane();
         root.setAlignment(Pos.TOP_CENTER);
         configureLogo(); //configureLogo must be done first to apply correct margins for it
@@ -100,7 +96,7 @@ public class FinalSplashScreenView {
     }
     private void configurePlayButtonHBox() {
         playButton = new Button("Play an existing story");
-        playButton.setFont(ViewUtils.pixeloidSans(30));
+        playButton.setFont(FrontendUtils.pixeloidSans(30));
         playButton.setStyle("-fx-border-color: #000000; -fx-border-width: 5px; -fx-background-color: #ffffff");
         playButtonHBox = new HBox(playButton);
         configureSelectionPointers(playButtonHBox);
@@ -113,7 +109,7 @@ public class FinalSplashScreenView {
     }
 
     private void configureSelectionPointers(HBox hBox) {
-        ImageView pointer = new ImageView(ViewUtils.pointerImage());
+        ImageView pointer = new ImageView(FrontendUtils.pointerImage());
         ImageView pointerClone;
         pointer.setFitWidth(75);
         pointer.setFitHeight(75);
@@ -128,10 +124,10 @@ public class FinalSplashScreenView {
 
     private void configureBaitButtonHBox() {
         Button baitButton = new Button("Follow your own path \n     (COMING SOON!)");
-        baitButton.setFont(ViewUtils.pixeloidSans(30));
+        baitButton.setFont(FrontendUtils.pixeloidSans(30));
         baitButton.setStyle("-fx-border-color: #000000; -fx-border-width: 5px; -fx-background-color: #6b6b6b");
 
-        Tooltip baitButtonTooltip = ViewUtils.createTooltip("This Feature is unavailable but you can still click me :)", 15);
+        Tooltip baitButtonTooltip = FrontendUtils.createTooltip("This Feature is unavailable but you can still click me :)", 15);
         baitButton.setTooltip(baitButtonTooltip);
 
         baitButtonHBox = new HBox(baitButton);

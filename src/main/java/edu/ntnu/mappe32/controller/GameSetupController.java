@@ -1,6 +1,6 @@
 package edu.ntnu.mappe32.controller;
 
-import edu.ntnu.mappe32.ViewUtils;
+import edu.ntnu.mappe32.FrontendUtils;
 import edu.ntnu.mappe32.model.PathsFile;
 import edu.ntnu.mappe32.view.CreatePlayerView;
 import edu.ntnu.mappe32.view.FinalSplashScreenView;
@@ -40,15 +40,15 @@ public class GameSetupController {
     }
     private void setBackButtonActions() {
         storySelectorView.getBackButton().setOnMouseEntered(mouseEvent -> {
-            setButtonImage(storySelectorView.getBackButton(), ViewUtils.restartHoverImage());
-            ViewUtils.playSelectionSound();
+            setButtonImage(storySelectorView.getBackButton(), FrontendUtils.restartHoverImage());
+            FrontendUtils.playSelectionSound();
         });
-        storySelectorView.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(storySelectorView.getBackButton(), ViewUtils.restartImage()));
+        storySelectorView.getBackButton().setOnMouseExited(mouseEvent -> setButtonImage(storySelectorView.getBackButton(), FrontendUtils.restartImage()));
         storySelectorView.getBackButton().setOnMouseClicked(mouseEvent -> new FinalSplashScreenController(stage, new FinalSplashScreenView()));
     }
     private void setAddPathsFileAction() {
         storySelectorView.getAddPathsFileButton().setOnAction(actionEvent -> {
-            ViewUtils.setHoverSound(storySelectorView.getAddPathsFileButton());
+            FrontendUtils.setHoverSound(storySelectorView.getAddPathsFileButton());
             FileChooser.ExtensionFilter pathsExtension = new FileChooser.ExtensionFilter("Paths Files (.paths)", "*.paths");
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Paths File");
