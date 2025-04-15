@@ -9,7 +9,7 @@ Player progression tracking
 
 Modular design for easy expansion
 
-Built as part of a university assignment, the current version focuses on core logic, text-based interaction, file handling, GUI, and additional features.
+Built as part of a university assignment in the course IDATT2001, the current version focuses on core logic, text-based interaction, file handling, GUI, and additional features.
 
 ## Running the Game 🎮
 To play the game, clone the repository and run the command `mvn javafx:run`.
