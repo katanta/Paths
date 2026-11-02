@@ -1,7 +1,7 @@
 # Paths - Interactive Storytelling Engine
 ![image](https://github.com/user-attachments/assets/f9161e25-9e03-48f1-a993-1c7f76123411)
 ## About Paths
-Paths 🛤 is a choice-based interactive storytelling game engine developed in Python. The engine provides core functionality for creating and navigating branching narrative paths, with:
+Paths 🛤 is a choice-based interactive storytelling game engine developed in Java. The engine provides core functionality for creating and navigating branching narrative paths, with:
 
 Story management with scenes, choices, and consequences
 
